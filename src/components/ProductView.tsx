@@ -1,0 +1,138 @@
+"use client";
+
+import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import Link from "@/components/Link";
+import ProductBuy from "@/components/ProductBuy";
+import Price from "@/components/Price";
+import FavButton from "@/components/FavButton";
+import { imgSrc, inr, variantPrice, packCount, colourLabel, ALL_SIZES, type Product, type Variant, rangeHref } from "@/lib/catalog";
+import { asset, SITE } from "@/lib/site";
+import { SHIPPING_FROM } from "@/lib/shipping";
+
+/**
+ * Product page body. A client component because the main photograph has to
+ * follow the colour the shopper picks in the buy box — that link is the whole
+ * point of having colour variants on one page.
+ *
+ * `?c=<colour>` preselects a shade, which is how collection grids can still
+ * list individual colourways while every one of them lands here.
+ */
+export default function ProductView({ p }: { p: Product }) {
+  const wanted = useSearchParams().get("c") ?? "";
+  // Keyed on the colour in the address: opening a different colour of the
+  // design you are already on (from favourites, say) changes only the URL, and
+  // without a fresh mount the page would keep showing the old shade.
+  return <ProductViewInner key={wanted} p={p} wanted={wanted || undefined} />;
+}
+
+function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
+  const initial =
+    p.variants.find(
+      (v) => v.colour.toLowerCase() === (wanted ?? "").toLowerCase(),
+    ) ?? p.variants[0];
+
+  const [variant, setVariant] = useState<Variant>(initial);
+
+  return (
+    <div className="flex flex-wrap gap-y-8">
+      <div className="w-full md:w-[55%] md:pr-10 lg:w-[58%]">
+        <div className="aspect-square overflow-hidden bg-cream-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            key={variant.image}
+            src={asset(imgSrc(variant.image))}
+            alt={`${p.name} — ${colourLabel(p, variant)}`}
+            className="h-full w-full object-cover"
+            style={{
+              ...(variant.focal ? { objectPosition: variant.focal } : undefined),
+              ...(variant.zoom && variant.zoom !== 1 ? { transform: `scale(${variant.zoom})` } : undefined),
+            }}
+            fetchPriority="high"
+            decoding="async"
+          />
+        </div>
+
+        {/* There is NO thumbnail strip here, on purpose.
+            It used to list the colourways as photos, directly above the buy
+            box's colour swatches — the same choice, asked twice, one scroll
+            apart. Having picked a shade from the strip, the customer was
+            immediately asked to pick a shade again, which read as though the
+            first choice had not registered.
+
+            A gallery strip is the right pattern when a colourway has SEVERAL
+            photos of itself (front, on-wrist, detail). Ours has exactly one:
+            catalog_photos in the ANVEDA database is keyed PRIMARY KEY
+            (family, colour), so one photo per shade is all it can hold. Until
+            that changes, a strip could only ever repeat the swatches.
+
+            Choosing colour lives in one place: <ProductBuy>, beside size and
+            quantity, where the decision is actually made. */}
+      </div>
+
+      <div className="w-full md:w-[45%] lg:w-[42%]">
+        <Link
+          href={rangeHref(p.collection)}
+          className="text-[11px] font-bold uppercase tracking-[0.2em] text-maroon"
+        >
+          {p.collectionName}
+        </Link>
+        <div className="mt-2.5 flex items-start justify-between gap-4">
+          <h1 className="font-display text-[clamp(28px,3.6vw,44px)]">{p.name}</h1>
+          <FavButton
+            id={p.id}
+            colour={variant.colour}
+            name={`${p.name} — ${colourLabel(p, variant)}`}
+            variant="inline"
+          />
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+          <Price price={variantPrice(p, variant)} size="lg" />
+          <span className="badge-sale">20% off</span>
+        </div>
+
+        <p className="mt-5 text-[15px] leading-relaxed text-ink-soft">{p.story}</p>
+
+        <ProductBuy p={p} variant={variant} onVariant={setVariant} />
+
+        <dl className="mt-9 border-t border-line">
+          {[
+            ["Colour", colourLabel(p, variant)],
+            ...(packCount(p, variant)
+              ? [["In each set", packCount(p, variant) as string] as [string, string]]
+              : []),
+            ["Sizes", ALL_SIZES.join(" · ")],
+            ["Delivery", `All India by ${SITE.courier} · from ${inr(SHIPPING_FROM)}`],
+          ].map(([k, v]) => (
+            <div key={k} className="flex justify-between border-b border-line py-3.5">
+              <dt className="text-[12.5px] uppercase tracking-[0.12em] text-ink-soft">
+                {k}
+              </dt>
+              <dd className="text-right text-[13.5px] font-medium">{v}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="mt-6 bg-cream-2 p-5">
+          <p className="text-[13.5px] leading-relaxed text-ink-soft">
+            <strong className="font-semibold text-ink">
+              Not sure about your size?
+            </strong>{" "}
+            Message us on WhatsApp and we will help you measure in under a minute.
+          </p>
+          <a
+            href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
+              `Hi ANVEDA! I need help with sizing for ${p.name} (${colourLabel(p, variant)}).`,
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-block border border-ink px-6 py-2.5 text-[11.5px] font-bold uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-cream"
+          >
+            Ask on WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ANVEDA Sitemap</title>
+<style>
+  :root{--bg:#f4f7fb;--fg:#1f2a37;--muted:#5b6673;--line:#3b4552;--card:#fff;--edge:#d5dde6}
+  @media (prefers-color-scheme:dark){:root{--bg:#141a21;--fg:#e8edf2;--muted:#9aa6b2;--line:#8b97a4;--card:#1d252e;--edge:#33404c}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  main{max-width:1500px;margin:0 auto;padding:28px 16px 56px}
+  h1{font-size:26px;margin:0 0 4px;text-align:center}
+  .sub{color:var(--muted);text-align:center;margin:0 0 8px}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin:14px 0 20px;font-size:13px;color:var(--muted)}
+  .legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px}
+  .scroll{overflow-x:auto;background:var(--card);border:1px solid var(--edge);border-radius:10px}
+  svg{display:block;min-width:1380px;width:100%;height:auto}
+  svg text{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;fill:#fff;text-anchor:middle}
+  .t1{font-size:14px;font-weight:700}.t2{font-size:11px;opacity:.9}
+  .ln{stroke:var(--line);stroke-width:1.5;fill:none}
+  .hint{font-size:12px;color:var(--muted);text-align:center;margin:8px 0 0}
+  h2{font-size:17px;margin:32px 0 12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .card{background:var(--card);border:1px solid var(--edge);border-radius:8px;padding:12px 16px}
+  .card h3{margin:0 0 6px;font-size:14px}
+  .card ul{margin:0;padding-left:18px}.card li{margin:2px 0}
+  code{font:13px ui-monospace,Consolas,monospace}
+  .pill{font-size:11px;background:var(--edge);border-radius:4px;padding:1px 6px;margin-left:4px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+  <h1>ANVEDA — Sitemap</h1>
+  <p class="sub">35 pages · 3 groups · 11 collections · 11 products · 137 colourways</p>
+  <div class="legend">
+    <span><i style="background:#4f8fc0"></i>Home</span>
+    <span><i style="background:#a46bc0"></i>Main section</span>
+    <span><i style="background:#4fb37c"></i>Page inside a section</span>
+    <span><i style="background:#e0913a"></i>Checkout step (not a page of its own)</span>
+  </div>
+
+  <div class="scroll"><svg id="map" role="img" aria-label="ANVEDA sitemap diagram"></svg></div>
+  <p class="hint">Every menu link (header, footer, mobile tab bar) leads to one of the purple boxes. “×11” means eleven pages generated from one template.</p>
+
+  <h2>What is in each group</h2>
+  <div class="grid">
+    <div class="card"><h3>Glass — <code>/shop/glass</code></h3><ul>
+      <li>Intricate Glass Bangle <span class="pill">12 colours</span></li>
+      <li>Jelly Bangles – Glass Bangles <span class="pill">8</span></li>
+      <li>Pastel Palette Glass Bangle <span class="pill">9</span></li>
+      <li>Petal Stone Glass Bangle <span class="pill">16</span></li>
+      <li>Phool Glass Bangle <span class="pill">9</span></li>
+      <li>Square Edge Glass Bangles <span class="pill">19</span></li></ul></div>
+    <div class="card"><h3>Ornate — <code>/shop/ornate</code></h3><ul>
+      <li>Statement Bangles <span class="pill">25 colours</span></li>
+      <li>Kada <span class="pill">5</span></li>
+      <li>Designer Side Bangles <span class="pill">24</span></li></ul></div>
+    <div class="card"><h3>Layering — <code>/shop/layering</code></h3><ul>
+      <li>Border Bangles <span class="pill">4 colours</span></li>
+      <li>Gunghroo <span class="pill">6</span></li></ul></div>
+    <div class="card"><h3>Good to know</h3><ul>
+      <li>Each collection holds one product of the same name, so <code>/collections/x</code> and <code>/product/x</code> share a slug.</li>
+      <li>Colour is not a page: grids link to <code>/product/[id]/?c=colour</code>.</li>
+      <li>Navigation: header mega-menu, footer, mobile tab bar (Shop · Home · Reels · Help · Bag).</li></ul></div>
+  </div>
+</main>
+
+<script>
+(function () {
+  var C = { root: "#4f8fc0", sec: "#a46bc0", pg: "#4fb37c", step: "#e0913a" };
+  var cols = [
+    { t: "Glass Bangles", s: "/shop/glass", kids: [
+      ["6 sections", "Intricate, Jelly, Pastel..."],
+      ["73 designs", "all on this one page"],
+      ["Product pages ×6", "/product/[id]"] ] },
+    { t: "Ornate Bangles", s: "/shop/ornate", kids: [
+      ["3 sections", "Statement, Kada, Designer"],
+      ["54 designs", "all on this one page"],
+      ["Product pages ×3", "/product/[id]"] ] },
+    { t: "Layering Bangles", s: "/shop/layering", kids: [
+      ["2 sections", "Border, Gunghroo"],
+      ["10 designs", "all on this one page"],
+      ["Product pages ×2", "/product/[id]"] ] },
+    { t: "Reels", s: "/reels", kids: [
+      ["3 reels", "link to a product"] ] },
+    { t: "About Us", s: "/about", kids: [] },
+    { t: "Sizing", s: "/sizing", kids: [
+      ["Size chart", "2.2 to 2.10, in cm"] ] },
+    { t: "Shipping & Returns", s: "/shipping", kids: [
+      ["DTDC rates", "priced by PIN zone"] ] },
+    { t: "Contact Us", s: "/contact", kids: [
+      ["WhatsApp", "wa.me/917996009966"],
+      ["Email", "anveda.in@gmail.com"],
+      ["Instagram", "@anveda.in"] ] },
+    { t: "Checkout", s: "/checkout", kids: [
+      ["Cart drawer", "opens on any page", 1],
+      ["Shipping details", "PIN code sets postage", 1],
+      ["Pay", "Razorpay or WhatsApp", 1],
+      ["Order confirmed", "/order-confirmed", 0] ] }
+  ];
+
+  var colW = 178, boxW = 158, boxH = 52, gapY = 22, indent = 14, kidW = 150;
+  var padX = 40, W = padX * 2 + colW * cols.length - (colW - boxW);
+  var rootY = 30, rootH = 56, busY = 120, l2Y = 150, l3Y = l2Y + boxH + 44;
+  var maxKids = Math.max.apply(null, cols.map(function (c) { return c.kids.length; }));
+  var H = l3Y + maxKids * (boxH + gapY) + 20;
+  var out = [];
+
+  function box(x, y, w, h, fill, t, s) {
+    var o = '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="4" fill="' + fill + '"/>';
+    var cx = x + w / 2;
+    if (s) {
+      o += '<text class="t1" x="' + cx + '" y="' + (y + h / 2 - 3) + '">' + t + '</text>';
+      o += '<text class="t2" x="' + cx + '" y="' + (y + h / 2 + 13) + '">' + s + '</text>';
+    } else {
+      o += '<text class="t1" x="' + cx + '" y="' + (y + h / 2 + 5) + '">' + t + '</text>';
+    }
+    return o;
+  }
+  function esc(s) { return s.replace(/&/g, "&amp;"); }
+
+  var rootX = W / 2 - 90;
+  out.push('<line class="ln" x1="' + W / 2 + '" y1="' + (rootY + rootH) + '" x2="' + W / 2 + '" y2="' + busY + '"/>');
+  var firstX = padX + boxW / 2, lastX = padX + colW * (cols.length - 1) + boxW / 2;
+  out.push('<line class="ln" x1="' + firstX + '" y1="' + busY + '" x2="' + lastX + '" y2="' + busY + '"/>');
+
+  cols.forEach(function (c, i) {
+    var x = padX + i * colW, cx = x + boxW / 2;
+    out.push('<line class="ln" x1="' + cx + '" y1="' + busY + '" x2="' + cx + '" y2="' + l2Y + '"/>');
+    out.push(box(x, l2Y, boxW, boxH, C.sec, esc(c.t), c.s));
+    if (!c.kids.length) return;
+    var spineX = x + 14, kx = x + indent + 6;
+    var lastMid = l3Y + (c.kids.length - 1) * (boxH + gapY) + boxH / 2;
+    out.push('<line class="ln" x1="' + spineX + '" y1="' + (l2Y + boxH) + '" x2="' + spineX + '" y2="' + lastMid + '"/>');
+    c.kids.forEach(function (k, j) {
+      var y = l3Y + j * (boxH + gapY), mid = y + boxH / 2;
+      out.push('<path class="ln" d="M' + spineX + ' ' + mid + ' H' + (kx - 5) + '"/>');
+      out.push('<path d="M' + (kx - 5) + ' ' + (mid - 4) + ' L' + kx + ' ' + mid + ' L' + (kx - 5) + ' ' + (mid + 4) + ' Z" fill="var(--line)"/>');
+      out.push(box(kx, y, kidW, boxH, k[2] === 1 ? C.step : C.pg, esc(k[0]), esc(k[1]) + (k[2] === undefined || k[2] === 0 ? "" : "")));
+    });
+  });
+
+  out.push(box(rootX, rootY, 180, rootH, C.root, "Home", "/ · hero · collections · story"));
+
+  var svg = document.getElementById("map");
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+  svg.innerHTML = out.join("");
+})();
+</script>
+</body>
+</html>

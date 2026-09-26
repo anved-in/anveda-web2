@@ -1,0 +1,34 @@
+{
+ "reels": [
+  {
+   "id": "intricate-glass-bangle",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DanPupPT5tq/",
+   "cover": "/img/products/reel-intricate-glass-bangle.webp",
+   "title": "Intricate Glass Bangle",
+   "caption": "Fine-cut glass with a hand-set sparkle that catches every light in the room.",
+   "productId": "intricate-glass-bangle",
+   "colour": null
+  },
+  {
+   "id": "pastel-palette-glass-bangle",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DazYiIEzcO-/",
+   "cover": "/img/products/reel-pastel-palette-glass-bangle.webp",
+   "title": "Pastel Palette Glass Bangle",
+   "caption": "Soft, powdery shades made to be stacked and layered.",
+   "productId": "pastel-palette-glass-bangle",
+   "colour": null
+  },
+  {
+   "id": "petal-stone-glass-bangle",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DbAvIV4z-HA/",
+   "cover": "/img/products/reel-petal-stone-glass-bangle.webp",
+   "title": "Petal Stone Glass Bangle",
+   "caption": "Petal-set stones running the full round of the bangle.",
+   "productId": "petal-stone-glass-bangle",
+   "colour": null
+  }
+ ]
+}

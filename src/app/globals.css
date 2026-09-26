@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------- fonts
+   The @font-face rules are NOT here on purpose. Their url() would have to be
+   an absolute "/fonts/..." path, which ignores basePath and 404s on a GitHub
+   Pages project site (silently dropping both brand faces). They are emitted in
+   layout.tsx instead, where the base path is known and can be prefixed.
+   See <BrandFonts /> there. */
+
+/* --------------------------------------------------------------- tokens
+   Palette measured from the reference storefront (gulnoorbymalavika.com),
+   read out of its live CSS custom properties rather than guessed:
+       --color-background 255,255,255   (pure white ground)
+       --color-foreground 0,0,0         (pure black type)
+       --color-accent     128,0,32      (#800020 — maroon)
+       --color-border     0,0,0
+       buttons: black fill / white text, and white fill / black text + rule
+   That is the whole scheme: white, black, one maroon accent. No warm cream,
+   no gold surfaces — the product photography supplies every other colour.
+
+   ANVEDA's own gold (#c8ae71, sampled from the mark) is retained ONLY as a
+   fine accent on rules and eyebrows, the same restraint the reference uses
+   with its maroon. Brand typefaces (Luxenta / Salena) are unchanged. */
+@theme {
+  /* Ink — pure black, as the reference uses. */
+  --color-ink: #000000;
+  --color-ink-soft: #4a4a4a;
+  --color-ink-faint: #5f5f5f;   /* 7:1 on white */
+
+  /* Grounds — white, with two off-whites for alternating bands. */
+  --color-cream: #ffffff;
+  --color-cream-2: #f7f5f3;
+  --color-cream-3: #efebe7;
+
+  /* Dark bands — near-black, matching the reference's #121212 shadow tone. */
+  --color-espresso: #121212;
+  --color-espresso-2: #232323;
+
+  /* The accent, straight from the reference: #800020. */
+  --color-maroon: #800020;
+  --color-maroon-deep: #660019;
+
+  /* ANVEDA gold, accent use only. */
+  --color-gold: #c8ae71;
+  --color-gold-deep: #8a6d2f;
+
+  /* Sale price red, for the struck-through "was" figure. */
+  --color-sale: #b3122b;
+
+  --color-line: rgba(0, 0, 0, 0.14);
+  --color-line-strong: rgba(0, 0, 0, 0.30);
+
+  --font-display: "Luxenta", Georgia, "Times New Roman", serif;
+  --font-sans: "Salena", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* clip, NOT hidden: overflow-x:hidden on html/body makes them a scroll
+   container, which silently kills position:sticky on the header. clip
+   contains a stray wide element without creating that container. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  line-height: 1.06;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-maroon);
+  outline-offset: 3px;
+}
+.on-dark :focus-visible { outline-color: var(--color-gold); }
+
+/* Editorial small-caps label used across every section. */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-maroon);
+}
+.on-dark .eyebrow { color: var(--color-gold); }
+.on-dark .price-was { color: rgba(255, 255, 255, 0.55); }
+
+/* Reveal-on-scroll. Only applies once JS marks the document, so a visitor
+   without JS never loses content to a hidden animation state. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.js .reveal.in { opacity: 1; transform: none; }
+
+/* Hide scrollbars on the horizontal rails without losing scrollability. */
+.no-bar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-bar::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------- pricing
+   Every price is shown twice: a struck "was" figure 20% above the real one,
+   and the real catalogue price beside it. The uplift is computed in
+   src/lib/price.ts so the two never drift apart. */
+.price-was {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  color: var(--color-ink-faint);
+  font-weight: 400;
+}
+.price-now { color: var(--color-sale); font-weight: 700; }
+
+/* Sale badge, as the reference puts on discounted cards. */
+.badge-sale {
+  display: inline-block;
+  background: var(--color-maroon);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  line-height: 1;
+}
+
+/* Scrolling announcement marquee, as on the reference storefront. */
+.marquee { display: flex; overflow: hidden; user-select: none; }
+.marquee > div {
+  flex-shrink: 0;
+  display: flex;
+  min-width: 100%;
+  animation: marquee 32s linear infinite;
+}
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+@media (prefers-reduced-motion: reduce) {
+  .marquee > div { animation: none; }
+}

@@ -1,0 +1,2525 @@
+{
+ "groups": [
+  {
+   "slug": "glass",
+   "name": "Glass Bangles",
+   "blurb": "Coloured glass, from clear jelly to cut and stone-set work."
+  },
+  {
+   "slug": "ornate",
+   "name": "Ornate Bangles",
+   "blurb": "The worked pieces — statement bangles, kada and designer sides."
+  },
+  {
+   "slug": "layering",
+   "name": "Layering Bangles",
+   "blurb": "Slim pieces made to sit either side of a statement bangle."
+  }
+ ],
+ "collections": [
+  {
+   "slug": "border-bangles",
+   "group": "layering",
+   "name": "Border Bangles",
+   "blurb": "Glass bangles finished with a worked border — kundan, pearl or set stone.",
+   "story": "The border is where the work shows. Kundan set by hand, pearl-and-gold stone, or the premium non-bendable stones — the body stays plain so the edge can carry the piece.",
+   "cover": "border-bangles-kundan-border-bangles.webp",
+   "order": 0
+  },
+  {
+   "slug": "intricate-glass-bangle",
+   "group": "glass",
+   "name": "Intricate Glass Bangle",
+   "blurb": "Fine-cut glass with a hand-set sparkle that catches every light in the room.",
+   "story": "Our most detailed glass work — each bangle cut and set so the light breaks across it rather than sitting flat.",
+   "cover": "intricate-glass-bangle-aqua.webp",
+   "order": 1
+  },
+  {
+   "slug": "jelly-bangles-glass-bangles",
+   "group": "glass",
+   "name": "Jelly Bangles - Glass Bangles",
+   "blurb": "Translucent jelly-finish glass in clean, saturated colour.",
+   "story": "Clear, candy-bright glass with nothing else going on. They stack with everything, which is exactly the point.",
+   "cover": "jelly-bangles-glass-bangles-dark-green.webp",
+   "order": 2
+  },
+  {
+   "slug": "pastel-palette-glass-bangle",
+   "group": "glass",
+   "name": "Pastel Palette Glass Bangle",
+   "blurb": "Soft, powdery shades made to be stacked and layered.",
+   "story": "Built as a palette rather than single colours — every shade in the range is made to sit next to every other one.",
+   "cover": "pastel-palette-glass-bangle-gold.webp",
+   "order": 3
+  },
+  {
+   "slug": "petal-stone-glass-bangle",
+   "group": "glass",
+   "name": "Petal Stone Glass Bangle",
+   "blurb": "Petal-set stones running the full round of the bangle.",
+   "story": "Stones set petal-wise around the full round, so the bangle keeps catching light from whatever angle you see it.",
+   "cover": "petal-stone-glass-bangle-burnt-orange.webp",
+   "order": 4
+  },
+  {
+   "slug": "phool-glass-bangle",
+   "group": "glass",
+   "name": "Phool Glass Bangle",
+   "blurb": "A floral motif worked into the glass, shade by shade.",
+   "story": "Phool — flower. The motif is worked into the glass itself, so it holds its colour and never lifts.",
+   "cover": "phool-glass-bangle-black.webp",
+   "order": 5
+  },
+  {
+   "slug": "statement-bangles",
+   "group": "ornate",
+   "name": "Statement Bangles",
+   "blurb": "The wide, worked pieces — the one you build the rest of the stack around.",
+   "story": "The widest, most worked pieces we carry. One of these and a few slim side bangles is a full stack.",
+   "cover": "statement-bangles-elephant-design.webp",
+   "order": 6
+  },
+  {
+   "slug": "kada",
+   "group": "ornate",
+   "name": "Kada",
+   "blurb": "Broad, solid kada with weight to it. Worn one to a wrist.",
+   "story": "Traditionally worn singly and meant to have weight. Solid through, with the finish carried right around.",
+   "cover": "kada-green-ball-kada-set-of-2.webp",
+   "order": 7
+  },
+  {
+   "slug": "designer-side-bangles",
+   "group": "ornate",
+   "name": "Designer Side Bangles",
+   "blurb": "Slim side bangles designed to flank a statement piece.",
+   "story": "Made to flank, not to lead. Slim profiles that frame a statement piece without competing with it.",
+   "cover": "designer-side-bangles-bell-pearl-flower-set-of-4.webp",
+   "order": 8
+  },
+  {
+   "slug": "gunghroo",
+   "group": "layering",
+   "name": "Gunghroo",
+   "blurb": "Bangles strung with fine gunghroo bells that sound as you move.",
+   "story": "Strung with fine bells, so the stack announces itself before you do. A festival piece.",
+   "cover": "gunghroo-acrylic-kashmiri-blue-yellow-set-of-4.webp",
+   "order": 9
+  },
+  {
+   "slug": "square-edge-glass-bangles",
+   "group": "glass",
+   "name": "Square Edge Glass Bangles",
+   "blurb": "A squared profile that sits flat and reads sharp against round bangles.",
+   "story": "A squared edge instead of a round one. It sits flatter on the wrist and gives a stack a harder, more graphic line.",
+   "cover": "square-edge-glass-bangles-aqua.webp",
+   "order": 10
+  }
+ ],
+ "products": [
+  {
+   "id": "border-bangles",
+   "collection": "border-bangles",
+   "collectionName": "Border Bangles",
+   "group": "layering",
+   "name": "Border Bangles",
+   "price": 240,
+   "priceMax": 320,
+   "pieces": 12,
+   "unit": "dozen",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8"
+   ],
+   "blurb": "Glass bangles finished with a worked border — kundan, pearl or set stone.",
+   "story": "The border is where the work shows. Kundan set by hand, pearl-and-gold stone, or the premium non-bendable stones — the body stays plain so the edge can carry the piece.",
+   "variants": [
+    {
+     "colour": "Kundan Border Bangles",
+     "image": "border-bangles-kundan-border-bangles.webp",
+     "hex": "#e2d8c4",
+     "price": 270,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "48.56% 45.31%",
+     "zoom": 1
+    },
+    {
+     "colour": "Pearl Gold Stone Glass Bangles",
+     "image": "border-bangles-pearl-gold-stone-glass-bangles.webp",
+     "hex": "#e2d8c4",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "46.64% 48.83%",
+     "zoom": 1
+    },
+    {
+     "colour": "Premium non Bendable Diamond Stones",
+     "image": "border-bangles-premium-non-bendable-diamond-stones.webp",
+     "hex": "#e2d8c4",
+     "price": 240,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "49.68% 50.88%",
+     "zoom": 1
+    },
+    {
+     "colour": "Premium non Bendable Gold Stones",
+     "image": "border-bangles-premium-non-bendable-gold-stones.webp",
+     "hex": "#e2d8c4",
+     "price": 240,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "50% 56.08%",
+     "zoom": 1
+    }
+   ],
+   "image": "border-bangles-kundan-border-bangles.webp"
+  },
+  {
+   "id": "intricate-glass-bangle",
+   "collection": "intricate-glass-bangle",
+   "collectionName": "Intricate Glass Bangle",
+   "group": "glass",
+   "name": "Intricate Glass Bangle",
+   "price": 320,
+   "priceMax": 320,
+   "pieces": 12,
+   "unit": "set",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8"
+   ],
+   "blurb": "Fine-cut glass with a hand-set sparkle that catches every light in the room.",
+   "story": "Our most detailed glass work — each bangle cut and set so the light breaks across it rather than sitting flat.",
+   "variants": [
+    {
+     "colour": "Aqua",
+     "image": "intricate-glass-bangle-aqua.webp",
+     "hex": "#0fd2c5",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "51.82% 45.11%",
+     "zoom": 2.95
+    },
+    {
+     "colour": "Champagne Gold",
+     "image": "intricate-glass-bangle-champagne-gold.webp",
+     "hex": "#dbc08a",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "50.38% 51.34%",
+     "zoom": 1
+    },
+    {
+     "colour": "Coffee",
+     "image": "intricate-glass-bangle-coffee.webp",
+     "hex": "#4f1212",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "50% 48.4%",
+     "zoom": 1
+    },
+    {
+     "colour": "Emerald Green",
+     "image": "intricate-glass-bangle-emerald-green.webp",
+     "hex": "#026600",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "36.29% 49.65%",
+     "zoom": 1
+    },
+    {
+     "colour": "Mocha",
+     "image": "intricate-glass-bangle-mocha.webp",
+     "hex": "#7d5608",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "46.28% 47.13%",
+     "zoom": 1
+    },
+    {
+     "colour": "Parrot Green",
+     "image": "intricate-glass-bangle-parrot-green.webp",
+     "hex": "#35d016",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "44.99% 60.93%",
+     "zoom": 1
+    },
+    {
+     "colour": "Purple",
+     "image": "intricate-glass-bangle-purple.webp",
+     "hex": "#c75dee",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "50% 53.73%",
+     "zoom": 1
+    },
+    {
+     "colour": "Radium",
+     "image": "intricate-glass-bangle-radium.webp",
+     "hex": "#037981",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "27.62% 56.67%",
+     "zoom": 1
+    },
+    {
+     "colour": "Rose Pink",
+     "image": "intricate-glass-bangle-rose-pink.webp",
+     "hex": "#fd729c",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "50.55% 42.87%",
+     "zoom": 1
+    },
+    {
+     "colour": "Royal Blue",
+     "image": "intricate-glass-bangle-royal-blue.webp",
+     "hex": "#011ad5",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4"
+     ],
+     "inStock": true,
+     "focal": "50% 50%",
+     "zoom": 1
+    },
+    {
+     "colour": "Sky Blue",
+     "image": "intricate-glass-bangle-sky-blue.webp",
+     "hex": "#17deda",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "50.34% 41.93%",
+     "zoom": 1
+    },
+    {
+     "colour": "Tangerine",
+     "image": "intricate-glass-bangle-tangerine.webp",
+     "hex": "#eda20c",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4"
+     ],
+     "inStock": true,
+     "focal": "47.34% 42.95%",
+     "zoom": 1
+    }
+   ],
+   "image": "intricate-glass-bangle-aqua.webp"
+  },
+  {
+   "id": "jelly-bangles-glass-bangles",
+   "collection": "jelly-bangles-glass-bangles",
+   "collectionName": "Jelly Bangles - Glass Bangles",
+   "group": "glass",
+   "name": "Jelly Bangles - Glass Bangles",
+   "price": 220,
+   "priceMax": 220,
+   "pieces": 8,
+   "unit": "set",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6"
+   ],
+   "blurb": "Translucent jelly-finish glass in clean, saturated colour.",
+   "story": "Clear, candy-bright glass with nothing else going on. They stack with everything, which is exactly the point.",
+   "variants": [
+    {
+     "colour": "Dark Green",
+     "image": "jelly-bangles-glass-bangles-dark-green.webp",
+     "hex": "#4b8406",
+     "price": 220,
+     "pieces": 8,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "57.56% 60.81%",
+     "zoom": 1
+    },
+    {
+     "colour": "Light Green",
+     "image": "jelly-bangles-glass-bangles-light-green.webp",
+     "hex": "#adf0ae",
+     "price": 220,
+     "pieces": 8,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "50.17% 58.28%",
+     "zoom": 1
+    },
+    {
+     "colour": "Multicolor",
+     "image": "jelly-bangles-glass-bangles-multicolor.webp",
+     "hex": "#c7c5c2",
+     "price": 220,
+     "pieces": 8,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "62.66% 62.04%",
+     "zoom": 1
+    },
+    {
+     "colour": "Orange",
+     "image": "jelly-bangles-glass-bangles-orange.webp",
+     "hex": "#e2b150",
+     "price": 220,
+     "pieces": 8,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "54.12% 60.75%",
+     "zoom": 1
+    },
+    {
+     "colour": "Red",
+     "image": "jelly-bangles-glass-bangles-red.webp",
+     "hex": "#e81111",
+     "price": 220,
+     "pieces": 8,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "50.64% 47.6%",
+     "zoom": 1
+    },
+    {
+     "colour": "Sky Blue",
+     "image": "jelly-bangles-glass-bangles-sky-blue.webp",
+     "hex": "#17deda",
+     "price": 220,
+     "pieces": 8,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "49.83% 53.68%",
+     "zoom": 1
+    },
+    {
+     "colour": "Teal",
+     "image": "jelly-bangles-glass-bangles-teal.webp",
+     "hex": "#2faca4",
+     "price": 220,
+     "pieces": 8,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "44.58% 54.45%",
+     "zoom": 1
+    },
+    {
+     "colour": "White Acrylic",
+     "image": "jelly-bangles-glass-bangles-white-acrylic.webp",
+     "hex": "#fafafa",
+     "price": 220,
+     "pieces": 8,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "50% 58.72%",
+     "zoom": 1
+    }
+   ],
+   "image": "jelly-bangles-glass-bangles-dark-green.webp"
+  },
+  {
+   "id": "pastel-palette-glass-bangle",
+   "collection": "pastel-palette-glass-bangle",
+   "collectionName": "Pastel Palette Glass Bangle",
+   "group": "glass",
+   "name": "Pastel Palette Glass Bangle",
+   "price": 220,
+   "priceMax": 220,
+   "pieces": 12,
+   "unit": "set",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8"
+   ],
+   "blurb": "Soft, powdery shades made to be stacked and layered.",
+   "story": "Built as a palette rather than single colours — every shade in the range is made to sit next to every other one.",
+   "variants": [
+    {
+     "colour": "Gold",
+     "image": "pastel-palette-glass-bangle-gold.webp",
+     "hex": "#cbb994",
+     "price": 220,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "58.68% 46.7%",
+     "zoom": 1
+    },
+    {
+     "colour": "Green",
+     "image": "pastel-palette-glass-bangle-green.webp",
+     "hex": "#7cd76a",
+     "price": 220,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "50.92% 55.9%",
+     "zoom": 1
+    },
+    {
+     "colour": "Ivory",
+     "image": "pastel-palette-glass-bangle-ivory.webp",
+     "hex": "#eeeae2",
+     "price": 220,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "45.76% 50.76%",
+     "zoom": 1
+    },
+    {
+     "colour": "Mauve",
+     "image": "pastel-palette-glass-bangle-mauve.webp",
+     "hex": "#cc94c1",
+     "price": 220,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "55.11% 52.3%",
+     "zoom": 1
+    },
+    {
+     "colour": "Peach",
+     "image": "pastel-palette-glass-bangle-peach.webp",
+     "hex": "#f4d495",
+     "price": 220,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "48.28% 59.79%",
+     "zoom": 1
+    },
+    {
+     "colour": "Pink",
+     "image": "pastel-palette-glass-bangle-pink.webp",
+     "hex": "#e599db",
+     "price": 220,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "50% 49.25%",
+     "zoom": 1
+    },
+    {
+     "colour": "Pista",
+     "image": "pastel-palette-glass-bangle-pista.webp",
+     "hex": "#aef494",
+     "price": 220,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "49.28% 50.49%",
+     "zoom": 1
+    },
+    {
+     "colour": "Purple",
+     "image": "pastel-palette-glass-bangle-purple.webp",
+     "hex": "#c75dee",
+     "price": 220,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "42.4% 48.89%",
+     "zoom": 1
+    },
+    {
+     "colour": "Sky Blue",
+     "image": "pastel-palette-glass-bangle-sky-blue.webp",
+     "hex": "#17deda",
+     "price": 220,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "53.69% 55.45%",
+     "zoom": 1
+    }
+   ],
+   "image": "pastel-palette-glass-bangle-gold.webp"
+  },
+  {
+   "id": "petal-stone-glass-bangle",
+   "collection": "petal-stone-glass-bangle",
+   "collectionName": "Petal Stone Glass Bangle",
+   "group": "glass",
+   "name": "Petal Stone Glass Bangle",
+   "price": 320,
+   "priceMax": 320,
+   "pieces": 12,
+   "unit": "dozen",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8",
+    "2.10"
+   ],
+   "blurb": "Petal-set stones running the full round of the bangle.",
+   "story": "Stones set petal-wise around the full round, so the bangle keeps catching light from whatever angle you see it.",
+   "variants": [
+    {
+     "colour": "Burnt Orange",
+     "image": "petal-stone-glass-bangle-burnt-orange.webp",
+     "hex": "#fb9404",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "49.78% 43.62%",
+     "zoom": 1
+    },
+    {
+     "colour": "Carrot",
+     "image": "petal-stone-glass-bangle-carrot.webp",
+     "hex": "#ff8d5c",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "43.66% 44.86%",
+     "zoom": 1
+    },
+    {
+     "colour": "Classic Blue",
+     "image": "petal-stone-glass-bangle-classic-blue.webp",
+     "hex": "#01aed0",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "53.92% 40.07%",
+     "zoom": 1
+    },
+    {
+     "colour": "Dark Green",
+     "image": "petal-stone-glass-bangle-dark-green.webp",
+     "hex": "#4b8406",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "44.99% 48.62%",
+     "zoom": 1
+    },
+    {
+     "colour": "Dark Pink",
+     "image": "petal-stone-glass-bangle-dark-pink.webp",
+     "hex": "#f20779",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "46.33% 53.35%",
+     "zoom": 1
+    },
+    {
+     "colour": "Deep Coffee",
+     "image": "petal-stone-glass-bangle-deep-coffee.webp",
+     "hex": "#543b08",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "47.28% 50.86%",
+     "zoom": 1
+    },
+    {
+     "colour": "Emerald Green",
+     "image": "petal-stone-glass-bangle-emerald-green.webp",
+     "hex": "#026600",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "44.37% 50.18%",
+     "zoom": 1
+    },
+    {
+     "colour": "Ivory",
+     "image": "petal-stone-glass-bangle-ivory.webp",
+     "hex": "#eeeae2",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "56.53% 57.39%",
+     "zoom": 1
+    },
+    {
+     "colour": "Lemon Yellow",
+     "image": "petal-stone-glass-bangle-lemon-yellow.webp",
+     "hex": "#eaed07",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "46.87% 47.4%",
+     "zoom": 1
+    },
+    {
+     "colour": "Magenta",
+     "image": "petal-stone-glass-bangle-magenta.webp",
+     "hex": "#ea34b0",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "51.24% 48.2%",
+     "zoom": 1
+    },
+    {
+     "colour": "Maroon",
+     "image": "petal-stone-glass-bangle-maroon.webp",
+     "hex": "#8b2328",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "47.4% 49.47%",
+     "zoom": 1
+    },
+    {
+     "colour": "Multicolor",
+     "image": "petal-stone-glass-bangle-multicolor.webp",
+     "hex": "#c7c5c2",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "46.31% 56.74%",
+     "zoom": 1
+    },
+    {
+     "colour": "Mustard Yellow",
+     "image": "petal-stone-glass-bangle-mustard-yellow.webp",
+     "hex": "#d9b05e",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "50.43% 60.33%",
+     "zoom": 1
+    },
+    {
+     "colour": "Parrot Green",
+     "image": "petal-stone-glass-bangle-parrot-green.webp",
+     "hex": "#35d016",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "42.55% 50.25%",
+     "zoom": 1
+    },
+    {
+     "colour": "Pista",
+     "image": "petal-stone-glass-bangle-pista.webp",
+     "hex": "#aef494",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "43.7% 53.75%",
+     "zoom": 1
+    },
+    {
+     "colour": "Sky Blue",
+     "image": "petal-stone-glass-bangle-sky-blue.webp",
+     "hex": "#17deda",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "48.43% 45.53%",
+     "zoom": 1
+    }
+   ],
+   "image": "petal-stone-glass-bangle-burnt-orange.webp"
+  },
+  {
+   "id": "phool-glass-bangle",
+   "collection": "phool-glass-bangle",
+   "collectionName": "Phool Glass Bangle",
+   "group": "glass",
+   "name": "Phool Glass Bangle",
+   "price": 320,
+   "priceMax": 320,
+   "pieces": 12,
+   "unit": "set",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8",
+    "2.10"
+   ],
+   "blurb": "A floral motif worked into the glass, shade by shade.",
+   "story": "Phool — flower. The motif is worked into the glass itself, so it holds its colour and never lifts.",
+   "variants": [
+    {
+     "colour": "Black",
+     "image": "phool-glass-bangle-black.webp",
+     "hex": "#130101",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "41.14% 59.43%",
+     "zoom": 1
+    },
+    {
+     "colour": "Champagne Gold",
+     "image": "phool-glass-bangle-champagne-gold.webp",
+     "hex": "#dbc08a",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "50% 51.14%",
+     "zoom": 1
+    },
+    {
+     "colour": "Dark Pink",
+     "image": "phool-glass-bangle-dark-pink.webp",
+     "hex": "#f20779",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "50.51% 47.15%",
+     "zoom": 1
+    },
+    {
+     "colour": "Mehendi Green",
+     "image": "phool-glass-bangle-mehendi-green.webp",
+     "hex": "#4a7e16",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "42.62% 50.83%",
+     "zoom": 1
+    },
+    {
+     "colour": "Pastel Pink",
+     "image": "phool-glass-bangle-pastel-pink.webp",
+     "hex": "#dcb7d4",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "47.16% 53.36%",
+     "zoom": 1
+    },
+    {
+     "colour": "Purple",
+     "image": "phool-glass-bangle-purple.webp",
+     "hex": "#c75dee",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "51.57% 44.75%",
+     "zoom": 1
+    },
+    {
+     "colour": "Red",
+     "image": "phool-glass-bangle-red.webp",
+     "hex": "#e81111",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "48.4% 61.08%",
+     "zoom": 1
+    },
+    {
+     "colour": "Snow",
+     "image": "phool-glass-bangle-snow.webp",
+     "hex": "#eee5d3",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "50% 53.91%",
+     "zoom": 1
+    },
+    {
+     "colour": "Wine",
+     "image": "phool-glass-bangle-wine.webp",
+     "hex": "#86158e",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "54.21% 56.28%",
+     "zoom": 1
+    }
+   ],
+   "image": "phool-glass-bangle-black.webp"
+  },
+  {
+   "id": "statement-bangles",
+   "collection": "statement-bangles",
+   "collectionName": "Statement Bangles",
+   "group": "ornate",
+   "name": "Statement Bangles",
+   "price": 399,
+   "priceMax": 1400,
+   "pieces": 2,
+   "unit": "pair",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8",
+    "2.10"
+   ],
+   "blurb": "The wide, worked pieces — the one you build the rest of the stack around.",
+   "story": "The widest, most worked pieces we carry. One of these and a few slim side bangles is a full stack.",
+   "variants": [
+    {
+     "colour": "Elephant Design",
+     "image": "statement-bangles-elephant-design.webp",
+     "hex": "#e2d8c4",
+     "price": 550,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "42.27% 56.62%",
+     "zoom": 1
+    },
+    {
+     "colour": "Enamel Lakshmi",
+     "image": "statement-bangles-enamel-lakshmi.webp",
+     "hex": "#e2d8c4",
+     "price": 399,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "48.08% 63.68%",
+     "zoom": 1
+    },
+    {
+     "colour": "Floral Stone",
+     "image": "statement-bangles-floral-stone.webp",
+     "hex": "#e2d8c4",
+     "price": 880,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "46.73% 46.47%",
+     "zoom": 1
+    },
+    {
+     "colour": "Floral Stone Premium",
+     "image": "statement-bangles-floral-stone-premium.webp",
+     "hex": "#e2d8c4",
+     "price": 900,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "53.33% 59.77%",
+     "zoom": 1
+    },
+    {
+     "colour": "Green Floral Stone",
+     "image": "statement-bangles-green-floral-stone.webp",
+     "hex": "#e2d8c4",
+     "price": 880,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "42.63% 53.24%",
+     "zoom": 1
+    },
+    {
+     "colour": "Lakshmi Centre Bangle",
+     "image": "statement-bangles-lakshmi-centre-bangle.webp",
+     "hex": "#e2d8c4",
+     "price": 399,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "48.52% 55.36%",
+     "zoom": 1
+    },
+    {
+     "colour": "Lakshmi Centre Bangle with Pearl",
+     "image": "statement-bangles-lakshmi-centre-bangle-with-pearl.webp",
+     "hex": "#e2d8c4",
+     "price": 399,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "50.2% 58.03%",
+     "zoom": 1
+    },
+    {
+     "colour": "Lakshmi with Flower",
+     "image": "statement-bangles-lakshmi-with-flower.webp",
+     "hex": "#e2d8c4",
+     "price": 399,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "44.16% 59.35%",
+     "zoom": 1
+    },
+    {
+     "colour": "Lakshmi with White Stone",
+     "image": "statement-bangles-lakshmi-with-white-stone.webp",
+     "hex": "#e2d8c4",
+     "price": 1100,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "48.55% 57.96%",
+     "zoom": 1
+    },
+    {
+     "colour": "Mantap Lakshmi",
+     "image": "statement-bangles-mantap-lakshmi.webp",
+     "hex": "#e2d8c4",
+     "price": 399,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "37.84% 58.24%",
+     "zoom": 1
+    },
+    {
+     "colour": "Non Idol Floral",
+     "image": "statement-bangles-non-idol-floral.webp",
+     "hex": "#e2d8c4",
+     "price": 399,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "48.93% 54.09%",
+     "zoom": 1
+    },
+    {
+     "colour": "Padma Lotus Bangle",
+     "image": "statement-bangles-padma-lotus-bangle.webp",
+     "hex": "#e2d8c4",
+     "price": 399,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "44.82% 59.93%",
+     "zoom": 1
+    },
+    {
+     "colour": "Pink Floral Stone",
+     "image": "statement-bangles-pink-floral-stone.webp",
+     "hex": "#e2d8c4",
+     "price": 880,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "45.59% 51.87%",
+     "zoom": 1
+    },
+    {
+     "colour": "Premium Blue Flower Stone",
+     "image": "statement-bangles-premium-blue-flower-stone.webp",
+     "hex": "#e2d8c4",
+     "price": 880,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "54.23% 62.64%",
+     "zoom": 1
+    },
+    {
+     "colour": "Premium Coral Flower Set of 2",
+     "image": "statement-bangles-premium-coral-flower-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 860,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "48.92% 61.9%",
+     "zoom": 1
+    },
+    {
+     "colour": "Premium Floral",
+     "image": "statement-bangles-premium-floral.webp",
+     "hex": "#e2d8c4",
+     "price": 1200,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "50.34% 61%",
+     "zoom": 1
+    },
+    {
+     "colour": "Premium Kashu with Stone",
+     "image": "statement-bangles-premium-kashu-with-stone.webp",
+     "hex": "#e2d8c4",
+     "price": 899,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "51.08% 62.26%",
+     "zoom": 1
+    },
+    {
+     "colour": "Premium Lakshmi Ruby Emerald",
+     "image": "statement-bangles-premium-lakshmi-ruby-emerald.webp",
+     "hex": "#e2d8c4",
+     "price": 1400,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "41.39% 62.46%",
+     "zoom": 1
+    },
+    {
+     "colour": "Premium Lakshmi with Flower Stone",
+     "image": "statement-bangles-premium-lakshmi-with-flower-stone.webp",
+     "hex": "#e2d8c4",
+     "price": 1200,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "55.8% 64.84%",
+     "zoom": 1
+    },
+    {
+     "colour": "Premium Round Design Lakshmi",
+     "image": "statement-bangles-premium-round-design-lakshmi.webp",
+     "hex": "#e2d8c4",
+     "price": 1300,
+     "pieces": 2,
+     "sizes": [
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "focal": "41.82% 57.62%",
+     "zoom": 1
+    },
+    {
+     "colour": "Premium Statement Lakshmi",
+     "image": "statement-bangles-premium-statement-lakshmi.webp",
+     "hex": "#e2d8c4",
+     "price": 899,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "44.58% 52.07%",
+     "zoom": 1
+    },
+    {
+     "colour": "Red Flower Stone",
+     "image": "statement-bangles-red-flower-stone.webp",
+     "hex": "#e2d8c4",
+     "price": 880,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "37.97% 60.41%",
+     "zoom": 1
+    },
+    {
+     "colour": "Ruby Lakshmi Set of 2",
+     "image": "statement-bangles-ruby-lakshmi-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 840,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "48.57% 57.82%",
+     "zoom": 1
+    },
+    {
+     "colour": "Two Layer Multi Stone",
+     "image": "statement-bangles-two-layer-multi-stone.webp",
+     "hex": "#e2d8c4",
+     "price": 699,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "52.49% 67.84%",
+     "zoom": 1
+    },
+    {
+     "colour": "White Floral Stone",
+     "image": "statement-bangles-white-floral-stone.webp",
+     "hex": "#e2d8c4",
+     "price": 880,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "49.84% 58.09%",
+     "zoom": 1
+    }
+   ],
+   "image": "statement-bangles-elephant-design.webp"
+  },
+  {
+   "id": "kada",
+   "collection": "kada",
+   "collectionName": "Kada",
+   "group": "ornate",
+   "name": "Kada",
+   "price": 699,
+   "priceMax": 2300,
+   "pieces": 2,
+   "unit": "set",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8"
+   ],
+   "blurb": "Broad, solid kada with weight to it. Worn one to a wrist.",
+   "story": "Traditionally worn singly and meant to have weight. Solid through, with the finish carried right around.",
+   "variants": [
+    {
+     "colour": "Green Ball Kada Set of 2",
+     "image": "kada-green-ball-kada-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 699,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "48.22% 56.54%",
+     "zoom": 1
+    },
+    {
+     "colour": "Premium Statement Flower Kada Set of 2",
+     "image": "kada-premium-statement-flower-kada-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 1199,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "44.92% 51.23%",
+     "zoom": 1
+    },
+    {
+     "colour": "Viral 10 In 1 Interchangeable Kada Flower",
+     "image": "kada-viral-10-in-1-interchangeable-kada-flower.webp",
+     "hex": "#e2d8c4",
+     "price": 2300,
+     "pieces": 1,
+     "sizes": [
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "47.65% 45.98%",
+     "zoom": 1
+    },
+    {
+     "colour": "Viral 10 In 1 Interchangeable Kada Swan",
+     "image": "kada-viral-10-in-1-interchangeable-kada-swan.webp",
+     "hex": "#e2d8c4",
+     "price": 2300,
+     "pieces": 12,
+     "sizes": [
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "50% 54.47%",
+     "zoom": 1
+    },
+    {
+     "colour": "White Ball Kada Set of 2",
+     "image": "kada-white-ball-kada-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 699,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "55.11% 62.6%",
+     "zoom": 1
+    }
+   ],
+   "image": "kada-green-ball-kada-set-of-2.webp"
+  },
+  {
+   "id": "designer-side-bangles",
+   "collection": "designer-side-bangles",
+   "collectionName": "Designer Side Bangles",
+   "group": "ornate",
+   "name": "Designer Side Bangles",
+   "price": 180,
+   "priceMax": 1200,
+   "pieces": 4,
+   "unit": "set",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8"
+   ],
+   "blurb": "Slim side bangles designed to flank a statement piece.",
+   "story": "Made to flank, not to lead. Slim profiles that frame a statement piece without competing with it.",
+   "variants": [
+    {
+     "colour": "Bell Pearl Flower Set of 4",
+     "image": "designer-side-bangles-bell-pearl-flower-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 485,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "46.69% 54.33%",
+     "zoom": 1
+    },
+    {
+     "colour": "Diamond Shaped Set of 2",
+     "image": "designer-side-bangles-diamond-shaped-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 660,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": false,
+     "focal": "48.29% 50.96%",
+     "zoom": 1
+    },
+    {
+     "colour": "Drop with White Stones Set of 4",
+     "image": "designer-side-bangles-drop-with-white-stones-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 1200,
+     "pieces": 4,
+     "sizes": [
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "47.3% 54.97%",
+     "zoom": 1
+    },
+    {
+     "colour": "Floral Red Green Square Set of 2",
+     "image": "designer-side-bangles-floral-red-green-square-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 1200,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": false,
+     "focal": "37.93% 55.06%",
+     "zoom": 1
+    },
+    {
+     "colour": "Kashu Side Bangles",
+     "image": "designer-side-bangles-kashu-side-bangles.webp",
+     "hex": "#e2d8c4",
+     "price": 399,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "51.95% 54.54%",
+     "zoom": 1
+    },
+    {
+     "colour": "Kashu with Pearl Flower Set of 2",
+     "image": "designer-side-bangles-kashu-with-pearl-flower-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 599,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "53.11% 64.53%",
+     "zoom": 1
+    },
+    {
+     "colour": "Kashu with Red Green Stone Set of 2",
+     "image": "designer-side-bangles-kashu-with-red-green-stone-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 620,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "53.7% 56.69%",
+     "zoom": 1
+    },
+    {
+     "colour": "Lakshmi Floral Drop Set of 4",
+     "image": "designer-side-bangles-lakshmi-floral-drop-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 999,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": false,
+     "focal": "43.57% 51.9%",
+     "zoom": 1
+    },
+    {
+     "colour": "Lakshmi Stone Set of 2",
+     "image": "designer-side-bangles-lakshmi-stone-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 660,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": false,
+     "focal": "49.76% 51.22%",
+     "zoom": 1
+    },
+    {
+     "colour": "Lakshmi with Kemp Stones Set of 4",
+     "image": "designer-side-bangles-lakshmi-with-kemp-stones-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 399,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "50.19% 53.38%",
+     "zoom": 1
+    },
+    {
+     "colour": "Multi Stone Lakshmi Set of 4",
+     "image": "designer-side-bangles-multi-stone-lakshmi-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 799,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "61.5% 70.55%",
+     "zoom": 1
+    },
+    {
+     "colour": "Non Idol Kemp Drop Set of 4",
+     "image": "designer-side-bangles-non-idol-kemp-drop-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 499,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "45.64% 54.31%",
+     "zoom": 1
+    },
+    {
+     "colour": "Pastel Kashu Blue Set of 2",
+     "image": "designer-side-bangles-pastel-kashu-blue-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 599,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "51.74% 58.05%",
+     "zoom": 1
+    },
+    {
+     "colour": "Pastel Kashu Pink Set of 2",
+     "image": "designer-side-bangles-pastel-kashu-pink-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 599,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "44.28% 57.54%",
+     "zoom": 1
+    },
+    {
+     "colour": "Pastel Kashu Pista Set of 2",
+     "image": "designer-side-bangles-pastel-kashu-pista-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 599,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "52.44% 73.29%",
+     "zoom": 1
+    },
+    {
+     "colour": "Peacock Set of 4",
+     "image": "designer-side-bangles-peacock-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 889,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": false,
+     "focal": "50.11% 44.88%",
+     "zoom": 1
+    },
+    {
+     "colour": "Pearl Floral Square Set of 4",
+     "image": "designer-side-bangles-pearl-floral-square-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 499,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "45.63% 50.49%",
+     "zoom": 1
+    },
+    {
+     "colour": "Premium Ad Flower Set of 2",
+     "image": "designer-side-bangles-premium-ad-flower-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 650,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "49.15% 70.4%",
+     "zoom": 1
+    },
+    {
+     "colour": "Premium White Stone Flower Set of 4",
+     "image": "designer-side-bangles-premium-white-stone-flower-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 1200,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": false,
+     "focal": "45.3% 48.75%",
+     "zoom": 1
+    },
+    {
+     "colour": "Red Green Stone Lozenge Set of 4",
+     "image": "designer-side-bangles-red-green-stone-lozenge-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 1200,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "50.41% 53.14%",
+     "zoom": 1
+    },
+    {
+     "colour": "Two Layer White Ball Set of 2",
+     "image": "designer-side-bangles-two-layer-white-ball-set-of-2.webp",
+     "hex": "#e2d8c4",
+     "price": 670,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "46.22% 58.02%",
+     "zoom": 1
+    },
+    {
+     "colour": "White Gold Flower Set of 4",
+     "image": "designer-side-bangles-white-gold-flower-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 180,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "54.87% 58.99%",
+     "zoom": 1
+    },
+    {
+     "colour": "White Stone Lakshmi Set of 4",
+     "image": "designer-side-bangles-white-stone-lakshmi-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 799,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "49.98% 67.81%",
+     "zoom": 1
+    },
+    {
+     "colour": "White Stone Set of 4",
+     "image": "designer-side-bangles-white-stone-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 799,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": false,
+     "focal": "41.68% 55.61%",
+     "zoom": 1
+    }
+   ],
+   "image": "designer-side-bangles-bell-pearl-flower-set-of-4.webp"
+  },
+  {
+   "id": "gunghroo",
+   "collection": "gunghroo",
+   "collectionName": "Gunghroo",
+   "group": "layering",
+   "name": "Gunghroo",
+   "price": 120,
+   "priceMax": 220,
+   "pieces": 4,
+   "unit": "set",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6"
+   ],
+   "blurb": "Bangles strung with fine gunghroo bells that sound as you move.",
+   "story": "Strung with fine bells, so the stack announces itself before you do. A festival piece.",
+   "variants": [
+    {
+     "colour": "Acrylic Kashmiri Blue & Yellow Set of 4",
+     "image": "gunghroo-acrylic-kashmiri-blue-yellow-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 120,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "58.01% 53.68%",
+     "zoom": 1
+    },
+    {
+     "colour": "Acrylic Kashmiri Maroon & Orange Set of 4",
+     "image": "gunghroo-acrylic-kashmiri-maroon-orange-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 120,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "56.34% 52.3%",
+     "zoom": 1
+    },
+    {
+     "colour": "Acrylic Kashmiri Red & Yellow Set of 4",
+     "image": "gunghroo-acrylic-kashmiri-red-yellow-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 120,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "57.04% 57.67%",
+     "zoom": 1
+    },
+    {
+     "colour": "Kashmiri Gold Stones Set of 4",
+     "image": "gunghroo-kashmiri-gold-stones-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 200,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "55.34% 48.98%",
+     "zoom": 1
+    },
+    {
+     "colour": "Kashmiri White Stones Set of 4",
+     "image": "gunghroo-kashmiri-white-stones-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 200,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "45.18% 64.65%",
+     "zoom": 1
+    },
+    {
+     "colour": "Long Hanging Gunghroo Set of 4",
+     "image": "gunghroo-long-hanging-gunghroo-set-of-4.webp",
+     "hex": "#e2d8c4",
+     "price": 220,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
+     "focal": "40.17% 49.62%",
+     "zoom": 1
+    }
+   ],
+   "image": "gunghroo-acrylic-kashmiri-blue-yellow-set-of-4.webp"
+  },
+  {
+   "id": "square-edge-glass-bangles",
+   "collection": "square-edge-glass-bangles",
+   "collectionName": "Square Edge Glass Bangles",
+   "group": "glass",
+   "name": "Square Edge Glass Bangles",
+   "price": 230,
+   "priceMax": 230,
+   "pieces": 12,
+   "unit": "set",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8"
+   ],
+   "blurb": "A squared profile that sits flat and reads sharp against round bangles.",
+   "story": "A squared edge instead of a round one. It sits flatter on the wrist and gives a stack a harder, more graphic line.",
+   "variants": [
+    {
+     "colour": "Aqua",
+     "image": "square-edge-glass-bangles-aqua.webp",
+     "hex": "#0fd2c5",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "55.93% 57.34%",
+     "zoom": 1
+    },
+    {
+     "colour": "Black",
+     "image": "square-edge-glass-bangles-black.webp",
+     "hex": "#130101",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "46.81% 44.32%",
+     "zoom": 1
+    },
+    {
+     "colour": "Champagne Gold",
+     "image": "square-edge-glass-bangles-champagne-gold.webp",
+     "hex": "#dbc08a",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "44.29% 49.25%",
+     "zoom": 1
+    },
+    {
+     "colour": "Dark Green",
+     "image": "square-edge-glass-bangles-dark-green.webp",
+     "hex": "#4b8406",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "51.1% 40.45%",
+     "zoom": 1
+    },
+    {
+     "colour": "Dark Pink",
+     "image": "square-edge-glass-bangles-dark-pink.webp",
+     "hex": "#f20779",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "51.36% 46.11%",
+     "zoom": 1
+    },
+    {
+     "colour": "Green (premium Raindrop)",
+     "image": "square-edge-glass-bangles-green-premium-raindrop.webp",
+     "hex": "#6cd01b",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "53.97% 54.84%",
+     "zoom": 1
+    },
+    {
+     "colour": "Ivory (premium Raindrop)",
+     "image": "square-edge-glass-bangles-ivory-premium-raindrop.webp",
+     "hex": "#fffcf5",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "50.1% 47%",
+     "zoom": 1
+    },
+    {
+     "colour": "Lavender",
+     "image": "square-edge-glass-bangles-lavender.webp",
+     "hex": "#c594cc",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "41.88% 49.76%",
+     "zoom": 1
+    },
+    {
+     "colour": "Maroon",
+     "image": "square-edge-glass-bangles-maroon.webp",
+     "hex": "#8b2328",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "58.93% 43.16%",
+     "zoom": 1
+    },
+    {
+     "colour": "Mauve",
+     "image": "square-edge-glass-bangles-mauve.webp",
+     "hex": "#cc94c1",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "50.08% 55.42%",
+     "zoom": 1
+    },
+    {
+     "colour": "Multicolor",
+     "image": "square-edge-glass-bangles-multicolor.webp",
+     "hex": "#c7c5c2",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "46.62% 55.09%",
+     "zoom": 1
+    },
+    {
+     "colour": "Olive (premium Raindrop)",
+     "image": "square-edge-glass-bangles-olive-premium-raindrop.webp",
+     "hex": "#9ad5a9",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "44.65% 56.64%",
+     "zoom": 1
+    },
+    {
+     "colour": "Parrot Green",
+     "image": "square-edge-glass-bangles-parrot-green.webp",
+     "hex": "#35d016",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "54.71% 42.2%",
+     "zoom": 1
+    },
+    {
+     "colour": "Radium",
+     "image": "square-edge-glass-bangles-radium.webp",
+     "hex": "#037981",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "45.72% 48.75%",
+     "zoom": 1
+    },
+    {
+     "colour": "Red",
+     "image": "square-edge-glass-bangles-red.webp",
+     "hex": "#e81111",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "59.1% 44.93%",
+     "zoom": 1
+    },
+    {
+     "colour": "Rose Pink",
+     "image": "square-edge-glass-bangles-rose-pink.webp",
+     "hex": "#fd729c",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "49.14% 53.05%",
+     "zoom": 1
+    },
+    {
+     "colour": "Royal Blue",
+     "image": "square-edge-glass-bangles-royal-blue.webp",
+     "hex": "#011ad5",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "50.49% 53.35%",
+     "zoom": 1
+    },
+    {
+     "colour": "Sunset Orange",
+     "image": "square-edge-glass-bangles-sunset-orange.webp",
+     "hex": "#ed9f02",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "52.25% 60.92%",
+     "zoom": 1
+    },
+    {
+     "colour": "Wine",
+     "image": "square-edge-glass-bangles-wine.webp",
+     "hex": "#86158e",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "focal": "51.86% 55.88%",
+     "zoom": 1
+    }
+   ],
+   "image": "square-edge-glass-bangles-aqua.webp"
+  }
+ ]
+}
