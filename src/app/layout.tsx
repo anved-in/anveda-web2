@@ -32,6 +32,21 @@ export const metadata: Metadata = {
   },
 };
 
+const ORG_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE.name,
+  url: "https://www.anveda.in",
+  logo: "https://www.anveda.in/opengraph-image.jpg",
+  sameAs: [SITE.instagram],
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: `+${SITE.whatsapp}`,
+    contactType: "customer service",
+    email: SITE.email,
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -39,6 +54,11 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <BrandFonts />
+        {/* eslint-disable-next-line react/no-danger */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSON_LD) }}
+        />
       </head>
       <body className="flex min-h-screen flex-col pb-[60px] md:pb-0">
         <CartProvider>

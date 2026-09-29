@@ -2,9 +2,45 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import Link from "@/components/Link";
-import { products, productById, related, rangeHref, groupBySlug } from "@/lib/catalog";
+import { products, productById, related, rangeHref, groupBySlug, imgSrc } from "@/lib/catalog";
+import { asset, SITE } from "@/lib/site";
 import ProductView from "@/components/ProductView";
 import ListingCard from "@/components/ListingCard";
+
+const SITE_URL = "https://www.anveda.in";
+
+/**
+ * Product structured data (schema.org), so Google can show price and
+ * stock status directly in search results instead of a plain blue link.
+ * AggregateOffer, not a flat price, since colourways of the same design can
+ * be priced differently. No aggregateRating — that field requires REAL
+ * reviews behind it; adding one without them is against Google's structured
+ * data policy and risks a manual penalty.
+ */
+function productJsonLd(p: (typeof products)[number]) {
+  const prices = p.variants.map((v) => v.price ?? p.price).filter(Boolean);
+  const inStock = p.variants.some((v) => v.inStock);
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: p.name,
+    description: p.blurb,
+    image: p.variants.map((v) => `${SITE_URL}${asset(imgSrc(v.image))}`),
+    brand: { "@type": "Brand", name: SITE.name },
+    url: `${SITE_URL}/product/${p.id}/`,
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "INR",
+      lowPrice: Math.min(...prices),
+      highPrice: Math.max(...prices),
+      offerCount: p.variants.length,
+      availability: inStock
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      url: `${SITE_URL}/product/${p.id}/`,
+    },
+  };
+}
 
 export function generateStaticParams() {
   return products.map((p) => ({ id: p.id }));
@@ -37,6 +73,12 @@ export default async function ProductPage({
 
   return (
     <>
+      {/* eslint-disable-next-line react/no-danger */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(p)) }}
+      />
+
       <section className="px-5 py-8 sm:px-6 md:py-12">
         <div className="mx-auto max-w-[1320px]">
           <nav className="mb-6 text-[11.5px] uppercase tracking-[0.16em] text-ink-soft">
