@@ -4,34 +4,26 @@ import { SITE } from "./site";
 
 /**
  * -------------------------------------------------------------------------
- * PAYMENTS — how this works, and what its limits are.
+ * PAYMENTS — how this works.
  * -------------------------------------------------------------------------
- * The site is a STATIC export (GitHub Pages), so there is no server of ours in
- * the payment path. That rules out the standard Razorpay Orders flow, which
- * needs a secret key to create an order and to verify the signature afterwards.
- * A secret key shipped to the browser is a compromised key, so we do not.
+ * The site is a static export, but it deploys as a Cloudflare Worker with one
+ * small server route: POST /api/checkout (see worker/index.js at the repo
+ * root). That route holds the Razorpay secret key and CMS 2.0's shared
+ * secret — neither ever reaches the browser.
  *
- * What we do instead, and why it is still real:
- *   - Razorpay Checkout is opened in the browser with the PUBLIC key only
- *     (key_id is designed to be public). The customer pays by UPI, card or
- *     netbanking on Razorpay's own widget. Money genuinely moves.
- *   - Razorpay itself emails the merchant and the customer on success, and the
- *     payment appears in the Razorpay dashboard. That dashboard — not this
- *     site — is the source of truth for what was paid.
- *   - The itemised order and shipping address travel WITH the payment, as
- *     Razorpay "notes" (see orderNotes), so every payment in the dashboard and
- *     in Razorpay's emails is already tied to what was bought and where it goes.
+ * The real flow:
+ *   1. createOrder() below calls /api/checkout, which creates a genuine
+ *      Razorpay order (locking the amount server-side, before payment opens —
+ *      the browser can no longer influence what gets charged) and saves the
+ *      structured order in CMS 2.0 as 'pending'.
+ *   2. Razorpay Checkout opens with that real order_id, not a raw amount.
+ *   3. CMS 2.0's webhook (webhook-razorpay.ts) is the source of truth for
+ *      whether payment actually succeeded — signature-verified server to
+ *      server, independent of anything the browser reports back. It flips
+ *      the order to 'paid' regardless of what happens in this tab afterwards.
  *
- * What this CANNOT do without a server, stated plainly:
- *   - It cannot cryptographically verify the payment signature. A determined
- *     user could fake a "success" screen on this site. They cannot fake money
- *     arriving in the Razorpay account, which is what the owner ships against.
- *   - Therefore: ALWAYS confirm the payment in the Razorpay dashboard before
- *     dispatching. The success page says this to the customer too.
- *
- * Upgrading later is a contained change: deploy to a host with server routes
- * (Vercel/Cloudflare), add /api/order + /api/verify, and switch
- * `createOrder()` below to call it. Nothing else in the app changes.
+ * The success screen in this browser is a convenience, not a receipt — always
+ * confirm 'paid' in the CMS 2.0 dashboard before dispatching, same as before.
  */
 
 export interface Customer {
@@ -60,6 +52,36 @@ export const RAZORPAY_KEY = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ?? "";
 /** Payments are only live once a real key is configured. */
 export const paymentsEnabled = (): boolean =>
   RAZORPAY_KEY.startsWith("rzp_");
+
+/**
+ * Same-origin server route (worker/index.js) that creates the real Razorpay
+ * order and saves it in CMS 2.0 before checkout opens. See that file for why
+ * this exists — the short version is that a secret key belongs on a server,
+ * and until now this static export had none.
+ */
+const createOrder = async (
+  ref: string,
+  o: OrderSummary,
+  c: Customer,
+): Promise<{ razorpay_order_id: string; key_id: string }> => {
+  const res = await fetch("/api/checkout", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      ref,
+      customer: c,
+      lines: o.lines,
+      subtotal: o.subtotal,
+      shipping: o.shipping,
+      total: o.total,
+    }),
+  });
+  const data = await res.json();
+  if (!res.ok || !data.ok) {
+    throw new Error(data.error || "Could not start payment. Please try again.");
+  }
+  return data;
+};
 
 /**
  * Shipping comes from the destination PIN code — see lib/shipping.ts, which
@@ -171,12 +193,18 @@ export const payWithRazorpay = (
       return;
     }
 
+    let order: { razorpay_order_id: string; key_id: string };
+    try {
+      order = await createOrder(ref, o, c);
+    } catch (e) {
+      reject(e instanceof Error ? e : new Error("Could not start payment."));
+      return;
+    }
+
     let settled = false;
     const rz = new window.Razorpay({
-      key: RAZORPAY_KEY,
-      // Razorpay works in paise.
-      amount: Math.round(o.total * 100),
-      currency: "INR",
+      key: order.key_id,
+      order_id: order.razorpay_order_id,
       name: SITE.name,
       description: `Order ${ref}`,
       prefill: { name: c.name, email: c.email, contact: c.phone },
