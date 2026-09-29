@@ -82,8 +82,19 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap justify-between gap-3 border-t border-gold/20 pt-6 text-[12.5px]">
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-gold/20 pt-6 text-[12.5px]">
           <span>© {new Date().getFullYear()} ANVEDA. All rights reserved.</span>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link href="/terms" className="transition-colors hover:text-gold">
+              Terms &amp; Conditions
+            </Link>
+            <Link href="/privacy" className="transition-colors hover:text-gold">
+              Privacy Policy
+            </Link>
+            <Link href="/shipping" className="transition-colors hover:text-gold">
+              Refund Policy
+            </Link>
+          </div>
           <span className="text-[#8a837b]">Made in India</span>
         </div>
       </div>
