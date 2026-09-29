@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "reels",
     "terms",
     "privacy",
+    "track",
   ].map((p) => ({
     url: `${BASE}/${p}${p ? "/" : ""}`,
     lastModified: new Date(),
