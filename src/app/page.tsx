@@ -4,6 +4,7 @@ import { asset, SITE } from "@/lib/site";
 import ListingCard from "@/components/ListingCard";
 import SectionHead from "@/components/SectionHead";
 import HeroSlider from "@/components/HeroSlider";
+import Testimonials from "@/components/Testimonials";
 
 /** One listing for a product, at its lead colourway (or the nth shade). */
 const lead = (slug: string, n = 0): Listing => {
@@ -149,6 +150,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <Testimonials />
 
       {/* ------------------------------------------------------ instagram */}
       <section className="px-4 py-12 sm:px-6 md:py-16">

@@ -17,6 +17,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMGDIR = os.path.join(ROOT, "public", "img", "products")
 OUT = os.path.join(ROOT, "src", "data", "catalog.json")
 REELS_OUT = os.path.join(ROOT, "src", "data", "reels.json")
+REVIEWS_OUT = os.path.join(ROOT, "src", "data", "reviews.json")
 REELDIR = os.path.join(ROOT, "public", "video", "reels")
 
 
@@ -32,6 +33,7 @@ groups = data.get("groups", [])
 collections = data.get("collections", [])
 products = data.get("products", [])
 reels_in = data.get("reels", [])
+reviews_in = data.get("reviews", [])
 
 json.dump(
     {"groups": groups, "collections": collections, "products": products},
@@ -70,6 +72,11 @@ json.dump({"reels": reels_out}, open(REELS_OUT, "w", encoding="utf-8"),
           ensure_ascii=False, indent=1)
 print(f"{len(reels_out)} reels "
       f"({sum(1 for r in reels_out if r['video'])} with uploaded video) -> {REELS_OUT}")
+
+# --------------------------------------------------------------- reviews
+json.dump({"reviews": reviews_in}, open(REVIEWS_OUT, "w", encoding="utf-8"),
+          ensure_ascii=False, indent=1)
+print(f"{len(reviews_in)} reviews -> {REVIEWS_OUT}")
 
 # ------------------------------------------------------------- photos
 # Collect every filename the catalog/reels reference, then fetch whichever

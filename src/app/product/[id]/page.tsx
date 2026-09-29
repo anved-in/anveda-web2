@@ -4,22 +4,24 @@ import { notFound } from "next/navigation";
 import Link from "@/components/Link";
 import { products, productById, related, rangeHref, groupBySlug, imgSrc } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
+import { reviews } from "@/lib/reviews";
 import ProductView from "@/components/ProductView";
 import ListingCard from "@/components/ListingCard";
 
 const SITE_URL = "https://www.anveda.in";
 
 /**
- * Product structured data (schema.org), so Google can show price and
- * stock status directly in search results instead of a plain blue link.
- * AggregateOffer, not a flat price, since colourways of the same design can
- * be priced differently. No aggregateRating — that field requires REAL
- * reviews behind it; adding one without them is against Google's structured
- * data policy and risks a manual penalty.
+ * Product structured data (schema.org), so Google can show price, stock
+ * status, and — once there are real reviews on this design — a star rating
+ * directly in search results. aggregateRating is only added when reviews
+ * actually exist for this product: adding one without real reviews behind it
+ * is against Google's structured data policy and risks a manual penalty.
  */
 function productJsonLd(p: (typeof products)[number]) {
   const prices = p.variants.map((v) => v.price ?? p.price).filter(Boolean);
   const inStock = p.variants.some((v) => v.inStock);
+  const productReviews = reviews.filter((r) => r.productId === p.id);
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -39,6 +41,23 @@ function productJsonLd(p: (typeof products)[number]) {
         : "https://schema.org/OutOfStock",
       url: `${SITE_URL}/product/${p.id}/`,
     },
+    ...(productReviews.length > 0
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: (
+              productReviews.reduce((n, r) => n + r.rating, 0) / productReviews.length
+            ).toFixed(1),
+            reviewCount: productReviews.length,
+          },
+          review: productReviews.map((r) => ({
+            "@type": "Review",
+            author: { "@type": "Person", name: r.name },
+            reviewRating: { "@type": "Rating", ratingValue: r.rating },
+            reviewBody: r.body,
+          })),
+        }
+      : {}),
   };
 }
 
