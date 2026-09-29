@@ -62,16 +62,19 @@ async function handleCheckout(request, env) {
   }
   const rzOrder = await rzRes.json();
 
-  // 2. Persist the structured order in CMS 2.0 as 'pending' — the secret
-  //    header lives only here, server-to-server, never in the browser bundle.
-  if (env.ORDERS_API_URL && env.ORDERS_API_SECRET) {
+  // 2. Persist the structured order in CMS 2.0 as 'pending' — via a service
+  //    binding (Worker-to-Worker, same account), not a public fetch. A
+  //    *.workers.dev Worker cannot fetch() another *.workers.dev URL directly
+  //    (Cloudflare error 1042); a service binding is also the intended way
+  //    for two Workers in one account to talk — no public hop, no DNS.
+  if (env.CMS && env.ORDERS_API_SECRET) {
     const lineItems = lines.map((l) => ({
       productId: l.id,
       colour: l.colour,
       size: l.size,
       qty: l.qty,
     }));
-    const intakeRes = await fetch(env.ORDERS_API_URL, {
+    const intakeRes = await env.CMS.fetch("https://internal/api/orders", {
       method: "POST",
       headers: {
         "content-type": "application/json",
