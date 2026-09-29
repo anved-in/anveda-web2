@@ -34,6 +34,13 @@
    "rating": 5,
    "body": "This delicate accessory adds a touch of elegance to any outfit. Its smooth surface catches the light beautifully with every movement of the wrist. The craftsmanship is truly impressive, showcasing a classic and timeless design. It feels lightweight and comfortable to wear throughout the entire day. This piece serves as a wonderful addition to a sophisticated jewelry collection.",
    "createdAt": "2026-09-29 18:06:01"
+  },
+  {
+   "id": 6,
+   "name": "Devi",
+   "rating": 5,
+   "body": "This delicate accessory adds a touch of elegance to any outfit. Its smooth surface catches the light beautifully with every movement of the wrist. The craftsmanship is truly impressive, showcasing a classic and timeless design. It feels lightweight and comfortable to wear throughout the entire day. This piece serves as a wonderful addition to a sophisticated jewelry collection.",
+   "createdAt": "2026-09-29 18:25:41"
   }
  ]
 }
