@@ -30,6 +30,13 @@ export const metadata: Metadata = {
     title: `${SITE.name} — ${SITE.tagline}`,
     description: SITE.description,
   },
+  appleWebApp: {
+    title: SITE.name,
+    statusBarStyle: "default",
+  },
+  icons: {
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 const ORG_JSON_LD = {
