@@ -34,6 +34,12 @@ if not os.path.isdir(IMGDIR):
     print("no image directory; nothing to prune")
     raise SystemExit(0)
 
+# Each kept file has a "@480" thumbnail sitting next to it (see
+# optimize-images.js) that never appears in the catalog itself — keep those
+# too, or every build would generate them just to have prune delete them.
+keep_small = {os.path.splitext(f)[0] + "@480" + os.path.splitext(f)[1] for f in keep}
+keep |= keep_small
+
 removed = 0
 for f in sorted(os.listdir(IMGDIR)):
     if f not in keep:

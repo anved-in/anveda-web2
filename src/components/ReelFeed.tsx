@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "@/components/Link";
 import { asset } from "@/lib/site";
-import { imgSrc, listingTitle, variantPrice } from "@/lib/catalog";
+import { imgSrcSmall, listingTitle, variantPrice } from "@/lib/catalog";
 import Price from "@/components/Price";
 import type { ResolvedReel } from "@/lib/reels";
 
@@ -230,7 +230,7 @@ export default function ReelFeed({
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src={asset(imgSrc(v.image))}
+                        src={asset(imgSrcSmall(v.image))}
                         alt=""
                         className="h-9 w-9 shrink-0 rounded-full object-cover"
                         loading="lazy"
@@ -296,7 +296,7 @@ export default function ReelFeed({
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={asset(imgSrc(v.image))}
+                      src={asset(imgSrcSmall(v.image))}
                       alt=""
                       className="h-14 w-14 shrink-0 rounded-lg object-cover"
                       loading="lazy"

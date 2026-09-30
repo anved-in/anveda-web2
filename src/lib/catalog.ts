@@ -135,6 +135,16 @@ export const allListings = (): Listing[] =>
 /** Image path for a product photo living in /public/img/products. */
 export const imgSrc = (file: string): string => `/img/products/${file}`;
 
+/**
+ * The 480px-wide companion of a product photo (see scripts/optimize-images.js)
+ * — for srcset on grid tiles, which never render wider than a few hundred
+ * pixels but were downloading the full ~1000px master on every device.
+ */
+export const imgSrcSmall = (file: string): string => {
+  const dot = file.lastIndexOf(".");
+  return `/img/products/${file.slice(0, dot)}@480${file.slice(dot)}`;
+};
+
 /** Prices are whole rupees; format them the way an Indian customer expects. */
 export const inr = (n: number): string =>
   "₹" + Math.round(n).toLocaleString("en-IN");

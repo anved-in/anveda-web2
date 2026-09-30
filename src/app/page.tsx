@@ -1,5 +1,5 @@
 import Link from "@/components/Link";
-import { collections, products, allListings, imgSrc, type Listing, rangeHref } from "@/lib/catalog";
+import { collections, products, allListings, imgSrc, imgSrcSmall, type Listing, rangeHref } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
 import ListingCard from "@/components/ListingCard";
 import SectionHead from "@/components/SectionHead";
@@ -74,6 +74,8 @@ export default function Home() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={asset(imgSrc(c.cover))}
+                    srcSet={`${asset(imgSrcSmall(c.cover))} 480w, ${asset(imgSrc(c.cover))} 1000w`}
+                    sizes="(max-width: 767px) 46vw, 20vw"
                     alt=""
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                     loading="lazy"
@@ -169,7 +171,7 @@ export default function Home() {
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={asset(imgSrc(c.cover))}
+                  src={asset(imgSrcSmall(c.cover))}
                   alt=""
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
                   loading="lazy"
