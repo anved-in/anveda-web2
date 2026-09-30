@@ -35,6 +35,11 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
   },
   icons: {
+    // An explicit `icons` object replaces Next's automatic file-convention
+    // detection entirely — icon.svg must be listed here too, or it silently
+    // stops being used the moment `apple` is added (found 2026-09-30: the
+    // browser tab fell back to no icon at all once this object existed).
+    icon: "/icon.svg",
     apple: "/apple-touch-icon.png",
   },
 };
