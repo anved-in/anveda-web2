@@ -2,7 +2,7 @@
 
 import Link from "@/components/Link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCart, lineProduct } from "@/lib/cart";
 import { imgSrc, inr, unitPrice, productById } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
@@ -59,6 +59,44 @@ export default function CheckoutForm() {
     setC((cur) => ({ ...cur, [k]: v }));
     if (errs[k]) setErrs((cur) => ({ ...cur, [k]: undefined }));
   };
+
+  // Abandoned-bag capture: fires once a valid phone number appears, so the
+  // owner has something to follow up on if payment never happens. Debounced
+  // (typing settles) and deduped per exact number (won't re-fire on every
+  // keystroke after it's already valid). Harmless if they go on to pay —
+  // the backend deletes this the moment a real order lands on that phone.
+  const capturedPhoneRef = useRef("");
+  useEffect(() => {
+    const digits = c.phone.replace(/\D/g, "").slice(-10);
+    if (!/^[6-9]\d{9}$/.test(digits) || lines.length === 0) return;
+    if (capturedPhoneRef.current === digits) return;
+    const t = setTimeout(() => {
+      capturedPhoneRef.current = digits;
+      fetch("/api/cart-capture", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          name: c.name || undefined,
+          phone: digits,
+          lines: lines.map((l) => {
+            const p = productById(l.id);
+            const v = p?.variants.find((x) => x.colour === l.colour);
+            return {
+              productId: l.id,
+              name: p?.name ?? l.id,
+              colour: l.colour,
+              size: l.size,
+              qty: l.qty,
+              price: v?.price ?? p?.price ?? 0,
+            };
+          }),
+          subtotal,
+          total,
+        }),
+      }).catch(() => {});
+    }, 1200);
+    return () => clearTimeout(t);
+  }, [c.phone, c.name, lines, subtotal, total]);
 
   // Payment succeeded: the order is complete, so only now is the bag emptied.
   // Razorpay's own success callback is the trigger, never the widget merely
