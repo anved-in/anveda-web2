@@ -1,5 +1,6 @@
 import Link from "@/components/Link";
 import Logo from "./Logo";
+import SignupForm from "./SignupForm";
 import { SITE, waLink } from "@/lib/site";
 import { collections, rangeHref } from "@/lib/catalog";
 
@@ -28,6 +29,14 @@ export default function Footer() {
               </svg>
               @anveda.in
             </a>
+
+            <h3 className="mb-3 mt-8 text-[11px] font-bold uppercase tracking-[0.24em] text-gold">
+              New arrivals, first
+            </h3>
+            <p className="mb-3 max-w-[38ch] text-[13px] leading-relaxed">
+              Leave your email or WhatsApp — we&apos;ll let you know when a new batch drops.
+            </p>
+            <SignupForm />
           </div>
 
           <div className="w-1/2 pr-6 sm:w-1/3 md:w-[21%]">
