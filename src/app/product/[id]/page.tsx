@@ -5,6 +5,7 @@ import Link from "@/components/Link";
 import { products, productById, related, rangeHref, groupBySlug, imgSrc } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
 import { reviews } from "@/lib/reviews";
+import { breadcrumbJsonLd } from "@/lib/breadcrumbs";
 import ProductView from "@/components/ProductView";
 import ListingCard from "@/components/ListingCard";
 
@@ -89,6 +90,13 @@ export default async function ProductPage({
   if (!p) notFound();
 
   const more = related(p, 4);
+  const group = p.group ? groupBySlug(p.group) : undefined;
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Home", url: "/" },
+    ...(group ? [{ name: group.name, url: `/shop/${group.slug}/` }] : []),
+    { name: p.collectionName, url: rangeHref(p.collection) },
+    { name: p.name, url: `/product/${p.id}/` },
+  ]);
 
   return (
     <>
@@ -96,6 +104,11 @@ export default async function ProductPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(p)) }}
+      />
+      {/* eslint-disable-next-line react/no-danger */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
 
       <section className="px-5 py-8 sm:px-6 md:py-12">

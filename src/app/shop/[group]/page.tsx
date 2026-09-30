@@ -8,6 +8,7 @@ import {
   collectionsInGroup,
   listingsIn,
 } from "@/lib/catalog";
+import { breadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 /**
  * A top-level group — Glass, Ornate or Layering — and the ONLY place its
@@ -42,9 +43,19 @@ export default async function GroupPage({
 
   const ranges = collectionsInGroup(g.slug);
   const total = ranges.reduce((n, c) => n + listingsIn(c.slug).length, 0);
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Home", url: "/" },
+    { name: g.name, url: `/shop/${g.slug}/` },
+  ]);
 
   return (
     <>
+      {/* eslint-disable-next-line react/no-danger */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+
       <section className="border-b border-line px-4 pb-8 pt-9 sm:px-6 md:pb-10 md:pt-12">
         <div className="mx-auto max-w-[1320px]">
           <h1 className="font-display text-[clamp(30px,4.4vw,54px)]">{g.name}</h1>

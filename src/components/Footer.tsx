@@ -66,6 +66,7 @@ export default function Footer() {
             <div className="flex flex-col">
               <Link href="/about" className="py-[5px] text-[14px] transition-colors hover:text-gold">Our story</Link>
               <Link href="/sizing" className="py-[5px] text-[14px] transition-colors hover:text-gold">Sizing guide</Link>
+              <Link href="/guides/glass-vs-kundan-vs-antique" className="py-[5px] text-[14px] transition-colors hover:text-gold">Glass vs Kundan vs Antique</Link>
               <Link href="/shipping" className="py-[5px] text-[14px] transition-colors hover:text-gold">Shipping &amp; returns</Link>
               <Link href="/track" className="py-[5px] text-[14px] transition-colors hover:text-gold">Track order</Link>
               <Link href="/contact" className="py-[5px] text-[14px] transition-colors hover:text-gold">Contact</Link>

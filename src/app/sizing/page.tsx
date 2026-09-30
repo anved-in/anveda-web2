@@ -9,9 +9,38 @@ export const metadata: Metadata = {
     "Indian bangle sizing explained — measure once, order confidently. Sizes 2.2 to 2.8.",
 };
 
+const howToJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to find your bangle size at home",
+  description: "Two ways to work out your Indian bangle size without a jeweller — using a bangle you already own, or measuring your hand.",
+  step: [
+    {
+      "@type": "HowToStep",
+      name: "Use a bangle you own",
+      text: "Take a bangle that already fits comfortably and measure straight across the inside, edge to edge, in inches. That number is your size.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Or measure your hand",
+      text: "Bring your thumb across to touch your little finger, as if slipping a bangle on. Wrap a measuring tape or strip of paper around the widest part and mark where it meets — that length in centimetres is your circumference. Match it against the size chart.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Between two sizes",
+      text: "Go up rather than down. A bangle that is slightly loose still wears well; one that won't pass the knuckle cannot be worn at all.",
+    },
+  ],
+};
+
 export default function SizingPage() {
   return (
     <>
+      {/* eslint-disable-next-line react/no-danger */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
+      />
       <section className="border-b border-line px-5 pb-10 pt-12 sm:px-6 md:pb-14 md:pt-16">
         <div className="mx-auto max-w-[1320px]">
           <span className="eyebrow">Find your fit</span>
