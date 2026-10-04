@@ -22,10 +22,36 @@ async function handleCheckout(request, env) {
     return json({ ok: false, error: "invalid JSON" }, 400);
   }
 
-  const { ref, customer, lines, subtotal, shipping, total } = body || {};
-  if (!ref || !customer?.phone || !Array.isArray(lines) || lines.length === 0 || !total) {
+  const { ref, customer, lines, subtotal, shipping, couponCode } = body || {};
+  if (!ref || !customer?.phone || !Array.isArray(lines) || lines.length === 0 || !subtotal) {
     return json({ ok: false, error: "invalid payload" }, 400);
   }
+
+  // The discount is ALWAYS recomputed here from CMS 2.0's own coupon rules,
+  // never trusted as a `total` the browser sends — this is the step that
+  // actually locks the Razorpay charge amount, so a tampered discount here
+  // would mean a real underpayment, not just a wrong-looking number. No code
+  // sent doesn't mean no coupon: an auto-apply one (e.g. "free shipping over
+  // ₹5000") can still apply with nothing typed by the customer — the browser
+  // only shows a preview of this; this call is what's actually authoritative.
+  let discount = 0;
+  let freeShipping = false;
+  if (env.CMS) {
+    const couponRes = await env.CMS.fetch("https://internal/coupon/validate", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ code: couponCode || undefined, subtotal }),
+    });
+    const couponData = await couponRes.json().catch(() => ({ valid: false, discount: 0, freeShipping: false }));
+    if (couponCode && !couponData.valid) {
+      return json({ ok: false, error: couponData.reason || "invalid coupon" }, 400);
+    }
+    if (couponData.valid) {
+      discount = couponData.discount;
+      freeShipping = !!couponData.freeShipping;
+    }
+  }
+  const total = subtotal - discount + (freeShipping ? 0 : shipping || 0);
 
   const amountPaise = Math.round(total * 100);
   if (amountPaise < 100) {
@@ -87,6 +113,7 @@ async function handleCheckout(request, env) {
         subtotal,
         shipping,
         total,
+        couponCode: couponCode || undefined,
       }),
     });
     if (!intakeRes.ok) {
@@ -100,7 +127,29 @@ async function handleCheckout(request, env) {
     ref,
     razorpay_order_id: rzOrder.id,
     key_id: env.RAZORPAY_KEY_ID,
+    total,
+    discount,
+    freeShipping,
   });
+}
+
+// Live coupon preview for the checkout page's "Apply" button — before any
+// order exists, so this is a pure read, not gated by a secret.
+async function handleCouponValidate(request, env) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ valid: false, reason: "invalid JSON", discount: 0 }, 400);
+  }
+  if (!env.CMS) return json({ valid: false, reason: "not configured", discount: 0 }, 500);
+  const res = await env.CMS.fetch("https://internal/coupon/validate", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({ valid: false, reason: "bad response", discount: 0 }));
+  return json(data, res.status);
 }
 
 // Order tracking — same service-binding proxy pattern as checkout, so the
@@ -181,6 +230,13 @@ export default {
         return await handleSubscribe(request, env);
       } catch (e) {
         return json({ ok: false, error: "internal error" }, 500);
+      }
+    }
+    if (url.pathname === "/api/coupon" && request.method === "POST") {
+      try {
+        return await handleCouponValidate(request, env);
+      } catch (e) {
+        return json({ valid: false, reason: "internal error", discount: 0 }, 500);
       }
     }
     if (url.pathname === "/api/cart-capture" && request.method === "POST") {

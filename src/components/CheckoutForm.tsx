@@ -43,6 +43,16 @@ export default function CheckoutForm() {
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState<string | null>(null);
 
+  // Coupon: validated live against CMS 2.0's own rules via /api/coupon as the
+  // customer types, same "preview, server decides for real" pattern as
+  // payment itself — this discount is never trusted at checkout time either,
+  // see /api/checkout's own re-validation.
+  interface AppliedCoupon { code: string; discount: number; freeShipping: boolean; auto: boolean }
+  const [couponInput, setCouponInput] = useState("");
+  const [coupon, setCoupon] = useState<AppliedCoupon | null>(null);
+  const [couponError, setCouponError] = useState<string | null>(null);
+  const [couponBusy, setCouponBusy] = useState(false);
+
   // Shipping is quoted from the PIN code the customer is typing, and re-quotes
   // as they type it, so the total is never a surprise at the last step.
   const pieces = lines.reduce((n, l) => {
@@ -51,9 +61,79 @@ export default function CheckoutForm() {
     return n + (v?.pieces ?? p?.pieces ?? 12) * l.qty;
   }, 0);
   const quote = quoteShipping(c.pin, pieces);
-  const shipping = quote.amount;
-  const total = subtotal + shipping;
+  const shipping = coupon?.freeShipping ? 0 : quote.amount;
+  const discount = coupon?.discount ?? 0;
+  const total = subtotal - discount + shipping;
   const live = paymentsEnabled();
+
+  // A coupon is validated against a subtotal snapshot — if the bag changes
+  // (qty edited in another tab, say) the discount could be stale, so it's
+  // cleared and the customer re-applies rather than silently trusting a
+  // number that no longer matches the rules. An auto-applied coupon instead
+  // just re-checks itself below (couponInput is empty for those, so there's
+  // nothing for the customer to "re-apply").
+  const couponSubtotalRef = useRef(subtotal);
+  useEffect(() => {
+    if (coupon && !coupon.auto && couponSubtotalRef.current !== subtotal) {
+      setCoupon(null);
+      setCouponError("Your bag changed — please re-apply the coupon.");
+    }
+    couponSubtotalRef.current = subtotal;
+  }, [subtotal, coupon]);
+
+  // Silent check for a "no code needed" coupon (e.g. free shipping over
+  // ₹5000) every time the subtotal changes — but never overrides a coupon
+  // the customer actually typed in themselves.
+  useEffect(() => {
+    if (coupon && !coupon.auto) return;
+    if (subtotal <= 0) return;
+    let cancelled = false;
+    fetch("/api/coupon", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ subtotal }),
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        if (cancelled) return;
+        if (data.valid) setCoupon({ code: data.code, discount: data.discount, freeShipping: !!data.freeShipping, auto: true });
+        else if (coupon?.auto) setCoupon(null); // no longer qualifies (e.g. bag shrank)
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subtotal]);
+
+  const applyCoupon = async () => {
+    const code = couponInput.trim();
+    if (!code) return;
+    setCouponBusy(true);
+    setCouponError(null);
+    try {
+      const res = await fetch("/api/coupon", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ code, subtotal }),
+      });
+      const data = await res.json();
+      if (!data.valid) {
+        setCouponError(data.reason || "That coupon isn't valid.");
+        return;
+      }
+      setCoupon({ code: data.code || code.toUpperCase(), discount: data.discount, freeShipping: !!data.freeShipping, auto: false });
+      couponSubtotalRef.current = subtotal;
+    } catch {
+      setCouponError("Could not check that coupon right now — try again.");
+    } finally {
+      setCouponBusy(false);
+    }
+  };
+
+  const removeCoupon = () => {
+    setCoupon(null);
+    setCouponInput("");
+    setCouponError(null);
+  };
 
   const set = (k: keyof Customer) => (v: string) => {
     setC((cur) => ({ ...cur, [k]: v }));
@@ -130,7 +210,7 @@ export default function CheckoutForm() {
     try {
       const paymentId = await payWithRazorpay(
         ref,
-        { lines, subtotal, shipping, total },
+        { lines, subtotal, shipping, total, couponCode: coupon?.code },
         c,
       );
       // null = the customer closed the widget. Not an error; just stop.
@@ -286,11 +366,72 @@ export default function CheckoutForm() {
             })}
           </div>
 
+          {/* ---------------------------------------------------- coupon */}
+          <div className="mt-4">
+            {coupon && !coupon.auto ? (
+              <div className="flex items-center justify-between gap-3 border border-line bg-white px-3.5 py-2.5">
+                <span className="min-w-0 truncate text-[13px]" title={coupon.code}>
+                  <span className="font-semibold uppercase tracking-[0.08em]">{coupon.code}</span>
+                  <span className="ml-1.5 text-ink-soft">
+                    applied
+                    {coupon.discount > 0 && ` — ${inr(coupon.discount)} off`}
+                    {coupon.freeShipping && (coupon.discount > 0 ? " + free shipping" : " — free shipping")}
+                  </span>
+                </span>
+                <button
+                  type="button"
+                  onClick={removeCoupon}
+                  className="shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] text-ink-soft underline underline-offset-2 hover:text-ink"
+                >
+                  Remove
+                </button>
+              </div>
+            ) : (
+              <>
+                {coupon?.auto && (
+                  <p className="mb-2 text-[12.5px] font-semibold text-[#2f6e4f]">
+                    ✓ {coupon.freeShipping ? "Free shipping" : inr(coupon.discount) + " off"} applied automatically
+                  </p>
+                )}
+                <div className="flex gap-2">
+                  <input
+                    value={couponInput}
+                    onChange={(e) => { setCouponInput(e.target.value); setCouponError(null); }}
+                    onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyCoupon(); } }}
+                    placeholder="Have a coupon code?"
+                    autoComplete="off"
+                    maxLength={32}
+                    className="min-w-0 flex-1 border border-line bg-white px-3.5 py-2.5 text-[14px] uppercase outline-none transition-colors focus:border-ink"
+                  />
+                  <button
+                    type="button"
+                    onClick={applyCoupon}
+                    disabled={couponBusy || !couponInput.trim()}
+                    className="shrink-0 border border-ink px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.14em] transition-colors hover:bg-ink hover:text-cream disabled:opacity-50"
+                  >
+                    {couponBusy ? "Checking…" : "Apply"}
+                  </button>
+                </div>
+              </>
+            )}
+            {couponError && (
+              <p className="mt-1.5 text-[12.5px] text-[#a33a2f]">{couponError}</p>
+            )}
+          </div>
+
           <div className="mt-4 space-y-1.5 text-[14px]">
             <div className="flex justify-between">
               <span className="text-ink-soft">Subtotal</span>
               <span className="font-semibold">{inr(subtotal)}</span>
             </div>
+            {coupon && coupon.discount > 0 && (
+              <div className="flex justify-between gap-3">
+                <span className="min-w-0 truncate text-ink-soft" title={`Coupon (${coupon.code})`}>
+                  Coupon ({coupon.code})
+                </span>
+                <span className="shrink-0 font-semibold text-[#2f6e4f]">−{inr(coupon.discount)}</span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span className="text-ink-soft">
                 Shipping
@@ -300,7 +441,14 @@ export default function CheckoutForm() {
                   </span>
                 )}
               </span>
-              <span className="font-semibold">{inr(shipping)}</span>
+              {coupon?.freeShipping ? (
+                <span className="font-semibold text-[#2f6e4f]">
+                  <span className="mr-1.5 text-ink-faint line-through">{inr(quote.amount)}</span>
+                  Free
+                </span>
+              ) : (
+                <span className="font-semibold">{inr(shipping)}</span>
+              )}
             </div>
           </div>
           <div className="mt-3 flex justify-between border-t border-line pt-3 text-[17px]">

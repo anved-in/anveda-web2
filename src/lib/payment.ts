@@ -42,8 +42,12 @@ export interface OrderSummary {
   subtotal: number;
   /** Estimated postage for the destination PIN — see lib/shipping.ts. */
   shipping: number;
-  /** subtotal + shipping: what the customer is actually charged. */
+  /** subtotal - discount + shipping: what the customer is actually charged. */
   total: number;
+  /** Applied coupon, if any — the server re-validates and recomputes the
+   * discount from this code; the browser's own discount display is only a
+   * preview, never what actually gets charged. */
+  couponCode?: string;
 }
 
 /** Razorpay's public key. Safe to ship; it identifies the account, not authorises it. */
@@ -63,7 +67,7 @@ const createOrder = async (
   ref: string,
   o: OrderSummary,
   c: Customer,
-): Promise<{ razorpay_order_id: string; key_id: string }> => {
+): Promise<{ razorpay_order_id: string; key_id: string; total: number; discount: number; freeShipping: boolean }> => {
   const res = await fetch("/api/checkout", {
     method: "POST",
     headers: { "content-type": "application/json" },
@@ -73,7 +77,7 @@ const createOrder = async (
       lines: o.lines,
       subtotal: o.subtotal,
       shipping: o.shipping,
-      total: o.total,
+      couponCode: o.couponCode || undefined,
     }),
   });
   const data = await res.json();
@@ -125,6 +129,7 @@ export const orderNotes = (
     ship_to: `${c.address}, ${c.city}, ${c.state} ${c.pin}`.slice(0, 250),
     postage: `${inr(o.shipping)} (${SITE.courier}, estimated)`,
   };
+  if (o.couponCode) notes.coupon = o.couponCode;
   if (c.notes) notes.buyer_notes = c.notes.slice(0, 250);
 
   const MAX_ITEM_KEYS = 15 - Object.keys(notes).length;
@@ -193,13 +198,17 @@ export const payWithRazorpay = (
       return;
     }
 
-    let order: { razorpay_order_id: string; key_id: string };
+    let order: { razorpay_order_id: string; key_id: string; total: number; discount: number; freeShipping: boolean };
     try {
       order = await createOrder(ref, o, c);
     } catch (e) {
       reject(e instanceof Error ? e : new Error("Could not start payment."));
       return;
     }
+    // The server is authoritative on total/discount (it re-validated the
+    // coupon) — reconcile the local summary before it's used in the Razorpay
+    // notes below, so what's shown there matches what's actually charged.
+    o = { ...o, total: order.total };
 
     let settled = false;
     const rz = new window.Razorpay({
