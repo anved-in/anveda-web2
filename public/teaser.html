@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="en" class="is-intro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="version" content="1.0.4">
+<title>ANVEDA — Almost there</title>
+<meta name="description" content="ANVEDA: glass, antique and kundan bangles, handpicked in India. The shop opens soon.">
+<meta name="theme-color" content="#F2F0EB">
+<link rel="canonical" href="https://anveda.in/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/Luxenta-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face { font-family: "Luxenta"; src: url("/fonts/Luxenta-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Salena"; src: url("/fonts/Salena-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Salena"; src: url("/fonts/Salena-Medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+
+  :root {
+    --bg: #F2F0EB;
+    --ink: #1C1C1A;
+    --ink-2: #5F5B54;      /* small grey text, 5.9:1 on --bg */
+    --rule: #D6D2C8;
+    --dock: #161615;
+    --dock-ink: #F2F0EB;
+    --dock-dim: #A9A59C;
+    --fs: clamp(7.25rem, min(27vw, 50svh), 31rem);
+    --ease-out: cubic-bezier(.16, 1, .3, 1);
+    --ease-io: cubic-bezier(.65, 0, .35, 1);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Salena", "Archivo", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100svh;
+    -webkit-tap-highlight-color: transparent;
+  }
+  ::selection { background: var(--ink); color: var(--bg); }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  :focus-visible { outline: 1.5px solid var(--ink); outline-offset: 4px; border-radius: 999px; }
+
+  /* ---------- WebGL layer ---------- */
+  #gl { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+
+  /* ---------- Frame ---------- */
+  .page { position: relative; z-index: 1; min-height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr auto; pointer-events: none; }
+  .page a, .page button, .note { pointer-events: auto; }
+
+  header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: clamp(20px, 3.2vw, 40px) clamp(16px, 3.6vw, 48px) 0;
+  }
+  .brand { display: flex; align-items: flex-start; gap: 18px; text-decoration: none; }
+  .brand__name { font-family: "Luxenta", "Cormorant Garamond", serif; font-size: clamp(26px, 2.3vw, 34px); line-height: .9; letter-spacing: .005em; }
+  .brand__desc {
+    margin: 0; padding-left: 14px; border-left: 1px solid var(--rule);
+    font-size: 11px; line-height: 1.45; letter-spacing: .02em; color: var(--ink-2);
+  }
+
+  .status {
+    position: relative; height: 30px; display: flex; align-items: center; justify-content: flex-end;
+  }
+  .status__dot {
+    position: relative; width: 14px; height: 14px; border-radius: 50%; background: var(--ink);
+    display: grid; place-items: center; overflow: hidden; white-space: nowrap;
+    transition: width .6s var(--ease-out), height .6s var(--ease-out), padding .6s var(--ease-out);
+  }
+  .status__dot span {
+    font-size: 12px; letter-spacing: .02em; color: var(--bg); opacity: 0;
+    transition: opacity .25s ease;
+  }
+  .status__dot::after {
+    content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 1px solid var(--ink);
+    opacity: 0; animation: ping 2.8s var(--ease-out) infinite 2.4s;
+  }
+  .status:hover .status__dot, .status:focus-visible .status__dot { width: 136px; height: 30px; border-radius: 999px; }
+  .status:hover .status__dot span, .status:focus-visible .status__dot span { opacity: 1; transition-delay: .18s; }
+  .status:hover .status__dot::after { animation: none; }
+  @keyframes ping { 0% { opacity: .5; transform: scale(.6); } 70%, 100% { opacity: 0; transform: scale(1.5); } }
+
+  /* ---------- Stage ---------- */
+  .stage { position: relative; display: grid; place-items: center; align-content: center; padding-bottom: 7vh; }
+  .code {
+    margin: 0; display: flex; align-items: center; justify-content: center;
+    font-family: "Archivo", sans-serif; font-weight: 800; font-size: var(--fs); line-height: .74;
+    letter-spacing: -.02em; color: var(--ink); user-select: none;
+  }
+  .four { display: block; overflow: hidden; padding: .04em .02em; }
+  .four i {
+    display: block; font-style: normal;
+    font-variation-settings: "wght" 800, "wdth" 100;
+    transition: transform 1.4s var(--ease-out);
+  }
+  .slot { display: block; width: .96em; height: .96em; margin: 0 .03em; position: relative; }
+  html.no-gl .slot::before {
+    content: ""; position: absolute; inset: .1em; border-radius: 50%;
+    border: .06em solid var(--ink); opacity: .85;
+  }
+
+  /* scattered notes */
+  .hero { position: relative; }
+  .notes { position: absolute; inset: 0; pointer-events: none; }
+  .note {
+    position: absolute; left: calc(50% + var(--s) * (var(--fs) * 1.16 + 22px)); top: calc(50% + var(--y) * var(--fs));
+    translate: var(--tx) -50%; rotate: var(--r, 0deg);
+    font-size: clamp(12px, .95vw, 14px); letter-spacing: .01em; color: var(--ink-2); white-space: nowrap;
+    display: flex; align-items: center; gap: 10px; cursor: default;
+    transition: opacity 1s var(--ease-out), filter 1s var(--ease-out);
+  }
+  .note__txt { display: inline-block; will-change: transform; }
+  .note__tick { width: 18px; height: 1px; background: var(--rule); flex: none; }
+  .note--care .note__tick { width: 1px; height: 28px; position: absolute; left: 50%; bottom: 100%; margin-bottom: 8px; }
+
+  /* Notify */
+  .cta { position: relative; margin-top: calc(var(--fs) * .3); display: grid; justify-items: center; gap: 14px; }
+  .notify {
+    position: relative; display: inline-flex; align-items: center; justify-content: center;
+    height: 46px; padding: 0 26px; border: 1px solid var(--ink); border-radius: 999px;
+    font-size: 14px; letter-spacing: .02em; text-decoration: none; overflow: hidden; isolation: isolate;
+    transition: color .45s var(--ease-out), border-color .45s;
+  }
+  .notify::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; background: var(--ink); border-radius: inherit;
+    clip-path: circle(0% at var(--hx, 50%) var(--hy, 50%));
+    transition: clip-path .6s var(--ease-out);
+  }
+  .notify:hover, .notify:focus-visible { color: var(--bg); }
+  .notify:hover::before, .notify:focus-visible::before { clip-path: circle(150% at var(--hx, 50%) var(--hy, 50%)); }
+  .notify svg { width: 14px; height: 14px; margin-left: 10px; flex: none; }
+  .notify__label { display: inline-flex; align-items: center; }
+  .cta__help {
+    margin: 0; font-size: 12px; color: var(--ink-2); text-align: center; max-width: 34ch; line-height: 1.5;
+    opacity: 0; translate: 0 -6px; transition: opacity .5s var(--ease-out), translate .5s var(--ease-out);
+  }
+  .cta.is-open .cta__help { opacity: 1; translate: 0 0; }
+
+  /* ---------- Dock ---------- */
+  .dock-wrap { display: flex; justify-content: center; padding: 0 16px max(22px, env(safe-area-inset-bottom)); }
+  .dock {
+    position: relative; display: flex; align-items: center; padding: 6px; border-radius: 999px;
+    background: var(--dock); box-shadow: 0 18px 40px -18px rgba(28, 28, 26, .55), 0 2px 6px rgba(28,28,26,.12);
+    pointer-events: auto;
+  }
+  .dock__pill {
+    position: absolute; top: 6px; bottom: 6px; left: 0; width: 0; border-radius: 999px; background: #2B2B29;
+    opacity: 0; transition: left .5s var(--ease-out), width .5s var(--ease-out), opacity .3s;
+  }
+  .dock__item {
+    position: relative; height: 36px; padding: 0 18px; border-radius: 999px; display: grid; place-items: center;
+    font-size: 13px; letter-spacing: .02em; color: var(--dock-dim); text-decoration: none; overflow: hidden;
+    transition: color .3s;
+  }
+  .dock__item:hover, .dock__item:focus-visible { color: var(--dock-ink); }
+  .dock__item:focus-visible { outline-color: var(--dock-ink); outline-offset: -3px; }
+  .dock__item .a, .dock__item .b { grid-area: 1 / 1; transition: transform .55s var(--ease-out), opacity .55s var(--ease-out); }
+  .dock__item .b { transform: translateY(110%); opacity: 0; color: var(--dock-ink); }
+  .dock__item.is-soon .a { transform: translateY(-110%); opacity: 0; }
+  .dock__item.is-soon .b { transform: none; opacity: 1; }
+  .dock__sep { width: 1px; height: 16px; background: #3A3A37; margin: 0 4px; }
+  .dock__item svg { width: 15px; height: 15px; }
+  .dock__ext { display: inline-flex; align-items: center; gap: 7px; }
+
+  /* ---------- Cursor ---------- */
+  .cursor { position: fixed; left: 0; top: 0; z-index: 50; pointer-events: none; display: none; }
+  .cursor__dot, .cursor__ring { position: fixed; left: 0; top: 0; border-radius: 50%; translate: -50% -50%; }
+  .cursor__dot { width: 6px; height: 6px; background: var(--ink); transition: opacity .2s, scale .3s var(--ease-out); }
+  .cursor__ring {
+    width: 38px; height: 38px; border: 1px solid rgba(28,28,26,.45);
+    display: grid; place-items: center;
+    transition: width .5s var(--ease-out), height .5s var(--ease-out), background-color .4s, border-color .4s;
+  }
+  .cursor__label { font-size: 11px; letter-spacing: .04em; color: var(--bg); opacity: 0; white-space: nowrap; transition: opacity .25s; }
+  .cursor.is-link .cursor__ring { width: 58px; height: 58px; border-color: transparent; background: rgba(28,28,26,.08); }
+  .cursor.is-link .cursor__dot { scale: 0; }
+  .cursor.is-glass .cursor__ring { width: 104px; height: 104px; background: var(--ink); border-color: var(--ink); }
+  .cursor.is-glass .cursor__label { opacity: 1; transition-delay: .12s; }
+  .cursor.is-glass .cursor__dot { scale: 0; }
+  .cursor.is-holding .cursor__ring { width: 76px; height: 76px; }
+  .cursor.is-dark .cursor__ring { border-color: rgba(242,240,235,.5); }
+  .cursor.is-dark .cursor__dot { background: var(--bg); }
+  @media (pointer: fine) {
+    html.has-cursor, html.has-cursor * { cursor: none !important; }
+    html.has-cursor .cursor { display: block; }
+  }
+
+  /* ---------- Intro choreography (only when JS runs) ---------- */
+  html.is-intro .four i { transform: translateY(105%); }
+  html.is-intro .note { opacity: 0; filter: blur(6px); }
+  html.is-intro .cta, html.is-intro .dock, html.is-intro header > * { opacity: 0; translate: 0 14px; }
+  .cta, .dock, header > * { transition: opacity 1.1s var(--ease-out), translate 1.1s var(--ease-out); }
+
+  /* ---------- Small screens ---------- */
+  @media (max-width: 900px) and (orientation: portrait) {
+    :root { --fs: clamp(6.5rem, 35vw, 14rem); }
+    .stage { padding-top: 5vh; }
+    .brand__desc { display: none; }
+    .stage { padding-bottom: 4vh; }
+    .note { translate: -50% -50%; left: calc(50% + var(--mx) * var(--fs)); top: calc(50% + var(--my) * var(--fs)); }
+    .note--care .note__tick { display: none; }
+    .cta { margin-top: calc(var(--fs) * .78); }
+    .dock__item { padding: 0 11px; font-size: 12px; }
+    .stage { padding-bottom: 2vh; }
+    .dock__item.wa { display: none; }
+    .dock__sep.wa { display: none; }
+  }
+
+  /* touch screens have no real hover: don't leave effects stuck after a tap */
+  @media (hover: none) {
+    .notify:hover { color: var(--ink); }
+    .notify:hover::before { clip-path: circle(0% at 50% 50%); }
+    .status:hover .status__dot { width: 14px; height: 14px; }
+    .status:hover .status__dot span { opacity: 0; }
+    .dock__item:hover { color: var(--dock-dim); }
+  }
+
+  /* narrow phones: the dock must never be wider than the screen */
+  @media (max-width: 400px) {
+    .dock { max-width: calc(100vw - 24px); }
+    .dock__item { padding: 0 9px; font-size: 12px; }
+    .dock__item svg { display: none; }
+    .dock__sep { margin: 0 2px; }
+    .notify { height: 44px; }
+  }
+  @media (max-width: 340px) {
+    .dock__item { padding: 0 6px; font-size: 11.5px; }
+    .brand__name { font-size: 24px; }
+  }
+
+  /* landscape phones: everything has to fit in ~375px of height */
+  @media (max-height: 520px) and (orientation: landscape) {
+    :root { --fs: clamp(5rem, min(27vw, 36svh), 31rem); }
+    .brand__desc { display: none; }
+    header { padding-top: 14px; }
+    .stage { padding-bottom: 0; }
+    .cta { margin-top: calc(var(--fs) * .2); }
+    .cta__help { display: none; }
+    .notify { height: 40px; }
+    .dock-wrap { padding-bottom: 10px; }
+    .dock__item { height: 32px; }
+    .note--care { left: calc(50% + var(--fs) * 1.16 + 22px); translate: 0 -50%; top: calc(50% + var(--fs) * .66); }
+    .note--care .note__tick { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+  <canvas id="gl" aria-hidden="true"></canvas>
+
+  <div class="page">
+    <header>
+      <a class="brand" href="/" aria-label="ANVEDA home" data-magnetic="0.15">
+        <span class="brand__name">Anveda</span>
+        <p class="brand__desc">Glass, antique &amp; kundan<br>bangles, handpicked<br>in small batches.</p>
+      </a>
+      <a class="status" href="#notify" aria-label="Shop opens soon" data-magnetic="0.4">
+        <span class="status__dot"><span>Shop opens soon</span></span>
+      </a>
+    </header>
+
+    <main class="stage">
+      <div class="hero">
+      <h1 class="code" aria-label="ANVEDA is opening soon.">
+        <span class="four" aria-hidden="true"><i data-four>4</i></span>
+        <span class="slot" id="slot" aria-hidden="true"></span>
+        <span class="four" aria-hidden="true"><i data-four>4</i></span>
+      </h1>
+
+      <div class="notes" aria-hidden="true">
+        <span class="note" style="--s:-1;--tx:-100%;--y:-.36;--r:-4deg;--mx:-.78;--my:-.78" data-depth="1.1"><span class="note__txt" data-scramble>Oops</span></span>
+        <span class="note" style="--s:1;--tx:0%;--y:-.44;--r:3deg;--mx:.5;--my:-.84" data-depth=".7"><span class="note__tick"></span><span class="note__txt" data-scramble>We’re working on it</span></span>
+        <span class="note" style="--s:-1;--tx:-100%;--y:.44;--r:2deg;--mx:-.68;--my:.7" data-depth=".9"><span class="note__txt" data-scramble>Live soon</span><span class="note__tick"></span></span>
+        <span class="note" style="--s:1;--tx:0%;--y:.36;--r:-3deg;--mx:.62;--my:.8" data-depth="1.3"><span class="note__txt" data-scramble>Almost there</span></span>
+        <span class="note note--care" style="--s:0;--tx:-50%;--y:.66;--mx:.02;--my:1.0" data-depth=".45"><span class="note__tick"></span><span class="note__txt" data-scramble>Handle with care</span></span>
+      </div>
+
+      </div>
+
+      <div class="cta" id="notify">
+        <a class="notify" id="notifyBtn" href="https://wa.me/917996009966?text=Hi%20ANVEDA!%20Please%20let%20me%20know%20when%20the%20shop%20opens."
+           target="_blank" rel="noopener" data-magnetic="0.3">
+          <span class="notify__label" id="notifyLabel">Notify me</span>
+        </a>
+        <p class="cta__help" id="notifyHelp">Opens WhatsApp with a message ready to send. We’ll write back the day the shop opens.</p>
+      </div>
+    </main>
+
+    <div class="dock-wrap">
+      <nav class="dock" aria-label="Collections and contact">
+        <span class="dock__pill" aria-hidden="true"></span>
+        <button class="dock__item" type="button" aria-label="Glass, opening soon"><span class="a">Glass</span><span class="b">Soon</span></button>
+        <button class="dock__item" type="button" aria-label="Ornate, opening soon"><span class="a">Ornate</span><span class="b">Soon</span></button>
+        <button class="dock__item" type="button" aria-label="Layering, opening soon"><span class="a">Layering</span><span class="b">Soon</span></button>
+        <span class="dock__sep" aria-hidden="true"></span>
+        <a class="dock__item" href="https://www.instagram.com/anveda.in/" target="_blank" rel="noopener">
+          <span class="dock__ext">Instagram
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg>
+          </span>
+        </a>
+        <a class="dock__item wa" href="https://wa.me/917996009966" target="_blank" rel="noopener">
+          <span class="dock__ext">WhatsApp
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg>
+          </span>
+        </a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="cursor" aria-hidden="true">
+    <span class="cursor__ring"><span class="cursor__label">Hold to mend</span></span>
+    <span class="cursor__dot"></span>
+  </div>
+
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js" } }
+</script>
+
+<script type="module">
+/* ANVEDA landing v1.0.4 */
+import * as THREE from "three";
+
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const finePointer = matchMedia("(pointer: fine)").matches;
+const root = document.documentElement;
+const slot = document.getElementById("slot");
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+
+// Every visit (and every re-break) fractures differently. ?seed=N pins one for debugging.
+const qs = new URLSearchParams(location.search);
+let seed = (+qs.get("seed") || ((Math.random() * 2147483646) | 0) + 1) % 2147483647 || 1;
+const rnd = () => ((seed = (seed * 48271) % 2147483647) - 1) / 2147483646;
+const reseed = () => { seed = ((Math.random() * 2147483646) | 0) + 1; };
+for (let i = 0; i < 6; i++) rnd();
+
+/* ------------------------------------------------------------------ pointer */
+const ptr = { x: innerWidth / 2, y: innerHeight / 2, nx: 0, ny: 0, sx: 0, sy: 0, moved: false };
+addEventListener("pointermove", (e) => {
+  ptr.x = e.clientX; ptr.y = e.clientY; ptr.moved = true;
+  ptr.nx = (e.clientX / innerWidth) * 2 - 1;
+  ptr.ny = (e.clientY / innerHeight) * 2 - 1;
+}, { passive: true });
+
+/* ------------------------------------------------------------------ WebGL */
+let gl = null;
+try {
+  gl = new THREE.WebGLRenderer({ canvas: document.getElementById("gl"), antialias: true, powerPreference: "high-performance" });
+} catch (err) {
+  root.classList.add("no-gl");
+}
+
+const BG = new THREE.Color("#F2F0EB");
+const RULE = new THREE.Color("#D6D2C8");
+const R = 1, TUBE = 0.105, RS = 40, TS = 120;
+
+const scene = new THREE.Scene();
+scene.background = BG;
+const camera = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, 0.1, 100);
+camera.position.z = 10;
+
+const world = new THREE.Group();      // follows the slot, never tilts
+const bangle = new THREE.Group();     // tilts with the pointer
+world.add(bangle);
+scene.add(world);
+
+const pieces = [], shards = [];
+const gfx = { disp: 0 };
+const post = {};
+let rebuild = () => {};
+const crack = { v: reduce ? 1 : 0, vel: 0, target: reduce ? 1 : 0 };
+
+if (gl) {
+  gl.setPixelRatio(Math.min(devicePixelRatio, 1.6));
+  gl.toneMapping = THREE.NoToneMapping;   // the off-white ground must match the page exactly
+  gl.toneMappingExposure = 1.0;
+
+  /* Studio environment: an almost black room with hard white strip lights. Glass is
+     defined by what it reflects, so a grey room reads as plastic and a dark one as glass. */
+  const env = new THREE.Scene();
+  env.add(new THREE.Mesh(new THREE.SphereGeometry(20, 32, 16), new THREE.MeshBasicMaterial({ color: 0x050505, side: THREE.BackSide })));
+  const strip = (w, h, x, y, z, ry, c, k) => {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(c).multiplyScalar(k), side: THREE.DoubleSide }));
+    m.position.set(x, y, z); m.lookAt(0, 0, 0); m.rotateZ(ry); env.add(m);
+  };
+  strip(12, 3.2, 0, 9, 2, 0, 0xffffff, 7);        // overhead softbox
+  strip(0.9, 16, -8, 0, 3, 0, 0xffffff, 20);      // left hard strip
+  strip(0.5, 16, 7.5, 1, 5, 0.2, 0xffffff, 16);   // right hard strip
+  strip(14, 0.3, 0, 3.5, 8, 0, 0xffffff, 12);     // thin front strip
+  strip(10, 1.2, 0, -8, 3, 0, 0xffffff, 3);       // low card to lift the lower rim
+  strip(2, 2, -6, -3, -7, 0, 0xffffff, 10);       // small sparkle sources
+  strip(1.2, 1.2, 6, 4, -7, 0, 0xffffff, 12);
+  const pmrem = new THREE.PMREMGenerator(gl);
+  scene.environment = pmrem.fromScene(env, 0.01).texture;
+
+  /* Real glass goes dark toward its silhouette (total internal reflection). Transmission
+     alone never does that, so darken the transmitted light as the surface turns edge-on. */
+  const rimDark = (shader) => {
+    shader.fragmentShader = shader.fragmentShader.replace(
+      'vec3 outgoingLight = totalDiffuse + totalSpecular + totalEmissiveRadiance;',
+      `float nv = abs(dot(normalize(normal), normalize(geometryViewDir)));
+       totalDiffuse *= 1.0 - 0.9 * pow(1.0 - nv, 2.2);
+       vec3 outgoingLight = totalDiffuse + totalSpecular + totalEmissiveRadiance;`);
+  };
+
+  const glass = new THREE.MeshPhysicalMaterial({
+    color: 0xffffff, metalness: 0, roughness: 0, transmission: 1, thickness: 0.3, ior: 1.52,
+    specularIntensity: 1, envMapIntensity: 1.6,   // no clearcoat: a second glossy skin reads as lacquer
+    dispersion: 1.2,   // faint spectral split through the whole body; breathes with the pointer
+  });
+  glass.onBeforeCompile = rimDark;
+  // Fracture faces: where the colour concentrates
+  const edge = glass.clone();
+  edge.onBeforeCompile = rimDark;
+  Object.assign(edge, { dispersion: 6, roughness: 0.04, iridescence: 1, iridescenceIOR: 1.7, iridescenceThicknessRange: [180, 820], side: THREE.DoubleSide });
+  const shardMat = glass.clone();
+  shardMat.onBeforeCompile = rimDark;
+  Object.assign(shardMat, { dispersion: 4, iridescence: 0.55, iridescenceIOR: 1.6, iridescenceThicknessRange: [200, 700], thickness: 0.2 });
+  Object.assign(gfx, { glass, edge, shardMat });
+
+  const TAU = Math.PI * 2;
+  const smooth = (x) => { x = clamp(x); return x * x * (3 - 2 * x); };
+  const ringPoint = (v, ang) => {
+    const rr = R + TUBE * Math.cos(v);
+    return new THREE.Vector3(rr * Math.cos(ang), rr * Math.sin(ang), TUBE * Math.sin(v));
+  };
+
+  /* A conchoidal fracture face that seals the open end of a torus arc. `ob` slants the
+     cut across the section, so no break is a clean right angle. Its rim is computed with
+     the same formula as the sheared torus vertices, so there is no seam. */
+  function fractureFace(a, sign, ob) {
+    const rad = new THREE.Vector3(Math.cos(a), Math.sin(a), 0);
+    const tan = new THREE.Vector3(-Math.sin(a), Math.cos(a), 0).multiplyScalar(sign);
+    const zed = new THREE.Vector3(0, 0, 1);
+    const C = rad.clone().multiplyScalar(R);
+    const p1 = rnd() * TAU, p2 = rnd() * TAU, amp = TUBE * (0.2 + rnd() * 0.5);
+    const at = (rr, v, t) => C.clone().addScaledVector(rad, rr * Math.cos(v)).addScaledVector(zed, rr * Math.sin(v)).addScaledVector(tan, t);
+    const outer = [], mid = [];
+    for (let j = 0; j < RS; j++) {
+      const v = (j / RS) * TAU;
+      outer.push(ringPoint(v, a + (ob * TUBE * Math.sin(v)) / R));
+      const slant = sign * ob * TUBE * Math.sin(v) * 0.55;
+      mid.push(at(TUBE * (0.5 + 0.16 * Math.sin(3 * v + p2)), v, slant + amp * (0.6 * Math.sin(2 * v + p1) + 0.4 * Math.sin(5 * v + p2))));
+    }
+    const centre = at(0, 0, (rnd() - 0.3) * TUBE * 1.3);
+    const pos = [];
+    const tri = (A, B, Cc) => pos.push(A.x, A.y, A.z, B.x, B.y, B.z, Cc.x, Cc.y, Cc.z);
+    for (let j = 0; j < RS; j++) {
+      const k = (j + 1) % RS;
+      tri(outer[j], outer[k], mid[k]); tri(outer[j], mid[k], mid[j]); tri(mid[j], mid[k], centre);
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+    g.computeVertexNormals();
+    return g;
+  }
+
+  /* 4 to 6 pieces of very different sizes, with uneven gaps and slanted cuts. */
+  function makeBreaks() {
+    const n = 4 + ((rnd() * 3) | 0);
+    const w = Array.from({ length: n }, () => 0.3 + Math.pow(rnd(), 1.7) * 2.6);
+    const sum = w.reduce((x, y) => x + y, 0);
+    let a = rnd() * TAU;
+    return w.map((wi) => { const b = { a, gap: 0.008 + rnd() * 0.03, oa: (rnd() - 0.5) * 1.7, ob: (rnd() - 0.5) * 1.7 }; a += (wi / sum) * TAU; return b; });
+  }
+
+  const shardGeo = new THREE.OctahedronGeometry(1, 0);
+  function build() {
+    for (const p of pieces) { p.traverse((o) => o.geometry && o.geometry.dispose()); bangle.remove(p); }
+    for (const m of shards) bangle.remove(m);
+    pieces.length = 0; shards.length = 0;
+
+    const B = makeBreaks();
+    for (let i = 0; i < B.length; i++) {
+      const nx = B[(i + 1) % B.length];
+      const a0 = B[i].a + B[i].gap / 2;
+      const a1 = (i + 1 < B.length ? nx.a : nx.a + TAU) - nx.gap / 2;
+      const arc = a1 - a0, ob0 = B[i].ob, ob1 = nx.oa;
+      const TSeg = Math.max(14, Math.round((TS * arc) / TAU) + 10);
+      const geo = new THREE.TorusGeometry(R, TUBE, RS, TSeg, arc);
+      const P = geo.attributes.position, blend = Math.min(0.5, arc * 0.45);
+      for (let j = 0; j <= RS; j++) for (let i2 = 0; i2 <= TSeg; i2++) {
+        const u = (i2 / TSeg) * arc, v = (j / RS) * TAU;
+        const du = ((ob0 * (1 - smooth(u / blend)) + ob1 * (1 - smooth((arc - u) / blend))) * TUBE * Math.sin(v)) / R;
+        const q = ringPoint(v, u + du);
+        P.setXYZ(j * (TSeg + 1) + i2, q.x, q.y, q.z);
+      }
+      geo.rotateZ(a0);
+      const piece = new THREE.Group();
+      piece.add(new THREE.Mesh(geo, glass));
+      piece.add(new THREE.Mesh(fractureFace(a0, -1, ob0), edge));
+      piece.add(new THREE.Mesh(fractureFace(a1, 1, ob1), edge));
+      const mid = (a0 + a1) / 2;
+      piece.userData = {
+        dir: new THREE.Vector3(Math.cos(mid), Math.sin(mid), 0),
+        k: 0.5 + rnd() * 1.5,                         // how far this piece drifts out
+        z: (rnd() - 0.5) * 0.34,                      // and how far in depth
+        axis: new THREE.Vector3(rnd() - 0.5, rnd() - 0.5, (rnd() - 0.5) * 0.5).normalize(),
+        spin: 0.04 + rnd() * 0.2,
+        pr: 0.5 + rnd() * 1.1,                        // how strongly it follows the pointer
+        fs: 0.4 + rnd() * 0.6, ph: rnd() * TAU,
+      };
+      pieces.push(piece);
+      bangle.add(piece);
+    }
+
+    // Splinters, born at the fracture points, in several sizes and depths
+    for (let i = 0; i < 34; i++) {
+      const b = B[i % B.length].a + (rnd() - 0.5) * 0.25;
+      const origin = new THREE.Vector3(Math.cos(b) * R, Math.sin(b) * R, 0);
+      const out = new THREE.Vector3(Math.cos(b), Math.sin(b), 0).multiplyScalar(0.1 + rnd() * 0.65)
+        .add(new THREE.Vector3((rnd() - 0.5) * 0.4, (rnd() - 0.5) * 0.4, (rnd() - 0.5) * 1.3));
+      const m = new THREE.Mesh(shardGeo, shardMat);
+      const sz = 0.014 + Math.pow(rnd(), 2.2) * 0.075;
+      m.userData = {
+        origin, home: origin.clone().add(out), size: new THREE.Vector3(sz, sz * (0.3 + rnd() * 0.5), sz * (0.1 + rnd() * 0.2)),
+        phase: rnd() * TAU, speed: 0.4 + rnd() * 0.6, rot: new THREE.Vector3(rnd(), rnd(), rnd()).multiplyScalar(0.8),
+        push: new THREE.Vector3(),
+      };
+      m.rotation.set(rnd() * 6, rnd() * 6, rnd() * 6);
+      shards.push(m);
+      bangle.add(m);
+    }
+  }
+  rebuild = () => { reseed(); build(); };
+  build();
+
+  /* Lateral chromatic aberration: red and blue are sampled either side of green, radially
+     from the bangle's centre, so every dark rim and white highlight gets a coloured fringe. */
+  post.rt = new THREE.WebGLRenderTarget(4, 4, { type: THREE.HalfFloatType, samples: 4 });
+  post.mat = new THREE.ShaderMaterial({
+    depthTest: false, depthWrite: false, toneMapped: false,
+    uniforms: { tMap: { value: post.rt.texture }, uC: { value: new THREE.Vector2(0.5, 0.5) }, uK: { value: 0.007 }, uAsp: { value: 1 }, uRad: { value: 0.2 } },
+    vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }",
+    fragmentShader: `varying vec2 vUv; uniform sampler2D tMap; uniform vec2 uC; uniform float uK, uAsp, uRad;
+      void main(){
+        vec2 d = vUv - uC;
+        float rel = length(d * vec2(uAsp, 1.0)) / uRad;
+        float m = 1.0 - smoothstep(1.3, 2.6, rel);
+        vec3 acc = vec3(0.0), wsum = vec3(0.0);
+        for (int i = 0; i < 9; i++) {
+          float t = float(i) / 8.0;
+          vec3 w = vec3(clamp(1.0 - abs(t - 1.0) / 0.75, 0.0, 1.0), clamp(1.0 - abs(t - 0.5) / 0.75, 0.0, 1.0), clamp(1.0 - abs(t) / 0.75, 0.0, 1.0));
+          vec3 c = texture2D(tMap, vUv + d * uK * m * (t - 0.5) * 2.0).rgb;
+          acc += c * w; wsum += w;
+        }
+        gl_FragColor = vec4(acc / wsum, 1.0);
+        #include <colorspace_fragment>
+      }`,
+  });
+  post.scene = new THREE.Scene();
+  post.cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  post.scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), post.mat));
+
+  /* Swiss construction lines behind the glass; the bangle refracts them. */
+  const guides = new THREE.Group();
+  guides.position.z = -1.4;
+  const gscale = (camera.position.z + 1.4) / camera.position.z;
+  guides.scale.setScalar(gscale);
+  const fadeLine = (pts) => {
+    const g = new THREE.BufferGeometry().setFromPoints(pts.map((p) => p[0]));
+    const cols = [];
+    pts.forEach((p) => { const c = BG.clone().lerp(RULE, p[1]); cols.push(c.r, c.g, c.b); });
+    g.setAttribute("color", new THREE.Float32BufferAttribute(cols, 3));
+    return new THREE.Line(g, new THREE.LineBasicMaterial({ vertexColors: true, toneMapped: false }));
+  };
+  const V = (x, y) => new THREE.Vector3(x, y, 0);
+  guides.add(fadeLine([[V(-3.6, 0), 0], [V(-1.6, 0), 1], [V(1.6, 0), 1], [V(3.6, 0), 0]]));
+  guides.add(fadeLine([[V(0, -1.9), 0], [V(0, -1.2), 1], [V(0, 1.2), 1], [V(0, 1.9), 0]]));
+  const circ = (r) => Array.from({ length: 129 }, (_, i) => V(Math.cos(i / 128 * 6.2832) * r, Math.sin(i / 128 * 6.2832) * r));
+  guides.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(circ(R)), new THREE.LineBasicMaterial({ color: RULE, toneMapped: false })));
+  const dashed = new THREE.Line(new THREE.BufferGeometry().setFromPoints(circ(1.36)), new THREE.LineDashedMaterial({ color: RULE, dashSize: 0.03, gapSize: 0.05, toneMapped: false }));
+  dashed.computeLineDistances();
+  guides.add(dashed);
+  world.add(guides);
+  gfx.guides = guides;
+
+  /* Soft ring shadow with caustic streaks cut out of it, on a plane behind the glass. */
+  const caustic = new THREE.Mesh(
+    new THREE.PlaneGeometry(4.4, 4.4),
+    new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false,
+      uniforms: { uT: { value: 0 }, uC: { value: 0 }, uOff: { value: new THREE.Vector2(0.05, -0.06) } },
+      vertexShader: "varying vec2 vP; void main(){ vP = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
+      fragmentShader: `varying vec2 vP; uniform float uT, uC; uniform vec2 uOff;
+        float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+        float n(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+          return mix(mix(h(i), h(i + vec2(1, 0)), f.x), mix(h(i + vec2(0, 1)), h(i + vec2(1, 1)), f.x), f.y); }
+        void main(){
+          vec2 p = vP - uOff; float d = length(p); float a = atan(p.y, p.x);
+          float band = exp(-pow((d - 1.0) / 0.2, 2.0));
+          float wob = n(vec2(a * 3.0 + uT * 0.3, d * 6.0)) * 0.6 + n(vec2(a * 9.0 - uT * 0.4, d * 14.0)) * 0.4;
+          float l1 = exp(-pow((d - (0.84 + 0.06 * wob)) / 0.03, 2.0));
+          float l2 = exp(-pow((d - (1.15 - 0.05 * wob)) / 0.022, 2.0));
+          float streak = (l1 * 0.9 + l2 * 0.6) * (0.35 + wob);
+          float alpha = band * 0.10 * (1.0 - 0.85 * clamp(streak, 0.0, 1.0));
+          gl_FragColor = vec4(vec3(0.1, 0.1, 0.09), alpha * (0.45 + 0.55 * uC));
+        }`,
+    })
+  );
+  caustic.position.z = -0.6;
+  caustic.renderOrder = -1;
+  world.add(caustic);
+  gfx.caustic = caustic;
+}
+
+/* Map the HTML slot to world space so the glass sits exactly between the 4s */
+const layout = { cx: 0, cy: 0, rpx: 100, upp: 0.01, scale: 1 };
+function measure() {
+  const r = slot.getBoundingClientRect();
+  layout.cx = r.left + r.width / 2;
+  layout.cy = r.top + r.height / 2;
+  layout.rpx = r.width / 2;
+  if (!gl) return;
+  gl.setSize(innerWidth, innerHeight, false);
+  if (post.rt) {
+    const sz = gl.getDrawingBufferSize(new THREE.Vector2());
+    post.rt.setSize(sz.x, sz.y);
+    post.mat.uniforms.uAsp.value = innerWidth / innerHeight;
+  }
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  layout.upp = (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z) / innerHeight;
+  layout.scale = (layout.rpx * 0.94 * layout.upp) / (R + TUBE);
+  world.position.set((layout.cx - innerWidth / 2) * layout.upp, -(layout.cy - innerHeight / 2) * layout.upp, 0);
+  world.scale.setScalar(layout.scale);
+}
+addEventListener("resize", measure);
+addEventListener("scroll", measure, { passive: true });
+document.fonts.ready.then(measure);
+measure();
+
+/* ------------------------------------------------------------------ hold to mend */
+const cursor = document.querySelector(".cursor");
+const cursorLabel = document.querySelector(".cursor__label");
+let holding = false, overGlass = false;
+const isOverGlass = (x, y) => Math.hypot(x - layout.cx, y - layout.cy) < layout.rpx * 1.15;
+
+addEventListener("pointerdown", (e) => {
+  if (!gl || reduce || !isOverGlass(e.clientX, e.clientY)) return;
+  holding = true; crack.target = 0;
+  cursor.classList.add("is-holding"); cursorLabel.textContent = "Mending…";
+});
+const release = () => {
+  if (!holding) return;
+  holding = false;
+  const healed = 1 - crack.v;
+  if (crack.v < 0.2) rebuild();   // mended: it breaks somewhere new
+  crack.target = 1; crack.vel += 3 + healed * 7;
+  cursor.classList.remove("is-holding"); cursorLabel.textContent = "Hold to mend";
+};
+addEventListener("pointerup", release);
+addEventListener("pointercancel", release);
+addEventListener("blur", release);
+
+/* ------------------------------------------------------------------ cursor */
+if (finePointer && !reduce) root.classList.add("has-cursor");
+const ring = document.querySelector(".cursor__ring"), dot = document.querySelector(".cursor__dot");
+const cpos = { x: ptr.x, y: ptr.y };
+document.querySelectorAll("a, button").forEach((el) => {
+  el.addEventListener("pointerenter", () => cursor.classList.add("is-link", ...(el.closest(".dock") ? ["is-dark"] : [])));
+  el.addEventListener("pointerleave", () => cursor.classList.remove("is-link", "is-dark"));
+});
+
+/* ------------------------------------------------------------------ magnetic elements */
+const magnets = [...document.querySelectorAll("[data-magnetic]")].map((el) => ({ el, k: +el.dataset.magnetic, x: 0, y: 0 }));
+
+/* notify button: fill grows from where the pointer enters */
+const notifyBtn = document.getElementById("notifyBtn");
+notifyBtn.addEventListener("pointerenter", (e) => {
+  const r = notifyBtn.getBoundingClientRect();
+  notifyBtn.style.setProperty("--hx", `${e.clientX - r.left}px`);
+  notifyBtn.style.setProperty("--hy", `${e.clientY - r.top}px`);
+});
+const cta = document.getElementById("notify");
+notifyBtn.addEventListener("click", () => cta.classList.add("is-open"));
+notifyBtn.addEventListener("pointerenter", () => {
+  document.getElementById("notifyLabel").innerHTML =
+    'Notify me on WhatsApp<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg>';
+  cta.classList.add("is-open");
+}, { once: true });
+
+/* ------------------------------------------------------------------ dock */
+const dock = document.querySelector(".dock"), pill = document.querySelector(".dock__pill");
+dock.querySelectorAll(".dock__item").forEach((item) => {
+  item.addEventListener("pointerenter", () => {
+    pill.style.left = `${item.offsetLeft}px`; pill.style.width = `${item.offsetWidth}px`; pill.style.opacity = 1;
+  });
+  if (item.tagName === "BUTTON") {
+    let t;
+    item.addEventListener("click", () => {
+      item.classList.add("is-soon"); clearTimeout(t);
+      t = setTimeout(() => item.classList.remove("is-soon"), 1600);
+    });
+  }
+});
+dock.addEventListener("pointerleave", () => (pill.style.opacity = 0));
+
+/* ------------------------------------------------------------------ notes: parallax + scramble */
+const notes = [...document.querySelectorAll(".note")].map((el) => ({ el, txt: el.querySelector(".note__txt"), d: +el.dataset.depth, x: 0, y: 0 }));
+const GLYPHS = "abcdefghijklmnopqrstuvwxyz";
+function scramble(el) {
+  const final = el.dataset.text ||= el.textContent;
+  let f = 0;
+  clearInterval(el._t);
+  el._t = setInterval(() => {
+    el.textContent = [...final].map((ch, i) => (ch === " " || i < f / 2 ? ch : GLYPHS[(Math.random() * 26) | 0])).join("");
+    if (++f > final.length * 2) { clearInterval(el._t); el.textContent = final; }
+  }, 28);
+}
+notes.forEach((n) => n.el.addEventListener("pointerenter", () => !reduce && scramble(n.txt)));
+
+/* ------------------------------------------------------------------ 4s respond to proximity */
+const fours = [...document.querySelectorAll("[data-four]")].map((el) => ({ el, w: 800, d: 100 }));
+
+/* ------------------------------------------------------------------ intro */
+const t0 = performance.now();
+let broken = reduce;
+requestAnimationFrame(() => requestAnimationFrame(() => {
+  root.classList.remove("is-intro");
+  document.querySelectorAll(".four i").forEach((el, i) => (el.style.transitionDelay = `${0.1 + i * 0.12}s`));
+  notes.forEach((n, i) => { n.el.style.transitionDelay = `${1.7 + i * 0.12}s`; setTimeout(() => !reduce && scramble(n.txt), 1700 + i * 120); });
+  document.querySelector(".cta").style.transitionDelay = "1.5s";
+  document.querySelector(".dock").style.transitionDelay = "1.9s";
+  document.querySelectorAll("header > *").forEach((el) => (el.style.transitionDelay = ".6s"));
+  setTimeout(() => notes.forEach((n) => (n.el.style.transitionDelay = "0s")), 3200);
+}));
+
+/* ------------------------------------------------------------------ frame loop */
+const tmp = new THREE.Vector3();
+let last = performance.now();
+gfx.px = ptr.x; gfx.py = ptr.y;
+const tq = new THREE.Quaternion(), te = new THREE.Euler();
+function frame(now) {
+  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  const t = (now - t0) / 1000;
+  const k = 1 - Math.pow(0.0009, dt); // frame-rate independent smoothing
+
+  ptr.sx = lerp(ptr.sx, ptr.moved && !reduce ? ptr.nx : 0, k * 0.6);
+  ptr.sy = lerp(ptr.sy, ptr.moved && !reduce ? ptr.ny : 0, k * 0.6);
+
+  // cursor
+  cpos.x = lerp(cpos.x, ptr.x, 1 - Math.pow(0.000001, dt));
+  cpos.y = lerp(cpos.y, ptr.y, 1 - Math.pow(0.000001, dt));
+  dot.style.transform = `translate(${ptr.x}px, ${ptr.y}px)`;
+  ring.style.transform = `translate(${cpos.x}px, ${cpos.y}px)`;
+  const og = gl && !reduce && isOverGlass(ptr.x, ptr.y) && ptr.moved;
+  if (og !== overGlass) { overGlass = og; cursor.classList.toggle("is-glass", og || holding); }
+  if (holding) cursor.classList.add("is-glass");
+
+  // magnets
+  for (const m of magnets) {
+    const r = m.el.getBoundingClientRect();
+    const dx = ptr.x - (r.left + r.width / 2 - m.x), dy = ptr.y - (r.top + r.height / 2 - m.y);
+    const near = Math.hypot(dx, dy) < Math.max(r.width, r.height) * 0.9 && !reduce;
+    m.x = lerp(m.x, near ? dx * m.k : 0, k * 0.5);
+    m.y = lerp(m.y, near ? dy * m.k : 0, k * 0.5);
+    m.el.style.transform = `translate(${m.x.toFixed(2)}px, ${m.y.toFixed(2)}px)`;
+  }
+
+  // notes drift against the pointer, nearer ones more
+  for (const n of notes) {
+    n.x = lerp(n.x, -ptr.sx * 26 * n.d, k * 0.5);
+    n.y = lerp(n.y, -ptr.sy * 18 * n.d, k * 0.5);
+    n.txt.style.transform = `translate(${n.x.toFixed(2)}px, ${n.y.toFixed(2)}px)`;
+  }
+
+  // pointer speed drives the colour split; the 4s sit on a deeper plane than the glass
+  const spd = clamp(Math.hypot(ptr.x - gfx.px, ptr.y - gfx.py) / (Math.max(dt, 0.001) * 2400));
+  gfx.px = ptr.x; gfx.py = ptr.y;
+  document.querySelectorAll(".four").forEach((el) => { el.style.transform = reduce ? "" : `translate(${(-ptr.sx * 9).toFixed(2)}px, ${(-ptr.sy * 6).toFixed(2)}px)`; });
+
+  // 4s get heavier and wider as the pointer approaches
+  for (const f of fours) {
+    const r = f.el.getBoundingClientRect();
+    const p = reduce || !ptr.moved ? 0 : clamp(1 - Math.hypot(ptr.x - (r.left + r.width / 2), ptr.y - (r.top + r.height / 2)) / (innerWidth * 0.42));
+    f.w = lerp(f.w, 780 + p * p * 120, k * 0.35);
+    f.d = lerp(f.d, 100 + p * p * 16, k * 0.35);
+    f.el.style.fontVariationSettings = `"wght" ${f.w.toFixed(1)}, "wdth" ${f.d.toFixed(2)}`;
+  }
+
+  if (gl) {
+    // the fracture: whole for a beat, then it breaks
+    if (!broken && t > 1.35) { broken = true; crack.target = 1; crack.vel = 9; }
+    const acc = 140 * (crack.target - crack.v) - 11 * crack.vel;
+    crack.vel += acc * dt; crack.v += crack.vel * dt;
+    const c = Math.max(0, crack.v);
+
+    // intro scale-in
+    const intro = reduce ? 1 : 1 - Math.pow(1 - clamp((t - 0.35) / 1.1), 4);
+    bangle.scale.setScalar(0.86 + 0.14 * intro);
+    bangle.visible = intro > 0.001;
+
+    const hover = overGlass && !holding ? 1 : 0;
+    bangle.userData.h = lerp(bangle.userData.h || 0, hover, k * 0.3);
+    const spread = 0.055 * c + 0.03 * bangle.userData.h * c;
+
+    bangle.rotation.x = -0.22 + ptr.sy * 0.5 + (reduce ? 0 : Math.sin(t * 0.45) * 0.05);
+    bangle.rotation.y = ptr.sx * 0.55 + (reduce ? 0 : Math.cos(t * 0.33) * 0.07) + (1 - intro) * 0.8;
+    bangle.rotation.z = reduce ? 0 : Math.sin(t * 0.12) * 0.12;
+
+    // light slides across the glass as the pointer moves
+    scene.environmentRotation.set(ptr.sy * 0.35, ptr.sx * 0.9 + (reduce ? 0 : t * 0.02), 0);
+    gfx.disp = lerp(gfx.disp, clamp(spd * 1.3 + Math.hypot(ptr.sx, ptr.sy) * 0.5), k * 0.4);
+    gfx.glass.dispersion = 0.9 + gfx.disp * 2.6;
+    gfx.edge.dispersion = 6 + gfx.disp * 10;
+    gfx.shardMat.dispersion = 4 + gfx.disp * 6;
+
+    // parallax: guides sit behind the glass, the shadow plane just behind it
+    gfx.guides.position.x = -ptr.sx * 0.16; gfx.guides.position.y = ptr.sy * 0.11;
+    const cu = gfx.caustic.material.uniforms;
+    cu.uT.value = t; cu.uC.value = c;
+    cu.uOff.value.set(0.05 - ptr.sx * 0.13, -0.06 + ptr.sy * 0.1);
+
+    for (const p of pieces) {
+      const u = p.userData;
+      const fl = reduce ? 0 : Math.sin(t * u.fs + u.ph);
+      p.position.copy(u.dir).multiplyScalar(spread * u.k + fl * 0.006 * c);
+      p.position.z = (u.z + fl * 0.02) * c;
+      p.quaternion.setFromAxisAngle(u.axis, (u.spin + fl * 0.02) * c);
+      tq.setFromEuler(te.set(ptr.sy * u.pr * 0.16 * c, ptr.sx * u.pr * 0.2 * c, 0));
+      p.quaternion.premultiply(tq);
+    }
+
+    // mouse in bangle-local space (good enough with gentle tilt)
+    const mx = (ptr.x - layout.cx) * layout.upp / layout.scale;
+    const my = -(ptr.y - layout.cy) * layout.upp / layout.scale;
+    for (const s of shards) {
+      const u = s.userData;
+      tmp.copy(u.home);
+      if (!reduce) {
+        tmp.x += Math.sin(t * u.speed + u.phase) * 0.05;
+        tmp.y += Math.cos(t * u.speed * 0.8 + u.phase) * 0.05;
+        tmp.z += Math.sin(t * u.speed * 0.6 + u.phase * 2) * 0.08;
+      }
+      const dx = tmp.x - mx, dy = tmp.y - my, d = Math.hypot(dx, dy);
+      const f = ptr.moved && !reduce ? clamp(1 - d / 0.6) : 0;
+      u.push.x = lerp(u.push.x, (dx / (d || 1)) * f * 0.45, k * 0.25);
+      u.push.y = lerp(u.push.y, (dy / (d || 1)) * f * 0.45, k * 0.25);
+      s.position.copy(u.origin).lerp(tmp, c).add(u.push);
+      s.scale.copy(u.size).multiplyScalar(clamp(c * 1.4, 0, 1.15));
+      s.visible = c > 0.02;
+      if (!reduce) { s.rotation.x += u.rot.x * dt; s.rotation.y += u.rot.y * dt; s.rotation.z += u.rot.z * dt * 0.5; }
+    }
+
+    // colour fringe grows with pointer speed and tilt, never fully off
+    const pu = post.mat.uniforms;
+    pu.uC.value.set(layout.cx / innerWidth, 1 - layout.cy / innerHeight);
+    pu.uRad.value = (layout.rpx * 0.94) / innerHeight;
+    pu.uK.value = 0.0075 + gfx.disp * 0.02;
+    gl.setRenderTarget(post.rt);
+    gl.render(scene, camera);
+    gl.setRenderTarget(null);
+    gl.render(post.scene, post.cam);
+  }
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+console.info("ANVEDA landing v1.0.1");
+</script>
+</body>
+</html>
