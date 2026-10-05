@@ -27,6 +27,8 @@ export interface Group {
 
 /** One colourway of a product: its own photo, and a swatch hex when we know it. */
 export interface Variant {
+  /** CMS 2.0's own variant row id — used only for "notify me when back in stock". */
+  id: number;
   colour: string;
   image: string;
   /** null when the shade has no single representative colour ("Assorted"). */

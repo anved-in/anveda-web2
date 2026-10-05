@@ -208,6 +208,24 @@ async function handleCartCapture(request, env) {
   return json(data, res.status);
 }
 
+// "Notify me when back in stock" capture on a sold-out colourway.
+async function handleNotifyStock(request, env) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ ok: false, error: "invalid JSON" }, 400);
+  }
+  if (!env.CMS) return json({ ok: false, error: "not configured" }, 500);
+  const res = await env.CMS.fetch("https://internal/notify-stock", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({ ok: false, error: "bad response" }));
+  return json(data, res.status);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -242,6 +260,13 @@ export default {
     if (url.pathname === "/api/cart-capture" && request.method === "POST") {
       try {
         return await handleCartCapture(request, env);
+      } catch (e) {
+        return json({ ok: false, error: "internal error" }, 500);
+      }
+    }
+    if (url.pathname === "/api/notify-stock" && request.method === "POST") {
+      try {
+        return await handleNotifyStock(request, env);
       } catch (e) {
         return json({ ok: false, error: "internal error" }, 500);
       }

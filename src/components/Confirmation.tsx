@@ -52,6 +52,21 @@ export default function Confirmation() {
           Please keep this reference and quote it if you need to reach us.
         </p>
 
+        <div className="mx-auto mt-7 max-w-[480px] border border-line-strong bg-cream-2 px-5 py-4 text-left">
+          <p className="text-[12.5px] font-bold uppercase tracking-[0.1em] text-ink">
+            Before you open the package
+          </p>
+          <p className="mt-1.5 text-[13px] leading-relaxed text-ink-soft">
+            Please record a continuous unboxing video, starting before you open the box. If
+            anything arrives broken or damaged, this video is required to process a replacement
+            or refund — see our{" "}
+            <Link href="/shipping" className="text-maroon underline underline-offset-2">
+              shipping &amp; returns policy
+            </Link>
+            .
+          </p>
+        </div>
+
         <div className="mt-9 flex flex-wrap justify-center gap-3.5">
           <Link
             href="/shop/glass/"

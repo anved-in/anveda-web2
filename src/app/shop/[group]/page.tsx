@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "@/components/Link";
-import ListingCard from "@/components/ListingCard";
+import ShopBrowser from "@/components/ShopBrowser";
 import {
   groups,
   groupBySlug,
@@ -79,42 +79,14 @@ export default async function GroupPage({
         </div>
       </section>
 
-      {ranges.map((c, i) => {
-        const items = listingsIn(c.slug);
-        return (
-          <section
-            key={c.slug}
-            id={c.slug}
-            className={[
-              "scroll-mt-[64px] px-4 py-12 sm:px-6 md:py-16",
-              i % 2 === 1 ? "bg-cream-2" : "",
-            ].join(" ")}
-          >
-            <div className="mx-auto max-w-[1320px]">
-              <div className="mb-8 border-b border-line pb-5">
-                <span className="eyebrow">
-                  {items.length} {items.length === 1 ? "design" : "designs"}
-                </span>
-                <h2 className="mt-2.5 font-display text-[clamp(24px,3vw,38px)]">
-                  {c.name}
-                </h2>
-                <p className="mt-3 max-w-[60ch] text-[15px] text-ink-soft">{c.blurb}</p>
-              </div>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 xl:grid-cols-4">
-                {items.map((l, j) => (
-                  <ListingCard
-                    key={l.variant.colour}
-                    l={l}
-                    delay={(j % 4) * 70}
-                    priority={i === 0 && j < 4}
-                    withFamily={false}
-                  />
-                ))}
-              </div>
-            </div>
-          </section>
-        );
-      })}
+      <ShopBrowser
+        sections={ranges.map((c) => ({
+          slug: c.slug,
+          name: c.name,
+          blurb: c.blurb,
+          items: listingsIn(c.slug),
+        }))}
+      />
     </>
   );
 }

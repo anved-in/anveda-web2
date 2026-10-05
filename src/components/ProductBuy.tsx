@@ -31,6 +31,8 @@ export default function ProductBuy({
   const [qty, setQty] = useState(1);
   const [err, setErr] = useState(false);
   const [added, setAdded] = useState(false);
+  const [notifyEmail, setNotifyEmail] = useState("");
+  const [notifyState, setNotifyState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const { add, setOpen: setBagOpen } = useCart();
 
   // "pair" / "set of 4" / "dozen" — what one unit of this colourway contains.
@@ -44,6 +46,23 @@ export default function ProductBuy({
     add(p.id, size, qty, variant.colour);
     setAdded(true);
     window.setTimeout(() => setAdded(false), 2200);
+  };
+
+  const onNotify = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!notifyEmail.includes("@")) return;
+    setNotifyState("sending");
+    try {
+      const res = await fetch("/api/notify-stock", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ variantId: variant.id, email: notifyEmail }),
+      });
+      const data = await res.json();
+      setNotifyState(data.ok ? "done" : "error");
+    } catch {
+      setNotifyState("error");
+    }
   };
 
   return (
@@ -163,65 +182,104 @@ export default function ProductBuy({
         )}
       </div>
 
-      {/* ---------------------------------------------------------- quantity */}
-      <div className="mt-7">
-        <span className="text-[12px] font-bold uppercase tracking-[0.18em]">
-          Quantity
-          {/* What one unit actually contains. Designs come as pairs, sets of
-              four or dozens, so "1" is ambiguous without this. */}
-          {pack && (
-            <span className="ml-1.5 font-medium normal-case tracking-normal text-ink-soft">
-              ({pack})
+      {variant.inStock ? (
+        <>
+          {/* -------------------------------------------------------- quantity */}
+          <div className="mt-7">
+            <span className="text-[12px] font-bold uppercase tracking-[0.18em]">
+              Quantity
+              {/* What one unit actually contains. Designs come as pairs, sets of
+                  four or dozens, so "1" is ambiguous without this. */}
+              {pack && (
+                <span className="ml-1.5 font-medium normal-case tracking-normal text-ink-soft">
+                  ({pack})
+                </span>
+              )}
             </span>
+            <div className="mt-3 inline-flex items-center border border-line-strong bg-white">
+              <button
+                type="button"
+                onClick={() => setQty((q) => Math.max(1, q - 1))}
+                className="cursor-pointer px-4 py-3 text-[17px] leading-none"
+                aria-label="Decrease quantity"
+              >
+                −
+              </button>
+              <span className="min-w-[42px] text-center text-[15px]">{qty}</span>
+              <button
+                type="button"
+                onClick={() => setQty((q) => Math.min(99, q + 1))}
+                className="cursor-pointer px-4 py-3 text-[17px] leading-none"
+                aria-label="Increase quantity"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={onAdd}
+            className="mt-8 w-full cursor-pointer bg-ink py-[18px] text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2"
+          >
+            {added ? "Added to bag ✓" : `Add to bag — ${inr(variantPrice(p, variant) * qty)}`}
+          </button>
+          {/* The bag stays closed on purpose: someone building an order adds
+              several designs in a row, and a drawer covering the page after each
+              one forced them back out to carry on. The bag icon's count confirms
+              the add; this link is the way in when they are done. */}
+          <p aria-live="polite" className="mt-3 h-[18px] text-center text-[12.5px] text-ink-soft">
+            {added && (
+              <button
+                type="button"
+                onClick={() => setBagOpen(true)}
+                className="underline underline-offset-2 hover:text-ink"
+              >
+                View bag
+              </button>
+            )}
+          </p>
+
+          <p className="mt-3.5 text-center text-[12.5px] text-ink-soft">
+            Secure checkout with UPI, card or netbanking.
+          </p>
+        </>
+      ) : (
+        <div className="mt-8 border border-line-strong bg-cream-2 px-5 py-6 text-center">
+          <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-ink">
+            Sold out — {colourLabel(p, variant)}
+          </p>
+          <p className="mt-1.5 text-[12.5px] text-ink-soft">
+            Leave your email and we&rsquo;ll let you know the moment this shade is back.
+          </p>
+          {notifyState === "done" ? (
+            <p className="mt-4 text-[13px] font-semibold text-ink">You&rsquo;re on the list ✓</p>
+          ) : (
+            <form onSubmit={onNotify} className="mt-4 flex gap-2">
+              <input
+                type="email"
+                required
+                value={notifyEmail}
+                onChange={(e) => setNotifyEmail(e.target.value)}
+                placeholder="you@example.com"
+                className="min-w-0 flex-1 border border-line-strong bg-white px-3.5 py-2.5 text-[13px] outline-none focus:border-ink"
+              />
+              <button
+                type="submit"
+                disabled={notifyState === "sending"}
+                className="shrink-0 cursor-pointer bg-ink px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] text-cream transition-opacity hover:bg-espresso-2 disabled:opacity-60"
+              >
+                {notifyState === "sending" ? "…" : "Notify me"}
+              </button>
+            </form>
           )}
-        </span>
-        <div className="mt-3 inline-flex items-center border border-line-strong bg-white">
-          <button
-            type="button"
-            onClick={() => setQty((q) => Math.max(1, q - 1))}
-            className="cursor-pointer px-4 py-3 text-[17px] leading-none"
-            aria-label="Decrease quantity"
-          >
-            −
-          </button>
-          <span className="min-w-[42px] text-center text-[15px]">{qty}</span>
-          <button
-            type="button"
-            onClick={() => setQty((q) => Math.min(99, q + 1))}
-            className="cursor-pointer px-4 py-3 text-[17px] leading-none"
-            aria-label="Increase quantity"
-          >
-            +
-          </button>
+          {notifyState === "error" && (
+            <p role="alert" className="mt-2 text-[12px] text-[#a33a2f]">
+              Something went wrong — please try again.
+            </p>
+          )}
         </div>
-      </div>
-
-      <button
-        type="button"
-        onClick={onAdd}
-        className="mt-8 w-full cursor-pointer bg-ink py-[18px] text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2"
-      >
-        {added ? "Added to bag ✓" : `Add to bag — ${inr(variantPrice(p, variant) * qty)}`}
-      </button>
-      {/* The bag stays closed on purpose: someone building an order adds
-          several designs in a row, and a drawer covering the page after each
-          one forced them back out to carry on. The bag icon's count confirms
-          the add; this link is the way in when they are done. */}
-      <p aria-live="polite" className="mt-3 h-[18px] text-center text-[12.5px] text-ink-soft">
-        {added && (
-          <button
-            type="button"
-            onClick={() => setBagOpen(true)}
-            className="underline underline-offset-2 hover:text-ink"
-          >
-            View bag
-          </button>
-        )}
-      </p>
-
-      <p className="mt-3.5 text-center text-[12.5px] text-ink-soft">
-        Secure checkout with UPI, card or netbanking.
-      </p>
+      )}
     </div>
   );
 }

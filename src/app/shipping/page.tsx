@@ -24,7 +24,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "My bangles arrived broken. What now?",
-    a: "Send us a photo on WhatsApp within 48 hours of delivery, with the parcel and packing visible. Breakages in transit are replaced free or refunded in full — that is on us, not on you.",
+    a: "Please record a continuous unboxing video, starting before you open the package — this is required to process a damage claim, since it's the only way to tell a transit breakage from damage after the fact. Send it to us on WhatsApp within 48 hours of delivery. Breakages in transit are replaced free or refunded in full — that is on us, not on you.",
   },
   {
     q: "Can I return something I simply did not like?",
