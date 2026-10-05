@@ -138,6 +138,7 @@
    "story": "The border is where the work shows. Kundan set by hand, pearl-and-gold stone, or the premium non-bendable stones — the body stays plain so the edge can carry the piece.",
    "variants": [
     {
+     "id": 1,
      "colour": "Kundan Border Bangles",
      "image": "border-bangles-kundan-border-bangles.webp",
      "hex": "#e2d8c4",
@@ -154,6 +155,7 @@
      "zoom": 1
     },
     {
+     "id": 2,
      "colour": "Pearl Gold Stone Glass Bangles",
      "image": "border-bangles-pearl-gold-stone-glass-bangles.webp",
      "hex": "#e2d8c4",
@@ -170,6 +172,7 @@
      "zoom": 1
     },
     {
+     "id": 3,
      "colour": "Premium non Bendable Diamond Stones",
      "image": "border-bangles-premium-non-bendable-diamond-stones.webp",
      "hex": "#e2d8c4",
@@ -186,6 +189,7 @@
      "zoom": 1
     },
     {
+     "id": 4,
      "colour": "Premium non Bendable Gold Stones",
      "image": "border-bangles-premium-non-bendable-gold-stones.webp",
      "hex": "#e2d8c4",
@@ -224,6 +228,7 @@
    "story": "Our most detailed glass work — each bangle cut and set so the light breaks across it rather than sitting flat.",
    "variants": [
     {
+     "id": 5,
      "colour": "Aqua",
      "image": "intricate-glass-bangle-aqua.webp",
      "hex": "#0fd2c5",
@@ -240,6 +245,7 @@
      "zoom": 1.71
     },
     {
+     "id": 6,
      "colour": "Champagne Gold",
      "image": "intricate-glass-bangle-champagne-gold.webp",
      "hex": "#dbc08a",
@@ -256,6 +262,7 @@
      "zoom": 1
     },
     {
+     "id": 7,
      "colour": "Coffee",
      "image": "intricate-glass-bangle-coffee.webp",
      "hex": "#4f1212",
@@ -272,6 +279,7 @@
      "zoom": 1
     },
     {
+     "id": 8,
      "colour": "Emerald Green",
      "image": "intricate-glass-bangle-emerald-green.webp",
      "hex": "#026600",
@@ -288,6 +296,7 @@
      "zoom": 1
     },
     {
+     "id": 9,
      "colour": "Mocha",
      "image": "intricate-glass-bangle-mocha.webp",
      "hex": "#7d5608",
@@ -303,6 +312,7 @@
      "zoom": 1
     },
     {
+     "id": 10,
      "colour": "Parrot Green",
      "image": "intricate-glass-bangle-parrot-green.webp",
      "hex": "#35d016",
@@ -319,6 +329,7 @@
      "zoom": 1
     },
     {
+     "id": 11,
      "colour": "Purple",
      "image": "intricate-glass-bangle-purple.webp",
      "hex": "#c75dee",
@@ -335,6 +346,7 @@
      "zoom": 1
     },
     {
+     "id": 12,
      "colour": "Radium",
      "image": "intricate-glass-bangle-radium.webp",
      "hex": "#037981",
@@ -351,6 +363,7 @@
      "zoom": 1
     },
     {
+     "id": 13,
      "colour": "Rose Pink",
      "image": "intricate-glass-bangle-rose-pink.webp",
      "hex": "#fd729c",
@@ -366,6 +379,7 @@
      "zoom": 1
     },
     {
+     "id": 14,
      "colour": "Royal Blue",
      "image": "intricate-glass-bangle-royal-blue.webp",
      "hex": "#011ad5",
@@ -380,6 +394,7 @@
      "zoom": 1
     },
     {
+     "id": 15,
      "colour": "Sky Blue",
      "image": "intricate-glass-bangle-sky-blue.webp",
      "hex": "#17deda",
@@ -395,6 +410,7 @@
      "zoom": 1
     },
     {
+     "id": 16,
      "colour": "Tangerine",
      "image": "intricate-glass-bangle-tangerine.webp",
      "hex": "#eda20c",
@@ -430,6 +446,7 @@
    "story": "Clear, candy-bright glass with nothing else going on. They stack with everything, which is exactly the point.",
    "variants": [
     {
+     "id": 17,
      "colour": "Dark Green",
      "image": "jelly-bangles-glass-bangles-dark-green.webp",
      "hex": "#4b8406",
@@ -445,6 +462,7 @@
      "zoom": 1
     },
     {
+     "id": 18,
      "colour": "Light Green",
      "image": "jelly-bangles-glass-bangles-light-green.webp",
      "hex": "#adf0ae",
@@ -460,6 +478,7 @@
      "zoom": 1
     },
     {
+     "id": 19,
      "colour": "Multicolor",
      "image": "jelly-bangles-glass-bangles-multicolor.webp",
      "hex": "#c7c5c2",
@@ -475,6 +494,7 @@
      "zoom": 1
     },
     {
+     "id": 20,
      "colour": "Orange",
      "image": "jelly-bangles-glass-bangles-orange.webp",
      "hex": "#e2b150",
@@ -490,6 +510,7 @@
      "zoom": 1
     },
     {
+     "id": 21,
      "colour": "Red",
      "image": "jelly-bangles-glass-bangles-red.webp",
      "hex": "#e81111",
@@ -505,6 +526,7 @@
      "zoom": 1
     },
     {
+     "id": 22,
      "colour": "Sky Blue",
      "image": "jelly-bangles-glass-bangles-sky-blue.webp",
      "hex": "#17deda",
@@ -520,6 +542,7 @@
      "zoom": 1
     },
     {
+     "id": 23,
      "colour": "Teal",
      "image": "jelly-bangles-glass-bangles-teal.webp",
      "hex": "#2faca4",
@@ -535,6 +558,7 @@
      "zoom": 1
     },
     {
+     "id": 24,
      "colour": "White Acrylic",
      "image": "jelly-bangles-glass-bangles-white-acrylic.webp",
      "hex": "#fafafa",
@@ -572,6 +596,7 @@
    "story": "Built as a palette rather than single colours — every shade in the range is made to sit next to every other one.",
    "variants": [
     {
+     "id": 25,
      "colour": "Gold",
      "image": "pastel-palette-glass-bangle-gold.webp",
      "hex": "#cbb994",
@@ -588,6 +613,7 @@
      "zoom": 1
     },
     {
+     "id": 26,
      "colour": "Green",
      "image": "pastel-palette-glass-bangle-green.webp",
      "hex": "#7cd76a",
@@ -604,6 +630,7 @@
      "zoom": 1
     },
     {
+     "id": 27,
      "colour": "Ivory",
      "image": "pastel-palette-glass-bangle-ivory.webp",
      "hex": "#eeeae2",
@@ -620,6 +647,7 @@
      "zoom": 1
     },
     {
+     "id": 28,
      "colour": "Mauve",
      "image": "pastel-palette-glass-bangle-mauve.webp",
      "hex": "#cc94c1",
@@ -636,6 +664,7 @@
      "zoom": 1
     },
     {
+     "id": 29,
      "colour": "Peach",
      "image": "pastel-palette-glass-bangle-peach.webp",
      "hex": "#f4d495",
@@ -652,6 +681,7 @@
      "zoom": 1
     },
     {
+     "id": 30,
      "colour": "Pink",
      "image": "pastel-palette-glass-bangle-pink.webp",
      "hex": "#e599db",
@@ -668,6 +698,7 @@
      "zoom": 1
     },
     {
+     "id": 31,
      "colour": "Pista",
      "image": "pastel-palette-glass-bangle-pista.webp",
      "hex": "#aef494",
@@ -684,6 +715,7 @@
      "zoom": 1
     },
     {
+     "id": 32,
      "colour": "Purple",
      "image": "pastel-palette-glass-bangle-purple.webp",
      "hex": "#c75dee",
@@ -700,6 +732,7 @@
      "zoom": 1
     },
     {
+     "id": 33,
      "colour": "Sky Blue",
      "image": "pastel-palette-glass-bangle-sky-blue.webp",
      "hex": "#17deda",
@@ -739,6 +772,7 @@
    "story": "Stones set petal-wise around the full round, so the bangle keeps catching light from whatever angle you see it.",
    "variants": [
     {
+     "id": 34,
      "colour": "Burnt Orange",
      "image": "petal-stone-glass-bangle-burnt-orange.webp",
      "hex": "#fb9404",
@@ -756,6 +790,7 @@
      "zoom": 1
     },
     {
+     "id": 35,
      "colour": "Carrot",
      "image": "petal-stone-glass-bangle-carrot.webp",
      "hex": "#ff8d5c",
@@ -773,6 +808,7 @@
      "zoom": 1
     },
     {
+     "id": 36,
      "colour": "Classic Blue",
      "image": "petal-stone-glass-bangle-classic-blue.webp",
      "hex": "#01aed0",
@@ -790,6 +826,7 @@
      "zoom": 1
     },
     {
+     "id": 37,
      "colour": "Dark Green",
      "image": "petal-stone-glass-bangle-dark-green.webp",
      "hex": "#4b8406",
@@ -807,6 +844,7 @@
      "zoom": 1
     },
     {
+     "id": 38,
      "colour": "Dark Pink",
      "image": "petal-stone-glass-bangle-dark-pink.webp",
      "hex": "#f20779",
@@ -824,6 +862,7 @@
      "zoom": 1
     },
     {
+     "id": 39,
      "colour": "Deep Coffee",
      "image": "petal-stone-glass-bangle-deep-coffee.webp",
      "hex": "#543b08",
@@ -841,6 +880,7 @@
      "zoom": 1
     },
     {
+     "id": 40,
      "colour": "Emerald Green",
      "image": "petal-stone-glass-bangle-emerald-green.webp",
      "hex": "#026600",
@@ -858,6 +898,7 @@
      "zoom": 1
     },
     {
+     "id": 41,
      "colour": "Ivory",
      "image": "petal-stone-glass-bangle-ivory.webp",
      "hex": "#eeeae2",
@@ -875,6 +916,7 @@
      "zoom": 1
     },
     {
+     "id": 42,
      "colour": "Lemon Yellow",
      "image": "petal-stone-glass-bangle-lemon-yellow.webp",
      "hex": "#eaed07",
@@ -892,6 +934,7 @@
      "zoom": 1
     },
     {
+     "id": 43,
      "colour": "Magenta",
      "image": "petal-stone-glass-bangle-magenta.webp",
      "hex": "#ea34b0",
@@ -909,6 +952,7 @@
      "zoom": 1
     },
     {
+     "id": 44,
      "colour": "Maroon",
      "image": "petal-stone-glass-bangle-maroon.webp",
      "hex": "#8b2328",
@@ -926,6 +970,7 @@
      "zoom": 1
     },
     {
+     "id": 45,
      "colour": "Multicolor",
      "image": "petal-stone-glass-bangle-multicolor.webp",
      "hex": "#c7c5c2",
@@ -943,6 +988,7 @@
      "zoom": 1
     },
     {
+     "id": 46,
      "colour": "Mustard Yellow",
      "image": "petal-stone-glass-bangle-mustard-yellow.webp",
      "hex": "#d9b05e",
@@ -960,6 +1006,7 @@
      "zoom": 1
     },
     {
+     "id": 47,
      "colour": "Parrot Green",
      "image": "petal-stone-glass-bangle-parrot-green.webp",
      "hex": "#35d016",
@@ -977,6 +1024,7 @@
      "zoom": 1
     },
     {
+     "id": 48,
      "colour": "Pista",
      "image": "petal-stone-glass-bangle-pista.webp",
      "hex": "#aef494",
@@ -994,6 +1042,7 @@
      "zoom": 1
     },
     {
+     "id": 49,
      "colour": "Sky Blue",
      "image": "petal-stone-glass-bangle-sky-blue.webp",
      "hex": "#17deda",
@@ -1034,6 +1083,7 @@
    "story": "Phool — flower. The motif is worked into the glass itself, so it holds its colour and never lifts.",
    "variants": [
     {
+     "id": 50,
      "colour": "Black",
      "image": "phool-glass-bangle-black.webp",
      "hex": "#130101",
@@ -1051,6 +1101,7 @@
      "zoom": 1
     },
     {
+     "id": 51,
      "colour": "Champagne Gold",
      "image": "phool-glass-bangle-champagne-gold.webp",
      "hex": "#dbc08a",
@@ -1068,6 +1119,7 @@
      "zoom": 1
     },
     {
+     "id": 52,
      "colour": "Dark Pink",
      "image": "phool-glass-bangle-dark-pink.webp",
      "hex": "#f20779",
@@ -1085,6 +1137,7 @@
      "zoom": 1
     },
     {
+     "id": 53,
      "colour": "Mehendi Green",
      "image": "phool-glass-bangle-mehendi-green.webp",
      "hex": "#4a7e16",
@@ -1102,6 +1155,7 @@
      "zoom": 1
     },
     {
+     "id": 54,
      "colour": "Pastel Pink",
      "image": "phool-glass-bangle-pastel-pink.webp",
      "hex": "#dcb7d4",
@@ -1119,6 +1173,7 @@
      "zoom": 1
     },
     {
+     "id": 55,
      "colour": "Purple",
      "image": "phool-glass-bangle-purple.webp",
      "hex": "#c75dee",
@@ -1136,6 +1191,7 @@
      "zoom": 1
     },
     {
+     "id": 56,
      "colour": "Red",
      "image": "phool-glass-bangle-red.webp",
      "hex": "#e81111",
@@ -1153,6 +1209,7 @@
      "zoom": 1
     },
     {
+     "id": 57,
      "colour": "Snow",
      "image": "phool-glass-bangle-snow.webp",
      "hex": "#eee5d3",
@@ -1170,6 +1227,7 @@
      "zoom": 1
     },
     {
+     "id": 58,
      "colour": "Wine",
      "image": "phool-glass-bangle-wine.webp",
      "hex": "#86158e",
@@ -1210,6 +1268,7 @@
    "story": "The widest, most worked pieces we carry. One of these and a few slim side bangles is a full stack.",
    "variants": [
     {
+     "id": 59,
      "colour": "Elephant Design",
      "image": "statement-bangles-elephant-design.webp",
      "hex": "#e2d8c4",
@@ -1225,6 +1284,7 @@
      "zoom": 1
     },
     {
+     "id": 60,
      "colour": "Enamel Lakshmi",
      "image": "statement-bangles-enamel-lakshmi.webp",
      "hex": "#e2d8c4",
@@ -1240,6 +1300,7 @@
      "zoom": 1
     },
     {
+     "id": 61,
      "colour": "Floral Stone",
      "image": "statement-bangles-floral-stone.webp",
      "hex": "#e2d8c4",
@@ -1256,6 +1317,7 @@
      "zoom": 1
     },
     {
+     "id": 62,
      "colour": "Floral Stone Premium",
      "image": "statement-bangles-floral-stone-premium.webp",
      "hex": "#e2d8c4",
@@ -1272,6 +1334,7 @@
      "zoom": 1
     },
     {
+     "id": 63,
      "colour": "Green Floral Stone",
      "image": "statement-bangles-green-floral-stone.webp",
      "hex": "#e2d8c4",
@@ -1288,6 +1351,7 @@
      "zoom": 1
     },
     {
+     "id": 64,
      "colour": "Lakshmi Centre Bangle",
      "image": "statement-bangles-lakshmi-centre-bangle.webp",
      "hex": "#e2d8c4",
@@ -1303,6 +1367,7 @@
      "zoom": 1
     },
     {
+     "id": 65,
      "colour": "Lakshmi Centre Bangle with Pearl",
      "image": "statement-bangles-lakshmi-centre-bangle-with-pearl.webp",
      "hex": "#e2d8c4",
@@ -1318,6 +1383,7 @@
      "zoom": 1
     },
     {
+     "id": 66,
      "colour": "Lakshmi with Flower",
      "image": "statement-bangles-lakshmi-with-flower.webp",
      "hex": "#e2d8c4",
@@ -1334,6 +1400,7 @@
      "zoom": 1
     },
     {
+     "id": 67,
      "colour": "Lakshmi with White Stone",
      "image": "statement-bangles-lakshmi-with-white-stone.webp",
      "hex": "#e2d8c4",
@@ -1350,6 +1417,7 @@
      "zoom": 1
     },
     {
+     "id": 68,
      "colour": "Mantap Lakshmi",
      "image": "statement-bangles-mantap-lakshmi.webp",
      "hex": "#e2d8c4",
@@ -1365,6 +1433,7 @@
      "zoom": 1
     },
     {
+     "id": 69,
      "colour": "Non Idol Floral",
      "image": "statement-bangles-non-idol-floral.webp",
      "hex": "#e2d8c4",
@@ -1380,6 +1449,7 @@
      "zoom": 1
     },
     {
+     "id": 70,
      "colour": "Padma Lotus Bangle",
      "image": "statement-bangles-padma-lotus-bangle.webp",
      "hex": "#e2d8c4",
@@ -1395,6 +1465,7 @@
      "zoom": 1
     },
     {
+     "id": 71,
      "colour": "Pink Floral Stone",
      "image": "statement-bangles-pink-floral-stone.webp",
      "hex": "#e2d8c4",
@@ -1411,6 +1482,7 @@
      "zoom": 1
     },
     {
+     "id": 72,
      "colour": "Premium Blue Flower Stone",
      "image": "statement-bangles-premium-blue-flower-stone.webp",
      "hex": "#e2d8c4",
@@ -1427,6 +1499,7 @@
      "zoom": 1
     },
     {
+     "id": 73,
      "colour": "Premium Coral Flower Set of 2",
      "image": "statement-bangles-premium-coral-flower-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1442,6 +1515,7 @@
      "zoom": 1
     },
     {
+     "id": 74,
      "colour": "Premium Floral",
      "image": "statement-bangles-premium-floral.webp",
      "hex": "#e2d8c4",
@@ -1458,6 +1532,7 @@
      "zoom": 1
     },
     {
+     "id": 75,
      "colour": "Premium Kashu with Stone",
      "image": "statement-bangles-premium-kashu-with-stone.webp",
      "hex": "#e2d8c4",
@@ -1474,6 +1549,7 @@
      "zoom": 1
     },
     {
+     "id": 76,
      "colour": "Premium Lakshmi Ruby Emerald",
      "image": "statement-bangles-premium-lakshmi-ruby-emerald.webp",
      "hex": "#e2d8c4",
@@ -1490,6 +1566,7 @@
      "zoom": 1
     },
     {
+     "id": 77,
      "colour": "Premium Lakshmi with Flower Stone",
      "image": "statement-bangles-premium-lakshmi-with-flower-stone.webp",
      "hex": "#e2d8c4",
@@ -1506,6 +1583,7 @@
      "zoom": 1
     },
     {
+     "id": 78,
      "colour": "Premium Round Design Lakshmi",
      "image": "statement-bangles-premium-round-design-lakshmi.webp",
      "hex": "#e2d8c4",
@@ -1522,6 +1600,7 @@
      "zoom": 1
     },
     {
+     "id": 79,
      "colour": "Premium Statement Lakshmi",
      "image": "statement-bangles-premium-statement-lakshmi.webp",
      "hex": "#e2d8c4",
@@ -1537,6 +1616,7 @@
      "zoom": 1
     },
     {
+     "id": 80,
      "colour": "Red Flower Stone",
      "image": "statement-bangles-red-flower-stone.webp",
      "hex": "#e2d8c4",
@@ -1552,6 +1632,7 @@
      "zoom": 1
     },
     {
+     "id": 81,
      "colour": "Ruby Lakshmi Set of 2",
      "image": "statement-bangles-ruby-lakshmi-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1567,6 +1648,7 @@
      "zoom": 1
     },
     {
+     "id": 82,
      "colour": "Two Layer Multi Stone",
      "image": "statement-bangles-two-layer-multi-stone.webp",
      "hex": "#e2d8c4",
@@ -1582,6 +1664,7 @@
      "zoom": 1
     },
     {
+     "id": 83,
      "colour": "White Floral Stone",
      "image": "statement-bangles-white-floral-stone.webp",
      "hex": "#e2d8c4",
@@ -1620,6 +1703,7 @@
    "story": "Traditionally worn singly and meant to have weight. Solid through, with the finish carried right around.",
    "variants": [
     {
+     "id": 84,
      "colour": "Green Ball Kada Set of 2",
      "image": "kada-green-ball-kada-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1635,6 +1719,7 @@
      "zoom": 1
     },
     {
+     "id": 85,
      "colour": "Premium Statement Flower Kada Set of 2",
      "image": "kada-premium-statement-flower-kada-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1650,6 +1735,7 @@
      "zoom": 1
     },
     {
+     "id": 86,
      "colour": "Viral 10 In 1 Interchangeable Kada Flower",
      "image": "kada-viral-10-in-1-interchangeable-kada-flower.webp",
      "hex": "#e2d8c4",
@@ -1665,6 +1751,7 @@
      "zoom": 1
     },
     {
+     "id": 87,
      "colour": "Viral 10 In 1 Interchangeable Kada Swan",
      "image": "kada-viral-10-in-1-interchangeable-kada-swan.webp",
      "hex": "#e2d8c4",
@@ -1680,6 +1767,7 @@
      "zoom": 1
     },
     {
+     "id": 88,
      "colour": "White Ball Kada Set of 2",
      "image": "kada-white-ball-kada-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1717,6 +1805,7 @@
    "story": "Made to flank, not to lead. Slim profiles that frame a statement piece without competing with it.",
    "variants": [
     {
+     "id": 89,
      "colour": "Bell Pearl Flower Set of 4",
      "image": "designer-side-bangles-bell-pearl-flower-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -1732,6 +1821,7 @@
      "zoom": 1
     },
     {
+     "id": 90,
      "colour": "Diamond Shaped Set of 2",
      "image": "designer-side-bangles-diamond-shaped-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1748,6 +1838,7 @@
      "zoom": 1
     },
     {
+     "id": 91,
      "colour": "Drop with White Stones Set of 4",
      "image": "designer-side-bangles-drop-with-white-stones-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -1762,6 +1853,7 @@
      "zoom": 1
     },
     {
+     "id": 92,
      "colour": "Floral Red Green Square Set of 2",
      "image": "designer-side-bangles-floral-red-green-square-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1778,6 +1870,7 @@
      "zoom": 1
     },
     {
+     "id": 93,
      "colour": "Kashu Side Bangles",
      "image": "designer-side-bangles-kashu-side-bangles.webp",
      "hex": "#e2d8c4",
@@ -1793,6 +1886,7 @@
      "zoom": 1
     },
     {
+     "id": 94,
      "colour": "Kashu with Pearl Flower Set of 2",
      "image": "designer-side-bangles-kashu-with-pearl-flower-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1808,6 +1902,7 @@
      "zoom": 1
     },
     {
+     "id": 95,
      "colour": "Kashu with Red Green Stone Set of 2",
      "image": "designer-side-bangles-kashu-with-red-green-stone-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1823,6 +1918,7 @@
      "zoom": 1
     },
     {
+     "id": 96,
      "colour": "Lakshmi Floral Drop Set of 4",
      "image": "designer-side-bangles-lakshmi-floral-drop-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -1839,6 +1935,7 @@
      "zoom": 1
     },
     {
+     "id": 97,
      "colour": "Lakshmi Stone Set of 2",
      "image": "designer-side-bangles-lakshmi-stone-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1855,6 +1952,7 @@
      "zoom": 1
     },
     {
+     "id": 98,
      "colour": "Lakshmi with Kemp Stones Set of 4",
      "image": "designer-side-bangles-lakshmi-with-kemp-stones-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -1870,6 +1968,7 @@
      "zoom": 1
     },
     {
+     "id": 99,
      "colour": "Multi Stone Lakshmi Set of 4",
      "image": "designer-side-bangles-multi-stone-lakshmi-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -1885,6 +1984,7 @@
      "zoom": 1
     },
     {
+     "id": 100,
      "colour": "Non Idol Kemp Drop Set of 4",
      "image": "designer-side-bangles-non-idol-kemp-drop-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -1900,6 +2000,7 @@
      "zoom": 1
     },
     {
+     "id": 101,
      "colour": "Pastel Kashu Blue Set of 2",
      "image": "designer-side-bangles-pastel-kashu-blue-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1915,6 +2016,7 @@
      "zoom": 1
     },
     {
+     "id": 102,
      "colour": "Pastel Kashu Pink Set of 2",
      "image": "designer-side-bangles-pastel-kashu-pink-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1930,6 +2032,7 @@
      "zoom": 1
     },
     {
+     "id": 103,
      "colour": "Pastel Kashu Pista Set of 2",
      "image": "designer-side-bangles-pastel-kashu-pista-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1945,6 +2048,7 @@
      "zoom": 1
     },
     {
+     "id": 104,
      "colour": "Peacock Set of 4",
      "image": "designer-side-bangles-peacock-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -1961,6 +2065,7 @@
      "zoom": 1
     },
     {
+     "id": 105,
      "colour": "Pearl Floral Square Set of 4",
      "image": "designer-side-bangles-pearl-floral-square-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -1976,6 +2081,7 @@
      "zoom": 1
     },
     {
+     "id": 106,
      "colour": "Premium Ad Flower Set of 2",
      "image": "designer-side-bangles-premium-ad-flower-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -1991,6 +2097,7 @@
      "zoom": 1
     },
     {
+     "id": 107,
      "colour": "Premium White Stone Flower Set of 4",
      "image": "designer-side-bangles-premium-white-stone-flower-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -2007,6 +2114,7 @@
      "zoom": 1
     },
     {
+     "id": 108,
      "colour": "Red Green Stone Lozenge Set of 4",
      "image": "designer-side-bangles-red-green-stone-lozenge-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -2022,6 +2130,7 @@
      "zoom": 1
     },
     {
+     "id": 109,
      "colour": "Two Layer White Ball Set of 2",
      "image": "designer-side-bangles-two-layer-white-ball-set-of-2.webp",
      "hex": "#e2d8c4",
@@ -2037,6 +2146,7 @@
      "zoom": 1
     },
     {
+     "id": 110,
      "colour": "White Gold Flower Set of 4",
      "image": "designer-side-bangles-white-gold-flower-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -2052,6 +2162,7 @@
      "zoom": 1
     },
     {
+     "id": 111,
      "colour": "White Stone Lakshmi Set of 4",
      "image": "designer-side-bangles-white-stone-lakshmi-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -2067,6 +2178,7 @@
      "zoom": 1
     },
     {
+     "id": 112,
      "colour": "White Stone Set of 4",
      "image": "designer-side-bangles-white-stone-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -2103,6 +2215,7 @@
    "story": "Strung with fine bells, so the stack announces itself before you do. A festival piece.",
    "variants": [
     {
+     "id": 113,
      "colour": "Acrylic Kashmiri Blue & Yellow Set of 4",
      "image": "gunghroo-acrylic-kashmiri-blue-yellow-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -2118,6 +2231,7 @@
      "zoom": 1
     },
     {
+     "id": 114,
      "colour": "Acrylic Kashmiri Maroon & Orange Set of 4",
      "image": "gunghroo-acrylic-kashmiri-maroon-orange-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -2133,6 +2247,7 @@
      "zoom": 1
     },
     {
+     "id": 115,
      "colour": "Acrylic Kashmiri Red & Yellow Set of 4",
      "image": "gunghroo-acrylic-kashmiri-red-yellow-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -2148,6 +2263,7 @@
      "zoom": 1
     },
     {
+     "id": 116,
      "colour": "Kashmiri Gold Stones Set of 4",
      "image": "gunghroo-kashmiri-gold-stones-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -2163,6 +2279,7 @@
      "zoom": 1
     },
     {
+     "id": 117,
      "colour": "Kashmiri White Stones Set of 4",
      "image": "gunghroo-kashmiri-white-stones-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -2178,6 +2295,7 @@
      "zoom": 1
     },
     {
+     "id": 118,
      "colour": "Long Hanging Gunghroo Set of 4",
      "image": "gunghroo-long-hanging-gunghroo-set-of-4.webp",
      "hex": "#e2d8c4",
@@ -2215,6 +2333,7 @@
    "story": "A squared edge instead of a round one. It sits flatter on the wrist and gives a stack a harder, more graphic line.",
    "variants": [
     {
+     "id": 119,
      "colour": "Aqua",
      "image": "square-edge-glass-bangles-aqua.webp",
      "hex": "#0fd2c5",
@@ -2231,6 +2350,7 @@
      "zoom": 1
     },
     {
+     "id": 120,
      "colour": "Black",
      "image": "square-edge-glass-bangles-black.webp",
      "hex": "#130101",
@@ -2247,6 +2367,7 @@
      "zoom": 1
     },
     {
+     "id": 121,
      "colour": "Champagne Gold",
      "image": "square-edge-glass-bangles-champagne-gold.webp",
      "hex": "#dbc08a",
@@ -2263,6 +2384,7 @@
      "zoom": 1
     },
     {
+     "id": 122,
      "colour": "Dark Green",
      "image": "square-edge-glass-bangles-dark-green.webp",
      "hex": "#4b8406",
@@ -2279,6 +2401,7 @@
      "zoom": 1
     },
     {
+     "id": 123,
      "colour": "Dark Pink",
      "image": "square-edge-glass-bangles-dark-pink.webp",
      "hex": "#f20779",
@@ -2295,6 +2418,7 @@
      "zoom": 1
     },
     {
+     "id": 124,
      "colour": "Green (premium Raindrop)",
      "image": "square-edge-glass-bangles-green-premium-raindrop.webp",
      "hex": "#6cd01b",
@@ -2311,6 +2435,7 @@
      "zoom": 1
     },
     {
+     "id": 125,
      "colour": "Ivory (premium Raindrop)",
      "image": "square-edge-glass-bangles-ivory-premium-raindrop.webp",
      "hex": "#fffcf5",
@@ -2327,6 +2452,7 @@
      "zoom": 1
     },
     {
+     "id": 126,
      "colour": "Lavender",
      "image": "square-edge-glass-bangles-lavender.webp",
      "hex": "#c594cc",
@@ -2343,6 +2469,7 @@
      "zoom": 1
     },
     {
+     "id": 127,
      "colour": "Maroon",
      "image": "square-edge-glass-bangles-maroon.webp",
      "hex": "#8b2328",
@@ -2359,6 +2486,7 @@
      "zoom": 1
     },
     {
+     "id": 128,
      "colour": "Mauve",
      "image": "square-edge-glass-bangles-mauve.webp",
      "hex": "#cc94c1",
@@ -2375,6 +2503,7 @@
      "zoom": 1
     },
     {
+     "id": 129,
      "colour": "Multicolor",
      "image": "square-edge-glass-bangles-multicolor.webp",
      "hex": "#c7c5c2",
@@ -2391,6 +2520,7 @@
      "zoom": 1
     },
     {
+     "id": 130,
      "colour": "Olive (premium Raindrop)",
      "image": "square-edge-glass-bangles-olive-premium-raindrop.webp",
      "hex": "#9ad5a9",
@@ -2407,6 +2537,7 @@
      "zoom": 1
     },
     {
+     "id": 131,
      "colour": "Parrot Green",
      "image": "square-edge-glass-bangles-parrot-green.webp",
      "hex": "#35d016",
@@ -2423,6 +2554,7 @@
      "zoom": 1
     },
     {
+     "id": 132,
      "colour": "Radium",
      "image": "square-edge-glass-bangles-radium.webp",
      "hex": "#037981",
@@ -2439,6 +2571,7 @@
      "zoom": 1
     },
     {
+     "id": 133,
      "colour": "Red",
      "image": "square-edge-glass-bangles-red.webp",
      "hex": "#e81111",
@@ -2455,6 +2588,7 @@
      "zoom": 1
     },
     {
+     "id": 134,
      "colour": "Rose Pink",
      "image": "square-edge-glass-bangles-rose-pink.webp",
      "hex": "#fd729c",
@@ -2471,6 +2605,7 @@
      "zoom": 1
     },
     {
+     "id": 135,
      "colour": "Royal Blue",
      "image": "square-edge-glass-bangles-royal-blue.webp",
      "hex": "#011ad5",
@@ -2487,6 +2622,7 @@
      "zoom": 1
     },
     {
+     "id": 136,
      "colour": "Sunset Orange",
      "image": "square-edge-glass-bangles-sunset-orange.webp",
      "hex": "#ed9f02",
@@ -2503,6 +2639,7 @@
      "zoom": 1
     },
     {
+     "id": 137,
      "colour": "Wine",
      "image": "square-edge-glass-bangles-wine.webp",
      "hex": "#86158e",
