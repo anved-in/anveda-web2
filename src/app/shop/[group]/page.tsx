@@ -59,7 +59,7 @@ export default async function GroupPage({
       <section className="border-b border-line px-4 pb-8 pt-9 sm:px-6 md:pb-10 md:pt-12">
         <div className="mx-auto max-w-[1320px]">
           <h1 className="font-display text-[clamp(30px,4.4vw,54px)]">{g.name}</h1>
-          <p className="mt-3 max-w-[56ch] text-[15px] text-ink-soft">{g.blurb}</p>
+          <p className="mt-3 max-w-[56ch] text-[13px] text-ink-soft">{g.blurb}</p>
           <p className="mt-2 text-[12.5px] text-ink-faint">
             {ranges.length} ranges · {total} designs
           </p>

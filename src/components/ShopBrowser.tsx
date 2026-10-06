@@ -351,7 +351,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
                   {s.items.length} {s.items.length === 1 ? "design" : "designs"}
                 </span>
                 <h2 className="mt-2.5 font-display text-[clamp(24px,3vw,38px)]">{s.name}</h2>
-                <p className="mt-3 max-w-[60ch] text-[15px] text-ink-soft">{s.blurb}</p>
+                <p className="mt-3 max-w-[60ch] text-[13px] text-ink-soft">{s.blurb}</p>
               </div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 xl:grid-cols-4">
                 {s.items.map((l, j) => (
