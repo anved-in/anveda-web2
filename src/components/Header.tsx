@@ -153,6 +153,20 @@ export default function Header() {
               is unbounded text that could actually force an overflow, so the
               clipping was pure liability with no upside. */}
           <div className="flex min-w-0 flex-1 items-center justify-end gap-4 lg:gap-6">
+            {/* Home only: the group dropdowns above (hidden md:block
+                lg:hidden) stop showing at exactly this breakpoint, so without
+                this the header on a full-width home page carries no path
+                into the catalogue at all until xl. Other pages don't need
+                it — the shop pages have their own sidebar, and everywhere
+                else a visitor arrived from the catalogue already. */}
+            {path === "/" && (
+              <Link
+                href="/shop/glass"
+                className="hidden whitespace-nowrap text-[10.5px] font-bold uppercase tracking-[0.06em] transition-colors hover:text-maroon lg:block lg:text-[11px] lg:tracking-[0.1em]"
+              >
+                Shop
+              </Link>
+            )}
             {NAV.map((n) => (
               <Link
                 key={n.href}

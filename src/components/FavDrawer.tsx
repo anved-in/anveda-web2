@@ -59,8 +59,8 @@ export default function FavDrawer() {
         aria-hidden={!open}
         inert={!open}
         className={[
-          "fixed right-0 top-0 z-[80] flex h-[100dvh] w-full max-w-[420px] flex-col bg-cream shadow-2xl transition-transform duration-300",
-          open ? "translate-x-0" : "translate-x-full",
+          "fixed right-0 top-0 z-[80] flex h-[100dvh] w-full max-w-[420px] flex-col bg-cream transition-transform duration-300",
+          open ? "translate-x-0 shadow-2xl" : "translate-x-full",
         ].join(" ")}
       >
         <div className="flex items-center justify-between border-b border-line px-6 py-5">

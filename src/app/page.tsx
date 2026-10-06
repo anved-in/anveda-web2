@@ -1,12 +1,9 @@
 import Link from "@/components/Link";
 import {
-  SIZE_GUIDE,
   allListings,
   collections,
-  colourLabel,
   imgSrc,
   imgSrcSmall,
-  listingsInGroup,
   products,
   rangeHref,
   type Listing,
@@ -18,7 +15,6 @@ import Testimonials from "@/components/Testimonials";
 import Hero3D from "@/components/home/Hero3D";
 import Tilt from "@/components/home/Tilt";
 import CategoryTiles from "@/components/home/CategoryTiles";
-import ShadeStudio, { type StudioShade } from "@/components/home/ShadeStudio";
 
 /** One listing for a product, at its lead colourway (or the nth shade). */
 const lead = (slug: string, n = 0): Listing => {
@@ -61,18 +57,6 @@ const categories = collections.map((c) => ({
   srcSmall: asset(imgSrcSmall(c.cover)),
 }));
 
-// Shade studio: real glass colourways, with their real colour values.
-const STUDIO_SHADES = ["Aqua", "Rose Pink", "Tangerine", "Purple", "Light Green", "Champagne Gold", "Royal Blue"];
-const glassListings = listingsInGroup("glass");
-const studioShades: StudioShade[] = STUDIO_SHADES.flatMap((name) => {
-  const l =
-    glassListings.find((x) => x.variant.colour === name && x.variant.inStock && x.variant.hex) ??
-    glassListings.find((x) => x.variant.colour === name && x.variant.hex);
-  return l && l.variant.hex
-    ? [{ name: colourLabel(l.product, l.variant), hex: l.variant.hex, family: l.product.name, href: l.href }]
-    : [];
-});
-
 export default function Home() {
   return (
     <>
@@ -104,21 +88,6 @@ export default function Home() {
           <CategoryTiles items={categories} />
         </div>
       </section>
-
-      {/* ------------------------------------------------- shade studio */}
-      {studioShades.length > 0 && (
-        <section className="bg-cream-2 px-4 py-12 sm:px-6 md:py-16">
-          <div className="mx-auto max-w-[1320px]">
-            <SectionHead
-              title="Find Your Shade"
-              sub="Turn it in your hand, try every colour, then pick your size"
-            />
-            <div className="mt-9">
-              <ShadeStudio shades={studioShades} sizes={SIZE_GUIDE} />
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* -------------------------------------------------- best sellers */}
       <section className="px-4 py-12 sm:px-6 md:py-16">
