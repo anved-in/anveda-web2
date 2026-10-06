@@ -17,6 +17,23 @@ import {
 } from "@/lib/payment";
 import { quoteShipping } from "@/lib/shipping";
 
+/**
+ * Reads as the same three-step progress the reference wizard shows — a
+ * numbered circle per stage — without actually gating anything behind a
+ * "Continue" tap. For a cart this small, each extra tap in a multi-step
+ * flow is a chance to bounce with no real reduction in how long the form
+ * actually is; this keeps the single-scroll, single-submit checkout but
+ * gives it the same sense of structure and progress.
+ */
+const SectionHeader = ({ n, title }: { n: number; title: string }) => (
+  <div className="flex items-center gap-3">
+    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ink text-[13px] font-semibold text-cream">
+      {n}
+    </span>
+    <h2 className="font-display text-[22px]">{title}</h2>
+  </div>
+);
+
 const EMPTY: Customer = {
   name: "", email: "", phone: "", address: "",
   city: "", state: "", pin: "", notes: "",
@@ -272,7 +289,7 @@ export default function CheckoutForm() {
     <form onSubmit={onSubmit} className="mt-8 flex flex-wrap gap-y-10">
       {/* ------------------------------------------------------- details */}
       <div className="w-full md:w-[58%] md:pr-12">
-        <h2 className="font-display text-[22px]">Shipping details</h2>
+        <SectionHeader n={1} title="Shipping details" />
 
         <div className="mt-5 space-y-4">
           {field("name", "Full name *", { autoComplete: "name" })}
@@ -339,7 +356,7 @@ export default function CheckoutForm() {
       {/* ------------------------------------------------------ summary */}
       <div className="w-full md:w-[42%]">
         <div className="bg-cream-2 p-6">
-          <h2 className="font-display text-[22px]">Order summary</h2>
+          <SectionHeader n={2} title="Order summary" />
 
           <div className="mt-5">
             {lines.map((l) => {
@@ -513,6 +530,10 @@ export default function CheckoutForm() {
               </>
             )}
           </p>
+
+          <div className="mt-6 border-t border-line pt-5">
+            <SectionHeader n={3} title="Payment" />
+          </div>
 
           {failure && (
             <p role="alert" className="mt-4 border border-[#a33a2f] bg-[#a33a2f]/5 p-3 text-[13px] text-[#a33a2f]">
