@@ -4,27 +4,21 @@ import { useState } from "react";
 import Link from "@/components/Link";
 import { useCart } from "@/lib/cart";
 import QtyStepper from "@/components/QtyStepper";
-import { imgSrc, inr, variantPrice, packLabel, colourLabel, ALL_SIZES, SIZE_GUIDE, type Product, type Variant } from "@/lib/catalog";
-import { asset } from "@/lib/site";
+import { inr, variantPrice, packLabel, colourLabel, ALL_SIZES, SIZE_GUIDE, type Product, type Variant } from "@/lib/catalog";
 
 /**
- * The buy box: colour, size, quantity, add to bag.
- *
- * Colour lives here rather than as separate product pages, which is how the
- * reference brands do it and how people actually shop: pick the design, then
- * the shade. The selected variant also drives the main photo, lifted into the
- * parent via `onVariant`.
+ * The buy box: size, quantity, add to bag. Colour is picked one level up
+ * (the thumbnail strip under the photo in <ProductView>) and arrives here
+ * as `variant`, already resolved — this component only reads it.
  */
 export default function ProductBuy({
   p,
   variant,
-  onVariant,
 }: {
   p: Product;
-  /** Controlled by ProductView so the photo, the thumbnails and the line that
-      reaches the cart can never disagree about which shade is selected. */
+  /** Controlled by ProductView so the photo, the thumbnails and the line
+      that reaches the cart can never disagree about which shade is selected. */
   variant: Variant;
-  onVariant: (v: Variant) => void;
 }) {
   // No size preselected on purpose: a defaulted size is the commonest cause of
   // a wrong-size delivery. The customer must choose deliberately.
@@ -68,63 +62,11 @@ export default function ProductBuy({
 
   return (
     <div>
-      {/* ------------------------------------------------------------ colour
-          The ONLY colour picker on the page. The gallery above used to carry a
-          second one, which asked the same question twice; see the note in
-          <ProductView>. Because this is now the single control, the swatches
-          are bigger and the selected one is named above them. */}
-      {p.variants.length > 1 && (
-        <div className="mt-7">
-          <div className="flex items-baseline justify-between gap-3">
-            <span className="text-[12px] font-bold uppercase tracking-[0.18em]">
-              Colour
-              <span className="ml-1.5 font-medium normal-case tracking-normal text-ink-soft">
-                ({p.variants.length})
-              </span>
-            </span>
-            <span className="truncate text-[12.5px] font-semibold">
-              {colourLabel(p, variant)}
-            </span>
-          </div>
-
-          <div className="mt-3 flex flex-wrap gap-2.5">
-            {p.variants.map((v) => {
-              const on = v.colour === variant.colour;
-              return (
-                <button
-                  key={v.colour}
-                  type="button"
-                  onClick={() => onVariant(v)}
-                  aria-pressed={on}
-                  aria-label={colourLabel(p, v)}
-                  title={colourLabel(p, v)}
-                  className={[
-                    "relative h-[62px] w-[62px] cursor-pointer overflow-hidden border-2 transition-all",
-                    on
-                      ? "border-ink ring-1 ring-ink ring-offset-2"
-                      : "border-transparent hover:border-line-strong",
-                  ].join(" ")}
-                >
-                  {/* The photo is the truest swatch — a flat hex can never
-                      represent a multi-tone or "assorted" set. */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={asset(imgSrc(v.image))}
-                    alt=""
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                  {!v.inStock && (
-                    <span className="absolute inset-0 flex items-center justify-center bg-white/70 text-[8.5px] font-bold uppercase tracking-[0.08em] text-ink">
-                      Sold
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      {/* No colour picker here any more — it now lives as a thumbnail strip
+          directly under the main photo in <ProductView>, so picking a shade
+          updates a big image right there instead of a small swatch down
+          here needing a scroll to see the result. Keeping both would ask
+          the same question twice, one scroll apart. */}
 
       {/* -------------------------------------------------------------- size */}
       <div className="mt-7">

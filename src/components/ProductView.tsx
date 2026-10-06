@@ -36,7 +36,7 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
   return (
     <div className="flex flex-wrap gap-y-8">
       <div className="w-full md:w-[55%] md:pr-10 lg:w-[58%]">
-        <div className="aspect-square overflow-hidden bg-cream-2">
+        <div className="relative aspect-square overflow-hidden bg-cream-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             key={variant.image}
@@ -50,23 +50,48 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
             fetchPriority="high"
             decoding="async"
           />
+          <FavButton
+            id={p.id}
+            colour={variant.colour}
+            name={`${p.name} — ${colourLabel(p, variant)}`}
+          />
         </div>
 
-        {/* There is NO thumbnail strip here, on purpose.
-            It used to list the colourways as photos, directly above the buy
-            box's colour swatches — the same choice, asked twice, one scroll
-            apart. Having picked a shade from the strip, the customer was
-            immediately asked to pick a shade again, which read as though the
-            first choice had not registered.
-
-            A gallery strip is the right pattern when a colourway has SEVERAL
-            photos of itself (front, on-wrist, detail). Ours has exactly one:
-            catalog_photos in the ANVEDA database is keyed PRIMARY KEY
-            (family, colour), so one photo per shade is all it can hold. Until
-            that changes, a strip could only ever repeat the swatches.
-
-            Choosing colour lives in one place: <ProductBuy>, beside size and
-            quantity, where the decision is actually made. */}
+        {/* Thumbnail strip: the colour picker now lives here, directly under
+            the photo it controls, instead of in the buy box further down —
+            picking a shade updates a big image right there, no scroll
+            needed to see the result. The buy box's own swatch picker is
+            gone (see the note in <ProductBuy>) so this is the only one;
+            having both asked the same question twice, one scroll apart. */}
+        {p.variants.length > 1 && (
+          <div className="no-bar mt-3 flex gap-2.5 overflow-x-auto">
+            {p.variants.map((v) => {
+              const on = v.colour === variant.colour;
+              return (
+                <button
+                  key={v.colour}
+                  type="button"
+                  onClick={() => setVariant(v)}
+                  aria-pressed={on}
+                  aria-label={colourLabel(p, v)}
+                  title={colourLabel(p, v)}
+                  className={[
+                    "relative h-[72px] w-[72px] shrink-0 cursor-pointer overflow-hidden border-2 transition-colors",
+                    on ? "border-ink" : "border-transparent hover:border-line-strong",
+                  ].join(" ")}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={asset(imgSrc(v.image))} alt="" className="h-full w-full object-cover" loading="lazy" />
+                  {!v.inStock && (
+                    <span className="absolute inset-0 flex items-center justify-center bg-white/70 text-[8px] font-bold uppercase tracking-[0.06em] text-ink">
+                      Sold
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       <div className="w-full md:w-[45%] lg:w-[42%]">
@@ -92,7 +117,7 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
 
         <p className="mt-5 text-[13px] leading-relaxed text-ink-faint">{p.story}</p>
 
-        <ProductBuy p={p} variant={variant} onVariant={setVariant} />
+        <ProductBuy p={p} variant={variant} />
 
         <dl className="mt-9 border-t border-line">
           {[
