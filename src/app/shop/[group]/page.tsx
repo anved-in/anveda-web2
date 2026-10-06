@@ -74,7 +74,7 @@ export default async function GroupPage({
                   // overlaps the next one instead of wrapping. overflow-hidden
                   // + ellipsis is the fallback if a label is ever still too
                   // wide at this size — truncating beats overlapping again.
-                  "min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap border-b-2 px-1 py-3 text-center text-[8px] font-normal uppercase tracking-[0.02em] transition-colors",
+                  "min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap border-b-2 px-1 py-3 text-center text-[9px] font-normal uppercase tracking-[0.02em] transition-colors",
                   on ? "border-ink text-ink" : "border-transparent text-ink-faint",
                 ].join(" ")}
               >

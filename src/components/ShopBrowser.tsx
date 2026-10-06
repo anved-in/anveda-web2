@@ -84,6 +84,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
   // re-scans on navigation). After the first touch, cards render instantly
   // visible instead of relying on that observer; see ListingCard's `instant`.
   const [touched, setTouched] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
   const sortBtnRef = useRef<HTMLButtonElement>(null);
   const priceBtnRef = useRef<HTMLButtonElement>(null);
@@ -129,8 +130,6 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
     return items;
   }, [all, q, sort, inStockOnly, priceBand, buckets]);
 
-  const activeFilterCount = (inStockOnly ? 1 : 0) + (priceBand !== null ? 1 : 0);
-
   return (
     <>
       <div ref={barRef} className="sticky top-[64px] z-10 border-b border-line bg-cream/95 backdrop-blur-sm">
@@ -141,24 +140,48 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
             on the label so the row stays short regardless of what's chosen. */}
         <div className="mx-auto flex max-w-[1320px] items-center px-3 py-3 sm:px-6">
           {/* Plain text throughout — no pill boxes, each control separated by
-              a thin vertical rule instead, matching the reference exactly. */}
-          <div className="flex min-w-0 flex-1 items-center gap-1.5">
-            <svg className="shrink-0 text-ink-faint" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <circle cx="11" cy="11" r="7" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-            <input
-              type="search"
-              value={q}
-              onChange={(e) => {
-                setQ(e.target.value);
-                setTouched(true);
-              }}
-              placeholder="Search this range"
+              a thin vertical rule instead, matching the reference exactly.
+              Search starts as just an icon — a fixed-width "Search this
+              range" label had no room left once Sort/Price/In stock/Clear
+              all share one row, and shrank to showing only "Search th" with
+              nowhere left to go. Tapping it expands to a normal-size field
+              instead; it collapses back once empty and unfocused. */}
+          {searchOpen ? (
+            <div className="flex min-w-0 flex-1 items-center gap-1.5">
+              <svg className="shrink-0 text-ink-faint" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+              <input
+                autoFocus
+                type="search"
+                value={q}
+                onChange={(e) => {
+                  setQ(e.target.value);
+                  setTouched(true);
+                }}
+                onBlur={() => {
+                  if (!q) setSearchOpen(false);
+                }}
+                placeholder="Search this range"
+                aria-label="Search designs"
+                className="min-w-0 flex-1 bg-transparent text-[13.5px] text-ink outline-none placeholder:text-ink-faint"
+              />
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setSearchOpen(true)}
               aria-label="Search designs"
-              className="min-w-0 flex-1 bg-transparent text-[12px] text-ink outline-none placeholder:text-ink-faint"
-            />
-          </div>
+              className={["shrink-0 transition-colors", q ? "text-ink" : "text-ink-faint"].join(" ")}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m21 21-4.3-4.3" />
+              </svg>
+            </button>
+          )}
+          <span className="flex-1" aria-hidden="true" />
 
           <span className="mx-2.5 h-4 w-px shrink-0 bg-line-strong sm:mx-3.5" aria-hidden="true" />
 
@@ -280,26 +303,6 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
               )}
             </span>
             In stock
-          </button>
-
-          <span className="mx-2.5 h-4 w-px shrink-0 bg-line-strong sm:mx-3.5" aria-hidden="true" />
-
-          {/* More/clear — always present (matching the reference's trailing
-              sliders icon); muted when there's nothing to clear. */}
-          <button
-            type="button"
-            onClick={() => {
-              setInStockOnly(false);
-              setPriceBand(null);
-            }}
-            disabled={activeFilterCount === 0}
-            aria-label="Clear filters"
-            title="Clear filters"
-            className={["shrink-0 transition-colors", activeFilterCount > 0 ? "text-ink" : "text-ink-faint"].join(" ")}
-          >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
-              <path d="M4 6h16M8 12h8M11 18h2" />
-            </svg>
           </button>
         </div>
       </div>
