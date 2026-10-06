@@ -71,8 +71,10 @@ export default async function GroupPage({
                   // min-w-0 is load-bearing: a flex item's default min-width
                   // is auto (its content size), so without this a label
                   // wider than its 1/3 share pushes past its own column and
-                  // overlaps the next one instead of wrapping.
-                  "min-w-0 flex-1 border-b-2 px-1 py-3 text-center text-[11px] font-bold uppercase leading-tight tracking-[0.04em] transition-colors",
+                  // overlaps the next one instead of wrapping. overflow-hidden
+                  // + ellipsis is the fallback if a label is ever still too
+                  // wide at this size — truncating beats overlapping again.
+                  "min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap border-b-2 px-1 py-3 text-center text-[10.5px] font-bold uppercase tracking-[0.02em] transition-colors",
                   on ? "border-ink text-ink" : "border-transparent text-ink-faint",
                 ].join(" ")}
               >
