@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import ListingCard from "./ListingCard";
 import { listingPrice, listingTitle, type Listing } from "@/lib/catalog";
 
@@ -32,6 +33,38 @@ function priceBuckets(all: Listing[]): { label: string; min: number; max: number
 }
 
 /**
+ * A dropdown panel rendered into document.body instead of in place. The
+ * toolbar it hangs off is horizontally scrollable (the pills never wrap on a
+ * phone), and overflow-x:auto on that row makes the browser compute
+ * overflow-y as auto too — any absolutely-positioned panel left inside it
+ * would get clipped the moment it extends past the row's own height. A
+ * portal, positioned from the trigger's own bounding rect, escapes that
+ * entirely.
+ */
+function DropdownPortal({
+  anchorRef,
+  children,
+}: {
+  anchorRef: React.RefObject<HTMLElement | null>;
+  children: React.ReactNode;
+}) {
+  const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
+  useEffect(() => {
+    const el = anchorRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    setPos({ top: r.bottom + 6, left: r.left });
+  }, [anchorRef]);
+  if (!pos) return null;
+  return createPortal(
+    <div style={{ position: "fixed", top: pos.top, left: pos.left }} className="z-20 w-[220px] border border-line bg-white py-1.5 shadow-lg">
+      {children}
+    </div>,
+    document.body,
+  );
+}
+
+/**
  * Wraps the group page's sectioned listing in an Amazon/Flipkart-style
  * toolbar: dropdown pills for Sort and Price (the left rail is already the
  * site's category navigator — ShopShell — so a second sidebar would fight
@@ -53,6 +86,8 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
   // visible instead of relying on that observer; see ListingCard's `instant`.
   const [touched, setTouched] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
+  const sortBtnRef = useRef<HTMLButtonElement>(null);
+  const priceBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
@@ -100,8 +135,11 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
   return (
     <>
       <div ref={barRef} className="sticky top-[64px] z-10 border-b border-line bg-cream/95 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-[1320px] flex-wrap items-center gap-2.5 px-4 py-3 sm:px-6">
-          <div className="relative min-w-[160px] flex-1">
+        {/* Single row, never wraps — on a narrow phone it scrolls sideways
+            instead, same as the reference. Scrollbar hidden since the row's
+            own affordance (pills peeking off the edge) is enough of a hint. */}
+        <div className="mx-auto flex max-w-[1320px] items-center gap-2 overflow-x-auto px-4 py-3 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-6 [&::-webkit-scrollbar]:hidden">
+          <div className="relative w-[128px] shrink-0 sm:w-[200px]">
             <svg
               className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint"
               width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"
@@ -116,15 +154,16 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
                 setQ(e.target.value);
                 setTouched(true);
               }}
-              placeholder="Search this range…"
+              placeholder="Search"
               aria-label="Search designs"
               className="w-full rounded-full border border-line-strong bg-white py-2 pl-9 pr-4 text-[13px] outline-none transition-colors focus:border-ink"
             />
           </div>
 
           {/* ---------------------------------------------------------- sort pill */}
-          <div className="relative">
+          <div className="relative shrink-0">
             <button
+              ref={sortBtnRef}
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
@@ -142,7 +181,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
               </svg>
             </button>
             {openMenu === "sort" && (
-              <div className="absolute left-0 top-[calc(100%+6px)] z-20 w-[220px] border border-line bg-white py-1.5 shadow-lg">
+              <DropdownPortal anchorRef={sortBtnRef}>
                 {(Object.keys(SORT_LABEL) as Sort[]).map((s) => (
                   <button
                     key={s}
@@ -154,7 +193,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
                     }}
                     className={[
                       "flex w-full items-center justify-between px-4 py-2.5 text-left text-[13px] transition-colors hover:bg-cream-2",
-                      sort === s ? "font-semibold text-maroon" : "text-ink-soft",
+                      sort === s ? "font-semibold text-ink" : "text-ink-soft",
                     ].join(" ")}
                   >
                     {SORT_LABEL[s]}
@@ -165,13 +204,14 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
                     )}
                   </button>
                 ))}
-              </div>
+              </DropdownPortal>
             )}
           </div>
 
           {/* --------------------------------------------------------- price pill */}
-          <div className="relative">
+          <div className="relative shrink-0">
             <button
+              ref={priceBtnRef}
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
@@ -189,7 +229,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
               </svg>
             </button>
             {openMenu === "price" && (
-              <div className="absolute left-0 top-[calc(100%+6px)] z-20 w-[200px] border border-line bg-white py-1.5 shadow-lg">
+              <DropdownPortal anchorRef={priceBtnRef}>
                 <button
                   type="button"
                   onClick={() => {
@@ -197,7 +237,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
                     setOpenMenu(null);
                     setTouched(true);
                   }}
-                  className={["block w-full px-4 py-2.5 text-left text-[13px] transition-colors hover:bg-cream-2", priceBand === null ? "font-semibold text-maroon" : "text-ink-soft"].join(" ")}
+                  className={["block w-full px-4 py-2.5 text-left text-[13px] transition-colors hover:bg-cream-2", priceBand === null ? "font-semibold text-ink" : "text-ink-soft"].join(" ")}
                 >
                   Any price
                 </button>
@@ -210,12 +250,12 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
                       setOpenMenu(null);
                       setTouched(true);
                     }}
-                    className={["block w-full px-4 py-2.5 text-left text-[13px] transition-colors hover:bg-cream-2", priceBand === i ? "font-semibold text-maroon" : "text-ink-soft"].join(" ")}
+                    className={["block w-full px-4 py-2.5 text-left text-[13px] transition-colors hover:bg-cream-2", priceBand === i ? "font-semibold text-ink" : "text-ink-soft"].join(" ")}
                   >
                     {b.label}
                   </button>
                 ))}
-              </div>
+              </DropdownPortal>
             )}
           </div>
 
@@ -228,10 +268,23 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
             }}
             aria-pressed={inStockOnly}
             className={[
-              "rounded-full border px-3.5 py-2 text-[12.5px] font-semibold transition-colors",
+              "flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 text-[12.5px] font-semibold transition-colors",
               inStockOnly ? "border-ink bg-ink text-cream" : "border-line-strong bg-white text-ink-soft hover:border-ink",
             ].join(" ")}
           >
+            <span
+              className={[
+                "flex h-[15px] w-[15px] shrink-0 items-center justify-center rounded-[4px] border transition-colors",
+                inStockOnly ? "border-cream bg-cream" : "border-line-strong",
+              ].join(" ")}
+              aria-hidden="true"
+            >
+              {inStockOnly && (
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 12.5l5 5L20 6.5" />
+                </svg>
+              )}
+            </span>
             In stock only
           </button>
 
@@ -242,7 +295,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
                 setInStockOnly(false);
                 setPriceBand(null);
               }}
-              className="text-[12px] font-semibold text-maroon underline underline-offset-2"
+              className="shrink-0 whitespace-nowrap px-1 text-[12px] font-semibold text-ink underline underline-offset-2"
             >
               Clear filters
             </button>

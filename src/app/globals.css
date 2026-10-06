@@ -36,9 +36,14 @@
   --color-espresso: #121212;
   --color-espresso-2: #232323;
 
-  /* The accent, straight from the reference: #800020. */
-  --color-maroon: #800020;
-  --color-maroon-deep: #660019;
+  /* Accent retired to plain black — every text-maroon/bg-maroon/border-maroon
+     utility across the site now resolves here. Kept as its own token (not
+     merged into --color-ink) so a future design pass can reintroduce a real
+     accent colour without re-touching every call site. -deep is a soft dark
+     grey, not pure black, so a hover/active state against an already-black
+     element still reads as a change. */
+  --color-maroon: #000000;
+  --color-maroon-deep: #2a2a2a;
 
   /* ANVEDA gold, accent use only. */
   --color-gold: #c8ae71;
@@ -155,3 +160,72 @@ h1, h2, h3, .font-display {
 @media (prefers-reduced-motion: reduce) {
   .marquee > div { animation: none; }
 }
+
+/* =====================================================================
+   HOME PAGE 3D (.hm-*)
+   The storefront home keeps its own brand look (white, black, maroon).
+   These rules only style the new 3D pieces: the tilt wrapper and the shade
+   studio. Everything else on the home page uses the existing site classes. */
+
+/* ------------------------------------------------------------ tilt */
+.hm-tilt {
+  position: relative;
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform .55s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.hm-tilt::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .34), transparent 55%);
+  transition: opacity .4s;
+}
+@media (hover: hover) { .hm-tilt:hover::after { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .hm-tilt { transform: none; transition: none; } .hm-tilt::after { display: none; } }
+
+/* ----------------------------------------------------- shade studio */
+.hm-studio {
+  --hm-bg: #f7f5f3; --hm-ink: #000; --hm-ink2: #4a4a4a; --hm-rule: rgba(0, 0, 0, .16);
+  --hm-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 80px); align-items: center;
+}
+@media (max-width: 859px) { .hm-studio { grid-template-columns: 1fr; } }
+.hm-studio__stage { position: relative; width: 100%; max-width: 620px; aspect-ratio: 1; margin-inline: auto; background: var(--hm-bg); }
+.hm-studio__cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; touch-action: pan-y; }
+.hm-studio__cv:active { cursor: grabbing; }
+.hm-studio__hint { position: absolute; left: 0; right: 0; bottom: 8px; margin: 0; text-align: center; font-size: 12px; letter-spacing: .04em; color: var(--hm-ink2); pointer-events: none; }
+.hm-studio__panel { display: grid; gap: 22px; justify-items: start; }
+.hm-studio__name { margin: 0; font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); line-height: 1.05; }
+.hm-studio__lede { margin: 0 0 14px; font-size: 14.5px; line-height: 1.6; color: var(--hm-ink2); max-width: 44ch; }
+.hm-studio__size { width: 100%; padding-top: 22px; border-top: 1px solid var(--hm-rule); }
+.hm-studio :focus-visible { outline: 2px solid var(--color-maroon); outline-offset: 3px; }
+
+.hm-shade__row { display: flex; flex-wrap: wrap; gap: 14px; }
+.hm-dot { position: relative; width: 24px; height: 24px; border-radius: 50%; background: var(--c); border: 1px solid rgba(0, 0, 0, .22); transition: transform .4s var(--hm-ease), box-shadow .3s; }
+.hm-dot::before { content: ""; position: absolute; inset: -8px; }
+.hm-dot:hover { transform: scale(1.18); }
+.hm-dot[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--hm-bg), 0 0 0 3.5px var(--hm-ink); }
+
+.hm-btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 28px; text-align: center;
+  background: var(--hm-ink); color: #fff; border: 1px solid var(--hm-ink);
+  font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; transition: background .3s, border-color .3s;
+}
+.hm-btn:hover { background: var(--color-maroon); border-color: var(--color-maroon); }
+.hm-link { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--hm-ink); border-bottom: 1px solid var(--hm-ink); padding-bottom: 2px; transition: gap .4s var(--hm-ease), color .3s; }
+.hm-link:hover { gap: 13px; color: var(--color-maroon); border-color: var(--color-maroon); }
+
+/* size dial */
+.hm-dial { position: relative; max-width: 420px; width: 100%; }
+.hm-dial__svg { display: block; width: 100%; height: auto; }
+.hm-dial__axis { stroke: var(--hm-rule); stroke-width: 1; }
+.hm-dial__ring { fill: none; stroke: var(--hm-rule); stroke-width: 1; transition: stroke .5s var(--hm-ease), stroke-width .5s var(--hm-ease), fill .5s; }
+.hm-dial__ring.is-on { stroke: var(--hm-ink); stroke-width: 1.6; fill: rgba(0, 0, 0, .04); }
+.hm-dial__measure { stroke: var(--color-maroon); stroke-width: 1; stroke-dasharray: 3 4; }
+.hm-dial__read { position: absolute; left: 0; top: 0; display: grid; }
+.hm-dial__num { font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1; }
+.hm-dial__lab { font-size: 13px; color: var(--hm-ink2); margin-top: 4px; }
+.hm-dial__ctl { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; margin-top: 8px; }
+.hm-dial__row { display: flex; flex-wrap: wrap; gap: 8px; }
+.hm-chip { height: 40px; min-width: 52px; padding: 0 14px; border: 1px solid var(--hm-rule); border-radius: 999px; font-size: 14px; color: var(--hm-ink); transition: background .35s var(--hm-ease), color .35s, border-color .35s; }
+.hm-chip:hover { border-color: var(--hm-ink); }
+.hm-chip.is-on { background: var(--hm-ink); color: #fff; border-color: var(--hm-ink); }
