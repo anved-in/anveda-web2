@@ -59,7 +59,7 @@ export default async function GroupPage({
       {/* Group switcher — plain underlined tabs, mobile only. The desktop
           sidebar (ShopShell) already does this job from 1024px up. */}
       <nav aria-label="Browse bangle types" className="border-b border-line px-4 sm:px-6 lg:hidden">
-        <div className="no-bar mx-auto flex max-w-[1320px] gap-6 overflow-x-auto">
+        <div className="mx-auto flex max-w-[1320px]">
           {groups.map((grp) => {
             const on = grp.slug === g.slug;
             return (
@@ -68,7 +68,7 @@ export default async function GroupPage({
                 href={`/shop/${grp.slug}`}
                 aria-current={on ? "page" : undefined}
                 className={[
-                  "shrink-0 whitespace-nowrap border-b-2 py-3.5 text-[12px] font-bold uppercase tracking-[0.08em] transition-colors",
+                  "flex-1 whitespace-nowrap border-b-2 py-3 text-center text-[11px] font-bold uppercase tracking-[0.04em] transition-colors",
                   on ? "border-ink text-ink" : "border-transparent text-ink-faint",
                 ].join(" ")}
               >

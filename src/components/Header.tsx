@@ -219,12 +219,15 @@ export default function Header() {
       </div>
 
       {/* Mobile category chips — the reference's scrolling pill row. Hidden on
-          desktop, where the same collections are reachable from Category, and
-          hidden on /reels, where the feed is meant to own the whole screen. */}
+          desktop, where the same collections are reachable from Category;
+          hidden on /reels, where the feed is meant to own the whole screen;
+          and hidden on /shop/[group], which has its own group-switcher tabs
+          right below this header (see that page) — showing both duplicated
+          the same three groups twice, stacked. */}
       <div
         className={[
           "border-b border-line md:hidden",
-          path.startsWith("/reels") ? "hidden" : "",
+          path.startsWith("/reels") || path.startsWith("/shop/") ? "hidden" : "",
         ].join(" ")}
       >
         {/* Groups lead the chip row, then the individual ranges — the same
@@ -287,8 +290,8 @@ export default function Header() {
         aria-label="Menu"
         aria-hidden={menu ? undefined : true}
         className={[
-          "fixed left-0 top-0 z-[95] flex h-[100dvh] w-[84%] max-w-[330px] flex-col bg-white shadow-2xl transition-transform duration-300 md:hidden",
-          menu ? "translate-x-0" : "-translate-x-full",
+          "fixed left-0 top-0 z-[95] flex h-[100dvh] w-[84%] max-w-[330px] flex-col bg-white transition-transform duration-300 md:hidden",
+          menu ? "translate-x-0 shadow-2xl" : "-translate-x-full",
         ].join(" ")}
       >
         <div className="flex items-center justify-between border-b border-line px-4 py-4">
