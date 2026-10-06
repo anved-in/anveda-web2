@@ -4,7 +4,9 @@ import Link from "@/components/Link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useCart, lineProduct } from "@/lib/cart";
-import { imgSrc, inr, unitPrice, productById } from "@/lib/catalog";
+import { useFavs } from "@/lib/favourites";
+import { HEART } from "@/components/FavButton";
+import { imgSrc, inr, unitPrice, productById, colourLabel } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
 import {
   type Customer,
@@ -37,7 +39,8 @@ const validate = (c: Customer): Partial<Record<keyof Customer, string>> => {
 
 export default function CheckoutForm() {
   const router = useRouter();
-  const { lines, subtotal, clear, ready } = useCart();
+  const { lines, subtotal, clear, ready, setQty, remove } = useCart();
+  const { has: hasFav, toggle: toggleFav } = useFavs();
   const [c, setC] = useState<Customer>(EMPTY);
   const [errs, setErrs] = useState<Partial<Record<keyof Customer, string>>>({});
   const [busy, setBusy] = useState(false);
@@ -341,26 +344,81 @@ export default function CheckoutForm() {
             {lines.map((l) => {
               const p = lineProduct(l);
               if (!p) return null;
+              const v = p.variants.find((x) => x.colour === l.colour);
+              const shade = v ? colourLabel(p, v) : l.colour;
+              const saved = hasFav(l.id, l.colour);
               return (
                 <div key={`${l.id}__${l.size}__${l.colour}`} className="flex gap-3.5 border-b border-line py-4">
                   <div className="h-[64px] w-[52px] shrink-0 overflow-hidden bg-cream">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={asset(imgSrc(
-                        p.variants.find((v) => v.colour === l.colour)?.image ?? p.image,
-                      ))}
+                      src={asset(imgSrc(v?.image ?? p.image))}
                       alt={p.name}
                       className="h-full w-full object-cover"
                       loading="lazy"
                     />
                   </div>
                   <div className="min-w-0 flex-1">
+                    <div className="text-[10px] uppercase tracking-[0.16em] text-ink-faint">
+                      {p.collectionName}
+                    </div>
                     <div className="truncate text-[13.5px] font-semibold">{p.name}</div>
-                    <div className="text-[12px] text-ink-soft">
-                      {l.colour && `${l.colour} · `}Size {l.size} · Qty {l.qty}
+                    <div className="mt-0.5 text-[12px] text-ink-soft">
+                      {shade && `${shade} · `}Size {l.size}
+                    </div>
+                    <div className="mt-1.5 text-[13.5px] font-semibold">
+                      {inr(unitPrice(l.id, l.colour) * l.qty)}
+                    </div>
+
+                    <div className="mt-2.5 flex items-center justify-between gap-3">
+                      <div className="flex items-center border border-line-strong">
+                        <button
+                          type="button"
+                          onClick={() => setQty(l.id, l.size, l.colour, l.qty - 1)}
+                          className="flex h-8 w-8 items-center justify-center text-[16px] leading-none transition-colors hover:bg-cream-2"
+                          aria-label={`Decrease quantity of ${p.name}`}
+                        >
+                          −
+                        </button>
+                        <span className="min-w-[30px] border-x border-line-strong text-center text-[13px] font-semibold">
+                          {l.qty}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setQty(l.id, l.size, l.colour, l.qty + 1)}
+                          className="flex h-8 w-8 items-center justify-center text-[16px] leading-none transition-colors hover:bg-cream-2"
+                          aria-label={`Increase quantity of ${p.name}`}
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      <div className="flex shrink-0 items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => toggleFav(l.id, l.colour)}
+                          aria-pressed={saved}
+                          aria-label={saved ? `Remove ${p.name} from favourites` : `Save ${p.name} for later`}
+                          className={["transition-colors", saved ? "text-ink" : "text-ink-faint hover:text-ink"].join(" ")}
+                        >
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" aria-hidden="true">
+                            <path d={HEART} />
+                          </svg>
+                        </button>
+                        <span className="h-4 w-px bg-line" aria-hidden="true" />
+                        <button
+                          type="button"
+                          onClick={() => remove(l.id, l.size, l.colour)}
+                          aria-label={`Remove ${p.name} from your bag`}
+                          className="text-ink-faint transition-colors hover:text-ink"
+                        >
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M4 7h16M9 7V4h6v3M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13M10 11v6M14 11v6" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  <div className="text-[13.5px] font-semibold">{inr(unitPrice(l.id, l.colour) * l.qty)}</div>
                 </div>
               );
             })}
