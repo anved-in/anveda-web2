@@ -241,16 +241,18 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile category chips — the reference's scrolling pill row. Hidden on
-          desktop, where the same collections are reachable from Category;
-          hidden on /reels, where the feed is meant to own the whole screen;
-          and hidden on /shop/[group], which has its own group-switcher tabs
-          right below this header (see that page) — showing both duplicated
-          the same three groups twice, stacked. */}
+      {/* Mobile category chips — the reference's scrolling pill row. An
+          allow-list, not a deny-list: it only earns its place where someone
+          is actually mid-browse and a quick jump to another range helps —
+          that's just the product page. Everywhere else (home, checkout,
+          track, the legal pages, guides) it was pure noise: a shopping
+          strip over a form, or a duplicate of nav the page already has.
+          /shop/[group] has its own group-switcher tabs right below this
+          header instead (see that page); /reels wants the whole screen. */}
       <div
         className={[
           "border-b border-line md:hidden",
-          path.startsWith("/reels") || path.startsWith("/shop/") ? "hidden" : "",
+          path.startsWith("/product/") ? "" : "hidden",
         ].join(" ")}
       >
         {/* Groups lead the row as plain underlined text — same treatment as
