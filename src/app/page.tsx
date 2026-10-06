@@ -1,10 +1,24 @@
 import Link from "@/components/Link";
-import { collections, products, allListings, imgSrc, imgSrcSmall, type Listing, rangeHref } from "@/lib/catalog";
+import {
+  SIZE_GUIDE,
+  allListings,
+  collections,
+  colourLabel,
+  imgSrc,
+  imgSrcSmall,
+  listingsInGroup,
+  products,
+  rangeHref,
+  type Listing,
+} from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
 import ListingCard from "@/components/ListingCard";
 import SectionHead from "@/components/SectionHead";
-import HeroSlider from "@/components/HeroSlider";
 import Testimonials from "@/components/Testimonials";
+import Hero3D from "@/components/home/Hero3D";
+import Tilt from "@/components/home/Tilt";
+import CategoryTiles from "@/components/home/CategoryTiles";
+import ShadeStudio, { type StudioShade } from "@/components/home/ShadeStudio";
 
 /** One listing for a product, at its lead colourway (or the nth shade). */
 const lead = (slug: string, n = 0): Listing => {
@@ -17,10 +31,10 @@ const lead = (slug: string, n = 0): Listing => {
   };
 };
 
-// New Arrivals — the lead shade of the first four families.
+// New Arrivals: the lead shade of the first four families.
 const arrivals: Listing[] = collections.slice(0, 4).map((c) => lead(c.slug));
 
-// Best Sellers — a different four, at a different shade, so the two grids do
+// Best Sellers: a different four, at a different shade, so the two grids do
 // not repeat the same photographs down the page.
 const bestsellers: Listing[] = collections.slice(4, 8).map((c) => lead(c.slug, 1));
 
@@ -38,11 +52,32 @@ const heroSlides = ["statement-bangles", "kada", "border-bangles"]
     };
   });
 
+// Shop By Category tiles.
+const categories = collections.map((c) => ({
+  slug: c.slug,
+  name: c.name,
+  href: rangeHref(c.slug),
+  src: asset(imgSrc(c.cover)),
+  srcSmall: asset(imgSrcSmall(c.cover)),
+}));
+
+// Shade studio: real glass colourways, with their real colour values.
+const STUDIO_SHADES = ["Aqua", "Rose Pink", "Tangerine", "Purple", "Light Green", "Champagne Gold", "Royal Blue"];
+const glassListings = listingsInGroup("glass");
+const studioShades: StudioShade[] = STUDIO_SHADES.flatMap((name) => {
+  const l =
+    glassListings.find((x) => x.variant.colour === name && x.variant.inStock && x.variant.hex) ??
+    glassListings.find((x) => x.variant.colour === name && x.variant.hex);
+  return l && l.variant.hex
+    ? [{ name: colourLabel(l.product, l.variant), hex: l.variant.hex, family: l.product.name, href: l.href }]
+    : [];
+});
+
 export default function Home() {
   return (
     <>
       {/* ---------------------------------------------------------- hero */}
-      <HeroSlider slides={heroSlides} />
+      <Hero3D slides={heroSlides} />
 
       {/* -------------------------------------------------- new arrivals */}
       <section className="px-4 py-12 sm:px-6 md:py-16">
@@ -50,10 +85,13 @@ export default function Home() {
           <SectionHead
             title="New Arrivals"
             sub="Freshly picked, straight from the latest batch"
+            viewAllHref="/shop/glass"
           />
           <div className="mt-9 grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-4 md:gap-x-6">
             {arrivals.map((l, i) => (
-              <ListingCard key={l.href} l={l} delay={i * 60} priority={i < 4} />
+              <Tilt key={l.href}>
+                <ListingCard l={l} delay={i * 60} priority={i < 4} />
+              </Tilt>
             ))}
           </div>
         </div>
@@ -63,33 +101,24 @@ export default function Home() {
       <section className="px-4 py-12 sm:px-6 md:py-16">
         <div className="mx-auto max-w-[1320px]">
           <SectionHead title="Shop By Category" />
-          <div className="no-bar mt-9 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-5 md:gap-6 md:overflow-visible">
-            {collections.map((c) => (
-              <Link
-                key={c.slug}
-                href={rangeHref(c.slug)}
-                className="group w-[46%] shrink-0 snap-start md:w-auto"
-              >
-                <div className="aspect-square overflow-hidden bg-cream-2">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={asset(imgSrc(c.cover))}
-                    srcSet={`${asset(imgSrcSmall(c.cover))} 480w, ${asset(imgSrc(c.cover))} 1000w`}
-                    sizes="(max-width: 767px) 46vw, 20vw"
-                    alt=""
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                <div className="pt-3 text-center text-[13.5px] transition-colors group-hover:text-maroon">
-                  {c.name}
-                </div>
-              </Link>
-            ))}
-          </div>
+          <CategoryTiles items={categories} />
         </div>
       </section>
+
+      {/* ------------------------------------------------- shade studio */}
+      {studioShades.length > 0 && (
+        <section className="bg-cream-2 px-4 py-12 sm:px-6 md:py-16">
+          <div className="mx-auto max-w-[1320px]">
+            <SectionHead
+              title="Find Your Shade"
+              sub="Turn it in your hand, try every colour, then pick your size"
+            />
+            <div className="mt-9">
+              <ShadeStudio shades={studioShades} sizes={SIZE_GUIDE} />
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* -------------------------------------------------- best sellers */}
       <section className="px-4 py-12 sm:px-6 md:py-16">
@@ -97,10 +126,13 @@ export default function Home() {
           <SectionHead
             title="Best Sellers"
             sub="The shades that keep going out of stock"
+            viewAllHref="/shop/glass"
           />
           <div className="mt-9 grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-4 md:gap-x-6">
             {bestsellers.map((l, i) => (
-              <ListingCard key={l.href} l={l} delay={i * 60} />
+              <Tilt key={l.href}>
+                <ListingCard l={l} delay={i * 60} />
+              </Tilt>
             ))}
           </div>
           <div className="mt-11 text-center">
@@ -120,16 +152,18 @@ export default function Home() {
           <SectionHead title="Our Story" />
           <div className="mt-9 flex flex-wrap items-center gap-8 md:flex-nowrap md:gap-14">
             <div className="w-full md:w-1/2">
-              <div className="reveal aspect-[4/3] overflow-hidden bg-cream-3">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={asset(imgSrc(collections[0].cover))}
-                  alt=""
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
+              <Tilt max={4}>
+                <div className="reveal aspect-[4/3] overflow-hidden bg-cream-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={asset(imgSrc(collections[0].cover))}
+                    alt=""
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </Tilt>
             </div>
             <div className="reveal w-full md:w-1/2">
               <p className="text-[15px] leading-relaxed text-ink-soft">
