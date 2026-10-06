@@ -239,9 +239,14 @@ export default function Header() {
           path.startsWith("/reels") || path.startsWith("/shop/") ? "hidden" : "",
         ].join(" ")}
       >
-        {/* Groups lead the chip row, then the individual ranges — the same
-            order the catalogue uses. */}
-        <div className="no-bar flex gap-2 overflow-x-auto px-4 py-2.5">
+        {/* Groups lead the row as plain underlined text — same treatment as
+            the group-switcher tabs on /shop/[group] itself, so the "three
+            bangle types" affordance reads the same wherever it shows up
+            instead of being a pill-button design in one place and plain
+            text in another. Individual ranges after stay their own pill
+            style — there are far more of them, and a scrolling pill row
+            suits that list better than equal-width tabs would. */}
+        <div className="no-bar flex items-center gap-4 overflow-x-auto px-4 py-2.5">
           {groups.map((g) => {
             const on = path.startsWith(`/shop/${g.slug}`);
             return (
@@ -249,10 +254,8 @@ export default function Header() {
                 key={g.slug}
                 href={`/shop/${g.slug}`}
                 className={[
-                  "whitespace-nowrap rounded-full border px-3.5 py-1.5 text-[10.5px] font-bold uppercase tracking-[0.08em] transition-colors",
-                  on
-                    ? "border-maroon bg-maroon text-white"
-                    : "border-ink text-ink",
+                  "shrink-0 whitespace-nowrap border-b-2 pb-1 text-[9px] font-normal uppercase tracking-[0.02em] transition-colors",
+                  on ? "border-ink text-ink" : "border-transparent text-ink-faint",
                 ].join(" ")}
               >
                 {g.name}

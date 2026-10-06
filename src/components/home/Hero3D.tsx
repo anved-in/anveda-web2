@@ -15,11 +15,11 @@ export interface Slide {
 }
 
 /**
- * The home page's opening: the same three featured collections as before, but
- * the photograph is drawn in WebGL, so it can have depth. It drifts against the
- * pointer, dissolves between slides through a ripple, and a set of real glass
- * bangles floats in front of it, refracting the photograph behind them with a
- * faint colour split along every edge.
+ * The home page's opening: the same three featured collections as before, the
+ * photograph drawn in WebGL so it can drift gently against the pointer and
+ * dissolve into the next slide through a ripple instead of a flat crossfade.
+ * No 3D objects float over the photo any more — just the photo itself, with
+ * that transition and a faint chromatic fringe that responds to pointer speed.
  *
  * The plain HTML slider underneath is the whole component without WebGL: the
  * photographs, captions, arrows, dots and autoplay are all ordinary DOM, and
@@ -64,25 +64,13 @@ export default function Hero3D({ slides }: { slides: Slide[] }) {
     const hooks: { fit?: () => void } = {};
 
     (async () => {
-      let off: Array<[number, number, number]> = [[0, 0, 0], [-1.45, 1.0, 0.5], [1.4, 0.95, -0.4]];
       const stage = await createStage(cv, hostEl, {
         bg: "#f7f5f3",
-        onResize: (s) => {
-          const { w, h } = s.lay;
-          const wide = w >= 860;
-          const cx = w * (wide ? 0.74 : 0.5);
-          const cy = h * (wide ? 0.4 : 0.34);
-          const rpx = wide ? Math.min(w * 0.14, h * 0.28) : Math.min(w * 0.24, h * 0.2);
-          s.place(cx, cy, rpx);
-          off = wide
-            ? [[0, 0, 0], [-1.45, 1.0, 0.5], [1.4, 0.95, -0.4]]
-            : [[0, 0, 0], [-1.2, -1.0, 0.5], [1.2, 0.95, -0.4]];
-          hooks.fit?.();
-        },
+        onResize: () => hooks.fit?.(),
       });
       if (!stage || disposed) { stage?.dispose(); return; }
       stageRef = stage;
-      const { THREE, gl, scene, camera, world } = stage;
+      const { THREE, gl, scene, camera } = stage;
       const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
       const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
       const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -150,38 +138,10 @@ export default function Hero3D({ slides }: { slides: Slide[] }) {
       hooks.fit();
       undo.push(() => { plane.geometry.dispose(); plane.material.dispose(); T.forEach((t) => t.dispose()); });
 
-      /* The glass: a statement bangle with two slim ones, one gold-tinted. */
-      const parts = [
-        { R: 1, tube: 0.13, th: 0.3, tint: "#ffffff" },
-        { R: 0.5, tube: 0.045, th: 0.12, tint: "#c8ae71" },
-        { R: 0.42, tube: 0.04, th: 0.1, tint: "#ffffff" },
-      ].map((p) => {
-        const mat = stage.glass(p.th);
-        mat.attenuationColor.set(p.tint);
-        mat.attenuationDistance = p.tint === "#ffffff" ? 1.5 : 0.45;
-        const geo = new THREE.TorusGeometry(p.R, p.tube, 56, 180);
-        const g = new THREE.Group();
-        g.add(new THREE.Mesh(geo, mat));
-        world.add(g);
-        return { g, mat, geo, ph: Math.random() * 6.28 };
-      });
-      const shardGeo = new THREE.OctahedronGeometry(1, 0);
-      const shardMat = stage.glass(0.08);
-      shardMat.dispersion = 3;
-      const shards = Array.from({ length: 14 }, () => {
-        const a = Math.random() * 6.283, d = 1.5 + Math.random() * 1.8;
-        const m = new THREE.Mesh(shardGeo, shardMat);
-        const s = 0.015 + Math.pow(Math.random(), 2) * 0.05;
-        m.scale.set(s, s * (0.3 + Math.random() * 0.5), s * 0.2);
-        m.position.set(Math.cos(a) * d, Math.sin(a) * d * 0.7, (Math.random() - 0.5) * 1.6);
-        m.rotation.set(Math.random() * 6, Math.random() * 6, Math.random() * 6);
-        m.userData = { b: m.position.clone(), ph: Math.random() * 6.28, sp: 0.3 + Math.random() * 0.5 };
-        world.add(m);
-        return m;
-      });
-      undo.push(() => { parts.forEach((p) => { p.geo.dispose(); p.mat.dispose(); }); shardGeo.dispose(); shardMat.dispose(); });
-
-      stage.place(stage.lay.w * 0.74, stage.lay.h * 0.4, Math.min(stage.lay.w * 0.14, stage.lay.h * 0.28));
+      // No glass bangle meshes and no `world` placement/rotation any more —
+      // just the photo plane. The ripple-dissolve transition between slides
+      // lives entirely in that plane's own shader (uMix below), not in
+      // anything removed here, so it's untouched.
 
       const ptr = { x: 0, y: 0, sx: 0, sy: 0, px: 0, py: 0, moved: false };
       const onMove = (e: PointerEvent) => {
@@ -237,27 +197,6 @@ export default function Hero3D({ slides }: { slides: Slide[] }) {
         u.uZoom.value = 1.07 + (reduce ? 0 : Math.sin(t * 0.18) * 0.012);
         u.uShift.value.set(-ptr.sx * 0.018, ptr.sy * 0.012);
 
-        const intro = reduce ? 1 : 1 - Math.pow(1 - clamp(t / 1.6), 4);
-        world.rotation.x = -0.25 + ptr.sy * 0.4 + (reduce ? 0 : Math.sin(t * 0.45) * 0.05);
-        world.rotation.y = ptr.sx * 0.55 + (1 - intro) * 1.2 + (reduce ? 0 : Math.cos(t * 0.33) * 0.07);
-        world.rotation.z = reduce ? 0 : Math.sin(t * 0.12) * 0.08;
-
-        parts.forEach((p, idx) => {
-          const o = off[idx];
-          const fl = reduce ? 0 : Math.sin(t * 0.6 + p.ph);
-          p.g.position.set(o[0] - ptr.sx * 0.1 * idx, o[1] + fl * 0.05 * (idx + 1) + ptr.sy * 0.07 * idx, o[2]);
-          p.g.rotation.x = ptr.sy * 0.2 * idx;
-          p.g.rotation.y = ptr.sx * 0.28 * idx;
-          p.mat.dispersion = 1.2 + speed * 2.2;
-        });
-        shards.forEach((s) => {
-          const ud = s.userData as { b: InstanceType<typeof THREE.Vector3>; ph: number; sp: number };
-          if (!reduce) {
-            s.position.set(ud.b.x + Math.sin(t * ud.sp + ud.ph) * 0.08, ud.b.y + Math.cos(t * ud.sp * 0.8 + ud.ph) * 0.08, ud.b.z);
-            s.rotation.x += dt * 0.4; s.rotation.y += dt * 0.3;
-          }
-        });
-        scene.environmentRotation.set(ptr.sy * 0.3, ptr.sx * 0.8 + (reduce ? 0 : t * 0.02), 0);
         stage.fringe(0.007 + speed * 0.014);
         stage.render();
       };
