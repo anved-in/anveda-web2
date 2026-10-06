@@ -56,6 +56,29 @@ export default async function GroupPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
 
+      {/* Group switcher — plain underlined tabs, mobile only. The desktop
+          sidebar (ShopShell) already does this job from 1024px up. */}
+      <nav aria-label="Browse bangle types" className="border-b border-line px-4 sm:px-6 lg:hidden">
+        <div className="no-bar mx-auto flex max-w-[1320px] gap-6 overflow-x-auto">
+          {groups.map((grp) => {
+            const on = grp.slug === g.slug;
+            return (
+              <Link
+                key={grp.slug}
+                href={`/shop/${grp.slug}`}
+                aria-current={on ? "page" : undefined}
+                className={[
+                  "shrink-0 whitespace-nowrap border-b-2 py-3.5 text-[12px] font-bold uppercase tracking-[0.08em] transition-colors",
+                  on ? "border-ink text-ink" : "border-transparent text-ink-faint",
+                ].join(" ")}
+              >
+                {grp.name}
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
+
       <section className="border-b border-line px-4 pb-8 pt-9 sm:px-6 md:pb-10 md:pt-12">
         <div className="mx-auto max-w-[1320px]">
           <h1 className="font-display text-[clamp(30px,4.4vw,54px)]">{g.name}</h1>

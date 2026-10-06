@@ -1,16 +1,23 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Link from "@/components/Link";
 import { imgSrc, imgSrcSmall, listingPrice, listingTitle, type Listing } from "@/lib/catalog";
 import { asset } from "@/lib/site";
+import { useCart } from "@/lib/cart";
 import Price from "./Price";
 import FavButton from "./FavButton";
 
 /**
- * Grid tile for one colourway, laid out the way the reference storefront lays
- * its product cards out: a plain square photo, then centred text beneath it.
+ * Grid tile for one colourway: a plain square photo, then the name small,
+ * the price below it, and a bag icon that quick-adds without leaving the
+ * grid. A size still has to be chosen — a defaulted size is the commonest
+ * cause of a wrong-size delivery (see ProductBuy) — so the bag icon opens a
+ * small inline size picker instead of skipping that choice.
  *
- * Deliberately only three things under the photo — name, price, colour count.
- * Pack size ("dozen", "set of 2") is never shown anywhere on the storefront:
- * it made the grid read as a wholesale list rather than a shop.
+ * Deliberately nothing else under the photo. Pack size ("dozen", "set of 2")
+ * is never shown anywhere on the storefront: it made the grid read as a
+ * wholesale list rather than a shop.
  */
 export default function ListingCard({
   l,
@@ -34,10 +41,32 @@ export default function ListingCard({
   const { product: p, variant: v, href } = l;
   const showColour = p.variants.length > 1;
   const price = listingPrice(l);
+  const title = listingTitle(p, v, withFamily);
+
+  const { add } = useCart();
+  const [sizeOpen, setSizeOpen] = useState(false);
+  const [added, setAdded] = useState(false);
+  const pickerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sizeOpen) return;
+    const onDocClick = (e: MouseEvent) => {
+      if (pickerRef.current && !pickerRef.current.contains(e.target as Node)) setSizeOpen(false);
+    };
+    document.addEventListener("click", onDocClick);
+    return () => document.removeEventListener("click", onDocClick);
+  }, [sizeOpen]);
+
+  const pickSize = (size: string) => {
+    add(p.id, size, 1, v.colour);
+    setSizeOpen(false);
+    setAdded(true);
+    window.setTimeout(() => setAdded(false), 1800);
+  };
 
   return (
     <article className={instant ? "group relative" : "reveal group relative"} data-d={delay}>
-      <FavButton id={p.id} colour={v.colour} name={listingTitle(p, v, withFamily)} />
+      <FavButton id={p.id} colour={v.colour} name={title} />
       <Link href={href} className="block">
         <div className="relative aspect-square overflow-hidden bg-cream-2">
           {/* Plain <img>: the site builds to a static export, where the Next
@@ -68,18 +97,58 @@ export default function ListingCard({
             </span>
           )}
         </div>
-
-        <div className="px-1 pt-3.5 text-center">
-          <h3 className="text-[13.5px] leading-snug">
-            {listingTitle(p, v, withFamily)}
-          </h3>
-          <div className="mt-1.5">
-            <Price price={price} size="sm" />
-          </div>
-          {/* No "N colours" line: every colourway is already its own tile in
-              the grid, so the count restated the obvious under each one. */}
-        </div>
       </Link>
+
+      <div className="px-1 pt-3">
+        <Link href={href} className="block truncate text-[12px] leading-snug text-ink-soft">
+          {title}
+        </Link>
+        <div className="mt-1 flex items-center justify-between gap-2">
+          <Link href={href} className="block">
+            <Price price={price} size="sm" />
+          </Link>
+          {v.inStock && (
+            <div ref={pickerRef} className="relative shrink-0">
+              <button
+                type="button"
+                onClick={() => setSizeOpen((o) => !o)}
+                aria-label={`Add ${title} to bag`}
+                aria-expanded={sizeOpen}
+                className="flex h-7 w-7 items-center justify-center text-ink transition-opacity hover:opacity-60"
+              >
+                {added ? (
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M4 12.5l5 5L20 6.5" />
+                  </svg>
+                ) : (
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M6 7h12l1 13H5L6 7Z" />
+                    <path d="M9 7a3 3 0 0 1 6 0" />
+                  </svg>
+                )}
+              </button>
+
+              {sizeOpen && (
+                <div className="absolute bottom-[calc(100%+8px)] right-0 z-20 w-max border border-line bg-white p-2.5 shadow-lg">
+                  <p className="px-0.5 pb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ink-faint">Size</p>
+                  <div className="flex gap-1.5">
+                    {v.sizes.map((s) => (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => pickSize(s)}
+                        className="min-w-[30px] border border-line-strong px-2 py-1 text-[11.5px] font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
     </article>
   );
 }

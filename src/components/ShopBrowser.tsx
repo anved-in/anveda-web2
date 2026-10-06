@@ -84,7 +84,6 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
   // re-scans on navigation). After the first touch, cards render instantly
   // visible instead of relying on that observer; see ListingCard's `instant`.
   const [touched, setTouched] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
   const sortBtnRef = useRef<HTMLButtonElement>(null);
   const priceBtnRef = useRef<HTMLButtonElement>(null);
@@ -140,53 +139,30 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
             (replacing the other controls while open) instead of claiming
             width permanently, and every pill drops its selected-value suffix
             on the label so the row stays short regardless of what's chosen. */}
-        {searchOpen ? (
-          <div className="mx-auto flex max-w-[1320px] items-center gap-2 px-3 py-2.5 sm:px-6">
-            <svg className="shrink-0 text-ink-faint" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+        <div className="mx-auto flex max-w-[1320px] items-center px-3 py-3 sm:px-6">
+          {/* Plain text throughout — no pill boxes, each control separated by
+              a thin vertical rule instead, matching the reference exactly. */}
+          <div className="flex min-w-0 flex-1 items-center gap-1.5">
+            <svg className="shrink-0 text-ink-faint" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <circle cx="11" cy="11" r="7" />
               <path d="m21 21-4.3-4.3" />
             </svg>
             <input
-              autoFocus
               type="search"
               value={q}
               onChange={(e) => {
                 setQ(e.target.value);
                 setTouched(true);
               }}
-              placeholder="Search this range…"
+              placeholder="Search this range"
               aria-label="Search designs"
-              className="min-w-0 flex-1 bg-transparent text-[13.5px] outline-none"
+              className="min-w-0 flex-1 bg-transparent text-[12px] text-ink outline-none placeholder:text-ink-faint"
             />
-            {q && (
-              <button type="button" onClick={() => setQ("")} aria-label="Clear search" className="shrink-0 text-ink-faint">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                  <path d="M6 6l12 12M18 6 6 18" />
-                </svg>
-              </button>
-            )}
-            <button type="button" onClick={() => setSearchOpen(false)} className="shrink-0 text-[12px] font-semibold text-ink">
-              Done
-            </button>
           </div>
-        ) : (
-        <div className="mx-auto flex max-w-[1320px] items-center gap-1.5 px-3 py-2.5 sm:gap-2.5 sm:px-6">
-          <button
-            type="button"
-            onClick={() => setSearchOpen(true)}
-            aria-label="Search designs"
-            className={[
-              "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors",
-              q ? "border-ink bg-ink text-cream" : "border-line-strong bg-white text-ink-faint hover:border-ink",
-            ].join(" ")}
-          >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-              <circle cx="11" cy="11" r="7" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-          </button>
 
-          {/* ---------------------------------------------------------- sort pill */}
+          <span className="mx-2.5 h-4 w-px shrink-0 bg-line-strong sm:mx-3.5" aria-hidden="true" />
+
+          {/* ---------------------------------------------------------- sort */}
           <div className="relative shrink-0">
             <button
               ref={sortBtnRef}
@@ -196,10 +172,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
                 setOpenMenu((m) => (m === "sort" ? null : "sort"));
               }}
               aria-expanded={openMenu === "sort"}
-              className={[
-                "flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1.5 text-[11.5px] font-semibold transition-colors sm:gap-1.5 sm:px-3.5 sm:py-2 sm:text-[12.5px]",
-                sort !== "featured" ? "border-ink bg-ink text-cream" : "border-line-strong bg-white text-ink-soft hover:border-ink",
-              ].join(" ")}
+              className={["flex items-center gap-1 whitespace-nowrap text-[12px] font-semibold transition-colors", sort !== "featured" ? "text-ink" : "text-ink-soft"].join(" ")}
             >
               Sort
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true" className={openMenu === "sort" ? "rotate-180" : ""}>
@@ -234,7 +207,9 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
             )}
           </div>
 
-          {/* --------------------------------------------------------- price pill */}
+          <span className="mx-2.5 h-4 w-px shrink-0 bg-line-strong sm:mx-3.5" aria-hidden="true" />
+
+          {/* --------------------------------------------------------- price */}
           <div className="relative shrink-0">
             <button
               ref={priceBtnRef}
@@ -244,10 +219,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
                 setOpenMenu((m) => (m === "price" ? null : "price"));
               }}
               aria-expanded={openMenu === "price"}
-              className={[
-                "flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1.5 text-[11.5px] font-semibold transition-colors sm:gap-1.5 sm:px-3.5 sm:py-2 sm:text-[12.5px]",
-                priceBand !== null ? "border-ink bg-ink text-cream" : "border-line-strong bg-white text-ink-soft hover:border-ink",
-              ].join(" ")}
+              className={["flex items-center gap-1 whitespace-nowrap text-[12px] font-semibold transition-colors", priceBand !== null ? "text-ink" : "text-ink-soft"].join(" ")}
             >
               Price
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true" className={openMenu === "price" ? "rotate-180" : ""}>
@@ -285,6 +257,8 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
             )}
           </div>
 
+          <span className="mx-2.5 h-4 w-px shrink-0 bg-line-strong sm:mx-3.5" aria-hidden="true" />
+
           {/* --------------------------------------------------- in-stock toggle */}
           <button
             type="button"
@@ -293,46 +267,41 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
               setTouched(true);
             }}
             aria-pressed={inStockOnly}
-            className={[
-              "flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1.5 text-[11.5px] font-semibold transition-colors sm:gap-2 sm:px-3.5 sm:py-2 sm:text-[12.5px]",
-              inStockOnly ? "border-ink bg-ink text-cream" : "border-line-strong bg-white text-ink-soft hover:border-ink",
-            ].join(" ")}
+            className="flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[12px] font-semibold text-ink-soft"
           >
             <span
-              className={[
-                "flex h-[13px] w-[13px] shrink-0 items-center justify-center rounded-[4px] border transition-colors sm:h-[15px] sm:w-[15px]",
-                inStockOnly ? "border-cream bg-cream" : "border-line-strong",
-              ].join(" ")}
+              className={["flex h-[13px] w-[13px] shrink-0 items-center justify-center rounded-[3px] border transition-colors", inStockOnly ? "border-ink bg-ink" : "border-line-strong"].join(" ")}
               aria-hidden="true"
             >
               {inStockOnly && (
-                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 12.5l5 5L20 6.5" />
                 </svg>
               )}
             </span>
-            <span className="sm:hidden">In stock</span>
-            <span className="hidden sm:inline">In stock only</span>
+            In stock
           </button>
 
-          {activeFilterCount > 0 && (
-            <button
-              type="button"
-              onClick={() => {
-                setInStockOnly(false);
-                setPriceBand(null);
-              }}
-              aria-label="Clear filters"
-              title="Clear filters"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-ink-faint transition-colors hover:text-ink"
-            >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                <path d="M6 6l12 12M18 6 6 18" />
-              </svg>
-            </button>
-          )}
+          <span className="mx-2.5 h-4 w-px shrink-0 bg-line-strong sm:mx-3.5" aria-hidden="true" />
+
+          {/* More/clear — always present (matching the reference's trailing
+              sliders icon); muted when there's nothing to clear. */}
+          <button
+            type="button"
+            onClick={() => {
+              setInStockOnly(false);
+              setPriceBand(null);
+            }}
+            disabled={activeFilterCount === 0}
+            aria-label="Clear filters"
+            title="Clear filters"
+            className={["shrink-0 transition-colors", activeFilterCount > 0 ? "text-ink" : "text-ink-faint"].join(" ")}
+          >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+              <path d="M4 6h16M8 12h8M11 18h2" />
+            </svg>
+          </button>
         </div>
-        )}
       </div>
 
       {browsing ? (
