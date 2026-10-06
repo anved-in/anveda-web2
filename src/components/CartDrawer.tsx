@@ -3,6 +3,7 @@
 import Link from "@/components/Link";
 import { useEffect } from "react";
 import { useCart, lineProduct } from "@/lib/cart";
+import QtyStepper from "@/components/QtyStepper";
 import { imgSrc, inr, unitPrice, packLabel, colourLabel } from "@/lib/catalog";
 import { SITE, asset } from "@/lib/site";
 import { SHIPPING_FROM } from "@/lib/shipping";
@@ -113,25 +114,13 @@ export default function CartDrawer() {
                       })()}
 
                       <div className="mt-2.5 flex items-center justify-between">
-                        <div className="flex items-center border border-line">
-                          <button
-                            type="button"
-                            onClick={() => setQty(l.id, l.size, l.colour, l.qty - 1)}
-                            className="px-2.5 py-1 text-[15px] leading-none"
-                            aria-label={`Decrease quantity of ${p.name}`}
-                          >
-                            −
-                          </button>
-                          <span className="min-w-[26px] text-center text-[13px]">{l.qty}</span>
-                          <button
-                            type="button"
-                            onClick={() => setQty(l.id, l.size, l.colour, l.qty + 1)}
-                            className="px-2.5 py-1 text-[15px] leading-none"
-                            aria-label={`Increase quantity of ${p.name}`}
-                          >
-                            +
-                          </button>
-                        </div>
+                        <QtyStepper
+                          qty={l.qty}
+                          onDecrease={() => setQty(l.id, l.size, l.colour, l.qty - 1)}
+                          onIncrease={() => setQty(l.id, l.size, l.colour, l.qty + 1)}
+                          label={p.name}
+                          size="sm"
+                        />
                         <span className="text-[14px] font-semibold">{inr(unitPrice(l.id, l.colour) * l.qty)}</span>
                       </div>
 

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "@/components/Link";
 import { useCart } from "@/lib/cart";
+import QtyStepper from "@/components/QtyStepper";
 import { imgSrc, inr, variantPrice, packLabel, colourLabel, ALL_SIZES, SIZE_GUIDE, type Product, type Variant } from "@/lib/catalog";
 import { asset } from "@/lib/site";
 
@@ -139,7 +140,10 @@ export default function ProductBuy({
           </Link>
         </div>
 
-        <div className="mt-3 flex flex-wrap gap-2.5">
+        {/* flex-1 + min-w-0 on every button, no wrap: all five sizes share
+            the row equally instead of a fixed min-width forcing a 3+2 wrap
+            on a phone. */}
+        <div className="mt-3 flex gap-1.5">
           {ALL_SIZES.map((s) => {
             const g = SIZE_GUIDE.find((x) => x.size === s);
             const on = size === s;
@@ -153,17 +157,17 @@ export default function ProductBuy({
                 }}
                 aria-pressed={on}
                 className={[
-                  "min-w-[76px] cursor-pointer border px-4 py-3 text-center transition-colors",
+                  "min-w-0 flex-1 cursor-pointer border px-1 py-2.5 text-center transition-colors",
                   on
                     ? "border-ink bg-ink text-cream"
                     : "border-line-strong bg-white hover:border-ink",
                 ].join(" ")}
               >
-                <span className="block text-[15px] font-semibold">{s}</span>
+                <span className="block text-[13px] font-semibold">{s}</span>
                 {g && (
                   <span
                     className={[
-                      "mt-0.5 block text-[10.5px] uppercase tracking-[0.1em]",
+                      "mt-0.5 block text-[8px] uppercase tracking-[0.06em]",
                       on ? "text-cream/70" : "text-ink-soft",
                     ].join(" ")}
                   >
@@ -196,24 +200,12 @@ export default function ProductBuy({
                 </span>
               )}
             </span>
-            <div className="mt-3 inline-flex items-center border border-line-strong bg-white">
-              <button
-                type="button"
-                onClick={() => setQty((q) => Math.max(1, q - 1))}
-                className="cursor-pointer px-4 py-3 text-[17px] leading-none"
-                aria-label="Decrease quantity"
-              >
-                −
-              </button>
-              <span className="min-w-[42px] text-center text-[15px]">{qty}</span>
-              <button
-                type="button"
-                onClick={() => setQty((q) => Math.min(99, q + 1))}
-                className="cursor-pointer px-4 py-3 text-[17px] leading-none"
-                aria-label="Increase quantity"
-              >
-                +
-              </button>
+            <div className="mt-3 w-fit">
+              <QtyStepper
+                qty={qty}
+                onDecrease={() => setQty((q) => Math.max(1, q - 1))}
+                onIncrease={() => setQty((q) => Math.min(99, q + 1))}
+              />
             </div>
           </div>
 

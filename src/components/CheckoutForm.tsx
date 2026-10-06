@@ -4,6 +4,7 @@ import Link from "@/components/Link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useCart, lineProduct } from "@/lib/cart";
+import QtyStepper from "@/components/QtyStepper";
 import { useFavs } from "@/lib/favourites";
 import { HEART } from "@/components/FavButton";
 import { imgSrc, inr, unitPrice, productById, colourLabel } from "@/lib/catalog";
@@ -371,27 +372,13 @@ export default function CheckoutForm() {
                     </div>
 
                     <div className="mt-2.5 flex items-center justify-between gap-3">
-                      <div className="flex items-center border border-line-strong">
-                        <button
-                          type="button"
-                          onClick={() => setQty(l.id, l.size, l.colour, l.qty - 1)}
-                          className="flex h-8 w-8 items-center justify-center text-[16px] leading-none transition-colors hover:bg-cream-2"
-                          aria-label={`Decrease quantity of ${p.name}`}
-                        >
-                          −
-                        </button>
-                        <span className="min-w-[30px] border-x border-line-strong text-center text-[13px] font-semibold">
-                          {l.qty}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => setQty(l.id, l.size, l.colour, l.qty + 1)}
-                          className="flex h-8 w-8 items-center justify-center text-[16px] leading-none transition-colors hover:bg-cream-2"
-                          aria-label={`Increase quantity of ${p.name}`}
-                        >
-                          +
-                        </button>
-                      </div>
+                      <QtyStepper
+                        qty={l.qty}
+                        onDecrease={() => setQty(l.id, l.size, l.colour, l.qty - 1)}
+                        onIncrease={() => setQty(l.id, l.size, l.colour, l.qty + 1)}
+                        label={p.name}
+                        size="sm"
+                      />
 
                       <div className="flex shrink-0 items-center gap-3">
                         <button
