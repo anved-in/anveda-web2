@@ -28,11 +28,11 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "Can I return something I simply did not like?",
-    a: "Yes, within 7 days of delivery, provided the set is unworn and in its original packing. Return postage is yours; the refund is the full item value. Sale and custom sets are final.",
+    a: "We can only accept a return or refund for a set that arrived broken, and only with the unboxing video as proof. We are not able to accept returns for a change of mind.",
   },
   {
     q: "I ordered the wrong size.",
-    a: "Message us as soon as you notice. If the order has not shipped we will simply swap it. If it has, treat it as a return and we will send the right size once the first set is back with us.",
+    a: "Message us as soon as you notice. If the order has not shipped we will simply swap it before it leaves.",
   },
   {
     q: "How is the order packed?",
