@@ -144,7 +144,12 @@ export default function ShopBrowser({
 
   return (
     <>
-      <div ref={barRef} className="sticky top-[64px] z-10 border-b border-line bg-cream/95 backdrop-blur-sm">
+      {/* top must match the real header height exactly (56px on phones,
+          64px from md: up — see Header.tsx's own h-[56px] md:h-[64px]), or
+          there's a gap between the fixed header and this sticky bar where
+          page content shows through while scrolling. A flat top-[64px] here
+          previously left an 8px gap on every phone. */}
+      <div ref={barRef} className="sticky top-[56px] z-10 border-b border-line bg-cream/95 backdrop-blur-sm md:top-[64px]">
         {header}
         {/* Everything here must fit one row with no horizontal scroll, even on
             a narrow phone — search collapses to an icon that expands in place
