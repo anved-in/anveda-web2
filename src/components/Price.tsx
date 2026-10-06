@@ -9,11 +9,16 @@ export default function Price({
   price,
   from = false,
   size = "md",
+  muted = false,
   className = "",
 }: {
   price: number;
   from?: boolean;
   size?: "sm" | "md" | "lg";
+  /** Plain small grey instead of the bold sale-red treatment — the grid's
+   *  own name/price order already puts the name first and in black; a loud
+   *  price under it would outrank the thing that's actually meant to lead. */
+  muted?: boolean;
   className?: string;
 }) {
   const t = priceTag(price);
@@ -27,8 +32,11 @@ export default function Price({
       )}
       {/* Selling price first, struck price after it: the number they pay is
           the one that should be read first. */}
-      <span className="price-now">{t.nowText}</span>
-      <span className="price-was text-[0.85em]" aria-label={`Was ${t.wasText}`}>
+      <span className={muted ? "font-normal text-ink-soft" : "price-now"}>{t.nowText}</span>
+      <span
+        className={muted ? "text-[0.85em] font-normal text-ink-faint line-through" : "price-was text-[0.85em]"}
+        aria-label={`Was ${t.wasText}`}
+      >
         {t.wasText}
       </span>
     </span>

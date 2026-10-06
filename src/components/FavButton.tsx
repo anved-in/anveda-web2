@@ -67,10 +67,11 @@ export default function FavButton({
       onClick={() => toggle(id, colour)}
       aria-pressed={on}
       aria-label={label}
-      className={[
-        "absolute right-2 top-2 z-10 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white/90 shadow-sm transition-colors hover:bg-white",
-        on ? "text-maroon" : "text-ink",
-      ].join(" ")}
+      // No white chip behind the icon — it floats directly on the photo, a
+      // drop-shadow (not a solid backing) keeps it legible on both light and
+      // dark crops without adding a visual element the reference doesn't have.
+      className="absolute right-2.5 top-2.5 z-10 flex h-7 w-7 cursor-pointer items-center justify-center text-white transition-opacity hover:opacity-80"
+      style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,.45))" }}
     >
       {icon}
     </button>

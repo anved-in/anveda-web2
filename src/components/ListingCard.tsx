@@ -68,7 +68,7 @@ export default function ListingCard({
     <article className={instant ? "group relative" : "reveal group relative"} data-d={delay}>
       <FavButton id={p.id} colour={v.colour} name={title} />
       <Link href={href} className="block">
-        <div className="relative aspect-square overflow-hidden bg-cream-2">
+        <div className="relative aspect-square overflow-hidden rounded-lg bg-cream-2">
           {/* Plain <img>: the site builds to a static export, where the Next
               image optimizer is unavailable. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -100,12 +100,12 @@ export default function ListingCard({
       </Link>
 
       <div className="px-1 pt-3">
-        <Link href={href} className="block truncate text-[12px] leading-snug text-ink-soft">
+        <Link href={href} className="block truncate text-[13.5px] leading-snug text-ink">
           {title}
         </Link>
         <div className="mt-1 flex items-center justify-between gap-2">
           <Link href={href} className="block">
-            <Price price={price} size="sm" />
+            <Price price={price} size="sm" muted />
           </Link>
           {v.inStock && (
             <div ref={pickerRef} className="relative shrink-0">
