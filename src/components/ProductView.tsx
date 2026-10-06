@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "@/components/Link";
 import ProductBuy from "@/components/ProductBuy";
 import Price from "@/components/Price";
 import FavButton from "@/components/FavButton";
-import { imgSrc, inr, variantPrice, packCount, colourLabel, ALL_SIZES, type Product, type Variant, rangeHref } from "@/lib/catalog";
+import { imgSrc, inr, variantPrice, packCount, colourLabel, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
 import { SHIPPING_FROM } from "@/lib/shipping";
 
@@ -71,13 +70,12 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
       </div>
 
       <div className="w-full md:w-[45%] lg:w-[42%]">
-        <Link
-          href={rangeHref(p.collection)}
-          className="text-[11px] font-bold uppercase tracking-[0.2em] text-maroon"
-        >
-          {p.collectionName}
-        </Link>
-        <div className="mt-2.5 flex items-start justify-between gap-4">
+        {/* Collection eyebrow removed — it repeated the product name itself
+            in the common case (a design that IS its collection, e.g.
+            "Intricate Glass Bangle"), reading as the same line twice before
+            anything else loaded. The collection stays reachable from the
+            shop page's own nav. */}
+        <div className="flex items-start justify-between gap-4">
           <h1 className="font-display text-[clamp(28px,3.6vw,44px)]">{p.name}</h1>
           <FavButton
             id={p.id}
@@ -92,7 +90,7 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
           <span className="badge-sale">20% off</span>
         </div>
 
-        <p className="mt-5 text-[15px] leading-relaxed text-ink-soft">{p.story}</p>
+        <p className="mt-5 text-[13px] leading-relaxed text-ink-faint">{p.story}</p>
 
         <ProductBuy p={p} variant={variant} onVariant={setVariant} />
 
