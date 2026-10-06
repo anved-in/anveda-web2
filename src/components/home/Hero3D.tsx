@@ -328,8 +328,13 @@ export default function Hero3D({ slides }: { slides: Slide[] }) {
               onClick={() => go(d)}
               className={[
                 "absolute flex h-9 w-9 items-center justify-center rounded-full border border-white/60 text-white transition-colors hover:bg-white hover:text-ink",
+                // Right-offsets must clear each other by at least the 36px
+                // button width + a gap, or the two circles overlap into one
+                // fused blob — sm: 24px vs 72px (36px gap), md: 40px vs 88px
+                // (also 36px). The previous values (40px vs 58px, only an
+                // 18px gap against a 36px button) did exactly that.
                 "top-1/2 -translate-y-1/2 sm:top-auto sm:bottom-6 sm:translate-y-0 md:bottom-10",
-                d === -1 ? "left-2 sm:left-auto sm:right-[52px] md:right-[58px]" : "right-2 sm:right-6 md:right-10",
+                d === -1 ? "left-2 sm:left-auto sm:right-[72px] md:right-[88px]" : "right-2 sm:right-6 md:right-10",
               ].join(" ")}
               aria-label={d === -1 ? "Previous slide" : "Next slide"}
             >
