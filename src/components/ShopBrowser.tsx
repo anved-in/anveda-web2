@@ -46,6 +46,12 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
   const [inStockOnly, setInStockOnly] = useState(false);
   const [priceBand, setPriceBand] = useState<number | null>(null); // index into buckets, null = any
   const [openMenu, setOpenMenu] = useState<"sort" | "price" | null>(null);
+  // Once any control has been touched, every subsequent render — including
+  // returning to the sectioned view via "Clear filters" — mounts fresh
+  // .reveal cards the page's scroll observer never gets to see (it only
+  // re-scans on navigation). After the first touch, cards render instantly
+  // visible instead of relying on that observer; see ListingCard's `instant`.
+  const [touched, setTouched] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -106,7 +112,10 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
             <input
               type="search"
               value={q}
-              onChange={(e) => setQ(e.target.value)}
+              onChange={(e) => {
+                setQ(e.target.value);
+                setTouched(true);
+              }}
               placeholder="Search this range…"
               aria-label="Search designs"
               className="w-full rounded-full border border-line-strong bg-white py-2 pl-9 pr-4 text-[13px] outline-none transition-colors focus:border-ink"
@@ -141,6 +150,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
                     onClick={() => {
                       setSort(s);
                       setOpenMenu(null);
+                      setTouched(true);
                     }}
                     className={[
                       "flex w-full items-center justify-between px-4 py-2.5 text-left text-[13px] transition-colors hover:bg-cream-2",
@@ -185,6 +195,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
                   onClick={() => {
                     setPriceBand(null);
                     setOpenMenu(null);
+                    setTouched(true);
                   }}
                   className={["block w-full px-4 py-2.5 text-left text-[13px] transition-colors hover:bg-cream-2", priceBand === null ? "font-semibold text-maroon" : "text-ink-soft"].join(" ")}
                 >
@@ -197,6 +208,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
                     onClick={() => {
                       setPriceBand(i);
                       setOpenMenu(null);
+                      setTouched(true);
                     }}
                     className={["block w-full px-4 py-2.5 text-left text-[13px] transition-colors hover:bg-cream-2", priceBand === i ? "font-semibold text-maroon" : "text-ink-soft"].join(" ")}
                   >
@@ -210,7 +222,10 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
           {/* --------------------------------------------------- in-stock toggle */}
           <button
             type="button"
-            onClick={() => setInStockOnly((v) => !v)}
+            onClick={() => {
+              setInStockOnly((v) => !v);
+              setTouched(true);
+            }}
             aria-pressed={inStockOnly}
             className={[
               "rounded-full border px-3.5 py-2 text-[12.5px] font-semibold transition-colors",
@@ -255,7 +270,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
               </div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 xl:grid-cols-4">
                 {s.items.map((l, j) => (
-                  <ListingCard key={l.variant.colour + l.product.id} l={l} delay={(j % 4) * 70} priority={i === 0 && j < 4} withFamily={false} />
+                  <ListingCard key={l.variant.colour + l.product.id} l={l} delay={(j % 4) * 70} priority={i === 0 && j < 4} withFamily={false} instant={touched} />
                 ))}
               </div>
             </div>
@@ -273,8 +288,8 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
               </p>
             ) : (
               <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 xl:grid-cols-4">
-                {filtered.map((l, j) => (
-                  <ListingCard key={l.variant.colour + l.product.id} l={l} delay={(j % 4) * 70} withFamily />
+                {filtered.map((l) => (
+                  <ListingCard key={l.variant.colour + l.product.id} l={l} withFamily instant />
                 ))}
               </div>
             )}

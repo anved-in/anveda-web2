@@ -17,19 +17,26 @@ export default function ListingCard({
   delay = 0,
   priority = false,
   withFamily = true,
+  instant = false,
 }: {
   l: Listing;
   delay?: number;
   priority?: boolean;
   /** false on a collection page, where the heading already names the family. */
   withFamily?: boolean;
+  /** True when this card is mounted after a client-side action (e.g. a
+   *  search/filter toggle) rather than the initial page load. The site's
+   *  scroll-reveal observer (Reveal.tsx) only re-scans on navigation, so a
+   *  .reveal card added later would never be observed and stay invisible —
+   *  this skips the fade-in entirely and renders it already visible. */
+  instant?: boolean;
 }) {
   const { product: p, variant: v, href } = l;
   const showColour = p.variants.length > 1;
   const price = listingPrice(l);
 
   return (
-    <article className="reveal group relative" data-d={delay}>
+    <article className={instant ? "group relative" : "reveal group relative"} data-d={delay}>
       <FavButton id={p.id} colour={v.colour} name={listingTitle(p, v, withFamily)} />
       <Link href={href} className="block">
         <div className="relative aspect-square overflow-hidden bg-cream-2">
