@@ -22,6 +22,15 @@ const isActive = (path: string, href: string): boolean => {
   return path.startsWith(href);
 };
 
+/** The one repeated affordance in the mobile menu: every tappable row ends
+ *  in this, at every level of the hierarchy, so "this goes somewhere" never
+ *  has to be re-learned per section. */
+const Chevron = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="shrink-0 text-ink-faint" aria-hidden="true">
+    <path d="M9 5l7 7-7 7" />
+  </svg>
+);
+
 export default function Header() {
   const path = usePathname();
   const { count, setOpen, ready } = useCart();
@@ -310,6 +319,15 @@ export default function Header() {
           </button>
         </div>
 
+        {/* Three levels of hierarchy, each reading differently on purpose:
+            top-level nav (REELS/ABOUT US/SIZING) is tracked uppercase —
+            destinations, not catalogue items; a group name (GLASS BANGLES) is
+            smaller again and grey, a label introducing what follows rather
+            than a row of its own weight; a range (Intricate Glass Bangle) is
+            the largest and plain black — what someone's actually here to
+            tap. Contrast and size carry that order without needing icons or
+            colour to do it; the chevron is the one repeated affordance that
+            says "this row goes somewhere," consistent at every level. */}
         <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-10">
           {NAV.map((n) => (
             <Link
@@ -317,11 +335,12 @@ export default function Header() {
               href={n.href}
               onClick={() => setMenu(false)}
               className={[
-                "block border-b border-line py-3 text-[13px] uppercase tracking-[0.1em]",
-                isActive(path, n.href) ? "font-bold text-maroon" : "",
+                "flex items-center justify-between border-b border-line py-4 text-[13px] uppercase tracking-[0.1em]",
+                isActive(path, n.href) ? "font-bold text-ink" : "text-ink",
               ].join(" ")}
             >
               {n.label}
+              <Chevron />
             </Link>
           ))}
 
@@ -332,10 +351,8 @@ export default function Header() {
                 href={`/shop/${g.slug}`}
                 onClick={() => setMenu(false)}
                 className={[
-                  "mt-5 block pb-1 text-[10.5px] uppercase tracking-[0.2em]",
-                  path.startsWith(`/shop/${g.slug}`)
-                    ? "font-bold text-maroon"
-                    : "text-ink-faint",
+                  "mt-7 block pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors",
+                  path.startsWith(`/shop/${g.slug}`) ? "text-ink" : "text-ink-faint",
                 ].join(" ")}
               >
                 {g.name}
@@ -346,13 +363,12 @@ export default function Header() {
                   href={rangeHref(c.slug)}
                   onClick={() => setMenu(false)}
                   className={[
-                    "block border-b border-line py-3 text-[13px]",
-                    path === rangeHref(c.slug)
-                      ? "font-bold text-maroon"
-                      : "",
+                    "flex items-center justify-between border-b border-line py-4 text-[15px]",
+                    path === rangeHref(c.slug) ? "font-semibold text-ink" : "text-ink",
                   ].join(" ")}
                 >
                   {c.name}
+                  <Chevron />
                 </Link>
               ))}
             </div>
