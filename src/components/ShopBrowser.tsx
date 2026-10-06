@@ -313,11 +313,15 @@ export default function ShopBrowser({
           >
             <div className="mx-auto max-w-[1320px]">
               <div className="mb-8 border-b border-line pb-5">
-                <span className="eyebrow">
+                {/* Design count and blurb dropped on mobile — the range
+                    name alone is enough once it's reached by scrolling or
+                    the jump-chips above, and cutting the extra two lines
+                    per section keeps the feed moving. Desktop keeps both. */}
+                <span className="eyebrow hidden lg:inline-block">
                   {s.items.length} {s.items.length === 1 ? "design" : "designs"}
                 </span>
-                <h2 className="mt-2.5 font-display text-[clamp(24px,3vw,38px)]">{s.name}</h2>
-                <p className="mt-3 max-w-[60ch] text-[13px] text-ink-soft">{s.blurb}</p>
+                <h2 className="font-display text-[clamp(24px,3vw,38px)] lg:mt-2.5">{s.name}</h2>
+                <p className="mt-3 hidden max-w-[60ch] text-[13px] text-ink-soft lg:block">{s.blurb}</p>
               </div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 xl:grid-cols-4">
                 {s.items.map((l, j) => (
