@@ -271,17 +271,6 @@ export default {
         return json({ ok: false, error: "internal error" }, 500);
       }
     }
-    // Pre-launch teaser: only the bare home address shows it. Every other
-    // path (and the shop's own client-side navigation to the home page) is the
-    // real storefront. To bring the real home page back, delete this block.
-    if ((url.pathname === "/" || url.pathname === "/index.html") && (request.method === "GET" || request.method === "HEAD")) {
-      const teaser = await env.ASSETS.fetch(new Request(new URL("/teaser", url), request));
-      if (teaser.ok) {
-        const res = new Response(teaser.body, teaser);
-        res.headers.set("cache-control", "public, max-age=0, must-revalidate");
-        return res;
-      }
-    }
     return env.ASSETS.fetch(request);
   },
 };

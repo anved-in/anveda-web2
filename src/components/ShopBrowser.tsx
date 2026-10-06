@@ -33,13 +33,10 @@ function priceBuckets(all: Listing[]): { label: string; min: number; max: number
 }
 
 /**
- * A dropdown panel rendered into document.body instead of in place. The
- * toolbar it hangs off is horizontally scrollable (the pills never wrap on a
- * phone), and overflow-x:auto on that row makes the browser compute
- * overflow-y as auto too — any absolutely-positioned panel left inside it
- * would get clipped the moment it extends past the row's own height. A
- * portal, positioned from the trigger's own bounding rect, escapes that
- * entirely.
+ * A dropdown panel rendered into document.body instead of in place, so it
+ * can never get clipped by a scrolling/overflow ancestor and can be clamped
+ * to the viewport instead of running off the right edge of a narrow phone.
+ * Positioned from the trigger's own bounding rect.
  */
 function DropdownPortal({
   anchorRef,
@@ -48,16 +45,18 @@ function DropdownPortal({
   anchorRef: React.RefObject<HTMLElement | null>;
   children: React.ReactNode;
 }) {
+  const PANEL_W = 220;
   const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
   useEffect(() => {
     const el = anchorRef.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
-    setPos({ top: r.bottom + 6, left: r.left });
+    const left = Math.min(r.left, window.innerWidth - PANEL_W - 8);
+    setPos({ top: r.bottom + 6, left: Math.max(8, left) });
   }, [anchorRef]);
   if (!pos) return null;
   return createPortal(
-    <div style={{ position: "fixed", top: pos.top, left: pos.left }} className="z-20 w-[220px] border border-line bg-white py-1.5 shadow-lg">
+    <div style={{ position: "fixed", top: pos.top, left: pos.left, width: PANEL_W }} className="z-20 border border-line bg-white py-1.5 shadow-lg">
       {children}
     </div>,
     document.body,
@@ -85,6 +84,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
   // re-scans on navigation). After the first touch, cards render instantly
   // visible instead of relying on that observer; see ListingCard's `instant`.
   const [touched, setTouched] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
   const sortBtnRef = useRef<HTMLButtonElement>(null);
   const priceBtnRef = useRef<HTMLButtonElement>(null);
@@ -135,30 +135,56 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
   return (
     <>
       <div ref={barRef} className="sticky top-[64px] z-10 border-b border-line bg-cream/95 backdrop-blur-sm">
-        {/* Single row, never wraps — on a narrow phone it scrolls sideways
-            instead, same as the reference. Scrollbar hidden since the row's
-            own affordance (pills peeking off the edge) is enough of a hint. */}
-        <div className="mx-auto flex max-w-[1320px] items-center gap-2 overflow-x-auto px-4 py-3 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-6 [&::-webkit-scrollbar]:hidden">
-          <div className="relative w-[128px] shrink-0 sm:w-[200px]">
-            <svg
-              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint"
-              width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"
-            >
+        {/* Everything here must fit one row with no horizontal scroll, even on
+            a narrow phone — search collapses to an icon that expands in place
+            (replacing the other controls while open) instead of claiming
+            width permanently, and every pill drops its selected-value suffix
+            on the label so the row stays short regardless of what's chosen. */}
+        {searchOpen ? (
+          <div className="mx-auto flex max-w-[1320px] items-center gap-2 px-3 py-2.5 sm:px-6">
+            <svg className="shrink-0 text-ink-faint" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <circle cx="11" cy="11" r="7" />
               <path d="m21 21-4.3-4.3" />
             </svg>
             <input
+              autoFocus
               type="search"
               value={q}
               onChange={(e) => {
                 setQ(e.target.value);
                 setTouched(true);
               }}
-              placeholder="Search"
+              placeholder="Search this range…"
               aria-label="Search designs"
-              className="w-full rounded-full border border-line-strong bg-white py-2 pl-9 pr-4 text-[13px] outline-none transition-colors focus:border-ink"
+              className="min-w-0 flex-1 bg-transparent text-[13.5px] outline-none"
             />
+            {q && (
+              <button type="button" onClick={() => setQ("")} aria-label="Clear search" className="shrink-0 text-ink-faint">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
+              </button>
+            )}
+            <button type="button" onClick={() => setSearchOpen(false)} className="shrink-0 text-[12px] font-semibold text-ink">
+              Done
+            </button>
           </div>
+        ) : (
+        <div className="mx-auto flex max-w-[1320px] items-center gap-1.5 px-3 py-2.5 sm:gap-2.5 sm:px-6">
+          <button
+            type="button"
+            onClick={() => setSearchOpen(true)}
+            aria-label="Search designs"
+            className={[
+              "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-colors",
+              q ? "border-ink bg-ink text-cream" : "border-line-strong bg-white text-ink-faint hover:border-ink",
+            ].join(" ")}
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </button>
 
           {/* ---------------------------------------------------------- sort pill */}
           <div className="relative shrink-0">
@@ -171,12 +197,12 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
               }}
               aria-expanded={openMenu === "sort"}
               className={[
-                "flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-[12.5px] font-semibold transition-colors",
+                "flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1.5 text-[11.5px] font-semibold transition-colors sm:gap-1.5 sm:px-3.5 sm:py-2 sm:text-[12.5px]",
                 sort !== "featured" ? "border-ink bg-ink text-cream" : "border-line-strong bg-white text-ink-soft hover:border-ink",
               ].join(" ")}
             >
-              Sort: {SORT_LABEL[sort]}
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true" className={openMenu === "sort" ? "rotate-180" : ""}>
+              Sort
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true" className={openMenu === "sort" ? "rotate-180" : ""}>
                 <path d="m6 9 6 6 6-6" />
               </svg>
             </button>
@@ -219,12 +245,12 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
               }}
               aria-expanded={openMenu === "price"}
               className={[
-                "flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-[12.5px] font-semibold transition-colors",
+                "flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1.5 text-[11.5px] font-semibold transition-colors sm:gap-1.5 sm:px-3.5 sm:py-2 sm:text-[12.5px]",
                 priceBand !== null ? "border-ink bg-ink text-cream" : "border-line-strong bg-white text-ink-soft hover:border-ink",
               ].join(" ")}
             >
-              Price{priceBand !== null ? `: ${buckets[priceBand].label}` : ""}
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true" className={openMenu === "price" ? "rotate-180" : ""}>
+              Price
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true" className={openMenu === "price" ? "rotate-180" : ""}>
                 <path d="m6 9 6 6 6-6" />
               </svg>
             </button>
@@ -268,24 +294,25 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
             }}
             aria-pressed={inStockOnly}
             className={[
-              "flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 text-[12.5px] font-semibold transition-colors",
+              "flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1.5 text-[11.5px] font-semibold transition-colors sm:gap-2 sm:px-3.5 sm:py-2 sm:text-[12.5px]",
               inStockOnly ? "border-ink bg-ink text-cream" : "border-line-strong bg-white text-ink-soft hover:border-ink",
             ].join(" ")}
           >
             <span
               className={[
-                "flex h-[15px] w-[15px] shrink-0 items-center justify-center rounded-[4px] border transition-colors",
+                "flex h-[13px] w-[13px] shrink-0 items-center justify-center rounded-[4px] border transition-colors sm:h-[15px] sm:w-[15px]",
                 inStockOnly ? "border-cream bg-cream" : "border-line-strong",
               ].join(" ")}
               aria-hidden="true"
             >
               {inStockOnly && (
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 12.5l5 5L20 6.5" />
                 </svg>
               )}
             </span>
-            In stock only
+            <span className="sm:hidden">In stock</span>
+            <span className="hidden sm:inline">In stock only</span>
           </button>
 
           {activeFilterCount > 0 && (
@@ -295,12 +322,17 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
                 setInStockOnly(false);
                 setPriceBand(null);
               }}
-              className="shrink-0 whitespace-nowrap px-1 text-[12px] font-semibold text-ink underline underline-offset-2"
+              aria-label="Clear filters"
+              title="Clear filters"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-ink-faint transition-colors hover:text-ink"
             >
-              Clear filters
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                <path d="M6 6l12 12M18 6 6 18" />
+              </svg>
             </button>
           )}
         </div>
+        )}
       </div>
 
       {browsing ? (
