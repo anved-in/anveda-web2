@@ -72,7 +72,20 @@ function DropdownPortal({
  * in-stock toggle pill. With nothing touched, this renders the exact
  * sectioned layout the server already produced.
  */
-export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
+export default function ShopBrowser({
+  sections,
+  header,
+}: {
+  sections: ShopSection[];
+  /** Extra content rendered inside this toolbar's own sticky wrapper, above
+   *  the toolbar row — e.g. the group-switcher tabs and collection jump
+   *  chips on mobile. Two independently-sticky elements both targeting the
+   *  same `top` would overlap once both are stuck instead of stacking (the
+   *  second would need `top` offset by the first's height, which isn't knowable
+   *  here); putting them inside ONE sticky container sidesteps that
+   *  entirely — they just stack in normal flow and move as one unit. */
+  header?: React.ReactNode;
+}) {
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<Sort>("featured");
   const [inStockOnly, setInStockOnly] = useState(false);
@@ -132,6 +145,7 @@ export default function ShopBrowser({ sections }: { sections: ShopSection[] }) {
   return (
     <>
       <div ref={barRef} className="sticky top-[64px] z-10 border-b border-line bg-cream/95 backdrop-blur-sm">
+        {header}
         {/* Everything here must fit one row with no horizontal scroll, even on
             a narrow phone — search collapses to an icon that expands in place
             (replacing the other controls while open) instead of claiming

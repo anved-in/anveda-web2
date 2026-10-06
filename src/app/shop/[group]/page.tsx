@@ -56,55 +56,19 @@ export default async function GroupPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
 
-      {/* Group switcher — plain underlined tabs, mobile only. The desktop
-          sidebar (ShopShell) already does this job from 1024px up. */}
-      <nav aria-label="Browse bangle types" className="border-b border-line px-4 sm:px-6 lg:hidden">
-        <div className="mx-auto flex max-w-[1320px]">
-          {groups.map((grp) => {
-            const on = grp.slug === g.slug;
-            return (
-              <Link
-                key={grp.slug}
-                href={`/shop/${grp.slug}`}
-                aria-current={on ? "page" : undefined}
-                className={[
-                  // min-w-0 is load-bearing: a flex item's default min-width
-                  // is auto (its content size), so without this a label
-                  // wider than its 1/3 share pushes past its own column and
-                  // overlaps the next one instead of wrapping. overflow-hidden
-                  // + ellipsis is the fallback if a label is ever still too
-                  // wide at this size — truncating beats overlapping again.
-                  "min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap border-b-2 px-1 py-3 text-center text-[9px] font-normal uppercase tracking-[0.02em] transition-colors",
-                  on ? "border-ink text-ink" : "border-transparent text-ink-faint",
-                ].join(" ")}
-              >
-                {grp.name}
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
-
-      <section className="border-b border-line px-4 pb-8 pt-9 sm:px-6 md:pb-10 md:pt-12">
+      {/* Desktop only (lg+): the page heading, blurb and ranges/designs
+          count. Dropped on mobile entirely, not just hidden behind a
+          toggle — the group tab right above already names where you are,
+          and each range repeats its own name + blurb immediately above its
+          own grid a few lines down, so this block was saying the same two
+          things twice before any products even appeared. */}
+      <section className="hidden border-b border-line px-4 pb-8 pt-9 sm:px-6 md:pb-10 md:pt-12 lg:block">
         <div className="mx-auto max-w-[1320px]">
           <h1 className="font-display text-[clamp(30px,4.4vw,54px)]">{g.name}</h1>
           <p className="mt-3 max-w-[56ch] text-[13px] text-ink-soft">{g.blurb}</p>
           <p className="mt-2 text-[12.5px] text-ink-faint">
             {ranges.length} ranges · {total} designs
           </p>
-
-          {/* Jump list. The desktop sidebar does this job from 1024px up. */}
-          <div className="no-bar -mx-4 mt-6 flex gap-2 overflow-x-auto px-4 lg:hidden">
-            {ranges.map((c) => (
-              <Link
-                key={c.slug}
-                href={`#${c.slug}`}
-                className="shrink-0 rounded-full border border-line-strong px-3.5 py-1.5 text-[10.5px] uppercase tracking-[0.08em]"
-              >
-                {c.name}
-              </Link>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -115,6 +79,53 @@ export default async function GroupPage({
           blurb: c.blurb,
           items: listingsIn(c.slug),
         }))}
+        header={
+          <div className="lg:hidden">
+            {/* Group switcher — plain underlined tabs. The desktop sidebar
+                (ShopShell) does this job from 1024px up instead. */}
+            <nav aria-label="Browse bangle types" className="border-b border-line px-4 sm:px-6">
+              <div className="mx-auto flex max-w-[1320px]">
+                {groups.map((grp) => {
+                  const on = grp.slug === g.slug;
+                  return (
+                    <Link
+                      key={grp.slug}
+                      href={`/shop/${grp.slug}`}
+                      aria-current={on ? "page" : undefined}
+                      className={[
+                        // min-w-0 is load-bearing: a flex item's default
+                        // min-width is auto (its content size), so without
+                        // this a label wider than its 1/3 share pushes past
+                        // its own column and overlaps the next one instead
+                        // of shrinking. overflow-hidden + ellipsis is the
+                        // fallback if a label is ever still too wide at this
+                        // size — truncating beats overlapping again.
+                        "min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap border-b-2 px-1 py-3 text-center text-[9px] font-normal uppercase tracking-[0.02em] transition-colors",
+                        on ? "border-ink text-ink" : "border-transparent text-ink-faint",
+                      ].join(" ")}
+                    >
+                      {grp.name}
+                    </Link>
+                  );
+                })}
+              </div>
+            </nav>
+
+            {/* Jump list straight to a range by anchor — the desktop
+                sidebar does this job from 1024px up instead. */}
+            <div className="no-bar flex gap-2 overflow-x-auto border-b border-line px-4 py-3 sm:px-6">
+              {ranges.map((c) => (
+                <Link
+                  key={c.slug}
+                  href={`#${c.slug}`}
+                  className="shrink-0 rounded-full border border-line-strong px-3.5 py-1.5 text-[10.5px] uppercase tracking-[0.08em]"
+                >
+                  {c.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        }
       />
     </>
   );
