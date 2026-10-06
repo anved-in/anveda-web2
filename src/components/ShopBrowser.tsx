@@ -148,8 +148,14 @@ export default function ShopBrowser({
           64px from md: up — see Header.tsx's own h-[56px] md:h-[64px]), or
           there's a gap between the fixed header and this sticky bar where
           page content shows through while scrolling. A flat top-[64px] here
-          previously left an 8px gap on every phone. */}
-      <div ref={barRef} className="sticky top-[56px] z-10 border-b border-line bg-cream/95 backdrop-blur-sm md:top-[64px]">
+          previously left an 8px gap on every phone.
+          z-30, not z-10: a product card's favourite heart and its quick-add
+          size popup are both z-10/z-20 (ListingCard/FavButton), and at a tie
+          the later-painted DOM element wins regardless of visual intent —
+          so as a card scrolled under this bar, its heart (later in the DOM)
+          rendered on top of the bar instead of being covered by it. This bar
+          needs to unambiguously outrank anything that scrolls underneath it. */}
+      <div ref={barRef} className="sticky top-[56px] z-30 border-b border-line bg-cream/95 backdrop-blur-sm md:top-[64px]">
         {header}
         {/* Everything here must fit one row with no horizontal scroll, even on
             a narrow phone — search collapses to an icon that expands in place
