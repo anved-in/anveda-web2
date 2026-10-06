@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190"><rect width="190" height="190" rx="36" fill="#000"/><text x="95" y="146" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="128" fill="#fff">A</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190">
+<rect width="190" height="190" rx="36" fill="#000"/>
+<g transform="translate(95.00, 95.00) scale(0.077763, -0.077763) translate(-735.50, -733.00)">
+<path fill="#fff" d="M1471 0H1149L1021 333H435L314 0H0L571 1466H884ZM926 580 724 1124 526 580Z"/>
+</g>
+</svg>
