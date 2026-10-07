@@ -11,10 +11,12 @@
 # shipped, by the exact name the catalog references it by.
 import json, os, sys, urllib.request
 
-SRC = "https://anveda2.anveda-in.workers.dev/catalog"
+CMS_BASE = "https://anveda2.anveda-in.workers.dev"
+SRC = CMS_BASE + "/catalog"
 PHOTO_FALLBACK = "https://www.anveda.in/img/products/"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMGDIR = os.path.join(ROOT, "public", "img", "products")
+REEL_IMGDIR = os.path.join(ROOT, "public", "img", "reels")
 OUT = os.path.join(ROOT, "src", "data", "catalog.json")
 REELS_OUT = os.path.join(ROOT, "src", "data", "reels.json")
 REVIEWS_OUT = os.path.join(ROOT, "src", "data", "reviews.json")
@@ -57,11 +59,21 @@ existing_video = {
 
 reels_out = []
 for r in reels_in:
+    raw_cover = r.get("cover")
+    if raw_cover and raw_cover.startswith("ig:"):
+        # Fetched straight from Instagram (ANVEDA2 POST /dash/api/reel/:id/fetch-cover)
+        # rather than being an existing catalog photo — downloaded below, into
+        # public/img/reels/ instead of public/img/products/.
+        cover = f"/img/reels/{raw_cover[3:]}"
+    elif raw_cover:
+        cover = f"/img/products/{raw_cover}"
+    else:
+        cover = None
     reels_out.append({
         "id": r["id"],
         "video": existing_video.get(r["id"]) or (f"/video/reels/{os.path.basename(r['video'])}" if r.get("video") else None),
         "instagram": r.get("instagram"),
-        "cover": f"/img/products/{r['cover']}" if r.get("cover") else None,
+        "cover": cover,
         "title": r.get("title"),
         "caption": r.get("caption") or "",
         "productId": r.get("productId"),
@@ -90,8 +102,9 @@ for c in collections:
     if c.get("cover"):
         wanted.add(c["cover"])
 for r in reels_in:
-    if r.get("cover"):
-        wanted.add(r["cover"])
+    cov = r.get("cover")
+    if cov and not cov.startswith("ig:"):
+        wanted.add(cov)
 
 os.makedirs(IMGDIR, exist_ok=True)
 new = 0
@@ -108,3 +121,27 @@ for fn in sorted(wanted):
         print(f"  ! {fn}: {e}", file=sys.stderr)
 
 print(f"{new} new photo(s) fetched")
+
+# Reel covers fetched from Instagram — a one-time mirror (Instagram's own
+# thumbnail link is signed and expires, so ANVEDA2 already downloaded it
+# once into its own R2 bucket; this is just pulling that copy in here, same
+# idea as the catalog photos above, just a different source and folder).
+os.makedirs(REEL_IMGDIR, exist_ok=True)
+new_ig = 0
+for r in reels_in:
+    cov = r.get("cover")
+    if not cov or not cov.startswith("ig:"):
+        continue
+    fn = cov[3:]
+    dest = os.path.join(REEL_IMGDIR, fn)
+    if os.path.exists(dest) and os.path.getsize(dest) > 0:
+        continue
+    try:
+        blob = fetch(f"{CMS_BASE}/reel-cover/{r['id']}")
+        open(dest, "wb").write(blob)
+        new_ig += 1
+        print(f"  + {fn} ({len(blob)//1024}kb, from Instagram)")
+    except Exception as e:
+        print(f"  ! {fn}: {e}", file=sys.stderr)
+
+print(f"{new_ig} new Instagram reel cover(s) fetched")
