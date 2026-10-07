@@ -81,7 +81,16 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
                   ].join(" ")}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={asset(imgSrc(v.image))} alt="" className="h-full w-full object-cover" loading="lazy" />
+                  <img
+                    src={asset(imgSrc(v.image))}
+                    alt=""
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                    style={{
+                      ...(v.focal ? { objectPosition: v.focal } : undefined),
+                      ...(v.zoom && v.zoom !== 1 ? { transform: `scale(${v.zoom})` } : undefined),
+                    }}
+                  />
                   {!v.inStock && (
                     <span className="absolute inset-0 flex items-center justify-center bg-white/70 text-[8px] font-bold uppercase tracking-[0.06em] text-ink">
                       Sold

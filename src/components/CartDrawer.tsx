@@ -86,6 +86,13 @@ export default function CartDrawer() {
                         alt={p.name}
                         className="h-full w-full object-cover"
                         loading="lazy"
+                        style={(() => {
+                          const v = p.variants.find((x) => x.colour === l.colour);
+                          return {
+                            ...(v?.focal ? { objectPosition: v.focal } : undefined),
+                            ...(v?.zoom && v.zoom !== 1 ? { transform: `scale(${v.zoom})` } : undefined),
+                          };
+                        })()}
                       />
                     </Link>
                     <div className="min-w-0 flex-1">

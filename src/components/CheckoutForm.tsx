@@ -374,6 +374,10 @@ export default function CheckoutForm() {
                       alt={p.name}
                       className="h-full w-full object-cover"
                       loading="lazy"
+                      style={{
+                        ...(v?.focal ? { objectPosition: v.focal } : undefined),
+                        ...(v?.zoom && v.zoom !== 1 ? { transform: `scale(${v.zoom})` } : undefined),
+                      }}
                     />
                   </div>
                   <div className="min-w-0 flex-1">
