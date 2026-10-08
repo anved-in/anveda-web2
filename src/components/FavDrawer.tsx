@@ -6,6 +6,7 @@ import { useFavs } from "@/lib/favourites";
 import { useCart } from "@/lib/cart";
 import {
   productById,
+  framingStyle,
   imgSrc,
   inr,
   variantPrice,
@@ -155,10 +156,7 @@ function FavRow({ p, v }: { p: Product; v: Variant }) {
           alt={`${p.name} — ${colourLabel(p, v)}`}
           className="h-full w-full object-cover"
           loading="lazy"
-          style={{
-            ...(v.focal ? { objectPosition: v.focal } : undefined),
-            ...(v.zoom && v.zoom !== 1 ? { transform: `scale(${v.zoom})` } : undefined),
-          }}
+          style={framingStyle(v)}
         />
       </Link>
       <div className="min-w-0 flex-1">

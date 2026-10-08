@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "@/components/Link";
-import { imgSrc, imgSrcSmall, listingPrice, listingTitle, type Listing } from "@/lib/catalog";
+import { framingStyle, imgSrc, imgSrcSmall, listingPrice, listingTitle, type Listing } from "@/lib/catalog";
 import { asset } from "@/lib/site";
 import { useCart } from "@/lib/cart";
 import Price from "./Price";
@@ -78,14 +78,11 @@ export default function ListingCard({
             sizes="(max-width: 767px) 46vw, (max-width: 1023px) 30vw, 300px"
             alt={`${p.name}${showColour ? ` — ${v.colour}` : ""}`}
             className={`h-full w-full object-cover ${v.zoom && v.zoom !== 1 ? "" : "transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04]"}`}
-            style={{
-              ...(v.focal ? { objectPosition: v.focal } : undefined),
-              // An inline transform beats the group-hover Tailwind utility
-              // outright (higher specificity, can't compose with it), so a
-              // zoomed photo loses the hover micro-effect — a fine trade for
-              // not fighting CSS specificity over a decorative detail.
-              ...(v.zoom && v.zoom !== 1 ? { transform: `scale(${v.zoom})` } : undefined),
-            }}
+            // An inline transform beats the group-hover Tailwind utility
+            // outright (higher specificity, can't compose with it), so a
+            // zoomed photo loses the hover micro-effect — a fine trade for
+            // not fighting CSS specificity over a decorative detail.
+            style={framingStyle(v)}
             loading={priority ? "eager" : "lazy"}
             decoding="async"
           />

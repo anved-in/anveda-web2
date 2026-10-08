@@ -4,7 +4,7 @@ import Link from "@/components/Link";
 import { useEffect } from "react";
 import { useCart, lineProduct } from "@/lib/cart";
 import QtyStepper from "@/components/QtyStepper";
-import { imgSrc, inr, unitPrice, packLabel, colourLabel } from "@/lib/catalog";
+import { framingStyle, imgSrc, inr, unitPrice, packLabel, colourLabel } from "@/lib/catalog";
 import { SITE, asset } from "@/lib/site";
 import { SHIPPING_FROM } from "@/lib/shipping";
 
@@ -86,13 +86,7 @@ export default function CartDrawer() {
                         alt={p.name}
                         className="h-full w-full object-cover"
                         loading="lazy"
-                        style={(() => {
-                          const v = p.variants.find((x) => x.colour === l.colour);
-                          return {
-                            ...(v?.focal ? { objectPosition: v.focal } : undefined),
-                            ...(v?.zoom && v.zoom !== 1 ? { transform: `scale(${v.zoom})` } : undefined),
-                          };
-                        })()}
+                        style={framingStyle(p.variants.find((x) => x.colour === l.colour))}
                       />
                     </Link>
                     <div className="min-w-0 flex-1">

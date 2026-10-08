@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import ProductBuy from "@/components/ProductBuy";
 import Price from "@/components/Price";
 import FavButton from "@/components/FavButton";
-import { imgSrc, inr, variantPrice, packCount, colourLabel, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
+import { imgSrc, inr, variantPrice, packCount, colourLabel, framingStyle, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
 import { SHIPPING_FROM } from "@/lib/shipping";
 
@@ -43,10 +43,7 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
             src={asset(imgSrc(variant.image))}
             alt={`${p.name} — ${colourLabel(p, variant)}`}
             className="h-full w-full object-cover"
-            style={{
-              ...(variant.focal ? { objectPosition: variant.focal } : undefined),
-              ...(variant.zoom && variant.zoom !== 1 ? { transform: `scale(${variant.zoom})` } : undefined),
-            }}
+            style={framingStyle(variant)}
             fetchPriority="high"
             decoding="async"
           />
@@ -86,10 +83,7 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
                     alt=""
                     className="h-full w-full object-cover"
                     loading="lazy"
-                    style={{
-                      ...(v.focal ? { objectPosition: v.focal } : undefined),
-                      ...(v.zoom && v.zoom !== 1 ? { transform: `scale(${v.zoom})` } : undefined),
-                    }}
+                    style={framingStyle(v)}
                   />
                   {!v.inStock && (
                     <span className="absolute inset-0 flex items-center justify-center bg-white/70 text-[8px] font-bold uppercase tracking-[0.06em] text-ink">

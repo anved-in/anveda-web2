@@ -46,6 +46,32 @@ export interface Variant {
   zoom: number | null;
 }
 
+/**
+ * The crop the owner set in the CMS, as inline style for an <img> that is
+ * already `object-cover` inside an `overflow-hidden` box.
+ *
+ * The zoom's transform-origin MUST be the focal point, not the default
+ * centre: the CMS editor zooms the photo anchored at the focal point
+ * (background-position % applied to the already-enlarged image), and
+ * `transform-origin: <focal>` + `scale(z)` is the exact CSS equivalent. With
+ * the default centre origin, any zoomed photo showed a different crop live
+ * than in the editor (verified pixel-for-pixel against the editor's own
+ * maths: identical at zoom 1, thousands of pixels off above it). Every photo
+ * that shows a colourway should use this rather than hand-rolling the style.
+ */
+export function framingStyle(
+  v: { focal?: string | null; zoom?: number | null } | null | undefined,
+): { objectPosition?: string; transform?: string; transformOrigin?: string } {
+  const s: { objectPosition?: string; transform?: string; transformOrigin?: string } = {};
+  if (!v) return s;
+  if (v.focal) s.objectPosition = v.focal;
+  if (v.zoom && v.zoom !== 1) {
+    s.transform = `scale(${v.zoom})`;
+    s.transformOrigin = v.focal ?? "50% 50%";
+  }
+  return s;
+}
+
 export interface Product {
   id: string;
   collection: string;

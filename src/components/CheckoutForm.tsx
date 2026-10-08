@@ -7,7 +7,7 @@ import { useCart, lineProduct } from "@/lib/cart";
 import QtyStepper from "@/components/QtyStepper";
 import { useFavs } from "@/lib/favourites";
 import { HEART } from "@/components/FavButton";
-import { imgSrc, inr, unitPrice, productById, colourLabel } from "@/lib/catalog";
+import { framingStyle, imgSrc, inr, unitPrice, productById, colourLabel } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
 import {
   type Customer,
@@ -374,10 +374,7 @@ export default function CheckoutForm() {
                       alt={p.name}
                       className="h-full w-full object-cover"
                       loading="lazy"
-                      style={{
-                        ...(v?.focal ? { objectPosition: v.focal } : undefined),
-                        ...(v?.zoom && v.zoom !== 1 ? { transform: `scale(${v.zoom})` } : undefined),
-                      }}
+                      style={framingStyle(v)}
                     />
                   </div>
                   <div className="min-w-0 flex-1">
