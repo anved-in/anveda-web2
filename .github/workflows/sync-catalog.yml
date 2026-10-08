@@ -89,13 +89,23 @@ jobs:
         env:
           CF_DEPLOY_HOOK: ${{ secrets.CF_DEPLOY_HOOK }}
         run: |
-          # Trimmed defensively — a copy-pasted secret picking up a trailing
-          # newline or stray space is exactly what curl's "(3) URL rejected:
-          # Malformed input to a URL function" means, and has bitten this
-          # step twice already even after re-pasting the value.
-          HOOK="$(printf '%s' "$CF_DEPLOY_HOOK" | tr -d '[:space:]')"
-          if [ -z "$HOOK" ]; then
+          # curl's "(3) URL rejected: Malformed input to a URL function" has
+          # hit this step repeatedly: the secret was saved with extra text
+          # around the URL (Cloudflare's dashboard shows a ready-made
+          # `curl -d "" "https://..."` command, and pasting that whole thing
+          # — or a value with a newline in it — makes the value itself an
+          # invalid URL). Stripping whitespace was not enough, so pull just
+          # the https:// URL out of whatever was stored, whatever shape the
+          # paste took.
+          HOOK="$(printf '%s' "$CF_DEPLOY_HOOK" | tr -d '[:space:]' | grep -oE 'https://[^"]+' | head -n1 || true)"
+          if [ -z "$CF_DEPLOY_HOOK" ]; then
             echo "::warning::CF_DEPLOY_HOOK secret not set — skipping deploy trigger."
             exit 0
           fi
-          curl -fsS -X POST "$HOOK"
+          if [ -z "$HOOK" ]; then
+            echo "::error::CF_DEPLOY_HOOK is set but contains no https:// URL — re-save the secret as the bare hook URL."
+            exit 1
+          fi
+          # Never echo the URL itself — anyone holding it can trigger builds.
+          curl -fsS -X POST "$HOOK" > /dev/null
+          echo "Deploy hook triggered."
