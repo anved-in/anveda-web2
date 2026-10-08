@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { inr } from "@/lib/catalog";
 import { waLink } from "@/lib/site";
 
@@ -33,6 +33,13 @@ export default function TrackForm() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<{ order: TrackOrder; items: TrackItem[] } | null>(null);
+
+  // The WhatsApp confirmation's "Track order" button opens /track?ref=AV…;
+  // read it from the URL on the client (the page is statically exported).
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("ref");
+    if (q) setRef(q.trim().slice(0, 40));
+  }, []);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
