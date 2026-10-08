@@ -97,15 +97,29 @@ jobs:
           # invalid URL). Stripping whitespace was not enough, so pull just
           # the https:// URL out of whatever was stored, whatever shape the
           # paste took.
-          HOOK="$(printf '%s' "$CF_DEPLOY_HOOK" | tr -d '[:space:]' | grep -oE 'https://[^"]+' | head -n1 || true)"
+          #
+          # A looser "anything starting with https://" match then failed with
+          # HTTP 400: the stored value held more than one line, and joining
+          # them glued two URLs into one. So match the exact shape of a
+          # Cloudflare deploy-hook URL (fixed host + path, UUID at the end)
+          # and take the first one found, on the raw text.
+          HOOK="$(printf '%s' "$CF_DEPLOY_HOOK" | grep -oE 'https://api\.cloudflare\.com/client/v4/pages/webhooks/deploy_hooks/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}' | head -n1 || true)"
           if [ -z "$CF_DEPLOY_HOOK" ]; then
             echo "::warning::CF_DEPLOY_HOOK secret not set — skipping deploy trigger."
             exit 0
           fi
           if [ -z "$HOOK" ]; then
-            echo "::error::CF_DEPLOY_HOOK is set but contains no https:// URL — re-save the secret as the bare hook URL."
+            # Shape facts only — never the value itself (anyone holding the
+            # URL can trigger builds).
+            LINES="$(printf '%s\n' "$CF_DEPLOY_HOOK" | wc -l)"
+            echo "::error::CF_DEPLOY_HOOK holds no valid Cloudflare deploy-hook URL (secret is ${#CF_DEPLOY_HOOK} chars over $LINES line(s)). Re-save it as just the hook URL."
             exit 1
           fi
-          # Never echo the URL itself — anyone holding it can trigger builds.
-          curl -fsS -X POST "$HOOK" > /dev/null
-          echo "Deploy hook triggered."
+          RESP="$(mktemp)"
+          CODE="$(curl -sS -o "$RESP" -w '%{http_code}' -X POST "$HOOK" || true)"
+          if [ "$CODE" != "200" ]; then
+            echo "::error::Deploy hook returned HTTP ${CODE:-none}. Cloudflare said:"
+            cat "$RESP"
+            exit 1
+          fi
+          echo "Deploy hook triggered (HTTP 200)."
