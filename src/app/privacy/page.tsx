@@ -16,6 +16,10 @@ const SECTIONS: { h: string; body: string }[] = [
     body: "Strictly to fulfil your order: to ship it to the right address, to reach you if there is a question about it, and to keep a record in case of a return, replacement or dispute. We do not sell, rent or share your details with anyone for marketing purposes.",
   },
   {
+    h: "WhatsApp messages",
+    body: "Once your payment is confirmed we send one WhatsApp message to the phone number you gave us, with your order reference and a link to track the order. It is about that order only — we do not use it for marketing. WhatsApp is run by Meta, which processes the message to deliver it.",
+  },
+  {
     h: "Payment data",
     body: "All payment processing is handled by Razorpay, which is PCI-DSS compliant. We receive confirmation that a payment succeeded, and a reference id — never your card or bank details themselves.",
   },
