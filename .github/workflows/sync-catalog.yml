@@ -86,9 +86,16 @@ jobs:
         # whatever's on `main` right now", regardless of who pushed it. Only
         # runs when the step above actually pushed something.
         if: steps.commit.outputs.changed == 'true'
+        env:
+          CF_DEPLOY_HOOK: ${{ secrets.CF_DEPLOY_HOOK }}
         run: |
-          if [ -z "${{ secrets.CF_DEPLOY_HOOK }}" ]; then
+          # Trimmed defensively — a copy-pasted secret picking up a trailing
+          # newline or stray space is exactly what curl's "(3) URL rejected:
+          # Malformed input to a URL function" means, and has bitten this
+          # step twice already even after re-pasting the value.
+          HOOK="$(printf '%s' "$CF_DEPLOY_HOOK" | tr -d '[:space:]')"
+          if [ -z "$HOOK" ]; then
             echo "::warning::CF_DEPLOY_HOOK secret not set — skipping deploy trigger."
             exit 0
           fi
-          curl -fsS -X POST "${{ secrets.CF_DEPLOY_HOOK }}"
+          curl -fsS -X POST "$HOOK"
