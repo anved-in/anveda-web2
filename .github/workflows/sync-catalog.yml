@@ -33,6 +33,10 @@ jobs:
         with:
           python-version: "3.12"
 
+      # Pillow turns a photo uploaded in the CMS (JPEG/PNG) into the site's WebP.
+      - name: Install Pillow
+        run: pip install --quiet pillow
+
       - name: Pull catalog, photos and reels
         run: python scripts/gen-catalog.py
 

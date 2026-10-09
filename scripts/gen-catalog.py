@@ -37,6 +37,35 @@ products = data.get("products", [])
 reels_in = data.get("reels", [])
 reviews_in = data.get("reviews", [])
 
+# Photos uploaded in the CMS keep the extension they were uploaded with (.jpg /
+# .png); the site's build converts every photo to .webp (scripts/optimize-
+# images.js) and drops the original, so the catalog must name the .webp file.
+# `origin` remembers the uploaded name, which is what the CMS serves it under.
+origin = {}
+
+
+def webp_name(fn):
+    if not fn or fn.lower().endswith(".webp"):
+        return fn
+    new = os.path.splitext(fn)[0] + ".webp"
+    origin[new] = fn
+    return new
+
+
+for _p in products:
+    for _v in _p.get("variants", []):
+        if _v.get("image"):
+            _v["image"] = webp_name(_v["image"])
+    if _p.get("image"):
+        _p["image"] = webp_name(_p["image"])
+for _c in collections:
+    if _c.get("cover"):
+        _c["cover"] = webp_name(_c["cover"])
+for _r in reels_in:
+    _cov = _r.get("cover")
+    if _cov and not _cov.startswith("ig:"):
+        _r["cover"] = webp_name(_cov)
+
 json.dump(
     {"groups": groups, "collections": collections, "products": products},
     open(OUT, "w", encoding="utf-8"),
@@ -106,19 +135,45 @@ for r in reels_in:
     if cov and not cov.startswith("ig:"):
         wanted.add(cov)
 
+def to_webp(blob):
+    """Re-encode an uploaded photo (JPEG/PNG) as a <=1000px WebP, like the build does."""
+    try:
+        import io
+        from PIL import Image, ImageOps
+        im = ImageOps.exif_transpose(Image.open(io.BytesIO(blob)))
+        im.thumbnail((1000, 1000))
+        out = io.BytesIO()
+        im.convert("RGB").save(out, "WEBP", quality=80)
+        return out.getvalue()
+    except Exception as e:  # no Pillow / unreadable: keep the bytes; the build step re-encodes
+        print(f"  (kept original bytes, could not convert: {e})", file=sys.stderr)
+        return blob
+
+
 os.makedirs(IMGDIR, exist_ok=True)
 new = 0
 for fn in sorted(wanted):
     dest = os.path.join(IMGDIR, fn)
     if os.path.exists(dest) and os.path.getsize(dest) > 0:
         continue
+    blob = None
+    # 1) a photo uploaded in the CMS (the CMS holds it under its uploaded name)
     try:
-        blob = fetch(PHOTO_FALLBACK + fn)
-        open(dest, "wb").write(blob)
-        new += 1
-        print(f"  + {fn} ({len(blob)//1024}kb)")
-    except Exception as e:
-        print(f"  ! {fn}: {e}", file=sys.stderr)
+        blob = fetch(CMS_BASE + "/photo/" + origin.get(fn, fn))
+        if blob[8:12] != b"WEBP":
+            blob = to_webp(blob)
+    except Exception:
+        blob = None
+    # 2) otherwise the live site's own copy of that exact filename
+    if blob is None:
+        try:
+            blob = fetch(PHOTO_FALLBACK + fn)
+        except Exception as e:
+            print(f"  ! {fn}: {e}", file=sys.stderr)
+            continue
+    open(dest, "wb").write(blob)
+    new += 1
+    print(f"  + {fn} ({len(blob)//1024}kb)")
 
 print(f"{new} new photo(s) fetched")
 
