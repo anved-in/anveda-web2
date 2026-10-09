@@ -150,7 +150,7 @@
       "2.6",
       "2.8"
      ],
-     "inStock": true,
+     "inStock": false,
      "focal": "30.5% 40.6%",
      "zoom": 1
     },
@@ -167,7 +167,7 @@
       "2.6",
       "2.8"
      ],
-     "inStock": true,
+     "inStock": false,
      "focal": "50% 50%",
      "zoom": 1.2
     },
@@ -184,7 +184,7 @@
       "2.6",
       "2.8"
      ],
-     "inStock": true,
+     "inStock": false,
      "focal": "76.1% 58.8%",
      "zoom": 1.25
     },
@@ -201,7 +201,7 @@
       "2.6",
       "2.8"
      ],
-     "inStock": true,
+     "inStock": false,
      "focal": "52% 64.8%",
      "zoom": 1.38
     }
