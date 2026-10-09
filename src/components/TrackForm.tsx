@@ -125,7 +125,10 @@ export default function TrackForm() {
             </p>
           ) : (
             <>
-              <div className="mt-5 flex items-center">
+              {/* items-start (not items-center): a label that wraps onto two lines
+                  ("Order placed" on a phone) makes its column taller, and
+                  centring then lifted that column's dot above the other three. */}
+              <div className="mt-5 flex items-start">
                 {STAGES.map((s, i) => {
                   const idx = STAGES.indexOf(result.order.fulfilment);
                   const done = i <= idx;
@@ -142,7 +145,7 @@ export default function TrackForm() {
                           <div className={["h-[2px] flex-1", i < idx ? "bg-maroon" : "bg-line"].join(" ")} />
                         )}
                       </div>
-                      <span className="mt-2 text-center text-[10.5px] font-semibold uppercase tracking-[0.08em] text-ink-soft">
+                      <span className="mt-2 text-center text-[9px] font-semibold uppercase leading-[1.25] tracking-[0.05em] text-ink-soft">
                         {STAGE_LABEL[s]}
                       </span>
                     </div>

@@ -111,6 +111,9 @@ async function handleCheckout(request, env) {
       headers: {
         "content-type": "application/json",
         "x-api-secret": env.ORDERS_API_SECRET,
+        // Tells the CMS this order comes from the CURRENT website, which is the
+        // only one allowed to place orders while maintenance mode is on.
+        "x-via": "pages-v2",
       },
       body: JSON.stringify({
         ref,
