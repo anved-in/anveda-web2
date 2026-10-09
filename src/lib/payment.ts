@@ -50,12 +50,18 @@ export interface OrderSummary {
   couponCode?: string;
 }
 
-/** Razorpay's public key. Safe to ship; it identifies the account, not authorises it. */
-export const RAZORPAY_KEY = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ?? "";
-
-/** Payments are only live once a real key is configured. */
-export const paymentsEnabled = (): boolean =>
-  RAZORPAY_KEY.startsWith("rzp_");
+/**
+ * Whether the Pay button is allowed to try. This used to be
+ * `NEXT_PUBLIC_RAZORPAY_KEY_ID.startsWith("rzp_")`, a variable that is baked in
+ * when the site is BUILT. When the build moved to Cloudflare Pages that
+ * variable was not carried over, the compiled site had an empty key, and every
+ * customer saw "Online payment is not available right now" even though the
+ * server side (RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET on the Pages project) was
+ * fine. The key never needed to be in the browser bundle: /api/checkout holds
+ * it and returns it as `key_id` with each order, and answers "payments not
+ * configured" itself if the secrets are missing. So the browser just tries.
+ */
+export const paymentsEnabled = (): boolean => true;
 
 /**
  * Same-origin server route (worker/index.js) that creates the real Razorpay
