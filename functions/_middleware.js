@@ -4,7 +4,9 @@
 // While it is ON, every visitor sees the 3D "we are updating the shop" page
 // (public/teaser.html) with a 503 status, except:
 //   - people holding the private preview link (?preview=KEY). The link sets a
-//     12-hour cookie, so that one device then sees the real shop;
+//     2-hour cookie, so that one device then sees the real shop. Switching
+//     maintenance ON in the CMS makes a new key, which cancels every old pass;
+//     ?preview=off ends the pass on the device that opens it;
 //   - the few pages that must keep working: Track order, the chat redirect, the
 //     privacy/terms pages and the files those pages need.
 // /api/* is closed too (checkout, coupons, bag capture), so nobody can pay
@@ -21,7 +23,7 @@ const ALLOW = [
   "/api/track",
 ];
 const COOKIE = "av_preview";
-const COOKIE_SECONDS = 12 * 60 * 60;
+const COOKIE_SECONDS = 2 * 60 * 60;
 
 let last = { at: 0, on: false };
 const keyCache = new Map(); // key -> { at, ok }
@@ -91,10 +93,25 @@ export async function onRequest(context) {
 
   if (!env.CMS) return next(); // not wired up (e.g. local preview): never block
   if (ALLOW.some((p) => path.startsWith(p))) return next();
+  const preview = url.searchParams.get("preview");
+
+  // ?preview=off: end the owner's pass on this device (works any time), so the
+  // owner can see exactly what customers see.
+  if (preview === "off") {
+    url.searchParams.delete("preview");
+    return new Response(null, {
+      status: 302,
+      headers: {
+        location: url.pathname + (url.search || ""),
+        "set-cookie": `${COOKIE}=; Path=/; Max-Age=0; Secure; HttpOnly; SameSite=Lax`,
+        "cache-control": "no-store",
+      },
+    });
+  }
+
   if (!(await isOn(env))) return next();
 
   // Maintenance is ON. The owner's private link: validate, remember, and clean the URL.
-  const preview = url.searchParams.get("preview");
   if (preview && (await keyOk(env, preview))) {
     url.searchParams.delete("preview");
     return new Response(null, {
