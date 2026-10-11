@@ -133,7 +133,7 @@ function InfoPopup({ p, variant, onClose }: { p: Product; variant: Variant; onCl
         onTouchEnd={(e) => e.stopPropagation()}
         onPointerDown={arm}
         onScroll={arm}
-        className="absolute right-2.5 top-11 z-50 max-h-[calc(100%-56px)] w-[min(88%,320px)] overflow-y-auto bg-white p-4 shadow-[0_8px_28px_rgba(0,0,0,0.22)]"
+        className="absolute right-2.5 top-14 z-50 max-h-[calc(100%-68px)] w-[min(88%,320px)] overflow-y-auto bg-white p-4 shadow-[0_8px_28px_rgba(0,0,0,0.22)]"
       >
         <button
           type="button"
@@ -210,10 +210,15 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
             onClick={() => setInfo((v) => !v)}
             aria-label="About this design"
             aria-expanded={info}
-            className="absolute right-2.5 top-2.5 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-white font-display text-[16px] italic leading-none text-white md:hidden"
-            style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,.5))" }}
+            className={[
+              "absolute right-2.5 top-2.5 z-10 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.35)] ring-1 ring-white/70 transition-all active:scale-95 md:hidden",
+              info ? "bg-white text-ink" : "bg-ink text-white",
+            ].join(" ")}
           >
-            i
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <circle cx="12" cy="6.6" r="1.7" />
+              <rect x="10.6" y="10" width="2.8" height="9" rx="1.4" />
+            </svg>
           </button>
           {info && <InfoPopup p={p} variant={variant} onClose={() => setInfo(false)} />}
         </div>
