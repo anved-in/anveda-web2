@@ -29,8 +29,8 @@ export default function FavButton({
 
   const icon = (
     <svg
-      width={variant === "card" ? 18 : 20}
-      height={variant === "card" ? 18 : 20}
+      width={variant === "card" ? 18 : 22}
+      height={variant === "card" ? 18 : 22}
       viewBox="0 0 24 24"
       fill={on ? "currentColor" : "none"}
       stroke="currentColor"
@@ -50,10 +50,7 @@ export default function FavButton({
         aria-pressed={on}
         aria-label={label}
         className={[
-          "flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center border transition-colors",
-          on
-            ? "border-maroon text-maroon"
-            : "border-line-strong hover:border-ink",
+          "flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center text-ink transition-opacity hover:opacity-70",
         ].join(" ")}
       >
         {icon}

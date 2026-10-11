@@ -42,9 +42,9 @@ function ShareButton({ name, colour }: { name: string; colour: string }) {
       type="button"
       onClick={share}
       aria-label={`Copy link to ${name}`}
-      className="relative flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center border border-line-strong transition-colors hover:border-ink"
+      className="relative flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center text-ink transition-opacity hover:opacity-70"
     >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1" />
       </svg>
       {copied && (
@@ -156,13 +156,24 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
               <Info p={p} variant={variant} />
             </div>
           </div>
-          <button
-            type="button"
-            onClick={() => setPanel(panel === 0 ? 1 : 0)}
-            className="absolute bottom-2.5 right-2.5 z-10 cursor-pointer bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-ink md:hidden"
-          >
-            {panel === 0 ? "Details ›" : "‹ Photo"}
-          </button>
+        </div>
+
+        {/* Carousel dots: the cue that the photo has a second page (the
+            details). Phone only; the dots are tappable as well as swipeable. */}
+        <div className="mt-2 flex items-center justify-center md:hidden" role="tablist" aria-label="Photo or details">
+          {([0, 1] as const).map((i) => (
+            <button
+              key={i}
+              type="button"
+              role="tab"
+              aria-selected={panel === i}
+              aria-label={i === 0 ? "Photo" : "Details"}
+              onClick={() => setPanel(i)}
+              className="flex h-5 w-6 cursor-pointer items-center justify-center"
+            >
+              <span className={["block h-1.5 rounded-full transition-all", panel === i ? "w-4 bg-ink" : "w-1.5 bg-line-strong"].join(" ")} />
+            </button>
+          ))}
         </div>
 
         {/* Thumbnail strip: the colour picker now lives here, directly under
@@ -228,9 +239,9 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
             "Intricate Glass Bangle"), reading as the same line twice before
             anything else loaded. The collection stays reachable from the
             shop page's own nav. */}
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex items-center justify-between gap-3">
           <h1 className="font-display text-[clamp(20px,2.4vw,30px)] leading-tight">{p.name}</h1>
-          <div className="flex gap-2">
+          <div className="-mr-2 flex shrink-0 items-center">
             <ShareButton name={p.name} colour={variant.colour} />
             <FavButton
               id={p.id}

@@ -7,7 +7,7 @@ import Logo from "./Logo";
 import { useCart } from "@/lib/cart";
 import { useFavs } from "@/lib/favourites";
 import { HEART } from "./FavButton";
-import { collections, groups, collectionsInGroup, rangeHref } from "@/lib/catalog";
+import { collections, groups, collectionsInGroup, rangeHref, productById } from "@/lib/catalog";
 
 /** The reference keeps a short text nav on the left of a single header row. */
 const NAV = [
@@ -33,6 +33,11 @@ const Chevron = () => (
 
 export default function Header() {
   const path = usePathname();
+  // On a product page the strip below the header should still show which
+  // group the design belongs to.
+  const productGroup = path.startsWith("/product/")
+    ? productById(path.split("/").filter(Boolean)[1] ?? "")?.group
+    : undefined;
   const { count, setOpen, ready } = useCart();
   const fav = useFavs();
 
@@ -264,14 +269,14 @@ export default function Header() {
             suits that list better than equal-width tabs would. */}
         <div className="no-bar flex items-center gap-4 overflow-x-auto px-4 py-2.5">
           {groups.map((g) => {
-            const on = path.startsWith(`/shop/${g.slug}`);
+            const on = path.startsWith(`/shop/${g.slug}`) || productGroup === g.slug;
             return (
               <Link
                 key={g.slug}
                 href={`/shop/${g.slug}`}
                 className={[
-                  "shrink-0 whitespace-nowrap border-b-2 pb-1 text-[9px] font-normal uppercase tracking-[0.02em] transition-colors",
-                  on ? "border-ink text-ink" : "border-transparent text-ink-faint",
+                  "shrink-0 whitespace-nowrap border-b-2 pb-1 text-[10px] uppercase tracking-[0.04em] transition-colors",
+                  on ? "border-ink font-semibold text-ink" : "border-transparent font-normal text-ink-faint",
                 ].join(" ")}
               >
                 {g.name}

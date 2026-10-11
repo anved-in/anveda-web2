@@ -133,13 +133,21 @@ export default function ProductBuy({
         <>
           {/* Phone: pinned just above the tab bar so it is always in reach while
               the shopper reads. Desktop: an ordinary full-width button. */}
-          <div className="fixed inset-x-0 bottom-[calc(60px+env(safe-area-inset-bottom))] z-30 border-t border-line bg-white px-4 py-2 md:static md:z-auto md:mt-6 md:border-0 md:bg-transparent md:p-0">
+          <div className="fixed inset-x-0 bottom-[calc(60px+env(safe-area-inset-bottom))] z-30 flex items-center gap-3 border-t border-line bg-white px-4 py-2 md:static md:z-auto md:mt-6 md:block md:border-0 md:bg-transparent md:p-0">
+            <div className="shrink-0 leading-tight md:hidden">
+              <span className="block text-[10px] uppercase tracking-[0.1em] text-ink-soft">Total</span>
+              <span className="block text-[16px] font-bold">{inr(variantPrice(p, variant) * qty)}</span>
+            </div>
             <button
               type="button"
               onClick={onAdd}
-              className="w-full cursor-pointer bg-ink py-3.5 text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2 md:py-[18px]"
+              className="ml-auto h-11 w-[58%] cursor-pointer bg-ink text-[12px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-espresso-2 md:h-auto md:w-full md:py-[18px] md:tracking-[0.2em]"
             >
-              {added ? "Added to bag ✓" : `Add to bag — ${inr(variantPrice(p, variant) * qty)}`}
+              {added ? "Added to bag ✓" : (
+                <>
+                  Add to bag<span className="hidden md:inline"> — {inr(variantPrice(p, variant) * qty)}</span>
+                </>
+              )}
             </button>
           </div>
           {/* The bag stays closed on purpose: someone building an order adds
