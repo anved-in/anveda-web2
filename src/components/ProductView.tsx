@@ -72,24 +72,38 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
                   aria-pressed={on}
                   aria-label={colourLabel(p, v)}
                   title={colourLabel(p, v)}
-                  className={[
-                    "relative h-[72px] w-[72px] shrink-0 cursor-pointer overflow-hidden border-2 transition-colors",
-                    on ? "border-ink" : "border-transparent hover:border-line-strong",
-                  ].join(" ")}
+                  className="flex w-[72px] shrink-0 cursor-pointer flex-col items-stretch gap-1 text-left"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={asset(imgSrc(v.image))}
-                    alt=""
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                    style={framingStyle(v)}
-                  />
-                  {!v.inStock && (
-                    <span className="absolute inset-0 flex items-center justify-center bg-white/70 text-[8px] font-bold uppercase tracking-[0.06em] text-ink">
-                      Sold
-                    </span>
-                  )}
+                  <span
+                    className={[
+                      "relative block h-[72px] w-[72px] overflow-hidden border-2 transition-colors",
+                      on ? "border-ink" : "border-transparent",
+                    ].join(" ")}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={asset(imgSrc(v.image))}
+                      alt=""
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                      style={framingStyle(v)}
+                    />
+                    {!v.inStock && (
+                      <span className="absolute inset-0 flex items-center justify-center bg-white/70 text-[8px] font-bold uppercase tracking-[0.06em] text-ink">
+                        Sold
+                      </span>
+                    )}
+                  </span>
+                  {/* The shade's name, tiny, under its photo (8px, as asked): at most two
+                      short lines, so a long name never makes the strip uneven. */}
+                  <span
+                    className={[
+                      "line-clamp-2 break-words text-center text-[8px] leading-[1.2]",
+                      on ? "font-semibold text-ink" : "text-ink-soft",
+                    ].join(" ")}
+                  >
+                    {colourLabel(p, v)}
+                  </span>
                 </button>
               );
             })}
