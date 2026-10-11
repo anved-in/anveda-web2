@@ -1,11 +1,21 @@
 {
  "reviews": [
   {
+   "id": 6,
+   "name": "Ramani",
+   "rating": 5,
+   "body": "Awesome blossom",
+   "productId": "jelly-bangles-glass-bangles",
+   "createdAt": "2026-10-11 13:48:23",
+   "verified": true
+  },
+  {
    "id": 3,
    "name": "Soorya",
    "rating": 5,
    "body": "Received my order today and i am so so so happy with it the bangles are exactly as shown in the pic the quality and finishing are excellent the packing are neat and secure thank you for this beautiful\nproduct",
-   "createdAt": "2026-09-29 18:05:53"
+   "createdAt": "2026-09-29 18:05:53",
+   "verified": false
   },
   {
    "id": 4,
@@ -13,7 +23,8 @@
    "rating": 5,
    "body": "Today I received your parcel. the quality is very good .I am so happy. Thank you,",
    "productId": "border-bangles",
-   "createdAt": "2026-09-29 18:05:57"
+   "createdAt": "2026-09-29 18:05:57",
+   "verified": false
   }
  ]
 }
