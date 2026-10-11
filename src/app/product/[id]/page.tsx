@@ -7,6 +7,7 @@ import { reviews } from "@/lib/reviews";
 import { breadcrumbJsonLd } from "@/lib/breadcrumbs";
 import ProductView from "@/components/ProductView";
 import ListingCard from "@/components/ListingCard";
+import Stars from "@/components/Stars";
 
 const SITE_URL = "https://www.anveda.in";
 
@@ -89,6 +90,13 @@ export default async function ProductPage({
   if (!p) notFound();
 
   const more = related(p, 4);
+  const productReviews = reviews.filter((r) => r.productId === p.id);
+  const rating = productReviews.length
+    ? {
+        avg: productReviews.reduce((n, r) => n + r.rating, 0) / productReviews.length,
+        count: productReviews.length,
+      }
+    : null;
   const group = p.group ? groupBySlug(p.group) : undefined;
   const breadcrumb = breadcrumbJsonLd([
     { name: "Home", url: "/" },
@@ -116,10 +124,30 @@ export default async function ProductPage({
           <Suspense
             fallback={<div className="min-h-[60svh] bg-cream-2" aria-hidden="true" />}
           >
-            <ProductView p={p} />
+            <ProductView p={p} rating={rating} />
           </Suspense>
         </div>
       </section>
+
+      {productReviews.length > 0 && (
+        <section id="reviews" className="scroll-mt-24 border-t border-line px-5 py-10 sm:px-6 md:py-14">
+          <div className="mx-auto max-w-[1320px]">
+            <h2 className="font-display text-[clamp(22px,2.6vw,30px)]">Customer reviews</h2>
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {productReviews.map((r) => (
+                <div key={r.id} className="bg-cream-2 p-5">
+                  <Stars n={r.rating} size={14} />
+                  {r.body && <p className="mt-3 text-[14px] leading-relaxed text-ink">&ldquo;{r.body}&rdquo;</p>}
+                  <p className="mt-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-ink-soft">
+                    {r.name}
+                    {r.verified && <span className="ml-2 font-normal normal-case tracking-normal text-ink-faint">· Verified order</span>}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="border-t border-line bg-cream-2 px-5 py-14 sm:px-6 md:py-20">
         <div className="mx-auto max-w-[1320px]">

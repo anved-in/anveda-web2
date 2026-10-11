@@ -6,6 +6,7 @@ import QtyStepper from "@/components/QtyStepper";
 import ProductBuy from "@/components/ProductBuy";
 import Price from "@/components/Price";
 import FavButton from "@/components/FavButton";
+import Stars from "@/components/Stars";
 import { soldOutLast, imgSrc, inr, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
 import { SHIPPING_FROM } from "@/lib/shipping";
@@ -56,12 +57,12 @@ function ShareButton({ name, colour }: { name: string; colour: string }) {
   );
 }
 
-export default function ProductView({ p }: { p: Product }) {
+export default function ProductView({ p, rating }: { p: Product; rating?: { avg: number; count: number } | null }) {
   const wanted = useSearchParams().get("c") ?? "";
   // Keyed on the colour in the address: opening a different colour of the
   // design you are already on (from favourites, say) changes only the URL, and
   // without a fresh mount the page would keep showing the old shade.
-  return <ProductViewInner key={wanted} p={p} wanted={wanted || undefined} />;
+  return <ProductViewInner key={wanted} p={p} wanted={wanted || undefined} rating={rating} />;
 }
 
 function Info({ p, variant }: { p: Product; variant: Variant }) {
@@ -153,7 +154,7 @@ function InfoPopup({ p, variant, onClose }: { p: Product; variant: Variant; onCl
   );
 }
 
-function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
+function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; rating?: { avg: number; count: number } | null }) {
   // In-stock colours first; the strip, the swipe and the default all follow it.
   const ordered = soldOutLast(p.variants, (v) => v.inStock);
   const initial =
@@ -310,7 +311,17 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
             anything else loaded. The collection stays reachable from the
             shop page's own nav. */}
         <div className="flex items-center justify-between gap-3">
-          <h1 className="font-display text-[clamp(20px,2.4vw,30px)] leading-tight">{p.name}</h1>
+          <div className="min-w-0">
+            <h1 className="font-display text-[clamp(20px,2.4vw,30px)] leading-tight">{p.name}</h1>
+            {rating && (
+              <a href="#reviews" className="mt-0.5 inline-flex items-center gap-1.5 text-[12px] text-ink-soft">
+                <Stars n={rating.avg} size={12} />
+                <span>
+                  {rating.avg.toFixed(1)} · {rating.count} review{rating.count > 1 ? "s" : ""}
+                </span>
+              </a>
+            )}
+          </div>
           <div className="-mr-2 flex shrink-0 items-center">
             <ShareButton name={p.name} colour={variant.colour} />
             <FavButton

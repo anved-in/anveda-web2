@@ -235,7 +235,28 @@ async function handleNotifyStock(request, env) {
   return json(data, res.status);
 }
 
+// Verified reviews: look up the order behind a private link, and submit a rating.
+// Same service-binding proxy; the CMS decides everything (token, delivered, once).
+const proxy = (cmsPath) => async (request, env) => {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ ok: false, error: "invalid JSON" }, 400);
+  }
+  if (!env.CMS) return json({ ok: false, error: "not configured" }, 500);
+  const res = await env.CMS.fetch(`https://internal${cmsPath}`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({ ok: false, error: "bad response" }));
+  return json(data, res.status);
+};
+
 const ROUTES = {
+  "/api/review-lookup": proxy("/review/lookup"),
+  "/api/review-submit": proxy("/review/submit"),
   "/api/checkout": handleCheckout,
   "/api/track": handleTrack,
   "/api/subscribe": handleSubscribe,

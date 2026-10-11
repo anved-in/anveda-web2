@@ -6,6 +6,8 @@ export interface Review {
   rating: number;
   body: string;
   productId?: string;
+  /** Written by someone with a delivered order (through their private link). */
+  verified?: boolean;
   createdAt: string;
 }
 

@@ -1,26 +1,6 @@
 import { reviews } from "@/lib/reviews";
 import SectionHead from "./SectionHead";
-
-function Stars({ n }: { n: number }) {
-  return (
-    <div className="flex gap-0.5" aria-label={`${n} out of 5 stars`}>
-      {[1, 2, 3, 4, 5].map((i) => (
-        <svg
-          key={i}
-          width="15"
-          height="15"
-          viewBox="0 0 24 24"
-          fill={i <= n ? "#a3843f" : "none"}
-          stroke="#a3843f"
-          strokeWidth="1.5"
-          aria-hidden="true"
-        >
-          <path d="M12 17.3l-6.2 3.7 1.6-7L2 9.2l7.1-.6L12 2l2.9 6.6 7.1.6-5.4 4.8 1.6 7z" />
-        </svg>
-      ))}
-    </div>
-  );
-}
+import Stars from "./Stars";
 
 /**
  * Real customer feedback the owner typed in from WhatsApp/Instagram after
@@ -43,6 +23,7 @@ export default function Testimonials() {
               </p>
               <p className="mt-4 text-[12.5px] font-semibold uppercase tracking-[0.1em] text-ink-soft">
                 {r.name}
+                {r.verified && <span className="ml-2 font-normal normal-case tracking-normal text-ink-faint">· Verified order</span>}
               </p>
             </div>
           ))}
