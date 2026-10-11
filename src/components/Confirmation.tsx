@@ -52,20 +52,20 @@ export default function Confirmation() {
           Please keep this reference and quote it if you need to reach us.
         </p>
 
-        <div className="mx-auto mt-7 max-w-[480px] border border-line-strong bg-cream-2 px-5 py-4 text-left">
-          <p className="text-[12.5px] font-bold uppercase tracking-[0.1em] text-ink">
-            Before you open the package
-          </p>
-          <p className="mt-1.5 text-[13px] leading-relaxed text-ink-soft">
-            Record a continuous video, starting before you open the box and
-            through to seeing the bangles inside. If anything arrives broken,
-            this video is required — without it, we cannot process a
-            replacement or refund. See our{" "}
-            <Link href="/shipping" className="text-maroon underline underline-offset-2">
-              shipping &amp; returns policy
-            </Link>
-            .
-          </p>
+        <div className="mx-auto mt-5 max-w-[440px] text-left text-[12px] leading-relaxed text-ink-soft">
+          <p className="font-semibold text-ink">When your parcel arrives</p>
+          <ul className="mt-1 list-disc space-y-0.5 pl-4">
+            <li>Record one continuous video before you open the sealed parcel, then open it and show every set.</li>
+            <li>Only an unboxing video counts. A photo, or a video taken after opening, cannot be considered.</li>
+            <li>If anything is broken, send the video on WhatsApp within 24 hours of delivery for a replacement or refund.</li>
+            <li>
+              Details in our{" "}
+              <Link href="/shipping" className="underline underline-offset-2">
+                shipping &amp; returns policy
+              </Link>
+              .
+            </li>
+          </ul>
         </div>
 
         <div className="mt-9 flex flex-wrap justify-center gap-3.5">

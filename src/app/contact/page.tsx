@@ -14,8 +14,8 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     a: (
       <>
         Only if it arrived broken. Record a continuous unboxing video,
-        starting before you open the package — without it, a return or
-        refund cannot be processed. See our{" "}
+        starting before you open the package, and send it within 24 hours of
+        delivery — without it, a return or refund cannot be processed. See our{" "}
         <Link href="/shipping" className="text-maroon underline underline-offset-2">
           shipping &amp; returns policy
         </Link>

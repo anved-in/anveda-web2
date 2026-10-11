@@ -17,6 +17,8 @@ interface TrackOrder {
   total: number;
   createdAt: string;
   fulfilmentChangedAt?: string | null;
+  courier?: string | null;
+  trackingNo?: string | null;
 }
 
 const STAGES = ["new", "packed", "shipped", "delivered"];
@@ -152,6 +154,13 @@ export default function TrackForm() {
                   );
                 })}
               </div>
+
+              {result.order.trackingNo && (
+                <p className="mt-5 text-[13.5px] text-ink-soft">
+                  {result.order.courier || "Courier"} tracking number:{" "}
+                  <span className="font-semibold text-ink">{result.order.trackingNo}</span>
+                </p>
+              )}
 
               <p className="mt-5 text-[13.5px] text-ink-soft">
                 Payment:{" "}
