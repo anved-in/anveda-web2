@@ -215,7 +215,7 @@
    "group": "glass",
    "name": "Intricate Glass Bangle",
    "price": 320,
-   "priceMax": 320,
+   "priceMax": 500,
    "pieces": 12,
    "unit": "set",
    "sizes": [
@@ -232,7 +232,7 @@
      "colour": "Aqua",
      "image": "intricate-glass-bangle-aqua.webp",
      "hex": "#0fd2c5",
-     "price": 320,
+     "price": 500,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -249,7 +249,7 @@
      "colour": "Champagne Gold",
      "image": "intricate-glass-bangle-champagne-gold.webp",
      "hex": "#dbc08a",
-     "price": 320,
+     "price": 500,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -266,7 +266,7 @@
      "colour": "Coffee",
      "image": "intricate-glass-bangle-coffee.webp",
      "hex": "#4f1212",
-     "price": 320,
+     "price": 500,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -283,7 +283,7 @@
      "colour": "Emerald Green",
      "image": "intricate-glass-bangle-emerald-green.webp",
      "hex": "#026600",
-     "price": 320,
+     "price": 500,
      "pieces": 12,
      "sizes": [
       "2.2",
