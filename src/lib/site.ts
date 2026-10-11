@@ -8,6 +8,8 @@
  */
 export const SITE = {
   name: "ANVEDA",
+  /** What link previews and Google show as the page heading. */
+  domain: "anveda.in",
   tagline: "Handpicked Glass Bangles",
   description:
     "Handpicked glass, antique and kundan bangles. Chosen in small batches, packed with care, delivered across India.",

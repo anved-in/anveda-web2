@@ -14,20 +14,22 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.anveda.in"),
+  // The owner wants the link preview / Google heading to read just "anveda.in".
+  // If that is ever not accepted, use "anveda.in - High Quality Glass Bangle Store".
   title: {
-    default: `${SITE.name} — ${SITE.tagline}`,
-    template: `%s — ${SITE.name}`,
+    default: SITE.domain,
+    template: `%s — ${SITE.domain}`,
   },
   description: SITE.description,
   openGraph: {
-    title: `${SITE.name} — ${SITE.tagline}`,
+    title: SITE.domain,
     description: SITE.description,
     type: "website",
-    siteName: SITE.name,
+    siteName: SITE.domain,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE.name} — ${SITE.tagline}`,
+    title: SITE.domain,
     description: SITE.description,
   },
   appleWebApp: {
