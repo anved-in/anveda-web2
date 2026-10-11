@@ -198,11 +198,16 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
             key={variant.image}
             src={asset(imgSrc(variant.image))}
             alt={`${p.name} — ${colourLabel(p, variant)}`}
-            className="h-full w-full object-cover"
+            className={`h-full w-full object-cover ${variant.inStock ? "" : "grayscale"}`}
             style={framingStyle(variant)}
             fetchPriority="high"
             decoding="async"
           />
+          {!variant.inStock && (
+            <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink py-2 text-center font-bold uppercase text-white text-[11px] tracking-[0.18em]">
+              Sold out
+            </span>
+          )}
           {/* Phone: the details sit behind an "i" on the photo (the heart
               lives beside the name). On desktop they are already on the page. */}
           <button
@@ -253,13 +258,13 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
                     <img
                       src={asset(imgSrc(v.image))}
                       alt=""
-                      className="h-full w-full object-cover"
+                      className={`h-full w-full object-cover ${v.inStock ? "" : "grayscale"}`}
                       loading="lazy"
                       style={framingStyle(v)}
                     />
                     {!v.inStock && (
-                      <span className="absolute inset-0 flex items-center justify-center bg-white/70 text-[8px] font-bold uppercase tracking-[0.06em] text-ink">
-                        Sold
+                      <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink py-1 text-center font-bold uppercase text-white text-[7px] tracking-[0.08em]">
+                        Sold out
                       </span>
                     )}
                   </span>

@@ -77,7 +77,7 @@ export default function ListingCard({
             srcSet={`${asset(imgSrcSmall(v.image))} 480w, ${asset(imgSrc(v.image))} 1000w`}
             sizes="(max-width: 767px) 46vw, (max-width: 1023px) 30vw, 300px"
             alt={`${p.name}${showColour ? ` — ${v.colour}` : ""}`}
-            className={`h-full w-full object-cover ${v.zoom && v.zoom !== 1 ? "" : "transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04]"}`}
+            className={`h-full w-full object-cover ${v.inStock ? "" : "grayscale"} ${v.zoom && v.zoom !== 1 ? "" : "transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04]"}`}
             // An inline transform beats the group-hover Tailwind utility
             // outright (higher specificity, can't compose with it), so a
             // zoomed photo loses the hover micro-effect — a fine trade for
@@ -87,10 +87,8 @@ export default function ListingCard({
             decoding="async"
           />
           {!v.inStock && (
-            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/95 px-4 py-3 text-[10px] font-bold uppercase leading-tight tracking-[0.1em] text-ink">
-              Sold
-              <br />
-              out
+            <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink py-1.5 text-center font-bold uppercase text-white text-[10px] tracking-[0.14em]">
+              Sold out
             </span>
           )}
         </div>
