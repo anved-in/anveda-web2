@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "@/components/Link";
 import { useCart } from "@/lib/cart";
-import QtyStepper from "@/components/QtyStepper";
-import { inr, variantPrice, packLabel, colourLabel, ALL_SIZES, SIZE_GUIDE, type Product, type Variant } from "@/lib/catalog";
+import { inr, variantPrice, colourLabel, ALL_SIZES, SIZE_GUIDE, type Product, type Variant } from "@/lib/catalog";
 
 /**
  * The buy box: size, quantity, add to bag. Colour is picked one level up
@@ -14,8 +13,11 @@ import { inr, variantPrice, packLabel, colourLabel, ALL_SIZES, SIZE_GUIDE, type 
 export default function ProductBuy({
   p,
   variant,
+  qty,
 }: {
   p: Product;
+  /** Chosen up beside the price in <ProductView>; read here for the total. */
+  qty: number;
   /** Controlled by ProductView so the photo, the thumbnails and the line
       that reaches the cart can never disagree about which shade is selected. */
   variant: Variant;
@@ -23,19 +25,18 @@ export default function ProductBuy({
   // No size preselected on purpose: a defaulted size is the commonest cause of
   // a wrong-size delivery. The customer must choose deliberately.
   const [size, setSize] = useState<string | null>(null);
-  const [qty, setQty] = useState(1);
+  const sizeRef = useRef<HTMLDivElement>(null);
   const [err, setErr] = useState(false);
   const [added, setAdded] = useState(false);
   const [notifyEmail, setNotifyEmail] = useState("");
   const [notifyState, setNotifyState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const { add, setOpen: setBagOpen } = useCart();
 
-  // "pair" / "set of 4" / "dozen" — what one unit of this colourway contains.
-  const pack = packLabel(p, variant);
-
   const onAdd = () => {
     if (!size) {
       setErr(true);
+      // The add button lives in a fixed bar, so the size row may be off screen.
+      sizeRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
     add(p.id, size, qty, variant.colour);
@@ -69,14 +70,14 @@ export default function ProductBuy({
           the same question twice, one scroll apart. */}
 
       {/* -------------------------------------------------------------- size */}
-      <div className="mt-7">
+      <div ref={sizeRef} className="mt-4">
         <div className="flex items-baseline justify-between">
-          <span className="text-[12px] font-bold uppercase tracking-[0.18em]">
+          <span className="text-[11px] font-bold uppercase tracking-[0.18em]">
             Size {size && <span className="text-ink-soft">· {size}</span>}
           </span>
           <Link
             href="/sizing"
-            className="text-[12px] text-maroon underline underline-offset-2"
+            className="text-[11px] text-ink underline underline-offset-2"
           >
             Size guide
           </Link>
@@ -85,7 +86,7 @@ export default function ProductBuy({
         {/* flex-1 + min-w-0 on every button, no wrap: all five sizes share
             the row equally instead of a fixed min-width forcing a 3+2 wrap
             on a phone. */}
-        <div className="mt-3 flex gap-1.5">
+        <div className="mt-2 flex gap-1.5">
           {ALL_SIZES.map((s) => {
             const g = SIZE_GUIDE.find((x) => x.size === s);
             const on = size === s;
@@ -99,17 +100,17 @@ export default function ProductBuy({
                 }}
                 aria-pressed={on}
                 className={[
-                  "min-w-0 flex-1 cursor-pointer border px-1 py-2.5 text-center transition-colors",
+                  "min-w-0 flex-1 cursor-pointer border px-1 py-1.5 text-center transition-colors",
                   on
                     ? "border-ink bg-ink text-cream"
                     : "border-line-strong bg-white hover:border-ink",
                 ].join(" ")}
               >
-                <span className="block text-[13px] font-semibold">{s}</span>
+                <span className="block text-[11.5px] font-semibold">{s}</span>
                 {g && (
                   <span
                     className={[
-                      "mt-0.5 block text-[8px] uppercase tracking-[0.06em]",
+                      "block text-[7px] uppercase tracking-[0.05em]",
                       on ? "text-cream/70" : "text-ink-soft",
                     ].join(" ")}
                   >
@@ -130,39 +131,22 @@ export default function ProductBuy({
 
       {variant.inStock ? (
         <>
-          {/* -------------------------------------------------------- quantity */}
-          <div className="mt-7">
-            <span className="text-[12px] font-bold uppercase tracking-[0.18em]">
-              Quantity
-              {/* What one unit actually contains. Designs come as pairs, sets of
-                  four or dozens, so "1" is ambiguous without this. */}
-              {pack && (
-                <span className="ml-1.5 font-medium normal-case tracking-normal text-ink-soft">
-                  ({pack})
-                </span>
-              )}
-            </span>
-            <div className="mt-3 w-fit">
-              <QtyStepper
-                qty={qty}
-                onDecrease={() => setQty((q) => Math.max(1, q - 1))}
-                onIncrease={() => setQty((q) => Math.min(99, q + 1))}
-              />
-            </div>
+          {/* Phone: pinned just above the tab bar so it is always in reach while
+              the shopper reads. Desktop: an ordinary full-width button. */}
+          <div className="fixed inset-x-0 bottom-[calc(60px+env(safe-area-inset-bottom))] z-30 border-t border-line bg-white px-4 py-2 md:static md:z-auto md:mt-6 md:border-0 md:bg-transparent md:p-0">
+            <button
+              type="button"
+              onClick={onAdd}
+              className="w-full cursor-pointer bg-ink py-3.5 text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2 md:py-[18px]"
+            >
+              {added ? "Added to bag ✓" : `Add to bag — ${inr(variantPrice(p, variant) * qty)}`}
+            </button>
           </div>
-
-          <button
-            type="button"
-            onClick={onAdd}
-            className="mt-8 w-full cursor-pointer bg-ink py-[18px] text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2"
-          >
-            {added ? "Added to bag ✓" : `Add to bag — ${inr(variantPrice(p, variant) * qty)}`}
-          </button>
           {/* The bag stays closed on purpose: someone building an order adds
               several designs in a row, and a drawer covering the page after each
               one forced them back out to carry on. The bag icon's count confirms
               the add; this link is the way in when they are done. */}
-          <p aria-live="polite" className="mt-3 h-[18px] text-center text-[12.5px] text-ink-soft">
+          <p aria-live="polite" className="mt-2 h-[18px] text-center text-[12.5px] text-ink-soft">
             {added && (
               <button
                 type="button"
@@ -174,7 +158,7 @@ export default function ProductBuy({
             )}
           </p>
 
-          <p className="mt-3.5 text-center text-[12.5px] text-ink-soft">
+          <p className="mt-2 text-center text-[12px] text-ink-soft">
             Secure checkout with UPI, card or netbanking.
           </p>
         </>

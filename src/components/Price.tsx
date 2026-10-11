@@ -23,7 +23,7 @@ export default function Price({
 }) {
   const t = priceTag(price);
   const scale =
-    size === "lg" ? "text-2xl" : size === "sm" ? "text-[13px]" : "text-[15px]";
+    size === "lg" ? "text-[19px]" : size === "sm" ? "text-[13px]" : "text-[15px]";
 
   return (
     <span className={`inline-flex items-baseline gap-2 ${scale} ${className}`}>
@@ -34,7 +34,7 @@ export default function Price({
           the one that should be read first. */}
       <span className={muted ? "font-normal text-ink-soft" : "price-now"}>{t.nowText}</span>
       <span
-        className={muted ? "text-[0.85em] font-normal text-ink-faint line-through" : "price-was text-[0.85em]"}
+        className={muted ? "text-[0.85em] font-normal text-ink-faint line-through" : size === "lg" ? "price-was text-[0.62em] !text-[#a3a3a3]" : "price-was text-[0.85em]"}
         aria-label={`Was ${t.wasText}`}
       >
         {t.wasText}

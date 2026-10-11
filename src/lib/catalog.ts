@@ -40,6 +40,8 @@ export interface Variant {
   /** Sizes this colourway is actually stocked in. */
   sizes: string[];
   inStock: boolean;
+  /** Pieces left, as the owner counts them in the CMS; absent/0 = not tracked. */
+  stockQty?: number;
   /** Admin-set crop focus, as a CSS object-position value. */
   focal: string | null;
   /** Admin-set crop zoom — a scale factor, 1 = no zoom. Paired with focal. */

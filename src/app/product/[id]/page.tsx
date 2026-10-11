@@ -133,6 +133,7 @@ export default async function ProductPage({
           </div>
         </div>
       </section>
+      <div className="h-14 md:hidden" aria-hidden="true" />
     </>
   );
 }

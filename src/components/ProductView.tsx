@@ -2,10 +2,11 @@
 
 import { useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
+import QtyStepper from "@/components/QtyStepper";
 import ProductBuy from "@/components/ProductBuy";
 import Price from "@/components/Price";
 import FavButton from "@/components/FavButton";
-import { imgSrc, inr, variantPrice, packCount, colourLabel, framingStyle, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
+import { imgSrc, inr, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
 import { SHIPPING_FROM } from "@/lib/shipping";
 
@@ -40,11 +41,11 @@ function ShareButton({ name, colour }: { name: string; colour: string }) {
     <button
       type="button"
       onClick={share}
-      aria-label={`Share ${name}`}
-      className="relative flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center border border-line-strong transition-colors hover:border-ink"
+      aria-label={`Copy link to ${name}`}
+      className="relative flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center border border-line-strong transition-colors hover:border-ink"
     >
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M12 15V3.5M7.5 8 12 3.5 16.5 8M5 12.5V19a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-6.5" />
+        <path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1" />
       </svg>
       {copied && (
         <span className="absolute right-0 top-[calc(100%+4px)] z-20 whitespace-nowrap bg-ink px-2 py-1 text-[10px] text-white">
@@ -108,6 +109,7 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
   const [variant, setVariant] = useState<Variant>(initial);
   // Phone: the photo and the design's details are two panels of one box; a
   // sideways swipe (or the chip in the corner) flips between them.
+  const [qty, setQty] = useState(1);
   const [panel, setPanel] = useState<0 | 1>(0);
   const touch = useRef<{ x: number; y: number } | null>(null);
   const onTouchEnd = (e: React.TouchEvent) => {
@@ -227,7 +229,7 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
             anything else loaded. The collection stays reachable from the
             shop page's own nav. */}
         <div className="flex items-start justify-between gap-4">
-          <h1 className="font-display text-[clamp(28px,3.6vw,44px)]">{p.name}</h1>
+          <h1 className="font-display text-[clamp(20px,2.4vw,30px)] leading-tight">{p.name}</h1>
           <div className="flex gap-2">
             <ShareButton name={p.name} colour={variant.colour} />
             <FavButton
@@ -239,12 +241,32 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
           </div>
         </div>
 
-        <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-2 md:mt-4">
-          <Price price={variantPrice(p, variant)} size="lg" />
-          <span className="badge-sale">20% off</span>
+        <div className="mt-2 flex items-center justify-between gap-3 md:mt-4">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+              <Price price={variantPrice(p, variant)} size="lg" />
+              <span className="badge-sale">20% off</span>
+            </div>
+            {packLabel(p, variant) && (
+              <p className="mt-1 text-[11px] text-ink-soft">per {packLabel(p, variant)}</p>
+            )}
+          </div>
+          {variant.inStock && (
+            <QtyStepper
+              size="sm"
+              qty={qty}
+              onDecrease={() => setQty((q) => Math.max(1, q - 1))}
+              onIncrease={() => setQty((q) => Math.min(99, q + 1))}
+            />
+          )}
         </div>
+        {variant.inStock && (variant.stockQty ?? 0) > 0 && (variant.stockQty ?? 0) <= 3 && (
+          <p className="mt-1.5 text-[12px] font-semibold text-[#c0152f]">
+            Only {variant.stockQty} left
+          </p>
+        )}
 
-        <ProductBuy p={p} variant={variant} />
+        <ProductBuy p={p} variant={variant} qty={qty} />
 
         <div className="mt-8 hidden md:block">
           <Info p={p} variant={variant} />
