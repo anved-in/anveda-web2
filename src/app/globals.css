@@ -133,7 +133,7 @@ h1, h2, h3, .font-display {
   color: var(--color-ink-faint);
   font-weight: 400;
 }
-.price-now { color: var(--color-sale); font-weight: 700; }
+.price-now { color: var(--color-ink); font-weight: 700; }
 
 /* Sale badge, as the reference puts on discounted cards. */
 .badge-sale {

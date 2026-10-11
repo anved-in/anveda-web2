@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import Link from "@/components/Link";
 import { products, productById, related, rangeHref, groupBySlug, imgSrc } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
 import { reviews } from "@/lib/reviews";
@@ -111,18 +110,8 @@ export default async function ProductPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
 
-      <section className="px-5 py-8 sm:px-6 md:py-12">
+      <section className="px-5 pb-8 pt-4 sm:px-6 md:py-12">
         <div className="mx-auto max-w-[1320px]">
-          <nav className="mb-6 text-[11.5px] uppercase tracking-[0.16em] text-ink-soft">
-            <Link href={`/shop/${p.group ?? "glass"}/`} className="hover:text-ink">
-              {(p.group && groupBySlug(p.group)?.name) || "Shop"}
-            </Link>
-            <span className="mx-2">/</span>
-            <Link href={rangeHref(p.collection)} className="hover:text-ink">
-              {p.collectionName}
-            </Link>
-          </nav>
-
           {/* useSearchParams needs a Suspense boundary to prerender statically. */}
           <Suspense
             fallback={<div className="min-h-[60svh] bg-cream-2" aria-hidden="true" />}
