@@ -169,6 +169,13 @@ export default function ProductBuy({
           <p className="mt-2 text-center text-[12px] text-ink-soft">
             Secure checkout with UPI, card or netbanking.
           </p>
+          {/* Only what is genuinely promised on the Shipping & Returns page. */}
+          <p className="mt-1 text-center text-[12px] text-ink-soft">
+            Dispatched in 1–2 working days · Broken in transit? Replaced or refunded.{" "}
+            <Link href="/shipping" className="underline underline-offset-2">
+              Details
+            </Link>
+          </p>
         </>
       ) : (
         <div className="mt-8 border border-line-strong bg-cream-2 px-5 py-6 text-center">

@@ -6,7 +6,7 @@ import QtyStepper from "@/components/QtyStepper";
 import ProductBuy from "@/components/ProductBuy";
 import Price from "@/components/Price";
 import FavButton from "@/components/FavButton";
-import { imgSrc, inr, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
+import { soldOutLast, imgSrc, inr, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
 import { SHIPPING_FROM } from "@/lib/shipping";
 
@@ -154,14 +154,30 @@ function InfoPopup({ p, variant, onClose }: { p: Product; variant: Variant; onCl
 }
 
 function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
+  // In-stock colours first; the strip, the swipe and the default all follow it.
+  const ordered = soldOutLast(p.variants, (v) => v.inStock);
   const initial =
-    p.variants.find(
+    ordered.find(
       (v) => v.colour.toLowerCase() === (wanted ?? "").toLowerCase(),
-    ) ?? p.variants[0];
+    ) ?? ordered[0];
 
   const [variant, setVariant] = useState<Variant>(initial);
   const [qty, setQty] = useState(1);
   const [info, setInfo] = useState(false);
+  // First visit on a phone: the photo slides a few pixels sideways once, so the
+  // swipe is discoverable. Never repeats (remembered in this browser).
+  const [nudge, setNudge] = useState(false);
+  useEffect(() => {
+    if (p.variants.length < 2) return;
+    try {
+      if (localStorage.getItem("anveda.swipe.nudged")) return;
+      localStorage.setItem("anveda.swipe.nudged", "1");
+    } catch {
+      return;
+    }
+    const t = setTimeout(() => setNudge(true), 1200);
+    return () => clearTimeout(t);
+  }, [p.variants.length]);
   // Swiping the photo moves to the next / previous colour.
   const touch = useRef<{ x: number; y: number } | null>(null);
   const strip = useRef<HTMLDivElement>(null);
@@ -172,8 +188,8 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
     const dx = e.changedTouches[0].clientX - t.x;
     const dy = e.changedTouches[0].clientY - t.y;
     if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
-    const i = p.variants.findIndex((v) => v.colour === variant.colour);
-    const next = p.variants[i + (dx < 0 ? 1 : -1)];
+    const i = ordered.findIndex((v) => v.colour === variant.colour);
+    const next = ordered[i + (dx < 0 ? 1 : -1)];
     if (next) setVariant(next);
   };
   // Keep the chosen colour's thumbnail in view when a swipe changes it.
@@ -193,16 +209,18 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
           }}
           onTouchEnd={onTouchEnd}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            key={variant.image}
-            src={asset(imgSrc(variant.image))}
-            alt={`${p.name} — ${colourLabel(p, variant)}`}
-            className={`h-full w-full object-cover ${variant.inStock ? "" : "grayscale"}`}
-            style={framingStyle(variant)}
-            fetchPriority="high"
-            decoding="async"
-          />
+          <div className={`h-full w-full ${nudge ? "swipe-nudge" : ""}`} onAnimationEnd={() => setNudge(false)}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              key={variant.image}
+              src={asset(imgSrc(variant.image))}
+              alt={`${p.name} — ${colourLabel(p, variant)}`}
+              className={`h-full w-full object-cover ${variant.inStock ? "" : "grayscale"}`}
+              style={framingStyle(variant)}
+              fetchPriority="high"
+              decoding="async"
+            />
+          </div>
           {!variant.inStock && (
             <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink py-2 text-center font-bold uppercase text-white text-[11px] tracking-[0.18em]">
               Sold out
@@ -236,7 +254,7 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
             having both asked the same question twice, one scroll apart. */}
         {p.variants.length > 1 && (
           <div ref={strip} className="no-bar relative mt-3 flex gap-2.5 overflow-x-auto">
-            {p.variants.map((v) => {
+            {ordered.map((v) => {
               const on = v.colour === variant.colour;
               return (
                 <button

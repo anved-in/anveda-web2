@@ -133,13 +133,22 @@ export interface Listing {
   href: string;
 }
 
+/** Stable: in-stock first, sold-out last, otherwise the catalogue order. */
+export const soldOutLast = <T,>(items: T[], inStock: (t: T) => boolean): T[] => [
+  ...items.filter(inStock),
+  ...items.filter((t) => !inStock(t)),
+];
+
 export const listingsIn = (slug: string): Listing[] =>
-  productsIn(slug).flatMap((p) =>
-    p.variants.map((v) => ({
-      product: p,
-      variant: v,
-      href: `/product/${p.id}/?c=${encodeURIComponent(v.colour)}`,
-    })),
+  soldOutLast(
+    productsIn(slug).flatMap((p) =>
+      p.variants.map((v) => ({
+        product: p,
+        variant: v,
+        href: `/product/${p.id}/?c=${encodeURIComponent(v.colour)}`,
+      })),
+    ),
+    (l) => l.variant.inStock,
   );
 
 export const groupBySlug = (slug: string): Group | undefined =>
@@ -151,7 +160,10 @@ export const collectionsInGroup = (slug: string): Collection[] =>
 
 /** Every colourway inside a group. */
 export const listingsInGroup = (slug: string): Listing[] =>
-  collectionsInGroup(slug).flatMap((c) => listingsIn(c.slug));
+  soldOutLast(
+    collectionsInGroup(slug).flatMap((c) => listingsIn(c.slug)),
+    (l) => l.variant.inStock,
+  );
 
 export const allListings = (): Listing[] =>
   products.flatMap((p) =>

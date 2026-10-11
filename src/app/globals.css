@@ -229,3 +229,13 @@ h1, h2, h3, .font-display {
 .hm-chip { height: 40px; min-width: 52px; padding: 0 14px; border: 1px solid var(--hm-rule); border-radius: 999px; font-size: 14px; color: var(--hm-ink); transition: background .35s var(--hm-ease), color .35s, border-color .35s; }
 .hm-chip:hover { border-color: var(--hm-ink); }
 .hm-chip.is-on { background: var(--hm-ink); color: #fff; border-color: var(--hm-ink); }
+
+/* One-time hint that the product photo swipes to the next colour (phones). */
+@keyframes swipe-nudge {
+  0%, 100% { transform: translateX(0); }
+  35% { transform: translateX(-22px); }
+  65% { transform: translateX(4px); }
+}
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .swipe-nudge { animation: swipe-nudge 0.9s ease-in-out 1; }
+}
