@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import QtyStepper from "@/components/QtyStepper";
 import ProductBuy from "@/components/ProductBuy";
@@ -100,6 +100,59 @@ function Info({ p, variant }: { p: Product; variant: Variant }) {
   );
 }
 
+const POPUP_IDLE_MS = 15000;
+
+/**
+ * The "i" popup on the photo: a small card with the design's details. It
+ * closes from the X, from a tap outside, from Escape, and by itself after
+ * 15 seconds without the shopper touching it.
+ */
+function InfoPopup({ p, variant, onClose }: { p: Product; variant: Variant; onClose: () => void }) {
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const arm = () => {
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(onClose, POPUP_IDLE_MS);
+  };
+  useEffect(() => {
+    arm();
+    const key = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", key);
+    return () => {
+      if (timer.current) clearTimeout(timer.current);
+      window.removeEventListener("keydown", key);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return (
+    <>
+      <div className="fixed inset-0 z-40" onClick={onClose} aria-hidden="true" />
+      <div
+        role="dialog"
+        aria-label={`About ${p.name}`}
+        onTouchStart={(e) => { e.stopPropagation(); arm(); }}
+        onTouchEnd={(e) => e.stopPropagation()}
+        onPointerDown={arm}
+        onScroll={arm}
+        className="absolute right-2.5 top-11 z-50 max-h-[calc(100%-56px)] w-[min(88%,320px)] overflow-y-auto bg-white p-4 shadow-[0_8px_28px_rgba(0,0,0,0.22)]"
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute right-1 top-1 flex h-8 w-8 cursor-pointer items-center justify-center text-ink"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+        <div className="pr-6">
+          <Info p={p} variant={variant} />
+        </div>
+      </div>
+    </>
+  );
+}
+
 function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
   const initial =
     p.variants.find(
@@ -107,19 +160,28 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
     ) ?? p.variants[0];
 
   const [variant, setVariant] = useState<Variant>(initial);
-  // Phone: the photo and the design's details are two panels of one box; a
-  // sideways swipe (or the chip in the corner) flips between them.
   const [qty, setQty] = useState(1);
-  const [panel, setPanel] = useState<0 | 1>(0);
+  const [info, setInfo] = useState(false);
+  // Swiping the photo moves to the next / previous colour.
   const touch = useRef<{ x: number; y: number } | null>(null);
+  const strip = useRef<HTMLDivElement>(null);
   const onTouchEnd = (e: React.TouchEvent) => {
     const t = touch.current;
     touch.current = null;
     if (!t) return;
     const dx = e.changedTouches[0].clientX - t.x;
     const dy = e.changedTouches[0].clientY - t.y;
-    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) setPanel(dx < 0 ? 1 : 0);
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    const i = p.variants.findIndex((v) => v.colour === variant.colour);
+    const next = p.variants[i + (dx < 0 ? 1 : -1)];
+    if (next) setVariant(next);
   };
+  // Keep the chosen colour's thumbnail in view when a swipe changes it.
+  useEffect(() => {
+    const box = strip.current;
+    const on = box?.querySelector<HTMLElement>('[aria-pressed="true"]');
+    if (box && on) box.scrollTo({ left: on.offsetLeft - 12, behavior: "smooth" });
+  }, [variant]);
 
   return (
     <div className="flex flex-wrap gap-y-4 md:gap-y-8">
@@ -131,49 +193,29 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
           }}
           onTouchEnd={onTouchEnd}
         >
-          <div
-            className="flex h-full w-full transition-transform duration-300 ease-out md:!transform-none"
-            style={{ transform: `translateX(${panel * -100}%)` }}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            key={variant.image}
+            src={asset(imgSrc(variant.image))}
+            alt={`${p.name} — ${colourLabel(p, variant)}`}
+            className="h-full w-full object-cover"
+            style={framingStyle(variant)}
+            fetchPriority="high"
+            decoding="async"
+          />
+          {/* Phone: the details sit behind an "i" on the photo (the heart
+              lives beside the name). On desktop they are already on the page. */}
+          <button
+            type="button"
+            onClick={() => setInfo((v) => !v)}
+            aria-label="About this design"
+            aria-expanded={info}
+            className="absolute right-2.5 top-2.5 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-white font-display text-[16px] italic leading-none text-white md:hidden"
+            style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,.5))" }}
           >
-            <div className="relative h-full w-full shrink-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                key={variant.image}
-                src={asset(imgSrc(variant.image))}
-                alt={`${p.name} — ${colourLabel(p, variant)}`}
-                className="h-full w-full object-cover"
-                style={framingStyle(variant)}
-                fetchPriority="high"
-                decoding="async"
-              />
-              <FavButton
-                id={p.id}
-                colour={variant.colour}
-                name={`${p.name} — ${colourLabel(p, variant)}`}
-              />
-            </div>
-            <div className="h-full w-full shrink-0 overflow-y-auto bg-white p-4 md:hidden">
-              <Info p={p} variant={variant} />
-            </div>
-          </div>
-        </div>
-
-        {/* Carousel dots: the cue that the photo has a second page (the
-            details). Phone only; the dots are tappable as well as swipeable. */}
-        <div className="mt-2 flex items-center justify-center md:hidden" role="tablist" aria-label="Photo or details">
-          {([0, 1] as const).map((i) => (
-            <button
-              key={i}
-              type="button"
-              role="tab"
-              aria-selected={panel === i}
-              aria-label={i === 0 ? "Photo" : "Details"}
-              onClick={() => setPanel(i)}
-              className="flex h-5 w-6 cursor-pointer items-center justify-center"
-            >
-              <span className={["block h-1.5 rounded-full transition-all", panel === i ? "w-4 bg-ink" : "w-1.5 bg-line-strong"].join(" ")} />
-            </button>
-          ))}
+            i
+          </button>
+          {info && <InfoPopup p={p} variant={variant} onClose={() => setInfo(false)} />}
         </div>
 
         {/* Thumbnail strip: the colour picker now lives here, directly under
@@ -183,7 +225,7 @@ function ProductViewInner({ p, wanted }: { p: Product; wanted?: string }) {
             gone (see the note in <ProductBuy>) so this is the only one;
             having both asked the same question twice, one scroll apart. */}
         {p.variants.length > 1 && (
-          <div className="no-bar mt-3 flex gap-2.5 overflow-x-auto">
+          <div ref={strip} className="no-bar relative mt-3 flex gap-2.5 overflow-x-auto">
             {p.variants.map((v) => {
               const on = v.colour === variant.colour;
               return (
