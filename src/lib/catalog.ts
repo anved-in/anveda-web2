@@ -112,6 +112,10 @@ export const collections: Collection[] = [...data.collections].sort(
 );
 export const products: Product[] = data.products;
 
+/** The owner's hand-arranged order for the By Colour wall (variant ids); empty = fully automatic. */
+export const colourWallManual: number[] =
+  (data as { colourWall?: number[] }).colourWall ?? [];
+
 export const productsIn = (slug: string): Product[] =>
   products.filter((p) => p.collection === slug);
 

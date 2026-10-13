@@ -19,7 +19,7 @@
 const ALLOW = [
   "/_next/", "/fonts/", "/img/", "/video/",
   "/icon", "/apple-touch-icon", "/favicon", "/manifest", "/robots.txt",
-  "/teaser", "/track", "/chat", "/privacy", "/terms", "/review",
+  "/teaser", "/track", "/chat", "/privacy", "/terms", "/review", "/colour-order",
   "/api/track", "/api/review",
 ];
 const COOKIE = "av_preview";

@@ -1,6 +1,6 @@
 import path from "node:path";
 import sharp from "sharp";
-import { allListings, type Listing } from "@/lib/catalog";
+import { allListings, colourWallManual, type Listing } from "@/lib/catalog";
 
 /**
  * Orders every in-stock colourway so the wall of photos reads as one seamless
@@ -121,9 +121,35 @@ const chromaOf = (c: Lab) => Math.hypot(c[1], c[2]);
 
 let cached: Promise<Listing[]> | null = null;
 
-export function colourFlow(): Promise<Listing[]> {
+/** The fully automatic order (what the CMS shows before the owner changes anything). */
+export function colourFlowAuto(): Promise<Listing[]> {
   if (!cached) cached = build();
   return cached;
+}
+
+/**
+ * The order the page uses: the owner's hand-arranged order if there is one,
+ * otherwise the automatic one. A colourway the owner has not placed yet (new,
+ * or back in stock) goes right after the photo that precedes it in the
+ * automatic order, so nothing is left at the end by accident.
+ */
+export async function colourFlow(): Promise<Listing[]> {
+  const auto = await colourFlowAuto();
+  if (colourWallManual.length === 0) return auto;
+  const byId = new Map(auto.map((l) => [l.variant.id, l]));
+  const result = [...new Set(colourWallManual)].filter((id) => byId.has(id));
+  const placed = new Set(result);
+  auto.forEach((l, i) => {
+    if (placed.has(l.variant.id)) return;
+    let at = 0;
+    for (let k = i - 1; k >= 0; k--) {
+      const idx = result.indexOf(auto[k].variant.id);
+      if (idx !== -1) { at = idx + 1; break; }
+    }
+    result.splice(at, 0, l.variant.id);
+    placed.add(l.variant.id);
+  });
+  return result.map((id) => byId.get(id)!);
 }
 
 async function build(): Promise<Listing[]> {
