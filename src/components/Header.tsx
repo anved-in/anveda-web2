@@ -11,6 +11,7 @@ import { collections, groups, collectionsInGroup, rangeHref, productById } from 
 
 /** The reference keeps a short text nav on the left of a single header row. */
 const NAV = [
+  { href: "/colours", label: "By Colour" },
   { href: "/reels", label: "Reels" },
   { href: "/about", label: "About Us" },
   { href: "/sizing", label: "Sizing" },
