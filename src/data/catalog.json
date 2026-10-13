@@ -790,8 +790,8 @@
    "collectionName": "Petal Stone Glass Bangle",
    "group": "glass",
    "name": "Petal Stone Glass Bangle",
-   "price": 340,
-   "priceMax": 340,
+   "price": 320,
+   "priceMax": 320,
    "pieces": 12,
    "unit": "dozen",
    "sizes": [
@@ -809,7 +809,7 @@
      "colour": "Burnt Orange",
      "image": "petal-stone-glass-bangle-burnt-orange.webp",
      "hex": "#fb9404",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -828,7 +828,7 @@
      "colour": "Carrot",
      "image": "petal-stone-glass-bangle-carrot.webp",
      "hex": "#ff8d5c",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -847,7 +847,7 @@
      "colour": "Classic Blue",
      "image": "petal-stone-glass-bangle-classic-blue.webp",
      "hex": "#01aed0",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -866,7 +866,7 @@
      "colour": "Dark Green",
      "image": "petal-stone-glass-bangle-dark-green.webp",
      "hex": "#4b8406",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -885,7 +885,7 @@
      "colour": "Dark Pink",
      "image": "petal-stone-glass-bangle-dark-pink.webp",
      "hex": "#f20779",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -904,7 +904,7 @@
      "colour": "Deep Coffee",
      "image": "petal-stone-glass-bangle-deep-coffee.webp",
      "hex": "#543b08",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -923,7 +923,7 @@
      "colour": "Emerald Green",
      "image": "petal-stone-glass-bangle-emerald-green.webp",
      "hex": "#026600",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -942,7 +942,7 @@
      "colour": "Ivory",
      "image": "petal-stone-glass-bangle-ivory.webp",
      "hex": "#eeeae2",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -961,7 +961,7 @@
      "colour": "Lemon Yellow",
      "image": "petal-stone-glass-bangle-lemon-yellow.webp",
      "hex": "#eaed07",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -980,7 +980,7 @@
      "colour": "Magenta",
      "image": "petal-stone-glass-bangle-magenta.webp",
      "hex": "#ea34b0",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -999,7 +999,7 @@
      "colour": "Maroon",
      "image": "petal-stone-glass-bangle-maroon.webp",
      "hex": "#8b2328",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -1018,7 +1018,7 @@
      "colour": "Multicolor",
      "image": "petal-stone-glass-bangle-multicolor.webp",
      "hex": "#c7c5c2",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -1037,7 +1037,7 @@
      "colour": "Mustard Yellow",
      "image": "petal-stone-glass-bangle-mustard-yellow.webp",
      "hex": "#d9b05e",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -1056,7 +1056,7 @@
      "colour": "Parrot Green",
      "image": "petal-stone-glass-bangle-parrot-green.webp",
      "hex": "#35d016",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -1075,7 +1075,7 @@
      "colour": "Pista",
      "image": "petal-stone-glass-bangle-pista.webp",
      "hex": "#aef494",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -1094,7 +1094,7 @@
      "colour": "Sky Blue",
      "image": "petal-stone-glass-bangle-sky-blue.webp",
      "hex": "#17deda",
-     "price": 340,
+     "price": 320,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -1364,7 +1364,7 @@
      "colour": "Floral Stone",
      "image": "statement-bangles-floral-stone.webp",
      "hex": "#e2d8c4",
-     "price": 880,
+     "price": 899,
      "pieces": 2,
      "sizes": [
       "2.2",
@@ -1382,7 +1382,7 @@
      "colour": "Floral Stone Premium",
      "image": "statement-bangles-floral-stone-premium.webp",
      "hex": "#e2d8c4",
-     "price": 900,
+     "price": 950,
      "pieces": 2,
      "sizes": [
       "2.2",
@@ -1400,7 +1400,7 @@
      "colour": "Green Floral Stone",
      "image": "statement-bangles-green-floral-stone.webp",
      "hex": "#e2d8c4",
-     "price": 880,
+     "price": 899,
      "pieces": 2,
      "sizes": [
       "2.2",
@@ -1470,7 +1470,7 @@
      "colour": "Lakshmi with White Stone",
      "image": "statement-bangles-lakshmi-with-white-stone.webp",
      "hex": "#e2d8c4",
-     "price": 1100,
+     "price": 1150,
      "pieces": 2,
      "sizes": [
       "2.2",
@@ -1539,7 +1539,7 @@
      "colour": "Pink Floral Stone",
      "image": "statement-bangles-pink-floral-stone.webp",
      "hex": "#e2d8c4",
-     "price": 880,
+     "price": 899,
      "pieces": 2,
      "sizes": [
       "2.2",
@@ -1557,7 +1557,7 @@
      "colour": "Premium Blue Flower Stone",
      "image": "statement-bangles-premium-blue-flower-stone.webp",
      "hex": "#e2d8c4",
-     "price": 880,
+     "price": 950,
      "pieces": 2,
      "sizes": [
       "2.2",
@@ -1699,7 +1699,7 @@
      "colour": "Red Flower Stone",
      "image": "statement-bangles-red-flower-stone.webp",
      "hex": "#e2d8c4",
-     "price": 880,
+     "price": 899,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -1750,7 +1750,7 @@
      "colour": "White Floral Stone",
      "image": "statement-bangles-white-floral-stone.webp",
      "hex": "#e2d8c4",
-     "price": 880,
+     "price": 899,
      "pieces": 2,
      "sizes": [
       "2.2",
@@ -1914,7 +1914,7 @@
      "colour": "Diamond Shaped Set of 2",
      "image": "designer-side-bangles-diamond-shaped-set-of-2.webp",
      "hex": "#e2d8c4",
-     "price": 660,
+     "price": 1200,
      "pieces": 2,
      "sizes": [
       "2.2",
@@ -2017,7 +2017,7 @@
      "colour": "Lakshmi Floral Drop Set of 4",
      "image": "designer-side-bangles-lakshmi-floral-drop-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 999,
+     "price": 1020,
      "pieces": 4,
      "sizes": [
       "2.2",
@@ -2035,7 +2035,7 @@
      "colour": "Lakshmi Stone Set of 2",
      "image": "designer-side-bangles-lakshmi-stone-set-of-2.webp",
      "hex": "#e2d8c4",
-     "price": 660,
+     "price": 699,
      "pieces": 2,
      "sizes": [
       "2.2",
@@ -2087,7 +2087,7 @@
      "colour": "Non Idol Kemp Drop Set of 4",
      "image": "designer-side-bangles-non-idol-kemp-drop-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 499,
+     "price": 1199,
      "pieces": 4,
      "sizes": [
       "2.2",
@@ -2155,7 +2155,7 @@
      "colour": "Peacock Set of 4",
      "image": "designer-side-bangles-peacock-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 889,
+     "price": 950,
      "pieces": 4,
      "sizes": [
       "2.2",
@@ -2225,7 +2225,7 @@
      "colour": "Red Green Stone Lozenge Set of 4",
      "image": "designer-side-bangles-red-green-stone-lozenge-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 1200,
+     "price": 1050,
      "pieces": 4,
      "sizes": [
       "2.2",
@@ -2314,7 +2314,7 @@
    "collectionName": "Gunghroo",
    "group": "layering",
    "name": "Gunghroo",
-   "price": 120,
+   "price": 100,
    "priceMax": 220,
    "pieces": 4,
    "unit": "set",
@@ -2331,7 +2331,7 @@
      "colour": "Acrylic Kashmiri Blue & Yellow Set of 4",
      "image": "gunghroo-acrylic-kashmiri-blue-yellow-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 120,
+     "price": 100,
      "pieces": 4,
      "sizes": [
       "2.2",
@@ -2348,7 +2348,7 @@
      "colour": "Acrylic Kashmiri Maroon & Orange Set of 4",
      "image": "gunghroo-acrylic-kashmiri-maroon-orange-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 120,
+     "price": 100,
      "pieces": 4,
      "sizes": [
       "2.2",
@@ -2365,7 +2365,7 @@
      "colour": "Acrylic Kashmiri Red & Yellow Set of 4",
      "image": "gunghroo-acrylic-kashmiri-red-yellow-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 120,
+     "price": 100,
      "pieces": 4,
      "sizes": [
       "2.2",
