@@ -13,8 +13,8 @@ export const metadata: Metadata = {
  * One wall of photographs, no text: every bangle in stock, ordered so the
  * colours flow from one into the next. Each tile opens that colourway.
  */
-export default function ColoursPage() {
-  const tiles = colourFlow();
+export default async function ColoursPage() {
+  const tiles = await colourFlow();
   return (
     <section aria-label="All bangles by colour">
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
