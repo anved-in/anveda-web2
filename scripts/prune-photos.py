@@ -19,6 +19,9 @@ for p in catalog["products"]:
     for v in p["variants"]:
         if v.get("image"):
             keep.add(v["image"])
+        for g in v.get("gallery") or []:
+            if g.get("image"):
+                keep.add(g["image"])
     if p.get("image"):
         keep.add(p["image"])
 for c in catalog["collections"]:

@@ -7,7 +7,7 @@ import ProductBuy from "@/components/ProductBuy";
 import Price from "@/components/Price";
 import FavButton from "@/components/FavButton";
 import Stars from "@/components/Stars";
-import { soldOutLast, imgSrc, inr, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
+import { soldOutLast, variantSlides, imgSrc, inr, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
 import { SHIPPING_FROM } from "@/lib/shipping";
 
@@ -163,6 +163,18 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
     ) ?? ordered[0];
 
   const [variant, setVariant] = useState<Variant>(initial);
+  // A colour can have several photos: the shopper swipes through them (dots show
+  // where they are), and a swipe past the last / first photo moves to the
+  // next / previous colour, so the gesture never dead-ends.
+  const [slide, setSlide] = useState(0);
+  const [drag, setDrag] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const slides = variantSlides(variant);
+  const pick = (v: Variant, at = 0) => {
+    setVariant(v);
+    setSlide(at);
+    setDrag(0);
+  };
   const [qty, setQty] = useState(1);
   const [info, setInfo] = useState(false);
   // First visit on a phone: the photo slides a few pixels sideways once, so the
@@ -179,19 +191,34 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
     const t = setTimeout(() => setNudge(true), 1200);
     return () => clearTimeout(t);
   }, [p.variants.length]);
-  // Swiping the photo moves to the next / previous colour.
-  const touch = useRef<{ x: number; y: number } | null>(null);
+  const touch = useRef<{ x: number; y: number; lock: "x" | "y" | null } | null>(null);
   const strip = useRef<HTMLDivElement>(null);
+  const onTouchMove = (e: React.TouchEvent) => {
+    const t = touch.current;
+    if (!t || slides.length < 2) return;
+    const dx = e.touches[0].clientX - t.x;
+    const dy = e.touches[0].clientY - t.y;
+    if (t.lock === null && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) t.lock = Math.abs(dx) > Math.abs(dy) * 1.2 ? "x" : "y";
+    if (t.lock !== "x") return;
+    setDragging(true);
+    // a little resistance when dragging past the first / last photo
+    const past = (slide === 0 && dx > 0) || (slide === slides.length - 1 && dx < 0);
+    setDrag(past ? dx * 0.35 : dx);
+  };
   const onTouchEnd = (e: React.TouchEvent) => {
     const t = touch.current;
     touch.current = null;
+    setDragging(false);
+    setDrag(0);
     if (!t) return;
     const dx = e.changedTouches[0].clientX - t.x;
     const dy = e.changedTouches[0].clientY - t.y;
     if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    if (dx < 0 && slide < slides.length - 1) return setSlide(slide + 1);
+    if (dx > 0 && slide > 0) return setSlide(slide - 1);
     const i = ordered.findIndex((v) => v.colour === variant.colour);
     const next = ordered[i + (dx < 0 ? 1 : -1)];
-    if (next) setVariant(next);
+    if (next) pick(next, dx < 0 ? 0 : variantSlides(next).length - 1);
   };
   // Keep the chosen colour's thumbnail in view when a swipe changes it.
   useEffect(() => {
@@ -205,22 +232,34 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
       <div className="w-full md:w-[55%] md:pr-10 lg:w-[58%]">
         <div
           className="relative aspect-square overflow-hidden bg-cream-2"
+          style={{ touchAction: "pan-y" }}
           onTouchStart={(e) => {
-            touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY, lock: null };
           }}
+          onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
           <div className={`h-full w-full ${nudge ? "swipe-nudge" : ""}`} onAnimationEnd={() => setNudge(false)}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              key={variant.image}
-              src={asset(imgSrc(variant.image))}
-              alt={`${p.name} — ${colourLabel(p, variant)}`}
-              className={`h-full w-full object-cover ${variant.inStock ? "" : "grayscale"}`}
-              style={framingStyle(variant)}
-              fetchPriority="high"
-              decoding="async"
-            />
+            <div
+              key={variant.colour}
+              className={`flex h-full w-full ${dragging ? "" : "transition-transform duration-300 ease-[cubic-bezier(.23,1,.32,1)]"}`}
+              style={{ transform: `translate3d(calc(${-slide * 100}% + ${drag}px), 0, 0)` }}
+            >
+              {slides.map((sl, i) => (
+                <div key={sl.image} className="h-full w-full shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={asset(imgSrc(sl.image))}
+                    alt={`${p.name} — ${colourLabel(p, variant)}${i > 0 ? ` (photo ${i + 1})` : ""}`}
+                    className={`h-full w-full object-cover ${variant.inStock ? "" : "grayscale"}`}
+                    style={framingStyle(sl)}
+                    fetchPriority={i === 0 ? "high" : "auto"}
+                    decoding="async"
+                    draggable={false}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
           {!variant.inStock && (
             <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink py-2 text-center font-bold uppercase text-white text-[11px] tracking-[0.18em]">
@@ -247,6 +286,26 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
           {info && <InfoPopup p={p} variant={variant} onClose={() => setInfo(false)} />}
         </div>
 
+        {/* Dots, like Instagram: one per photo of this colour, the current one dark.
+            Only shown when there is more than one photo. */}
+        {slides.length > 1 && (
+          <div className="mt-2 flex items-center justify-center" role="tablist" aria-label="Photos of this colour">
+            {slides.map((sl, i) => (
+              <button
+                key={sl.image}
+                type="button"
+                role="tab"
+                aria-selected={slide === i}
+                aria-label={`Photo ${i + 1} of ${slides.length}`}
+                onClick={() => setSlide(i)}
+                className="flex h-5 w-4 cursor-pointer items-center justify-center"
+              >
+                <span className={`block h-[6px] w-[6px] rounded-full transition-colors duration-200 ${slide === i ? "bg-ink" : "bg-line-strong"}`} />
+              </button>
+            ))}
+          </div>
+        )}
+
         {/* Thumbnail strip: the colour picker now lives here, directly under
             the photo it controls, instead of in the buy box further down —
             picking a shade updates a big image right there, no scroll
@@ -261,7 +320,7 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
                 <button
                   key={v.colour}
                   type="button"
-                  onClick={() => setVariant(v)}
+                  onClick={() => pick(v)}
                   aria-pressed={on}
                   aria-label={colourLabel(p, v)}
                   title={colourLabel(p, v)}

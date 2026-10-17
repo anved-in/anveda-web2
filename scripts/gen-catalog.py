@@ -56,6 +56,9 @@ for _p in products:
     for _v in _p.get("variants", []):
         if _v.get("image"):
             _v["image"] = webp_name(_v["image"])
+        for _g in _v.get("gallery") or []:
+            if _g.get("image"):
+                _g["image"] = webp_name(_g["image"])
     if _p.get("image"):
         _p["image"] = webp_name(_p["image"])
 for _c in collections:
@@ -127,6 +130,9 @@ for p in products:
     for v in p["variants"]:
         if v.get("image"):
             wanted.add(v["image"])
+        for g in v.get("gallery") or []:
+            if g.get("image"):
+                wanted.add(g["image"])
 for c in collections:
     if c.get("cover"):
         wanted.add(c["cover"])

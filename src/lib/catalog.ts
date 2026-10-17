@@ -42,10 +42,17 @@ export interface Variant {
   inStock: boolean;
   /** Pieces left, as the owner counts them in the CMS; absent/0 = not tracked. */
   stockQty?: number;
+  /** More photos after `image`, shown when the shopper swipes the main photo. */
+  gallery?: { image: string; focal?: string | null; zoom?: number | null }[];
   /** Admin-set crop focus, as a CSS object-position value. */
   focal: string | null;
   /** Admin-set crop zoom — a scale factor, 1 = no zoom. Paired with focal. */
   zoom: number | null;
+}
+
+/** Every photo of a colourway in swipe order: the main one first, then the extras. */
+export function variantSlides(v: Variant): { image: string; focal?: string | null; zoom?: number | null }[] {
+  return [{ image: v.image, focal: v.focal, zoom: v.zoom }, ...(v.gallery ?? [])];
 }
 
 /**
@@ -96,7 +103,7 @@ export interface Product {
   image: string;
 }
 
-const data = raw as {
+const data = raw as unknown as {
   groups: Group[];
   collections: Collection[];
   products: Product[];
