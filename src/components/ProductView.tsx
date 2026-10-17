@@ -427,36 +427,35 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
           )}
         </div>
 
-        {/* Price with its "20% off" tag beside it. The quantity, heart and link form one
-            cluster of controls: on phones right under the price, on desktop in the
-            add-to-bag row. */}
+        {/* Price, its "20% off" tag, then the link and heart: one line, the controls right
+            where the eye already is. On phones the quantity sits on its own row below. */}
         <div className="mt-2 md:mt-3">
           <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
             <Price price={variantPrice(p, variant)} size="lg" />
             <span className="badge-sale">20% off</span>
+            <div className="-ml-1.5">{actionIcons}</div>
           </div>
           {packLabel(p, variant) && (
             <p className="mt-1 text-[11px] text-ink-soft">per {packLabel(p, variant)}</p>
           )}
         </div>
-        <div className="mt-3 flex items-center gap-2 md:hidden">
-          {variant.inStock && (
+        {variant.inStock && (
+          <div className="mt-3 w-fit md:hidden">
             <QtyStepper
               size="sm"
               qty={qty}
               onDecrease={() => setQty((q) => Math.max(1, q - 1))}
               onIncrease={() => setQty((q) => Math.min(99, q + 1))}
             />
-          )}
-          {actionIcons}
-        </div>
+          </div>
+        )}
         {variant.inStock && (variant.stockQty ?? 0) > 0 && (variant.stockQty ?? 0) <= 3 && (
           <p className="mt-1.5 text-[12px] font-semibold text-[#c0152f]">
             Only {variant.stockQty} left
           </p>
         )}
 
-        <ProductBuy p={p} variant={variant} qty={qty} setQty={setQty} actions={actionIcons} />
+        <ProductBuy p={p} variant={variant} qty={qty} setQty={setQty} />
 
         {/* Desktop: the other colours live here, under the add-to-bag button. */}
         {p.variants.length > 1 && (
