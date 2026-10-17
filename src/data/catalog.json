@@ -810,7 +810,7 @@
      "inStock": true,
      "stockQty": 12,
      "focal": "50% 47.7%",
-     "zoom": 1,
+     "zoom": 1.2,
      "gallery": [
       {
        "image": "pastel-palette-glass-bangle-purple.webp",
@@ -834,8 +834,8 @@
      ],
      "inStock": true,
      "stockQty": 12,
-     "focal": "50% 59.0%",
-     "zoom": 1,
+     "focal": "49% 55.9%",
+     "zoom": 1.45,
      "gallery": [
       {
        "image": "pastel-palette-glass-bangle-sky-blue.webp",
