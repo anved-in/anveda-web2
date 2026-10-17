@@ -22,6 +22,43 @@ const ALLOW = [
   "/teaser", "/track", "/chat", "/privacy", "/terms", "/review", "/colour-order",
   "/api/track", "/api/review",
 ];
+// ---------------------------------------------------------------- test copies
+// Cloudflare Pages publishes every branch other than the live one on its own
+// address (<branch>.anveda-web-pages.pages.dev, or <commit>.anveda-web-pages.pages.dev).
+// Those "test copies" are for the owner and testers to try changes before they go live:
+//   - the maintenance page is never shown there (testers see the real shop);
+//   - search engines are told to ignore them (X-Robots-Tag);
+//   - nothing can be written: no checkout, no order, no sign-up, no review, no
+//     stock alert. Reads (coupon check, order tracking, review lookup) still work;
+//   - every page carries a small "TEST COPY" tag so nobody mistakes it for the shop.
+// The live addresses are listed below; anything else under pages.dev is a test copy.
+const LIVE_HOSTS = new Set(["anveda.in", "www.anveda.in", "anveda-web-pages.pages.dev"]);
+const isTestCopy = (host) => host.endsWith(".anveda-web-pages.pages.dev") && !LIVE_HOSTS.has(host);
+const TEST_READ_OK = ["/api/coupon", "/api/track", "/api/review-lookup"];
+const TEST_TAG =
+  '<div aria-hidden="true" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2147483647;' +
+  'background:#b3122b;color:#fff;font:700 9px/1 system-ui,sans-serif;letter-spacing:.12em;padding:3px 10px;' +
+  'border-radius:0 0 6px 6px;pointer-events:none;opacity:.92">TEST COPY &middot; ORDERS OFF</div>';
+
+async function testCopy(next, request, url) {
+  const path = url.pathname;
+  const write = request.method !== "GET" && request.method !== "HEAD";
+  if (write && path.startsWith("/api/") && !TEST_READ_OK.some((p) => path.startsWith(p))) {
+    return new Response(
+      JSON.stringify({ ok: false, error: "This is a test copy of the shop. Orders and sign-ups are switched off here." }),
+      { status: 403, headers: { "content-type": "application/json", "x-robots-tag": "noindex, nofollow, noarchive" } },
+    );
+  }
+  const res = await next();
+  const headers = new Headers(res.headers);
+  headers.set("x-robots-tag", "noindex, nofollow, noarchive");
+  const out = new Response(res.body, { status: res.status, statusText: res.statusText, headers });
+  if ((headers.get("content-type") || "").includes("text/html")) {
+    return new HTMLRewriter().on("body", { element(el) { el.append(TEST_TAG, { html: true }); } }).transform(out);
+  }
+  return out;
+}
+
 const COOKIE = "av_preview";
 const COOKIE_SECONDS = 2 * 60 * 60;
 
@@ -91,6 +128,7 @@ export async function onRequest(context) {
   const url = new URL(request.url);
   const path = url.pathname;
 
+  if (isTestCopy(url.hostname)) return testCopy(next, request, url);
   if (!env.CMS) return next(); // not wired up (e.g. local preview): never block
   if (ALLOW.some((p) => path.startsWith(p))) return next();
   const preview = url.searchParams.get("preview");
