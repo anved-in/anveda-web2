@@ -1,15 +1,6 @@
 {
  "reviews": [
   {
-   "id": 6,
-   "name": "Ramani",
-   "rating": 5,
-   "body": "Awesome blossom",
-   "productId": "jelly-bangles-glass-bangles",
-   "createdAt": "2026-10-11 13:48:23",
-   "verified": true
-  },
-  {
    "id": 3,
    "name": "Soorya",
    "rating": 5,
