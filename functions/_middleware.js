@@ -20,7 +20,7 @@ const ALLOW = [
   "/_next/", "/fonts/", "/img/", "/video/",
   "/icon", "/apple-touch-icon", "/favicon", "/manifest", "/robots.txt",
   "/teaser", "/track", "/chat", "/privacy", "/terms", "/review", "/colour-order",
-  "/api/track", "/api/review",
+  "/api/track", "/api/review", "/go/",
 ];
 // ---------------------------------------------------------------- test copies
 // Cloudflare Pages publishes every branch other than the live one on its own
