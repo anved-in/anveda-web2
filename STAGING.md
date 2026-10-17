@@ -21,6 +21,11 @@ private **test copy** from Cloudflare Pages, on a link like
   (HTTP 403 "test copy"). Coupon check, order tracking and review lookup still work.
 - Shows a small red "TEST COPY . ORDERS OFF" tag at the top of every page.
 
+## One-time Cloudflare setting (already done)
+Pages project anveda-web-pages > Preview environment has the service binding `CMS` -> Worker
+`anveda2`, so coupon check / order tracking / review lookup work on test copies. Preview has
+no payment keys, so even without the middleware block a test copy could not take a payment.
+
 ## Not covered
 - CMS edits (photos, prices, stock) still go live by themselves through the sync.
 - The CMS itself (the admin.anveda.in screens) is deployed with `wrangler deploy`; test it

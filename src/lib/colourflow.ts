@@ -120,6 +120,25 @@ const hueOf = (c: Lab) => ((Math.atan2(c[2], c[1]) * 180) / Math.PI + 360) % 360
 const chromaOf = (c: Lab) => Math.hypot(c[1], c[2]);
 
 let cached: Promise<Listing[]> | null = null;
+let labsCached: Promise<Record<string, Lab>> | null = null;
+
+/** "<productId>|<colour>" -> the colour found in that colourway's photo (OKLab), for every colourway with a photo. */
+export function variantColours(): Promise<Record<string, Lab>> {
+  if (!labsCached) {
+    labsCached = (async () => {
+      const root = path.join(process.cwd(), "public", "img", "products");
+      const all = allListings().filter((l) => l.variant.image);
+      const labs = await Promise.all(all.map((l) => photoColour(path.join(root, l.variant.image))));
+      const out: Record<string, Lab> = {};
+      all.forEach((l, i) => {
+        const c = labs[i];
+        if (c) out[`${l.product.id}|${l.variant.colour}`] = [Math.round(c[0] * 1000) / 1000, Math.round(c[1] * 1000) / 1000, Math.round(c[2] * 1000) / 1000];
+      });
+      return out;
+    })();
+  }
+  return labsCached;
+}
 
 /** The fully automatic order (what the CMS shows before the owner changes anything). */
 export function colourFlowAuto(): Promise<Listing[]> {
@@ -156,7 +175,8 @@ async function build(): Promise<Listing[]> {
   const items = allListings().filter((l) => l.variant.inStock && l.variant.image);
   const isMulti = (l: Listing) => /multi|assorted|mix|rainbow/i.test(l.variant.colour);
   const root = path.join(process.cwd(), "public", "img", "products");
-  const colours = await Promise.all(items.map((l) => photoColour(path.join(root, l.variant.image))));
+  const labs = await variantColours();
+  const colours = items.map((l) => labs[`${l.product.id}|${l.variant.colour}`] ?? null);
 
   const placed: { l: Listing; c: Lab }[] = [];
   const multi: Listing[] = [];

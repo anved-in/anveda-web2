@@ -213,6 +213,34 @@ export const related = (p: Product, n = 4): Listing[] =>
       href: `/product/${x.id}/`,
     }));
 
+/**
+ * The colour family a colourway's NAME points to ("Rose Pink" -> pink, "Pista" -> green),
+ * or null when the name says nothing about colour ("Mantap Lakshmi"). Used to line up
+ * "the same colour" across different designs before falling back to photo colour.
+ */
+const FAMILY_WORDS: Record<string, string[]> = {
+  red: ["red", "ruby", "maroon", "wine", "burgundy", "crimson"],
+  pink: ["pink", "rose", "magenta", "fuchsia"],
+  orange: ["orange", "tangerine", "peach", "coral", "sunset", "rust"],
+  yellow: ["yellow", "mustard", "lemon"],
+  gold: ["gold", "golden", "champagne", "antique", "copper"],
+  green: ["green", "pista", "olive", "parrot", "emerald", "lime", "mint", "radium"],
+  teal: ["aqua", "teal", "turquoise", "sea"],
+  blue: ["blue", "navy", "royal", "sky", "indigo"],
+  purple: ["purple", "lavender", "violet", "lilac", "mauve", "plum"],
+  brown: ["brown", "coffee", "mocha", "chocolate", "bronze"],
+  black: ["black"],
+  white: ["white", "ivory", "snow", "cream", "pearl", "clear", "silver"],
+  multi: ["multi", "multicolor", "multicolour", "rainbow", "assorted", "mix"],
+};
+export function colourFamily(name: string): string | null {
+  for (const w of name.toLowerCase().split(/[^a-z]+/)) {
+    if (!w) continue;
+    for (const [fam, words] of Object.entries(FAMILY_WORDS)) if (words.includes(w)) return fam;
+  }
+  return null;
+}
+
 /** Bangle sizes, in inches of inner diameter, with a plain-language note. */
 export const SIZE_GUIDE: { size: string; label: string; cm: string }[] = [
   { size: "2.2", label: "Petite", cm: "5.6 cm" },
