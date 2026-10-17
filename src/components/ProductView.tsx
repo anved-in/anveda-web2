@@ -64,24 +64,26 @@ export default function ProductView({ p, rating }: { p: Product; rating?: { avg:
   return <ProductViewInner key={wanted} p={p} wanted={wanted || undefined} rating={rating} />;
 }
 
-function Info({ p, variant }: { p: Product; variant: Variant }) {
+function Info({ p, variant, compact = false }: { p: Product; variant: Variant; compact?: boolean }) {
   return (
     <>
       <p className="text-[13px] leading-relaxed text-ink-faint">{p.story}</p>
-      <dl className="mt-4 border-t border-line">
-        {[
-          ["Colour", colourLabel(p, variant)],
-          ...(packCount(p, variant)
-            ? [["In each set", packCount(p, variant) as string] as [string, string]]
-            : []),
-          ["Sizes", ALL_SIZES.join(" · ")],
-        ].map(([k, v]) => (
-          <div key={k} className="flex justify-between gap-4 border-b border-line py-2.5">
-            <dt className="text-[11.5px] uppercase tracking-[0.12em] text-ink-soft">{k}</dt>
-            <dd className="text-right text-[13px] font-medium">{v}</dd>
-          </div>
-        ))}
-      </dl>
+      {!compact && (
+        <dl className="mt-4 border-t border-line">
+          {[
+            ["Colour", colourLabel(p, variant)],
+            ...(packCount(p, variant)
+              ? [["In each set", packCount(p, variant) as string] as [string, string]]
+              : []),
+            ["Sizes", ALL_SIZES.join(" · ")],
+          ].map(([k, v]) => (
+            <div key={k} className="flex justify-between gap-4 border-b border-line py-2.5">
+              <dt className="text-[11.5px] uppercase tracking-[0.12em] text-ink-soft">{k}</dt>
+              <dd className="text-right text-[13px] font-medium">{v}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
       <p className="mt-4 text-[13px] leading-relaxed text-ink-soft">
         <strong className="font-semibold text-ink">Not sure about your size?</strong>{" "}
         <a
@@ -191,6 +193,7 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
   }, [p.variants.length]);
   const touch = useRef<{ x: number; y: number; lock: "x" | "y" | null } | null>(null);
   const strip = useRef<HTMLDivElement>(null);
+  const stripDesk = useRef<HTMLDivElement>(null);
   const onTouchMove = (e: React.TouchEvent) => {
     const t = touch.current;
     if (!t || slides.length < 2) return;
@@ -220,10 +223,61 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
   };
   // Keep the chosen colour's thumbnail in view when a swipe changes it.
   useEffect(() => {
-    const box = strip.current;
-    const on = box?.querySelector<HTMLElement>('[aria-pressed="true"]');
-    if (box && on) box.scrollTo({ left: on.offsetLeft - 12, behavior: "smooth" });
+    for (const box of [strip.current, stripDesk.current]) {
+      const on = box?.querySelector<HTMLElement>('[aria-pressed="true"]');
+      if (box && on) box.scrollTo({ left: on.offsetLeft - 12, behavior: "smooth" });
+    }
   }, [variant]);
+
+  const colourStrip = (ref: React.RefObject<HTMLDivElement | null>) => (
+          <div ref={ref} className="no-bar relative mt-3 flex gap-2.5 overflow-x-auto md:mt-2.5">
+      {ordered.map((v) => {
+        const on = v.colour === variant.colour;
+        return (
+          <button
+            key={v.colour}
+            type="button"
+            onClick={() => pick(v)}
+            aria-pressed={on}
+            aria-label={colourLabel(p, v)}
+            title={colourLabel(p, v)}
+            className="flex w-[72px] shrink-0 cursor-pointer flex-col items-stretch gap-1 text-left"
+          >
+            <span
+              className={[
+                "relative block h-[72px] w-[72px] overflow-hidden border-2 transition-colors",
+                on ? "border-ink" : "border-transparent",
+              ].join(" ")}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={asset(imgSrc(v.image))}
+                alt=""
+                className={`h-full w-full object-cover ${v.inStock ? "" : "grayscale"}`}
+                loading="lazy"
+                style={framingStyle(v)}
+              />
+              {!v.inStock && (
+                <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink py-1 text-center font-bold uppercase text-white text-[7px] tracking-[0.08em]">
+                  Sold out
+                </span>
+              )}
+            </span>
+            {/* The shade's name, tiny, under its photo (8px, as asked): at most two
+                short lines, so a long name never makes the strip uneven. */}
+            <span
+              className={[
+                "line-clamp-2 break-words text-center text-[8px] leading-[1.2]",
+                on ? "font-semibold text-ink" : "text-ink-soft",
+              ].join(" ")}
+            >
+              {colourLabel(p, v)}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
 
   return (
     <div className="flex flex-wrap gap-y-4 md:gap-y-8">
@@ -244,7 +298,7 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
               style={{ transform: `translate3d(calc(${-slide * 100}% + ${drag}px), 0, 0)` }}
             >
               {slides.map((sl, i) => (
-                <div key={sl.image} className="h-full w-full shrink-0">
+                <div key={sl.image} className="relative h-full w-full shrink-0 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={asset(imgSrc(sl.image))}
@@ -331,55 +385,8 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
             needed to see the result. The buy box's own swatch picker is
             gone (see the note in <ProductBuy>) so this is the only one;
             having both asked the same question twice, one scroll apart. */}
-        {p.variants.length > 1 && (
-          <div ref={strip} className="no-bar relative mt-3 flex gap-2.5 overflow-x-auto">
-            {ordered.map((v) => {
-              const on = v.colour === variant.colour;
-              return (
-                <button
-                  key={v.colour}
-                  type="button"
-                  onClick={() => pick(v)}
-                  aria-pressed={on}
-                  aria-label={colourLabel(p, v)}
-                  title={colourLabel(p, v)}
-                  className="flex w-[72px] shrink-0 cursor-pointer flex-col items-stretch gap-1 text-left"
-                >
-                  <span
-                    className={[
-                      "relative block h-[72px] w-[72px] overflow-hidden border-2 transition-colors",
-                      on ? "border-ink" : "border-transparent",
-                    ].join(" ")}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={asset(imgSrc(v.image))}
-                      alt=""
-                      className={`h-full w-full object-cover ${v.inStock ? "" : "grayscale"}`}
-                      loading="lazy"
-                      style={framingStyle(v)}
-                    />
-                    {!v.inStock && (
-                      <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink py-1 text-center font-bold uppercase text-white text-[7px] tracking-[0.08em]">
-                        Sold out
-                      </span>
-                    )}
-                  </span>
-                  {/* The shade's name, tiny, under its photo (8px, as asked): at most two
-                      short lines, so a long name never makes the strip uneven. */}
-                  <span
-                    className={[
-                      "line-clamp-2 break-words text-center text-[8px] leading-[1.2]",
-                      on ? "font-semibold text-ink" : "text-ink-soft",
-                    ].join(" ")}
-                  >
-                    {colourLabel(p, v)}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        )}
+        {/* Phones: the colour thumbnails sit right under the photo. */}
+        {p.variants.length > 1 && <div className="md:hidden">{colourStrip(strip)}</div>}
       </div>
 
       <div className="w-full md:w-[45%] lg:w-[42%]">
@@ -422,12 +429,14 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
             )}
           </div>
           {variant.inStock && (
-            <QtyStepper
-              size="sm"
-              qty={qty}
-              onDecrease={() => setQty((q) => Math.max(1, q - 1))}
-              onIncrease={() => setQty((q) => Math.min(99, q + 1))}
-            />
+            <div className="md:hidden">
+              <QtyStepper
+                size="sm"
+                qty={qty}
+                onDecrease={() => setQty((q) => Math.max(1, q - 1))}
+                onIncrease={() => setQty((q) => Math.min(99, q + 1))}
+              />
+            </div>
           )}
         </div>
         {variant.inStock && (variant.stockQty ?? 0) > 0 && (variant.stockQty ?? 0) <= 3 && (
@@ -436,10 +445,20 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
           </p>
         )}
 
-        <ProductBuy p={p} variant={variant} qty={qty} />
+        <ProductBuy p={p} variant={variant} qty={qty} setQty={setQty} />
 
-        <div className="mt-8 hidden md:block">
-          <Info p={p} variant={variant} />
+        {/* Desktop: the other colours live here, under the add-to-bag button. */}
+        {p.variants.length > 1 && (
+          <div className="mt-6 hidden md:block">
+            <span className="text-[11px] font-bold uppercase tracking-[0.18em]">
+              Colour <span className="text-ink-soft">· {colourLabel(p, variant)}</span>
+            </span>
+            {colourStrip(stripDesk)}
+          </div>
+        )}
+
+        <div className="mt-6 hidden md:block">
+          <Info p={p} variant={variant} compact />
         </div>
       </div>
     </div>

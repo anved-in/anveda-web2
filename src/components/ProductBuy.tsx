@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Link from "@/components/Link";
+import QtyStepper from "@/components/QtyStepper";
 import { useCart } from "@/lib/cart";
 import { inr, variantPrice, colourLabel, ALL_SIZES, SIZE_GUIDE, type Product, type Variant } from "@/lib/catalog";
 
@@ -14,10 +15,13 @@ export default function ProductBuy({
   p,
   variant,
   qty,
+  setQty,
 }: {
   p: Product;
   /** Chosen up beside the price in <ProductView>; read here for the total. */
   qty: number;
+  /** Desktop shows the −1+ stepper beside the button; phones keep it by the price. */
+  setQty: React.Dispatch<React.SetStateAction<number>>;
   /** Controlled by ProductView so the photo, the thumbnails and the line
       that reaches the cart can never disagree about which shade is selected. */
   variant: Variant;
@@ -86,7 +90,7 @@ export default function ProductBuy({
         {/* flex-1 + min-w-0 on every button, no wrap: all five sizes share
             the row equally instead of a fixed min-width forcing a 3+2 wrap
             on a phone. */}
-        <div className="mt-2 flex gap-1.5">
+        <div className="mt-2 flex gap-1.5 md:flex-wrap">
           {ALL_SIZES.map((s) => {
             const g = SIZE_GUIDE.find((x) => x.size === s);
             const on = size === s;
@@ -100,7 +104,7 @@ export default function ProductBuy({
                 }}
                 aria-pressed={on}
                 className={[
-                  "min-w-0 flex-1 cursor-pointer border px-1 py-1.5 text-center transition-colors",
+                  "min-w-0 flex-1 cursor-pointer border px-1 py-1.5 text-center transition-colors md:w-[60px] md:flex-none md:py-1.5",
                   on
                     ? "border-ink bg-ink text-cream"
                     : "border-line-strong bg-white hover:border-ink",
@@ -133,7 +137,15 @@ export default function ProductBuy({
         <>
           {/* Phone: pinned just above the tab bar so it is always in reach while
               the shopper reads. Desktop: an ordinary full-width button. */}
-          <div className="fixed inset-x-0 bottom-[calc(60px+env(safe-area-inset-bottom))] z-30 flex items-center gap-3 border-t border-line bg-white px-4 py-2 md:static md:z-auto md:mt-6 md:block md:border-0 md:bg-transparent md:p-0">
+          <div className="fixed inset-x-0 bottom-[calc(60px+env(safe-area-inset-bottom))] z-30 flex items-center gap-3 border-t border-line bg-white px-4 py-2 md:static md:z-auto md:mt-5 md:flex md:items-center md:gap-3 md:border-0 md:bg-transparent md:p-0">
+            <div className="hidden shrink-0 md:block">
+              <QtyStepper
+                size="sm"
+                qty={qty}
+                onDecrease={() => setQty((q) => Math.max(1, q - 1))}
+                onIncrease={() => setQty((q) => Math.min(99, q + 1))}
+              />
+            </div>
             <div className="shrink-0 leading-tight md:hidden">
               <span className="block text-[10px] uppercase tracking-[0.1em] text-ink-soft">Total</span>
               <span className="block text-[16px] font-bold">{inr(variantPrice(p, variant) * qty)}</span>
@@ -141,7 +153,7 @@ export default function ProductBuy({
             <button
               type="button"
               onClick={onAdd}
-              className="ml-auto h-11 w-[58%] cursor-pointer bg-ink text-[12px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-espresso-2 md:h-auto md:w-full md:py-[18px] md:tracking-[0.2em]"
+              className="ml-auto h-11 w-[58%] cursor-pointer bg-ink text-[12px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-espresso-2 md:ml-0 md:w-[250px] md:tracking-[0.16em]"
             >
               {added ? "Added to bag ✓" : (
                 <>
