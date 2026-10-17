@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { products, productById, related, rangeHref, groupBySlug, imgSrc } from "@/lib/catalog";
+import { products, productById, rangeHref, groupBySlug, imgSrc, soldOutLast } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
 import { reviews } from "@/lib/reviews";
 import { breadcrumbJsonLd } from "@/lib/breadcrumbs";
 import ProductView from "@/components/ProductView";
-import ListingCard from "@/components/ListingCard";
+import RelatedByColour from "@/components/RelatedByColour";
+import { ColourProvider } from "@/components/ColourContext";
+import { variantColours } from "@/lib/colourflow";
 import Stars from "@/components/Stars";
 
 const SITE_URL = "https://www.anveda.in";
@@ -89,7 +91,8 @@ export default async function ProductPage({
   const p = productById(id);
   if (!p) notFound();
 
-  const more = related(p, 4);
+  const labs = await variantColours();
+  const startColour = soldOutLast(p.variants, (v) => v.inStock)[0].colour;
   const productReviews = reviews.filter((r) => r.productId === p.id);
   const rating = productReviews.length
     ? {
@@ -106,7 +109,7 @@ export default async function ProductPage({
   ]);
 
   return (
-    <>
+    <ColourProvider initial={startColour}>
       {/* eslint-disable-next-line react/no-danger */}
       <script
         type="application/ld+json"
@@ -154,14 +157,10 @@ export default async function ProductPage({
           <h2 className="reveal mb-9 border-b border-line pb-5 font-display text-[clamp(24px,3vw,36px)]">
             You may also like
           </h2>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-4 md:gap-x-6">
-            {more.map((l, i) => (
-              <ListingCard key={l.product.id} l={l} delay={(i % 4) * 70} />
-            ))}
-          </div>
+          <RelatedByColour currentId={p.id} labs={labs} />
         </div>
       </section>
       <div className="h-14 md:hidden" aria-hidden="true" />
-    </>
+    </ColourProvider>
   );
 }

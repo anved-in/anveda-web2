@@ -16,12 +16,15 @@ export default function ProductBuy({
   variant,
   qty,
   setQty,
+  actions,
 }: {
   p: Product;
   /** Chosen up beside the price in <ProductView>; read here for the total. */
   qty: number;
   /** Desktop shows the −1+ stepper beside the button; phones keep it by the price. */
   setQty: React.Dispatch<React.SetStateAction<number>>;
+  /** Heart + link, shown beside the add-to-bag button on desktop. */
+  actions?: React.ReactNode;
   /** Controlled by ProductView so the photo, the thumbnails and the line
       that reaches the cart can never disagree about which shade is selected. */
   variant: Variant;
@@ -161,6 +164,7 @@ export default function ProductBuy({
                 </>
               )}
             </button>
+            {actions && <div className="hidden shrink-0 md:block">{actions}</div>}
           </div>
           {/* The bag stays closed on purpose: someone building an order adds
               several designs in a row, and a drawer covering the page after each
@@ -178,9 +182,6 @@ export default function ProductBuy({
             )}
           </p>
 
-          <p className="mt-2 text-center text-[12px] text-ink-soft">
-            Secure checkout with UPI, card or netbanking.
-          </p>
         </>
       ) : (
         <div className="mt-8 border border-line-strong bg-cream-2 px-5 py-6 text-center">

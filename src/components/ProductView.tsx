@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import QtyStepper from "@/components/QtyStepper";
+import { useSelectedColour } from "@/components/ColourContext";
 import ProductBuy from "@/components/ProductBuy";
 import Price from "@/components/Price";
 import FavButton from "@/components/FavButton";
@@ -170,7 +171,14 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
   const [drag, setDrag] = useState(0);
   const [dragging, setDragging] = useState(false);
   const slides = variantSlides(variant);
+  const { setColour } = useSelectedColour();
+  // Tell "You may also like" which colour is on screen (also once at the start, from ?c=).
+  useEffect(() => {
+    queueMicrotask(() => setColour(variant.colour));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const pick = (v: Variant, at = 0) => {
+    setColour(v.colour);
     setVariant(v);
     setSlide(at);
     setDrag(0);
@@ -228,6 +236,18 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
       if (box && on) box.scrollTo({ left: on.offsetLeft - 12, behavior: "smooth" });
     }
   }, [variant]);
+
+  const actionIcons = (
+    <div className="flex items-center">
+      <ShareButton name={p.name} colour={variant.colour} />
+      <FavButton
+        id={p.id}
+        colour={variant.colour}
+        name={`${p.name} — ${colourLabel(p, variant)}`}
+        variant="inline"
+      />
+    </div>
+  );
 
   const colourStrip = (ref: React.RefObject<HTMLDivElement | null>) => (
           <div ref={ref} className="no-bar relative mt-3 flex gap-2.5 overflow-x-auto md:mt-2.5">
@@ -407,39 +427,28 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
           )}
         </div>
 
-        {/* Price with its "20% off" tag underneath on the left; link + heart on the right,
-            where a thumb (or the mouse) already is. On phones the quantity sits under them. */}
-        <div className="mt-2 flex items-start justify-between gap-3 md:mt-3">
-          <div className="min-w-0">
+        {/* Price with its "20% off" tag beside it. The quantity, heart and link form one
+            cluster of controls: on phones right under the price, on desktop in the
+            add-to-bag row. */}
+        <div className="mt-2 md:mt-3">
+          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
             <Price price={variantPrice(p, variant)} size="lg" />
-            <div className="mt-1.5">
-              <span className="badge-sale">20% off</span>
-            </div>
-            {packLabel(p, variant) && (
-              <p className="mt-1.5 text-[11px] text-ink-soft">per {packLabel(p, variant)}</p>
-            )}
+            <span className="badge-sale">20% off</span>
           </div>
-          <div className="flex shrink-0 flex-col items-end gap-2">
-            <div className="-mr-2 flex items-center">
-              <ShareButton name={p.name} colour={variant.colour} />
-              <FavButton
-                id={p.id}
-                colour={variant.colour}
-                name={`${p.name} — ${colourLabel(p, variant)}`}
-                variant="inline"
-              />
-            </div>
-            {variant.inStock && (
-              <div className="md:hidden">
-                <QtyStepper
-                  size="sm"
-                  qty={qty}
-                  onDecrease={() => setQty((q) => Math.max(1, q - 1))}
-                  onIncrease={() => setQty((q) => Math.min(99, q + 1))}
-                />
-              </div>
-            )}
-          </div>
+          {packLabel(p, variant) && (
+            <p className="mt-1 text-[11px] text-ink-soft">per {packLabel(p, variant)}</p>
+          )}
+        </div>
+        <div className="mt-3 flex items-center gap-2 md:hidden">
+          {variant.inStock && (
+            <QtyStepper
+              size="sm"
+              qty={qty}
+              onDecrease={() => setQty((q) => Math.max(1, q - 1))}
+              onIncrease={() => setQty((q) => Math.min(99, q + 1))}
+            />
+          )}
+          {actionIcons}
         </div>
         {variant.inStock && (variant.stockQty ?? 0) > 0 && (variant.stockQty ?? 0) <= 3 && (
           <p className="mt-1.5 text-[12px] font-semibold text-[#c0152f]">
@@ -447,7 +456,7 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
           </p>
         )}
 
-        <ProductBuy p={p} variant={variant} qty={qty} setQty={setQty} />
+        <ProductBuy p={p} variant={variant} qty={qty} setQty={setQty} actions={actionIcons} />
 
         {/* Desktop: the other colours live here, under the add-to-bag button. */}
         {p.variants.length > 1 && (
