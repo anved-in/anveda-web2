@@ -147,9 +147,9 @@ def to_webp(blob):
         import io
         from PIL import Image, ImageOps
         im = ImageOps.exif_transpose(Image.open(io.BytesIO(blob)))
-        im.thumbnail((1000, 1000))
+        im.thumbnail((1600, 1600))
         out = io.BytesIO()
-        im.convert("RGB").save(out, "WEBP", quality=80)
+        im.convert("RGB").save(out, "WEBP", quality=82)
         return out.getvalue()
     except Exception as e:  # no Pillow / unreadable: keep the bytes; the build step re-encodes
         print(f"  (kept original bytes, could not convert: {e})", file=sys.stderr)

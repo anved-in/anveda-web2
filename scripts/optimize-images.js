@@ -17,7 +17,7 @@ const path = require("path");
 const sharp = require("sharp");
 
 const DIR = path.join(__dirname, "..", "public", "img", "products");
-const MAX_DIMENSION = 1000;
+const MAX_DIMENSION = 1600;
 const SMALL_DIMENSION = 480;
 const QUALITY = 80;
 
