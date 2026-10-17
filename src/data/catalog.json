@@ -622,7 +622,7 @@
     {
      "id": 25,
      "colour": "Gold",
-     "image": "u-pastel-palette-glass-bangle-gold-1792243865.webp",
+     "image": "u-pastel-palette-glass-bangle-gold-hd-1792254278.webp",
      "hex": "#cbb994",
      "price": 220,
      "pieces": 12,
@@ -647,7 +647,7 @@
     {
      "id": 26,
      "colour": "Green",
-     "image": "u-pastel-palette-glass-bangle-green-1792243865.webp",
+     "image": "u-pastel-palette-glass-bangle-green-hd-1792254278.webp",
      "hex": "#7cd76a",
      "price": 220,
      "pieces": 12,
@@ -672,7 +672,7 @@
     {
      "id": 27,
      "colour": "Ivory",
-     "image": "u-pastel-palette-glass-bangle-ivory-1792243865.webp",
+     "image": "u-pastel-palette-glass-bangle-ivory-hd-1792254278.webp",
      "hex": "#eeeae2",
      "price": 220,
      "pieces": 12,
@@ -697,7 +697,7 @@
     {
      "id": 28,
      "colour": "Mauve",
-     "image": "u-pastel-palette-glass-bangle-mauve-1792243865.webp",
+     "image": "u-pastel-palette-glass-bangle-mauve-hd-1792254278.webp",
      "hex": "#cc94c1",
      "price": 220,
      "pieces": 12,
@@ -722,7 +722,7 @@
     {
      "id": 29,
      "colour": "Peach",
-     "image": "u-pastel-palette-glass-bangle-peach-1792243865.webp",
+     "image": "u-pastel-palette-glass-bangle-peach-hd-1792254278.webp",
      "hex": "#f4d495",
      "price": 220,
      "pieces": 12,
@@ -747,7 +747,7 @@
     {
      "id": 30,
      "colour": "Pink",
-     "image": "u-pastel-palette-glass-bangle-pink-1792243865.webp",
+     "image": "u-pastel-palette-glass-bangle-pink-hd-1792254278.webp",
      "hex": "#e599db",
      "price": 220,
      "pieces": 12,
@@ -772,7 +772,7 @@
     {
      "id": 31,
      "colour": "Pista",
-     "image": "u-pastel-palette-glass-bangle-pista-1792243865.webp",
+     "image": "u-pastel-palette-glass-bangle-pista-hd-1792254278.webp",
      "hex": "#aef494",
      "price": 220,
      "pieces": 12,
@@ -797,7 +797,7 @@
     {
      "id": 32,
      "colour": "Purple",
-     "image": "u-pastel-palette-glass-bangle-purple-1792243865.webp",
+     "image": "u-pastel-palette-glass-bangle-purple-hd-1792254278.webp",
      "hex": "#c75dee",
      "price": 220,
      "pieces": 12,
@@ -822,7 +822,7 @@
     {
      "id": 33,
      "colour": "Sky Blue",
-     "image": "u-pastel-palette-glass-bangle-sky-blue-1792243865.webp",
+     "image": "u-pastel-palette-glass-bangle-sky-blue-hd-1792254278.webp",
      "hex": "#17deda",
      "price": 220,
      "pieces": 12,
@@ -845,7 +845,7 @@
      ]
     }
    ],
-   "image": "u-pastel-palette-glass-bangle-gold-1792243865.webp"
+   "image": "u-pastel-palette-glass-bangle-gold-hd-1792254278.webp"
   },
   {
    "id": "petal-stone-glass-bangle",
@@ -2516,7 +2516,7 @@
     {
      "id": 119,
      "colour": "Aqua",
-     "image": "u-square-edge-glass-bangles-aqua-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-aqua-hd-1792254278.webp",
      "hex": "#0fd2c5",
      "price": 230,
      "pieces": 12,
@@ -2541,7 +2541,7 @@
     {
      "id": 120,
      "colour": "Black",
-     "image": "u-square-edge-glass-bangles-black-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-black-hd-1792254278.webp",
      "hex": "#130101",
      "price": 230,
      "pieces": 12,
@@ -2584,7 +2584,7 @@
     {
      "id": 122,
      "colour": "Dark Green",
-     "image": "u-square-edge-glass-bangles-dark-green-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-dark-green-hd-1792254278.webp",
      "hex": "#4b8406",
      "price": 230,
      "pieces": 12,
@@ -2609,7 +2609,7 @@
     {
      "id": 123,
      "colour": "Dark Pink",
-     "image": "u-square-edge-glass-bangles-dark-pink-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-dark-pink-hd-1792254278.webp",
      "hex": "#f20779",
      "price": 230,
      "pieces": 12,
@@ -2670,7 +2670,7 @@
     {
      "id": 126,
      "colour": "Lavender",
-     "image": "u-square-edge-glass-bangles-lavender-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-lavender-hd-1792254278.webp",
      "hex": "#c594cc",
      "price": 230,
      "pieces": 12,
@@ -2695,7 +2695,7 @@
     {
      "id": 127,
      "colour": "Maroon",
-     "image": "u-square-edge-glass-bangles-maroon-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-maroon-hd-1792254278.webp",
      "hex": "#8b2328",
      "price": 230,
      "pieces": 12,
@@ -2720,7 +2720,7 @@
     {
      "id": 128,
      "colour": "Mauve",
-     "image": "u-square-edge-glass-bangles-mauve-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-mauve-hd-1792254278.webp",
      "hex": "#cc94c1",
      "price": 230,
      "pieces": 12,
@@ -2763,7 +2763,7 @@
     {
      "id": 130,
      "colour": "Olive (premium Raindrop)",
-     "image": "u-square-edge-glass-bangles-olive-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-olive-hd-1792254278.webp",
      "hex": "#9ad5a9",
      "price": 230,
      "pieces": 12,
@@ -2788,7 +2788,7 @@
     {
      "id": 131,
      "colour": "Parrot Green",
-     "image": "u-square-edge-glass-bangles-parrot-green-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-parrot-green-hd-1792254278.webp",
      "hex": "#35d016",
      "price": 230,
      "pieces": 12,
@@ -2813,7 +2813,7 @@
     {
      "id": 132,
      "colour": "Radium",
-     "image": "u-square-edge-glass-bangles-radium-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-radium-hd-1792254278.webp",
      "hex": "#037981",
      "price": 230,
      "pieces": 12,
@@ -2838,7 +2838,7 @@
     {
      "id": 133,
      "colour": "Red",
-     "image": "u-square-edge-glass-bangles-red-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-red-hd-1792254278.webp",
      "hex": "#e81111",
      "price": 230,
      "pieces": 12,
@@ -2881,7 +2881,7 @@
     {
      "id": 135,
      "colour": "Royal Blue",
-     "image": "u-square-edge-glass-bangles-royal-blue-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-royal-blue-hd-1792254278.webp",
      "hex": "#011ad5",
      "price": 230,
      "pieces": 12,
@@ -2906,7 +2906,7 @@
     {
      "id": 136,
      "colour": "Sunset Orange",
-     "image": "u-square-edge-glass-bangles-sunset-orange-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-sunset-orange-hd-1792254278.webp",
      "hex": "#ed9f02",
      "price": 230,
      "pieces": 12,
@@ -2931,7 +2931,7 @@
     {
      "id": 137,
      "colour": "Wine",
-     "image": "u-square-edge-glass-bangles-wine-1792243865.webp",
+     "image": "u-square-edge-glass-bangles-wine-hd-1792254278.webp",
      "hex": "#86158e",
      "price": 230,
      "pieces": 12,
@@ -2954,26 +2954,21 @@
      ]
     }
    ],
-   "image": "u-square-edge-glass-bangles-aqua-1792243865.webp"
+   "image": "u-square-edge-glass-bangles-aqua-hd-1792254278.webp"
   }
  ],
  "colourWall": [
   87,
+  86,
   7,
-  55,
-  44,
   39,
   40,
-  9,
   8,
   122,
   37,
   132,
   120,
   12,
-  73,
-  135,
-  113,
   5,
   33,
   119,
@@ -2981,7 +2976,6 @@
   118,
   27,
   54,
-  126,
   79,
   80,
   88,
@@ -3012,6 +3006,15 @@
   70,
   64,
   76,
+  73,
+  55,
+  44,
+  137,
+  126,
+  32,
+  128,
+  28,
+  11,
   58,
   127,
   21,
@@ -3025,15 +3028,13 @@
   30,
   134,
   133,
-  128,
-  28,
   56,
   115,
-  11,
-  137,
+  9,
+  114,
+  121,
   29,
   46,
-  114,
   16,
   24,
   136,
@@ -3046,29 +3047,28 @@
   2,
   20,
   50,
-  22,
+  53,
+  17,
   130,
   23,
   18,
-  17,
-  53,
   26,
   131,
   48,
   124,
   47,
-  121,
+  22,
   31,
   42,
   129,
   49,
   15,
+  113,
   36,
+  135,
   14,
-  32,
   19,
   45,
-  82,
-  86
+  82
  ]
 }
