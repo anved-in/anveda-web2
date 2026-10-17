@@ -498,11 +498,6 @@ export default function CheckoutForm() {
             <div className="flex justify-between">
               <span className="text-ink-soft">
                 Shipping
-                {quote.known && (
-                  <span className="ml-1 text-[12px] text-ink-faint">
-                    · {quote.label}
-                  </span>
-                )}
               </span>
               {coupon?.freeShipping ? (
                 <span className="font-semibold text-[#2f6e4f]">
@@ -518,19 +513,6 @@ export default function CheckoutForm() {
             <span className="font-semibold">Total</span>
             <span className="font-semibold">{inr(total)}</span>
           </div>
-          <p className="mt-2 text-[12px] text-ink-faint">
-            {quote.known ? (
-              <>
-                {SITE.courier} to {quote.label.toLowerCase()}, about {quote.days}.
-                Postage is estimated from your PIN code and included in the total.
-              </>
-            ) : (
-              <>
-                Enter your PIN code and we will price the {SITE.courier} parcel
-                for your area. Until then this shows our all-India rate.
-              </>
-            )}
-          </p>
 
           <div className="mt-6 border-t border-line pt-5">
             <SectionHeader n={3} title="Payment" />

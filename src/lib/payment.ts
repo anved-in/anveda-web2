@@ -133,7 +133,7 @@ export const orderNotes = (
     ref,
     customer: `${c.name} / ${c.phone}${c.email ? ` / ${c.email}` : ""}`.slice(0, 250),
     ship_to: `${c.address}, ${c.city}, ${c.state} ${c.pin}`.slice(0, 250),
-    postage: `${inr(o.shipping)} (${SITE.courier}, estimated)`,
+    postage: inr(o.shipping),
   };
   if (o.couponCode) notes.coupon = o.couponCode;
   if (c.notes) notes.buyer_notes = c.notes.slice(0, 250);

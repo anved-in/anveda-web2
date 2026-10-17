@@ -7,9 +7,8 @@ import ProductBuy from "@/components/ProductBuy";
 import Price from "@/components/Price";
 import FavButton from "@/components/FavButton";
 import Stars from "@/components/Stars";
-import { soldOutLast, variantSlides, imgSrc, inr, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
+import { soldOutLast, variantSlides, imgSrc, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
-import { SHIPPING_FROM } from "@/lib/shipping";
 
 /**
  * Product page body. A client component because the main photograph has to
@@ -76,7 +75,6 @@ function Info({ p, variant }: { p: Product; variant: Variant }) {
             ? [["In each set", packCount(p, variant) as string] as [string, string]]
             : []),
           ["Sizes", ALL_SIZES.join(" · ")],
-          ["Delivery", `All India by ${SITE.courier} · from ${inr(SHIPPING_FROM)}`],
         ].map(([k, v]) => (
           <div key={k} className="flex justify-between gap-4 border-b border-line py-2.5">
             <dt className="text-[11.5px] uppercase tracking-[0.12em] text-ink-soft">{k}</dt>
@@ -261,6 +259,27 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
               ))}
             </div>
           </div>
+          {/* Desktop: small arrows to step through this colour's photos (phones swipe). */}
+          {slides.length > 1 && slide > 0 && (
+            <button
+              type="button"
+              onClick={() => setSlide(slide - 1)}
+              aria-label="Previous photo"
+              className="absolute left-2.5 top-1/2 z-10 hidden h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/85 text-ink shadow-[0_1px_6px_rgba(0,0,0,0.25)] transition-colors hover:bg-white md:flex"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+            </button>
+          )}
+          {slides.length > 1 && slide < slides.length - 1 && (
+            <button
+              type="button"
+              onClick={() => setSlide(slide + 1)}
+              aria-label="Next photo"
+              className="absolute right-2.5 top-1/2 z-10 hidden h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/85 text-ink shadow-[0_1px_6px_rgba(0,0,0,0.25)] transition-colors hover:bg-white md:flex"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+            </button>
+          )}
           {!variant.inStock && (
             <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink py-2 text-center font-bold uppercase text-white text-[11px] tracking-[0.18em]">
               Sold out

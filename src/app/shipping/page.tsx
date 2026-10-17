@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import { inr } from "@/lib/catalog";
-import { SITE, waLink } from "@/lib/site";
-import { SHIPPING_FROM } from "@/lib/shipping";
+import { waLink } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Shipping & Returns",
   description:
-    "How ANVEDA ships across India, what it costs, how long it takes, and what happens if something arrives broken.",
+    "How ANVEDA ships, how long it takes, and what happens if something arrives broken.",
 };
 
 const FAQ: { q: string; a: string }[] = [
@@ -16,7 +14,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "What does shipping cost?",
-    a: `It depends on where it is going. We send everything by ${SITE.courier}, whose rate is set by the destination PIN code and the parcel weight — for a bangle parcel that starts at ${inr(SHIPPING_FROM)} within Karnataka and rises with distance. Checkout works out the postage from your PIN code and includes it in the total you pay, so you see the full amount before you pay.`,
+    a: "The shipping charge is shown at checkout and included in the total you pay, so you always see the full amount before you pay.",
   },
   {
     q: "Do you ship outside India?",
@@ -78,7 +76,7 @@ export default function ShippingPage() {
             {[
               ["Dispatch", "1–2 working days"],
               ["Delivery", "3–8 working days"],
-              ["Shipping", `By ${SITE.courier} · from ${inr(SHIPPING_FROM)}, priced by PIN code`],
+              ["Shipping", "Shown at checkout"],
               ["Breakage", "Replaced or refunded"],
             ].map(([t, d], i) => (
               <div
