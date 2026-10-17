@@ -182,6 +182,11 @@ export default function ProductBuy({
             )}
           </p>
 
+          {/* Phone only: the reassurance line stays on the phone page. */}
+          <p className="mt-2 text-center text-[12px] text-ink-soft md:hidden">
+            Secure checkout with UPI, card or netbanking.
+          </p>
+
         </>
       ) : (
         <div className="mt-8 border border-line-strong bg-cream-2 px-5 py-6 text-center">

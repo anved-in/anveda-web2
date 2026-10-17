@@ -415,40 +415,48 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
             "Intricate Glass Bangle"), reading as the same line twice before
             anything else loaded. The collection stays reachable from the
             shop page's own nav. */}
-        <div className="min-w-0">
-          <h1 className="font-display text-[clamp(20px,2.4vw,30px)] leading-tight">{p.name}</h1>
-          {rating && (
-            <a href="#reviews" className="mt-0.5 inline-flex items-center gap-1.5 text-[12px] text-ink-soft">
-              <Stars n={rating.avg} size={12} />
-              <span>
-                {rating.avg.toFixed(1)} · {rating.count} review{rating.count > 1 ? "s" : ""}
-              </span>
-            </a>
-          )}
+        {/* PHONE keeps the arrangement agreed earlier: link + heart at the right of the
+            name, quantity at the right of the price. DESKTOP puts link + heart after
+            the "20% off" tag instead (and the quantity beside Add to bag). */}
+        <div className="flex items-center justify-between gap-3 md:block">
+          <div className="min-w-0">
+            <h1 className="font-display text-[clamp(20px,2.4vw,30px)] leading-tight">{p.name}</h1>
+            {rating && (
+              <a href="#reviews" className="mt-0.5 inline-flex items-center gap-1.5 text-[12px] text-ink-soft">
+                <Stars n={rating.avg} size={12} />
+                <span>
+                  {rating.avg.toFixed(1)} · {rating.count} review{rating.count > 1 ? "s" : ""}
+                </span>
+              </a>
+            )}
+          </div>
+          <div className="-mr-2 shrink-0 md:hidden">{actionIcons}</div>
         </div>
 
         {/* Price, its "20% off" tag, then the link and heart: one line, the controls right
             where the eye already is. On phones the quantity sits on its own row below. */}
-        <div className="mt-2 md:mt-3">
-          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-            <Price price={variantPrice(p, variant)} size="lg" />
-            <span className="badge-sale">20% off</span>
-            <div className="-ml-1.5">{actionIcons}</div>
+        <div className="mt-2 flex items-center justify-between gap-3 md:mt-3 md:block">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+              <Price price={variantPrice(p, variant)} size="lg" />
+              <span className="badge-sale">20% off</span>
+              <div className="-ml-1.5 hidden md:block">{actionIcons}</div>
+            </div>
+            {packLabel(p, variant) && (
+              <p className="mt-1 text-[11px] text-ink-soft">per {packLabel(p, variant)}</p>
+            )}
           </div>
-          {packLabel(p, variant) && (
-            <p className="mt-1 text-[11px] text-ink-soft">per {packLabel(p, variant)}</p>
+          {variant.inStock && (
+            <div className="md:hidden">
+              <QtyStepper
+                size="sm"
+                qty={qty}
+                onDecrease={() => setQty((q) => Math.max(1, q - 1))}
+                onIncrease={() => setQty((q) => Math.min(99, q + 1))}
+              />
+            </div>
           )}
         </div>
-        {variant.inStock && (
-          <div className="mt-3 w-fit md:hidden">
-            <QtyStepper
-              size="sm"
-              qty={qty}
-              onDecrease={() => setQty((q) => Math.max(1, q - 1))}
-              onIncrease={() => setQty((q) => Math.min(99, q + 1))}
-            />
-          </div>
-        )}
         {variant.inStock && (variant.stockQty ?? 0) > 0 && (variant.stockQty ?? 0) <= 3 && (
           <p className="mt-1.5 text-[12px] font-semibold text-[#c0152f]">
             Only {variant.stockQty} left
