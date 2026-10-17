@@ -13,7 +13,7 @@ const SECTIONS: { h: string; body: React.ReactNode }[] = [
     body: (
       <>
         ANVEDA sells glass, antique and kundan bangles direct to customers
-        across India, through this website. You can reach us at{" "}
+        through this website. You can reach us at{" "}
         <a href={`mailto:${SITE.email}`} className="underline underline-offset-2">
           {SITE.email}
         </a>{" "}

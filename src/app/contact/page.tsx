@@ -54,7 +54,7 @@ export default function ContactPage() {
             <p className="mt-2 text-[13.5px] leading-relaxed text-ink-soft">
               Karnataka, India.
               <br />
-              Online only — we ship everywhere in India.
+              Online only.
             </p>
           </div>
           <div className="w-full sm:w-1/2">

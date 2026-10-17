@@ -12,7 +12,7 @@ export const SITE = {
   domain: "anveda.in",
   tagline: "Handpicked Glass Bangles",
   description:
-    "Handpicked glass, antique and kundan bangles. Chosen in small batches, packed with care, delivered across India.",
+    "Handpicked glass, antique and kundan bangles. Chosen in small batches, packed with care.",
   /**
    * The owner's WhatsApp number, digits only, with country code.
    *

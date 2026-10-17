@@ -6,7 +6,7 @@
 const LINES = [
   "Handpicked in small batches",
   "Flat 20% off — this week only",
-  "Delivered across India",
+  "Packed with care, set by set",
 ];
 
 function Track({ hidden = false }: { hidden?: boolean }) {

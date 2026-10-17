@@ -143,7 +143,7 @@ export default function Home() {
               <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
                 Glass, kundan and antique pieces for the weddings, the festivals
                 and the ordinary Tuesdays that deserve them too. Packed with
-                care and delivered right across India.
+                care, set by set.
               </p>
               <Link
                 href="/about"
