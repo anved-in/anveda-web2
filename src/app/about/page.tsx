@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "@/components/Link";
 import { products, imgSrc, collections } from "@/lib/catalog";
-import { asset } from "@/lib/site";
+import { asset, HAS_WHATSAPP } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Our Story",
@@ -88,7 +88,7 @@ export default function AboutPage() {
               ["Picked in person", "Every batch is chosen by hand — never ordered from a photograph."],
               ["Checked piece by piece", "Chips, uneven finishes and off shades are pulled before packing."],
               ["Packed to survive post", "Bubble wrap, rigid boxes and enough padding for Indian courier routes."],
-              ["A real person replies", "WhatsApp reaches us directly, not a call centre."],
+              ["A real person replies", `${HAS_WHATSAPP ? "WhatsApp" : "Instagram"} reaches us directly, not a call centre.`],
             ].map(([t, d], i) => (
               <div key={t} className="w-full pr-8 sm:w-1/2 lg:w-1/4">
                 <div className="font-display text-[30px] text-gold">

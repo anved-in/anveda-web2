@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "@/components/Link";
 import { SIZE_GUIDE } from "@/lib/catalog";
-import { waLink } from "@/lib/site";
+import { waLink, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Sizing Guide",
@@ -161,12 +161,12 @@ export default function SizingPage() {
                   you your size. It takes about a minute.
                 </p>
                 <a
-                  href={waLink("Hi ANVEDA! Could you help me work out my bangle size?")}
+                  href={HAS_WHATSAPP ? waLink("Hi ANVEDA! Could you help me work out my bangle size?") : igDmLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-4 inline-block bg-espresso px-7 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.18em] text-cream transition-colors hover:bg-espresso-2"
                 >
-                  Ask on WhatsApp
+                  {HAS_WHATSAPP ? "Ask on WhatsApp" : "Ask on Instagram"}
                 </a>
               </div>
             </div>

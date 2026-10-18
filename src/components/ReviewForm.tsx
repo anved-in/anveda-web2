@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { HAS_WHATSAPP } from "@/lib/site";
 
 interface Item {
   id: number;
@@ -87,7 +88,7 @@ export default function ReviewForm() {
     return (
       <p className="mt-6 text-[14.5px] leading-relaxed text-ink-soft">
         This review link is not valid, or it has expired. If you would like to share feedback, message us
-        on WhatsApp and we will help.
+        {HAS_WHATSAPP ? "on WhatsApp" : "on Instagram (@anveda.in)"} and we will help.
       </p>
     );
 

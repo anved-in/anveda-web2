@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ChatRedirect from "@/components/ChatRedirect";
 
 export const metadata: Metadata = {
-  title: "Message us on WhatsApp",
+  title: "Message us",
   robots: { index: false, follow: false },
 };
 

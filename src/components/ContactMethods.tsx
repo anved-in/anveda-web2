@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "@/components/Link";
-import { SITE, waLink } from "@/lib/site";
+import { SITE, waLink, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 
 /**
  * Interactive contact-method list: needs client state for the copy-to-
@@ -42,7 +42,8 @@ export default function ContactMethods() {
         </span>
       </Link>
 
-      {/* ------------------------------------------------------------ whatsapp */}
+      {/* ------------------------------------------------------------ whatsapp (only while a number is configured) */}
+      {HAS_WHATSAPP && (
       <div className="flex items-center justify-between gap-4 py-5">
         <div>
           <h2 className="text-[14px] font-bold uppercase tracking-[0.1em]">
@@ -62,6 +63,7 @@ export default function ContactMethods() {
           Chat
         </a>
       </div>
+      )}
 
       {/* --------------------------------------------------------------- email */}
       <div className="flex items-center justify-between gap-4 py-5">
@@ -92,11 +94,13 @@ export default function ContactMethods() {
             Instagram
           </h2>
           <p className="mt-1 text-[13px] text-ink-soft">
-            New batches, restocks and daylight shots of the colours.
+            {HAS_WHATSAPP
+              ? "New batches, restocks and daylight shots of the colours."
+              : "Orders, questions and custom requests: send us a message. New batches and restocks too."}
           </p>
         </div>
         <a
-          href={SITE.instagram}
+          href={HAS_WHATSAPP ? SITE.instagram : igDmLink}
           target="_blank"
           rel="noopener noreferrer"
           className="shrink-0 border border-ink px-4 py-2 text-[11px] font-bold uppercase tracking-[0.14em] transition-colors hover:bg-ink hover:text-cream"

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { waLink } from "@/lib/site";
+import { waLink, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Shipping & Returns",
@@ -22,7 +22,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "My bangles arrived broken. What now?",
-    a: "Please record a continuous unboxing video, starting before you open the package — this is required to process a damage claim, since it's the only way to tell a transit breakage from damage after the fact. Only an unboxing video can be accepted: a photo, or a video recorded after the parcel is opened, cannot be considered. Send it to us on WhatsApp within 24 hours of delivery. Breakages in transit are replaced free or refunded in full — that is on us, not on you.",
+    a: "Please record a continuous unboxing video, starting before you open the package — this is required to process a damage claim, since it's the only way to tell a transit breakage from damage after the fact. Only an unboxing video can be accepted: a photo, or a video recorded after the parcel is opened, cannot be considered. Send it to us " + (HAS_WHATSAPP ? "on WhatsApp" : "as a message on Instagram (@anveda.in)") + " within 24 hours of delivery. Breakages in transit are replaced free or refunded in full — that is on us, not on you.",
   },
   {
     q: "Can I return something I simply did not like?",
@@ -123,10 +123,10 @@ export default function ShippingPage() {
           <div className="mt-10 bg-cream-2 p-7 text-center">
             <h3 className="font-display text-[22px]">Something not covered here?</h3>
             <p className="mx-auto mt-2 max-w-[46ch] text-[14.5px] text-ink-soft">
-              Message us on WhatsApp — a real person reads it.
+              {HAS_WHATSAPP ? "Message us on WhatsApp" : "Message us on Instagram"} — a real person reads it.
             </p>
             <a
-              href={waLink("Hi ANVEDA! I have a question about shipping.")}
+              href={HAS_WHATSAPP ? waLink("Hi ANVEDA! I have a question about shipping.") : igDmLink}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-5 inline-block bg-espresso px-8 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.18em] text-cream transition-colors hover:bg-espresso-2"

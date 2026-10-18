@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { HAS_WHATSAPP } from "@/lib/site";
 
 export default function SignupForm() {
   const [value, setValue] = useState("");
@@ -11,9 +12,9 @@ export default function SignupForm() {
     e.preventDefault();
     const v = value.trim();
     const isEmail = v.includes("@");
-    const isPhone = /^\d{10,}$/.test(v.replace(/\D/g, ""));
+    const isPhone = HAS_WHATSAPP && /^\d{10,}$/.test(v.replace(/\D/g, ""));
     if (!isEmail && !isPhone) {
-      setError("Enter a valid email or WhatsApp number.");
+      setError(HAS_WHATSAPP ? "Enter a valid email or WhatsApp number." : "Enter a valid email address.");
       setStatus("error");
       return;
     }
@@ -55,7 +56,7 @@ export default function SignupForm() {
             setValue(e.target.value);
             if (status === "error") setStatus("idle");
           }}
-          placeholder="Email or WhatsApp number"
+          placeholder={HAS_WHATSAPP ? "Email or WhatsApp number" : "Your email address"}
           className="min-w-0 flex-1 border border-gold/25 bg-transparent px-3 py-2.5 text-[13.5px] text-[#f4efe9] outline-none placeholder:text-[#8a837b] focus:border-gold"
         />
         <button

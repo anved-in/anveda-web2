@@ -8,7 +8,7 @@ import QtyStepper from "@/components/QtyStepper";
 import { useFavs } from "@/lib/favourites";
 import { HEART } from "@/components/FavButton";
 import { framingStyle, imgSrc, inr, unitPrice, productById, colourLabel } from "@/lib/catalog";
-import { asset, SITE } from "@/lib/site";
+import { asset, SITE, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 import {
   type Customer,
   makeRef,
@@ -539,7 +539,7 @@ export default function CheckoutForm() {
           <p className="mt-3 text-center text-[12px] text-ink-soft">
             Questions?{" "}
             <a
-              href={`https://wa.me/${SITE.whatsapp}`}
+              href={HAS_WHATSAPP ? `https://wa.me/${SITE.whatsapp}` : igDmLink}
               target="_blank"
               rel="noopener noreferrer"
               className="underline underline-offset-2"

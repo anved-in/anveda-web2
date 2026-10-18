@@ -2,7 +2,7 @@
 
 import Link from "@/components/Link";
 import { useSearchParams } from "next/navigation";
-import { SITE } from "@/lib/site";
+import { SITE, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 
 export default function Confirmation() {
   const q = useSearchParams();
@@ -57,7 +57,7 @@ export default function Confirmation() {
           <ul className="mt-1 list-disc space-y-0.5 pl-4">
             <li>Record one continuous video before you open the sealed parcel, then open it and show every set.</li>
             <li>Only an unboxing video counts. A photo, or a video taken after opening, cannot be considered.</li>
-            <li>If anything is broken, send the video on WhatsApp within 24 hours of delivery for a replacement or refund.</li>
+            <li>If anything is broken, send the video to us {HAS_WHATSAPP ? "on WhatsApp" : "as a message on Instagram (@anveda.in)"} within 24 hours of delivery for a replacement or refund.</li>
             <li>
               Details in our{" "}
               <Link href="/shipping" className="underline underline-offset-2">
@@ -76,9 +76,9 @@ export default function Confirmation() {
             Continue shopping
           </Link>
           <a
-            href={`https://wa.me/${SITE.whatsapp}${
+            href={HAS_WHATSAPP ? `https://wa.me/${SITE.whatsapp}${
               ref ? `?text=${encodeURIComponent(`Hi ANVEDA! About my order ${ref}`)}` : ""
-            }`}
+            }` : igDmLink}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-espresso px-8 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2"

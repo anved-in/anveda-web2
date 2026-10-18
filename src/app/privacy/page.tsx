@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SITE } from "@/lib/site";
+import { SITE, HAS_WHATSAPP } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -54,7 +54,7 @@ export default function PrivacyPage() {
 
       <section className="px-5 py-14 sm:px-6 md:py-20">
         <div className="mx-auto max-w-[720px] space-y-9">
-          {SECTIONS.map((s) => (
+          {SECTIONS.filter((s) => HAS_WHATSAPP || s.h !== "WhatsApp messages").map((s) => (
             <div key={s.h}>
               <h2 className="font-display text-[20px]">{s.h}</h2>
               <p className="mt-2.5 text-[15px] leading-[1.8] text-ink-soft">{s.body}</p>

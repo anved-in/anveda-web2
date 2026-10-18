@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { inr } from "@/lib/catalog";
-import { waLink } from "@/lib/site";
+import { waLink, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 
 interface TrackItem {
   name: string;
@@ -184,7 +184,7 @@ export default function TrackForm() {
           )}
 
           <a
-            href={waLink(`Hi ANVEDA! Question about my order ${result.order.ref}.`)}
+            href={HAS_WHATSAPP ? waLink(`Hi ANVEDA! Question about my order ${result.order.ref}.`) : igDmLink}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-6 inline-block border border-ink px-6 py-2.5 text-[11.5px] font-bold uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-cream"

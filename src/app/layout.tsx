@@ -10,7 +10,7 @@ import FavDrawer from "@/components/FavDrawer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { CartProvider } from "@/lib/cart";
 import { FavProvider } from "@/lib/favourites";
-import { SITE } from "@/lib/site";
+import { SITE, HAS_WHATSAPP } from "@/lib/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.anveda.in"),
@@ -55,7 +55,7 @@ const ORG_JSON_LD = {
   sameAs: [SITE.instagram],
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: `+${SITE.whatsapp}`,
+    ...(HAS_WHATSAPP ? { telephone: `+${SITE.whatsapp}` } : {}),
     contactType: "customer service",
     email: SITE.email,
   },
@@ -84,7 +84,7 @@ export default function RootLayout({
           <CartDrawer />
           <FavDrawer />
           <TabBar />
-          <WhatsAppFloat />
+          {HAS_WHATSAPP && <WhatsAppFloat />}
           </FavProvider>
         </CartProvider>
       </body>

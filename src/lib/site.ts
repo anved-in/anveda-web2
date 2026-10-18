@@ -23,7 +23,10 @@ export const SITE = {
    * wrong. There is one number, it belongs in version control, and changing
    * it should be a commit like any other.
    */
-  whatsapp: "917996009966",
+  whatsapp: "" as string,
+  // ^ WhatsApp is switched OFF: the number is not available (owner, 2026-10-18). Every WhatsApp button, link and
+  //   sentence on the site checks HAS_WHATSAPP and falls back to an Instagram message. To switch it back on, put the
+  //   new number here (digits with country code, e.g. "919XXXXXXXXX") and deploy: everything returns by itself.
   email: "anveda.in@gmail.com",
   instagram: "https://www.instagram.com/anveda.in/",
 
@@ -53,6 +56,12 @@ export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 /** Prefix a /public asset path for the deployed base path. */
 export const asset = (p: string): string =>
   `${BASE_PATH}${p.startsWith("/") ? p : `/${p}`}`;
+
+/** True when a WhatsApp number is configured. When false nothing on the site mentions or links WhatsApp. */
+export const HAS_WHATSAPP = SITE.whatsapp.trim() !== "";
+
+/** Opens an Instagram message to the shop (used wherever WhatsApp used to be). */
+export const igDmLink = "https://ig.me/m/anveda.in";
 
 export const waLink = (text: string): string =>
   `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(text)}`;

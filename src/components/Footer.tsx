@@ -1,7 +1,7 @@
 import Link from "@/components/Link";
 import Logo from "./Logo";
 import SignupForm from "./SignupForm";
-import { SITE, waLink } from "@/lib/site";
+import { SITE, waLink, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 import { collections, rangeHref } from "@/lib/catalog";
 
 export default function Footer() {
@@ -34,7 +34,7 @@ export default function Footer() {
               New arrivals, first
             </h3>
             <p className="mb-3 max-w-[38ch] text-[13px] leading-relaxed">
-              Leave your email or WhatsApp — we&apos;ll let you know when a new batch drops.
+              {HAS_WHATSAPP ? "Leave your email or WhatsApp" : "Leave your email"} — we&apos;ll let you know when a new batch drops.
             </p>
             <SignupForm />
           </div>
@@ -79,12 +79,12 @@ export default function Footer() {
             </h3>
             <div className="flex flex-col">
               <a
-                href={waLink("Hi ANVEDA! I would like to know more about your bangles.")}
+                href={HAS_WHATSAPP ? waLink("Hi ANVEDA! I would like to know more about your bangles.") : igDmLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="py-[5px] text-[14px] transition-colors hover:text-gold"
               >
-                WhatsApp us
+                {HAS_WHATSAPP ? "WhatsApp us" : "Message us on Instagram"}
               </a>
               <a href={`mailto:${SITE.email}`} className="py-[5px] text-[14px] transition-colors hover:text-gold">
                 {SITE.email}

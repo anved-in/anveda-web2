@@ -5,7 +5,7 @@ import ContactMethods from "@/components/ContactMethods";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Talk to ANVEDA — track an order, WhatsApp, email or Instagram.",
+    "Talk to ANVEDA — track an order, email or Instagram.",
 };
 
 const FAQ: { q: string; a: React.ReactNode }[] = [

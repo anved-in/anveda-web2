@@ -9,7 +9,7 @@ import Price from "@/components/Price";
 import FavButton from "@/components/FavButton";
 import Stars from "@/components/Stars";
 import { soldOutLast, variantSlides, imgSrc, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
-import { asset, SITE } from "@/lib/site";
+import { asset, SITE, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 
 /**
  * Product page body. A client component because the main photograph has to
@@ -88,14 +88,14 @@ function Info({ p, variant, compact = false }: { p: Product; variant: Variant; c
       <p className="mt-4 text-[13px] leading-relaxed text-ink-soft">
         <strong className="font-semibold text-ink">Not sure about your size?</strong>{" "}
         <a
-          href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
+          href={HAS_WHATSAPP ? `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(
             `Hi ANVEDA! I need help with sizing for ${p.name} (${colourLabel(p, variant)}).`,
-          )}`}
+          )}` : igDmLink}
           target="_blank"
           rel="noopener noreferrer"
           className="underline underline-offset-2"
         >
-          Ask on WhatsApp
+          {HAS_WHATSAPP ? "Ask on WhatsApp" : "Message us on Instagram"}
         </a>
       </p>
     </>

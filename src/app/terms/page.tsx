@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/components/Link";
-import { SITE } from "@/lib/site";
+import { SITE, HAS_WHATSAPP } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions",
@@ -17,7 +17,7 @@ const SECTIONS: { h: string; body: React.ReactNode }[] = [
         <a href={`mailto:${SITE.email}`} className="underline underline-offset-2">
           {SITE.email}
         </a>{" "}
-        or on WhatsApp — see the{" "}
+        or {HAS_WHATSAPP ? "on WhatsApp" : "by Instagram message"} — see the{" "}
         <Link href="/contact" className="underline underline-offset-2">
           Contact
         </Link>{" "}
