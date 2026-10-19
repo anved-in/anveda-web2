@@ -168,7 +168,7 @@ export default function Header() {
             {path === "/" && (
               <Link
                 href="/shop/glass"
-                className="hidden whitespace-nowrap text-[10.5px] font-bold uppercase tracking-[0.06em] transition-colors hover:text-maroon lg:block lg:text-[11px] lg:tracking-[0.1em]"
+                className="hidden whitespace-nowrap text-[10.5px] uppercase tracking-[0.06em] transition-colors hover:text-maroon lg:block lg:text-[11px] lg:tracking-[0.1em]"
               >
                 Shop
               </Link>
