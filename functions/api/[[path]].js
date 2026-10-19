@@ -127,6 +127,13 @@ async function handleCheckout(request, env) {
     });
     if (!intakeRes.ok) {
       const detail = await intakeRes.text().catch(() => "");
+      // A clear reason from the shop (a size that just sold out / is not offered) is shown to the shopper as it is
+      if (intakeRes.status === 409) {
+        try {
+          const parsed = JSON.parse(detail);
+          if (parsed && parsed.error) return json({ ok: false, error: String(parsed.error) + " Please change it in your bag and try again." }, 409);
+        } catch { /* fall through to the technical message */ }
+      }
       return json({ ok: false, error: `order intake failed: ${detail}` }, 500);
     }
   }

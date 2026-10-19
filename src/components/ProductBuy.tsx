@@ -1,10 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "@/components/Link";
 import QtyStepper from "@/components/QtyStepper";
 import { useCart } from "@/lib/cart";
-import { inr, variantPrice, colourLabel, ALL_SIZES, SIZE_GUIDE, type Product, type Variant } from "@/lib/catalog";
+import { inr, variantPrice, colourLabel, sizeLeft, sizeLeftNote, sizeState, ALL_SIZES, SIZE_GUIDE, type Product, type Variant } from "@/lib/catalog";
 
 /**
  * The buy box: size, quantity, add to bag. Colour is picked one level up
@@ -38,12 +38,24 @@ export default function ProductBuy({
   const [notifyEmail, setNotifyEmail] = useState("");
   const [notifyState, setNotifyState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const { add, setOpen: setBagOpen } = useCart();
+  const left = size ? sizeLeft(variant, size) : null;
+  const [overErr, setOverErr] = useState<string | null>(null);
+
+  // switching colour: a size that is finished in the new colour must not stay selected
+  useEffect(() => {
+    if (size && sizeState(variant, size) !== "ok") setSize(null);
+    setOverErr(null);
+  }, [variant, size]);
 
   const onAdd = () => {
     if (!size) {
       setErr(true);
       // The add button lives in a fixed bar, so the size row may be off screen.
       sizeRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+    if (left !== null && qty > left) {
+      setOverErr(left <= 0 ? "That size has just sold out." : `Only ${left} left in size ${size}.`);
       return;
     }
     add(p.id, size, qty, variant.colour);
@@ -97,24 +109,32 @@ export default function ProductBuy({
           {ALL_SIZES.map((s) => {
             const g = SIZE_GUIDE.find((x) => x.size === s);
             const on = size === s;
+            const st = sizeState(variant, s);
+            const gone = st !== "ok";
             return (
               <button
                 key={s}
                 type="button"
+                disabled={gone}
                 onClick={() => {
                   setSize(s);
                   setErr(false);
                 }}
                 aria-pressed={on}
+                aria-label={st === "na" ? `Size ${s}, not available` : st === "gone" ? `Size ${s}, sold out` : `Size ${s}`}
                 className={[
-                  "min-w-0 flex-1 cursor-pointer border px-1 py-1.5 text-center transition-colors md:w-[60px] md:flex-none md:py-1.5",
-                  on
-                    ? "border-ink bg-ink text-cream"
-                    : "border-line-strong bg-white hover:border-ink",
+                  "min-w-0 flex-1 border px-1 py-1.5 text-center transition-colors md:w-[60px] md:flex-none md:py-1.5",
+                  gone
+                    ? "cursor-not-allowed border-line bg-cream-2 text-ink-soft/60"
+                    : on
+                      ? "cursor-pointer border-ink bg-ink text-cream"
+                      : "cursor-pointer border-line-strong bg-white hover:border-ink",
                 ].join(" ")}
               >
-                <span className="block text-[11.5px] font-semibold">{s}</span>
-                {g && (
+                <span className={`block text-[11.5px] font-semibold${gone ? " line-through" : ""}`}>{s}</span>
+                {gone ? (
+                  <span className="block text-[7px] uppercase tracking-[0.05em]">{st === "na" ? "Unavailable" : "Sold out"}</span>
+                ) : g && (
                   <span
                     className={[
                       "block text-[7px] uppercase tracking-[0.05em]",
@@ -128,6 +148,18 @@ export default function ProductBuy({
             );
           })}
         </div>
+
+        {size && left !== null && left > 0 && (
+          <p aria-live="polite" className="mt-2 text-[12.5px] font-semibold text-maroon">
+            {sizeLeftNote(left)}
+          </p>
+        )}
+
+        {overErr && (
+          <p role="alert" className="mt-2.5 text-[13px] text-[#a33a2f]">
+            {overErr}
+          </p>
+        )}
 
         {err && (
           <p role="alert" className="mt-2.5 text-[13px] text-[#a33a2f]">

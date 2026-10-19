@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "@/components/Link";
-import { framingStyle, imgSrc, imgSrcSmall, listingPrice, listingTitle, type Listing } from "@/lib/catalog";
+import { ALL_SIZES, framingStyle, imgSrc, imgSrcSmall, listingPrice, listingTitle, sizeState, type Listing } from "@/lib/catalog";
 import { asset } from "@/lib/site";
 import { useCart } from "@/lib/cart";
 import Price from "./Price";
@@ -127,16 +127,27 @@ export default function ListingCard({
                 <div className="absolute bottom-[calc(100%+8px)] right-0 z-20 w-max border border-line bg-white p-2.5 shadow-lg">
                   <p className="px-0.5 pb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ink-faint">Size</p>
                   <div className="flex gap-1.5">
-                    {v.sizes.map((s) => (
-                      <button
-                        key={s}
-                        type="button"
-                        onClick={() => pickSize(s)}
-                        className="min-w-[30px] border border-line-strong px-2 py-1 text-[11.5px] font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
-                      >
-                        {s}
-                      </button>
-                    ))}
+                    {ALL_SIZES.map((s) => {
+                      const st = sizeState(v, s);
+                      const gone = st !== "ok";
+                      return (
+                        <button
+                          key={s}
+                          type="button"
+                          disabled={gone}
+                          onClick={() => pickSize(s)}
+                          aria-label={st === "na" ? `Size ${s}, not available` : st === "gone" ? `Size ${s}, sold out` : `Size ${s}`}
+                          className={[
+                            "min-w-[30px] border px-2 py-1 text-[11.5px] font-semibold transition-colors",
+                            gone
+                              ? "cursor-not-allowed border-line bg-cream-2 text-ink-soft/60 line-through"
+                              : "border-line-strong hover:border-ink hover:bg-ink hover:text-cream",
+                          ].join(" ")}
+                        >
+                          {s}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               )}

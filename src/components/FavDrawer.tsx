@@ -13,6 +13,7 @@ import {
   colourLabel,
   packLabel,
   ALL_SIZES,
+  sizeState,
   type Product,
   type Variant,
 } from "@/lib/catalog";
@@ -185,22 +186,30 @@ function FavRow({ p, v }: { p: Product; v: Variant }) {
         {v.inStock ? (
           <>
             <div className="mt-3 flex flex-wrap gap-1.5" role="group" aria-label="Choose a size">
-              {ALL_SIZES.map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  onClick={() => setSize(s)}
-                  aria-pressed={size === s}
-                  className={[
-                    "min-w-[40px] cursor-pointer border px-2 py-1.5 text-[12.5px] transition-colors",
-                    size === s
-                      ? "border-ink bg-ink text-cream"
-                      : "border-line-strong bg-white hover:border-ink",
-                  ].join(" ")}
-                >
-                  {s}
-                </button>
-              ))}
+              {ALL_SIZES.map((s) => {
+                const st = sizeState(v, s);
+                const gone = st !== "ok";
+                return (
+                  <button
+                    key={s}
+                    type="button"
+                    disabled={gone}
+                    onClick={() => setSize(s)}
+                    aria-pressed={size === s}
+                    aria-label={st === "na" ? `Size ${s}, not available` : st === "gone" ? `Size ${s}, sold out` : `Size ${s}`}
+                    className={[
+                      "min-w-[40px] border px-2 py-1.5 text-[12.5px] transition-colors",
+                      gone
+                        ? "cursor-not-allowed border-line bg-cream-2 text-ink-soft/60 line-through"
+                        : size === s
+                          ? "cursor-pointer border-ink bg-ink text-cream"
+                          : "cursor-pointer border-line-strong bg-white hover:border-ink",
+                    ].join(" ")}
+                  >
+                    {s}
+                  </button>
+                );
+              })}
             </div>
             <button
               type="button"

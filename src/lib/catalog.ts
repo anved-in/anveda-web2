@@ -42,6 +42,8 @@ export interface Variant {
   inStock: boolean;
   /** Pieces left, as the owner counts them in the CMS; absent/0 = not tracked. */
   stockQty?: number;
+  /** Pieces left PER SIZE (e.g. { "2.4": 3 }); a size at 0 is sold out. Absent = sizes are not counted. */
+  sizeStock?: Record<string, number>;
   /** More photos after `image`, shown when the shopper swipes the main photo. */
   gallery?: { image: string; focal?: string | null; zoom?: number | null }[];
   /** Admin-set crop focus, as a CSS object-position value. */
@@ -259,6 +261,29 @@ export const SIZE_GUIDE: { size: string; label: string; cm: string }[] = [
  * dead end for the customer, so the picker always offers the full range.
  */
 export const ALL_SIZES: string[] = SIZE_GUIDE.map((s) => s.size);
+
+/** Pieces left of one size of a colourway, or null when that size is not counted (then it is always offered). */
+export const sizeLeft = (v: Variant, size: string): number | null => {
+  const n = v.sizeStock?.[size];
+  return typeof n === "number" ? n : null;
+};
+
+/**
+ * Can this size be bought for this colourway?
+ *   "ok"   - offered, and (if counted) pieces left
+ *   "gone" - offered but sold out right now (every piece of that size is gone)
+ *   "na"   - the owner switched this size OFF for this colourway in the CMS (it is not made in that size)
+ * Both "gone" and "na" are shown struck through and greyed, and cannot be chosen.
+ */
+export type SizeState = "ok" | "gone" | "na";
+export const sizeState = (v: Variant, size: string): SizeState => {
+  if (!v.sizes.includes(size)) return "na";
+  const n = v.sizeStock?.[size];
+  return typeof n === "number" && n <= 0 ? "gone" : "ok";
+};
+
+/** What the shopper reads under the size row: the real count, and a plain line when it is nearly gone. */
+export const sizeLeftNote = (left: number): string => (left < 2 ? "Less than 2 left" : `${left} left`);
 
 /** True when a family's colourways are not all the same price. */
 export const hasPriceRange = (p: Product): boolean => p.priceMax > p.price;

@@ -76,7 +76,7 @@ function Info({ p, variant, compact = false }: { p: Product; variant: Variant; c
             ...(packCount(p, variant)
               ? [["In each set", packCount(p, variant) as string] as [string, string]]
               : []),
-            ["Sizes", ALL_SIZES.join(" · ")],
+            ["Sizes", ALL_SIZES.filter((s) => variant.sizes.includes(s)).join(" · ") || "—"],
           ].map(([k, v]) => (
             <div key={k} className="flex justify-between gap-4 border-b border-line py-2.5">
               <dt className="text-[11.5px] uppercase tracking-[0.12em] text-ink-soft">{k}</dt>
