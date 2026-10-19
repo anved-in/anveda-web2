@@ -1898,7 +1898,7 @@
       "2.6",
       "2.8"
      ],
-     "inStock": true,
+     "inStock": false,
      "stockQty": 12,
      "focal": "50% 54.47%",
      "zoom": 1
@@ -1917,8 +1917,8 @@
      ],
      "inStock": true,
      "stockQty": 12,
-     "focal": "55.11% 62.6%",
-     "zoom": 1
+     "focal": "65.1% 75.7%",
+     "zoom": 1.65
     }
    ],
    "image": "kada-green-ball-kada-set-of-2.webp"
