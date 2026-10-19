@@ -2136,7 +2136,7 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
+     "inStock": true,
      "stockQty": 1,
      "focal": "45.64% 54.31%",
      "zoom": 1
@@ -2153,7 +2153,7 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
+     "inStock": true,
      "stockQty": 2,
      "focal": "51.74% 58.05%",
      "zoom": 1
@@ -2170,7 +2170,7 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
+     "inStock": true,
      "stockQty": 2,
      "focal": "44.28% 57.54%",
      "zoom": 1
@@ -2187,7 +2187,7 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
+     "inStock": true,
      "focal": "52.44% 73.29%",
      "zoom": 1
     },
@@ -2204,7 +2204,7 @@
       "2.6",
       "2.8"
      ],
-     "inStock": false,
+     "inStock": true,
      "focal": "50.11% 44.88%",
      "zoom": 1
     },
@@ -2220,7 +2220,7 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
+     "inStock": true,
      "focal": "45.63% 50.49%",
      "zoom": 1
     },
