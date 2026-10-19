@@ -1847,7 +1847,7 @@
       "2.4",
       "2.6"
      ],
-     "inStock": true,
+     "inStock": false,
      "stockQty": 12,
      "focal": "49.2% 60.9%",
      "zoom": 1.67
