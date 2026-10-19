@@ -1822,7 +1822,7 @@
    "collectionName": "Kada",
    "group": "ornate",
    "name": "Kada",
-   "price": 699,
+   "price": 520,
    "priceMax": 2300,
    "pieces": 2,
    "unit": "set",
@@ -1847,7 +1847,7 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
+     "inStock": true,
      "focal": "49.2% 60.9%",
      "zoom": 1.67
     },
@@ -1863,7 +1863,7 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
+     "inStock": true,
      "focal": "43.3% 54.5%",
      "zoom": 1.66
     },
@@ -1879,7 +1879,7 @@
       "2.6",
       "2.8"
      ],
-     "inStock": false,
+     "inStock": true,
      "focal": "47.65% 45.98%",
      "zoom": 1
     },
@@ -1895,7 +1895,7 @@
       "2.6",
       "2.8"
      ],
-     "inStock": false,
+     "inStock": true,
      "focal": "50% 54.47%",
      "zoom": 1
     },
@@ -1912,9 +1912,60 @@
       "2.6"
      ],
      "inStock": true,
+     "focal": "55.11% 62.6%",
+     "zoom": 1
+    },
+    {
+     "id": 138,
+     "colour": "Lakshmi Square Ruby Kada",
+     "image": "u-kada-lakshmi-square-ruby-kada-mvfdlmiq.webp",
+     "price": 520,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6"
+     ],
+     "inStock": true,
      "stockQty": 3,
-     "focal": "65.1% 75.7%",
+     "focal": "55.1% 68%",
      "zoom": 1.65
+    },
+    {
+     "id": 139,
+     "colour": "Flower Kada",
+     "image": "u-kada-flower-kada-mvfdn8ye.webp",
+     "price": 520,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 3,
+     "focal": "50.3% 84.6%",
+     "zoom": 1.35
+    },
+    {
+     "id": 140,
+     "colour": "Round Ruby Green Kada",
+     "image": "u-kada-round-ruby-green-kada-mvfdv38o.webp",
+     "price": 599,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 3,
+     "focal": "48.8% 67.9%",
+     "zoom": 2
     }
    ],
    "image": "kada-green-ball-kada-set-of-2.webp"
