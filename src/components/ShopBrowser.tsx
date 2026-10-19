@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import ListingCard from "./ListingCard";
-import { listingPrice, listingTitle, type Listing } from "@/lib/catalog";
+import { listingPrice, listingTitle, sizeState, ALL_SIZES, SIZE_GUIDE, type Listing } from "@/lib/catalog";
 
 export interface ShopSection {
   slug: string;
@@ -65,7 +65,7 @@ function DropdownPortal({
 
 /**
  * Wraps the group page's sectioned listing in an Amazon/Flipkart-style
- * toolbar: dropdown pills for Sort and Price (the left rail is already the
+ * toolbar: dropdown pills for Size (several can be ticked), Sort and Price (the left rail is already the
  * site's category navigator — ShopShell — so a second sidebar would fight
  * it for space; pills are the pattern both reference sites actually use for
  * everything past the primary category nav), plus a plain search box and an
@@ -90,7 +90,9 @@ export default function ShopBrowser({
   const [sort, setSort] = useState<Sort>("featured");
   const [inStockOnly, setInStockOnly] = useState(false);
   const [priceBand, setPriceBand] = useState<number | null>(null); // index into buckets, null = any
-  const [openMenu, setOpenMenu] = useState<"sort" | "price" | null>(null);
+  // Sizes ticked in the Size menu (any number). A colourway is kept when it can be bought in AT LEAST ONE ticked size.
+  const [sizes, setSizes] = useState<string[]>([]);
+  const [openMenu, setOpenMenu] = useState<"sort" | "price" | "size" | null>(null);
   // Once any control has been touched, every subsequent render — including
   // returning to the sectioned view via "Clear filters" — mounts fresh
   // .reveal cards the page's scroll observer never gets to see (it only
@@ -100,6 +102,7 @@ export default function ShopBrowser({
   const barRef = useRef<HTMLDivElement>(null);
   const sortBtnRef = useRef<HTMLButtonElement>(null);
   const priceBtnRef = useRef<HTMLButtonElement>(null);
+  const sizeBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
@@ -118,7 +121,7 @@ export default function ShopBrowser({
 
   const all = useMemo(() => sections.flatMap((s) => s.items), [sections]);
   const buckets = useMemo(() => priceBuckets(all), [all]);
-  const browsing = q.trim() === "" && sort === "featured" && !inStockOnly && priceBand === null;
+  const browsing = q.trim() === "" && sort === "featured" && !inStockOnly && priceBand === null && sizes.length === 0;
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -130,6 +133,8 @@ export default function ShopBrowser({
       });
     }
     if (inStockOnly) items = items.filter((l) => l.variant.inStock);
+    // a size counts only if the colourway is made in it AND has pieces left in it
+    if (sizes.length) items = items.filter((l) => sizes.some((z) => sizeState(l.variant, z) === "ok"));
     if (priceBand !== null) {
       const b = buckets[priceBand];
       items = items.filter((l) => {
@@ -140,7 +145,7 @@ export default function ShopBrowser({
     if (sort === "price-asc") items = [...items].sort((a, b) => listingPrice(a) - listingPrice(b));
     if (sort === "price-desc") items = [...items].sort((a, b) => listingPrice(b) - listingPrice(a));
     return items;
-  }, [all, q, sort, inStockOnly, priceBand, buckets]);
+  }, [all, q, sort, inStockOnly, priceBand, sizes, buckets]);
 
   return (
     <>
@@ -186,6 +191,80 @@ export default function ShopBrowser({
               aria-label="Search designs"
               className="min-w-0 flex-1 appearance-none border-0 bg-transparent p-0 text-[13.5px] text-ink outline-none placeholder:text-ink-faint"
             />
+          </div>
+
+          <span className="mx-2.5 h-4 w-px shrink-0 bg-line-strong sm:mx-3.5" aria-hidden="true" />
+
+          {/* ---------------------------------------------------------- size (pick several) */}
+          <div className="relative shrink-0">
+            <button
+              ref={sizeBtnRef}
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenMenu((m) => (m === "size" ? null : "size"));
+              }}
+              aria-expanded={openMenu === "size"}
+              aria-haspopup="true"
+              className={["flex items-center gap-1 whitespace-nowrap text-[12px] font-semibold transition-colors", sizes.length ? "text-ink" : "text-ink-soft"].join(" ")}
+            >
+              Size
+              {sizes.length > 0 && (
+                <span className="flex h-[15px] min-w-[15px] items-center justify-center rounded-full bg-ink px-1 text-[9px] font-bold leading-none text-cream" aria-label={`${sizes.length} sizes chosen`}>
+                  {sizes.length}
+                </span>
+              )}
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true" className={openMenu === "size" ? "rotate-180" : ""}>
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+            {openMenu === "size" && (
+              <DropdownPortal anchorRef={sizeBtnRef}>
+                <p className="px-4 pb-1.5 pt-1 text-[10.5px] font-bold uppercase tracking-[0.14em] text-ink-faint">Choose one or more</p>
+                {ALL_SIZES.map((z) => {
+                  const on = sizes.includes(z);
+                  const g = SIZE_GUIDE.find((x) => x.size === z);
+                  return (
+                    <button
+                      key={z}
+                      type="button"
+                      role="menuitemcheckbox"
+                      aria-checked={on}
+                      onClick={() => {
+                        setSizes((cur) => (cur.includes(z) ? cur.filter((x) => x !== z) : [...cur, z]));
+                        setTouched(true);
+                      }}
+                      className="flex w-full items-center gap-3 px-4 py-2.5 text-left text-[13px] transition-colors hover:bg-cream-2"
+                    >
+                      <span
+                        className={["flex h-[15px] w-[15px] shrink-0 items-center justify-center rounded-[3px] border transition-colors", on ? "border-ink bg-ink" : "border-line-strong"].join(" ")}
+                        aria-hidden="true"
+                      >
+                        {on && (
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M4 12.5l5 5L20 6.5" />
+                          </svg>
+                        )}
+                      </span>
+                      <span className={on ? "font-semibold text-ink" : "text-ink"}>{z}</span>
+                      {g && <span className="ml-auto text-[11px] text-ink-faint">{g.label}</span>}
+                    </button>
+                  );
+                })}
+                {sizes.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSizes([]);
+                      setTouched(true);
+                    }}
+                    className="mt-1 block w-full border-t border-line px-4 py-2.5 text-left text-[12.5px] font-semibold text-ink underline underline-offset-2"
+                  >
+                    Clear sizes
+                  </button>
+                )}
+              </DropdownPortal>
+            )}
           </div>
 
           <span className="mx-2.5 h-4 w-px shrink-0 bg-line-strong sm:mx-3.5" aria-hidden="true" />
@@ -355,7 +434,12 @@ export default function ShopBrowser({
             ) : (
               <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 xl:grid-cols-4">
                 {filtered.map((l) => (
-                  <ListingCard key={l.variant.colour + l.product.id} l={l} withFamily instant />
+                  <ListingCard
+                    key={l.variant.colour + l.product.id}
+                    l={sizes.length === 1 ? { ...l, href: `${l.href}${l.href.includes("?") ? "&" : "?"}size=${encodeURIComponent(sizes[0])}` } : l}
+                    withFamily
+                    instant
+                  />
                 ))}
               </div>
             )}
