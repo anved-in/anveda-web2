@@ -2709,13 +2709,13 @@
      ],
      "inStock": true,
      "stockQty": 12,
-     "focal": "50% 10.0%",
-     "zoom": 1,
+     "focal": "58.8% 72.3%",
+     "zoom": 1.5,
      "gallery": [
       {
        "image": "square-edge-glass-bangles-mauve.webp",
        "focal": "50.08% 55.42%",
-       "zoom": 1
+       "zoom": 1.5
       }
      ]
     },
