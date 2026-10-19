@@ -170,7 +170,7 @@ export default function ShopBrowser({
             (replacing the other controls while open) instead of claiming
             width permanently, and every pill drops its selected-value suffix
             on the label so the row stays short regardless of what's chosen. */}
-        <div className="mx-auto flex max-w-[1320px] items-center px-3 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-[1320px] items-center justify-center px-3 py-3 sm:px-6">
           {/* Plain text throughout — no pill boxes, each control separated by
               a thin vertical rule instead, matching the reference exactly.
               Always-visible field, not a collapse-to-icon toggle — an empty
@@ -178,7 +178,7 @@ export default function ShopBrowser({
               browser's own type="search" chrome (an inset box with its own
               border on some engines) so only this component's own styling
               shows. */}
-          <div className="flex min-w-0 flex-1 items-center gap-1.5">
+          <div className="flex min-w-0 flex-1 items-center gap-1.5 sm:w-[190px] sm:flex-none">
             <svg className="shrink-0 text-ink-faint" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <circle cx="11" cy="11" r="7" />
               <path d="m21 21-4.3-4.3" />
