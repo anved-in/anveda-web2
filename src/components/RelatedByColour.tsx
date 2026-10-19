@@ -60,7 +60,9 @@ export default function RelatedByColour({
   return (
     <div className="grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-4 md:gap-x-6">
       {listings.map((l, i) => (
-        <ListingCard key={l.product.id} l={l} delay={(i % 4) * 70} />
+        // `instant`: this list is rebuilt every time the shopper taps another colour, and a card that mounts later is never
+        // seen by the page's scroll-reveal observer, so it would sit at opacity 0 (clickable but invisible).
+        <ListingCard key={l.product.id} l={l} delay={(i % 4) * 70} instant />
       ))}
     </div>
   );

@@ -45,9 +45,10 @@ export default function Reveal() {
   //
   // Only the pathname, deliberately: useSearchParams() would opt this component
   // — and therefore the whole root layout — out of static prerendering, which
-  // breaks the build on /order-confirmed. Query changes (the product page's
-  // ?c= colour swap) re-render existing elements rather than mounting new
-  // .reveal ones, so they need no re-observation.
+  // breaks the build on /order-confirmed. A query change (the product page's
+  // ?c= colour swap) can mount NEW .reveal elements ("You may also like" is
+  // re-picked for the new colour), so the MutationObserver below adopts any
+  // .reveal element added after this scan.
   const pathname = usePathname();
 
   useEffect(() => {
@@ -67,6 +68,12 @@ export default function Reveal() {
       else els.push(e);
     });
 
+    // Adopt one element: a rail item is shown outright, anything else is watched until it scrolls into view.
+    const adopt = (e: HTMLElement) => {
+      if (e.classList.contains("in")) return;
+      if (inHorizontalRail(e)) e.classList.add("in");
+      else io.observe(e);
+    };
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((en) => {
@@ -81,14 +88,28 @@ export default function Reveal() {
     );
     els.forEach((e) => io.observe(e));
 
+    // Cards that appear LATER on the same page (switching the colour on a product page changes "You may also like", filters
+    // and searches re-draw the shop grid) are new elements this scan never saw: they would stay invisible. Watch for them.
+    const mo = new MutationObserver((records) => {
+      for (const r of records) {
+        r.addedNodes.forEach((n) => {
+          if (!(n instanceof HTMLElement)) return;
+          if (n.classList.contains("reveal")) adopt(n);
+          n.querySelectorAll<HTMLElement>(".reveal").forEach(adopt);
+        });
+      }
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+
     const onScroll = () => {
       if (window.innerHeight + window.scrollY < document.body.scrollHeight - 240)
         return;
-      els.forEach((e) => e.classList.add("in"));
+      document.querySelectorAll<HTMLElement>(".reveal:not(.in)").forEach((e) => e.classList.add("in"));
     };
     window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
+      mo.disconnect();
       io.disconnect();
       window.removeEventListener("scroll", onScroll);
     };
