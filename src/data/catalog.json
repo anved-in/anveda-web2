@@ -2598,15 +2598,8 @@
      ],
      "inStock": true,
      "stockQty": 12,
-     "focal": "50% 70.6%",
-     "zoom": 1,
-     "gallery": [
-      {
-       "image": "square-edge-glass-bangles-dark-pink.webp",
-       "focal": "51.36% 46.11%",
-       "zoom": 1
-      }
-     ]
+     "focal": "85.8% 63.5%",
+     "zoom": 1.4
     },
     {
      "id": 124,
@@ -2623,8 +2616,8 @@
      ],
      "inStock": true,
      "stockQty": 12,
-     "focal": "53.97% 54.84%",
-     "zoom": 1
+     "focal": "65.7% 61.1%",
+     "zoom": 1.4
     },
     {
      "id": 125,
