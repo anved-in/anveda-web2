@@ -1926,7 +1926,7 @@
    "group": "ornate",
    "name": "Designer Side Bangles",
    "price": 180,
-   "priceMax": 1200,
+   "priceMax": 1250,
    "pieces": 4,
    "unit": "set",
    "sizes": [
@@ -2188,6 +2188,7 @@
       "2.6"
      ],
      "inStock": true,
+     "stockQty": 3,
      "focal": "52.44% 73.29%",
      "zoom": 1
     },
@@ -2205,6 +2206,7 @@
       "2.8"
      ],
      "inStock": true,
+     "stockQty": 4,
      "focal": "50.11% 44.88%",
      "zoom": 1
     },
@@ -2213,7 +2215,7 @@
      "colour": "Pearl Floral Square Set of 4",
      "image": "designer-side-bangles-pearl-floral-square-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 499,
+     "price": 530,
      "pieces": 4,
      "sizes": [
       "2.2",
@@ -2221,12 +2223,13 @@
       "2.6"
      ],
      "inStock": true,
+     "stockQty": 1,
      "focal": "45.63% 50.49%",
      "zoom": 1
     },
     {
      "id": 106,
-     "colour": "Premium Ad Flower Set of 2",
+     "colour": "Tara AD Flower Set of 2",
      "image": "designer-side-bangles-premium-ad-flower-set-of-2.webp",
      "hex": "#e2d8c4",
      "price": 650,
@@ -2242,10 +2245,10 @@
     },
     {
      "id": 107,
-     "colour": "Premium White Stone Flower Set of 4",
+     "colour": "Laya White Stone Flower Set of 4",
      "image": "designer-side-bangles-premium-white-stone-flower-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 1200,
+     "price": 1250,
      "pieces": 4,
      "sizes": [
       "2.2",
@@ -2254,6 +2257,7 @@
       "2.8"
      ],
      "inStock": true,
+     "stockQty": 2,
      "focal": "45.3% 48.75%",
      "zoom": 1
     },
@@ -2270,6 +2274,7 @@
       "2.6"
      ],
      "inStock": true,
+     "stockQty": 2,
      "focal": "50.41% 53.14%",
      "zoom": 1
     },
@@ -2286,6 +2291,7 @@
       "2.6"
      ],
      "inStock": true,
+     "stockQty": 4,
      "focal": "46.22% 58.02%",
      "zoom": 1
     },
@@ -2318,6 +2324,7 @@
       "2.6"
      ],
      "inStock": true,
+     "stockQty": 1,
      "focal": "49.98% 67.81%",
      "zoom": 1
     },
@@ -2334,6 +2341,7 @@
       "2.6"
      ],
      "inStock": false,
+     "stockQty": 2,
      "focal": "41.68% 55.61%",
      "zoom": 1
     }
