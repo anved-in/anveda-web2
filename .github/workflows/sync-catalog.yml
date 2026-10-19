@@ -119,11 +119,23 @@ jobs:
             echo "::error::CF_DEPLOY_HOOK holds no valid Cloudflare deploy-hook URL (secret is ${#CF_DEPLOY_HOOK} chars over $LINES line(s)). Re-save it as just the hook URL."
             exit 1
           fi
+          # Several CMS saves in a row start several of these runs a few seconds apart. Cloudflare answers a hook it
+          # considers a repeat with HTTP 304 ("not modified": a build of this branch is already queued), which is not an
+          # error - the site is being built anyway. Anything else is retried, and only then reported.
           RESP="$(mktemp)"
-          CODE="$(curl -sS -o "$RESP" -w '%{http_code}' -X POST "$HOOK" || true)"
-          if [ "$CODE" != "200" ]; then
-            echo "::error::Deploy hook returned HTTP ${CODE:-none}. Cloudflare said:"
-            cat "$RESP"
-            exit 1
-          fi
-          echo "Deploy hook triggered (HTTP 200)."
+          for attempt in 1 2 3; do
+            CODE="$(curl -sS -o "$RESP" -w '%{http_code}' -X POST "$HOOK" || true)"
+            if [ "$CODE" = "200" ]; then
+              echo "Deploy hook triggered (HTTP 200)."
+              exit 0
+            fi
+            if [ "$CODE" = "304" ]; then
+              echo "::notice::Deploy hook answered HTTP 304: a build for this branch is already queued, so nothing more to do."
+              exit 0
+            fi
+            echo "Deploy hook returned HTTP ${CODE:-none} (attempt $attempt of 3)."
+            [ "$attempt" = "3" ] || sleep 15
+          done
+          echo "::error::Deploy hook returned HTTP ${CODE:-none} three times. Cloudflare said:"
+          cat "$RESP"
+          exit 1
