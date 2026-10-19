@@ -1950,7 +1950,7 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
+     "inStock": true,
      "stockQty": 12,
      "focal": "46.69% 54.33%",
      "zoom": 1
@@ -1968,7 +1968,7 @@
       "2.6",
       "2.8"
      ],
-     "inStock": false,
+     "inStock": true,
      "stockQty": 12,
      "focal": "48.29% 50.96%",
      "zoom": 1
