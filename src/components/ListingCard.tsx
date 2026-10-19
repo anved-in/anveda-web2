@@ -130,19 +130,26 @@ export default function ListingCard({
                     {ALL_SIZES.map((s) => {
                       const st = sizeState(v, s);
                       const gone = st !== "ok";
+                      if (gone) {
+                        // not available: open the product on that size, where "Notify me" is offered
+                        return (
+                          <Link
+                            key={s}
+                            href={`${href}${href.includes("?") ? "&" : "?"}size=${encodeURIComponent(s)}`}
+                            aria-label={`Size ${s}, not available: tap to be notified`}
+                            className="min-w-[30px] border border-line bg-cream-2 px-2 py-1 text-center text-[11.5px] font-semibold text-ink-soft/60 line-through transition-colors hover:border-ink"
+                          >
+                            {s}
+                          </Link>
+                        );
+                      }
                       return (
                         <button
                           key={s}
                           type="button"
-                          disabled={gone}
                           onClick={() => pickSize(s)}
-                          aria-label={st === "na" ? `Size ${s}, not available` : st === "gone" ? `Size ${s}, sold out` : `Size ${s}`}
-                          className={[
-                            "min-w-[30px] border px-2 py-1 text-[11.5px] font-semibold transition-colors",
-                            gone
-                              ? "cursor-not-allowed border-line bg-cream-2 text-ink-soft/60 line-through"
-                              : "border-line-strong hover:border-ink hover:bg-ink hover:text-cream",
-                          ].join(" ")}
+                          aria-label={`Size ${s}`}
+                          className="min-w-[30px] border border-line-strong px-2 py-1 text-[11.5px] font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
                         >
                           {s}
                         </button>

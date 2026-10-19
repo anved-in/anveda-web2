@@ -189,21 +189,32 @@ function FavRow({ p, v }: { p: Product; v: Variant }) {
               {ALL_SIZES.map((s) => {
                 const st = sizeState(v, s);
                 const gone = st !== "ok";
+                if (gone) {
+                  // not available: open the product on that size, where "Notify me" is offered
+                  return (
+                    <Link
+                      key={s}
+                      href={`${href}&size=${encodeURIComponent(s)}`}
+                      onClick={() => setFavOpen(false)}
+                      aria-label={`Size ${s}, not available: tap to be notified`}
+                      className="min-w-[40px] border border-line bg-cream-2 px-2 py-1.5 text-center text-[12.5px] text-ink-soft/60 line-through transition-colors hover:border-ink"
+                    >
+                      {s}
+                    </Link>
+                  );
+                }
                 return (
                   <button
                     key={s}
                     type="button"
-                    disabled={gone}
                     onClick={() => setSize(s)}
                     aria-pressed={size === s}
-                    aria-label={st === "na" ? `Size ${s}, not available` : st === "gone" ? `Size ${s}, sold out` : `Size ${s}`}
+                    aria-label={`Size ${s}`}
                     className={[
-                      "min-w-[40px] border px-2 py-1.5 text-[12.5px] transition-colors",
-                      gone
-                        ? "cursor-not-allowed border-line bg-cream-2 text-ink-soft/60 line-through"
-                        : size === s
-                          ? "cursor-pointer border-ink bg-ink text-cream"
-                          : "cursor-pointer border-line-strong bg-white hover:border-ink",
+                      "min-w-[40px] cursor-pointer border px-2 py-1.5 text-[12.5px] transition-colors",
+                      size === s
+                        ? "border-ink bg-ink text-cream"
+                        : "border-line-strong bg-white hover:border-ink",
                     ].join(" ")}
                   >
                     {s}

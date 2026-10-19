@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "@/components/Link";
 import QtyStepper from "@/components/QtyStepper";
 import { useCart } from "@/lib/cart";
@@ -31,7 +32,9 @@ export default function ProductBuy({
 }) {
   // No size preselected on purpose: a defaulted size is the commonest cause of
   // a wrong-size delivery. The customer must choose deliberately.
-  const [size, setSize] = useState<string | null>(null);
+  // (a size can arrive in the link, e.g. from the shop card's size picker: ?size=2.10)
+  const sizeFromLink = useSearchParams().get("size");
+  const [size, setSize] = useState<string | null>(() => (sizeFromLink && ALL_SIZES.includes(sizeFromLink) ? sizeFromLink : null));
   const sizeRef = useRef<HTMLDivElement>(null);
   const [err, setErr] = useState(false);
   const [added, setAdded] = useState(false);
@@ -41,10 +44,13 @@ export default function ProductBuy({
   const left = size ? sizeLeft(variant, size) : null;
   const [overErr, setOverErr] = useState<string | null>(null);
 
-  // switching colour: a size that is finished in the new colour must not stay selected
+  // A size that cannot be bought stays selectable: choosing it offers "Notify me" instead of "Add to bag".
+  const choice = size ? sizeState(variant, size) : null;
+  const unavailableChoice = choice !== null && choice !== "ok";
+  const showNotify = !variant.inStock || unavailableChoice;
   useEffect(() => {
-    if (size && sizeState(variant, size) !== "ok") setSize(null);
     setOverErr(null);
+    setNotifyState("idle");
   }, [variant, size]);
 
   const onAdd = () => {
@@ -71,7 +77,7 @@ export default function ProductBuy({
       const res = await fetch("/api/notify-stock", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ variantId: variant.id, email: notifyEmail }),
+        body: JSON.stringify({ variantId: variant.id, email: notifyEmail, size: unavailableChoice ? size : null }),
       });
       const data = await res.json();
       setNotifyState(data.ok ? "done" : "error");
@@ -115,25 +121,26 @@ export default function ProductBuy({
               <button
                 key={s}
                 type="button"
-                disabled={gone}
                 onClick={() => {
                   setSize(s);
                   setErr(false);
                 }}
                 aria-pressed={on}
-                aria-label={st === "na" ? `Size ${s}, not available` : st === "gone" ? `Size ${s}, sold out` : `Size ${s}`}
+                aria-label={gone ? `Size ${s}, not available: tap to be notified` : `Size ${s}`}
                 className={[
-                  "min-w-0 flex-1 border px-1 py-1.5 text-center transition-colors md:w-[60px] md:flex-none md:py-1.5",
+                  "min-w-0 flex-1 cursor-pointer border px-1 py-1.5 text-center transition-colors md:w-[60px] md:flex-none md:py-1.5",
                   gone
-                    ? "cursor-not-allowed border-line bg-cream-2 text-ink-soft/60"
+                    ? on
+                      ? "border-ink bg-white text-ink-soft"
+                      : "border-line bg-cream-2 text-ink-soft/60 hover:border-ink"
                     : on
-                      ? "cursor-pointer border-ink bg-ink text-cream"
-                      : "cursor-pointer border-line-strong bg-white hover:border-ink",
+                      ? "border-ink bg-ink text-cream"
+                      : "border-line-strong bg-white hover:border-ink",
                 ].join(" ")}
               >
                 <span className={`block text-[11.5px] font-semibold${gone ? " line-through" : ""}`}>{s}</span>
                 {gone ? (
-                  <span className="block text-[7px] uppercase tracking-[0.05em]">{st === "na" ? "Unavailable" : "Sold out"}</span>
+                  <span className="block text-[7px] uppercase tracking-[0.05em]">Notify me</span>
                 ) : g && (
                   <span
                     className={[
@@ -168,7 +175,7 @@ export default function ProductBuy({
         )}
       </div>
 
-      {variant.inStock ? (
+      {!showNotify ? (
         <>
           {/* Phone: pinned just above the tab bar so it is always in reach while
               the shopper reads. Desktop: an ordinary full-width button. */}
@@ -223,10 +230,14 @@ export default function ProductBuy({
       ) : (
         <div className="mt-8 border border-line-strong bg-cream-2 px-5 py-6 text-center">
           <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-ink">
-            Sold out — {colourLabel(p, variant)}
+            {unavailableChoice ? `Size ${size} — ${colourLabel(p, variant)}` : `Sold out — ${colourLabel(p, variant)}`}
           </p>
           <p className="mt-1.5 text-[12.5px] text-ink-soft">
-            Leave your email and we&rsquo;ll let you know the moment this shade is back.
+            {unavailableChoice
+              ? choice === "na"
+                ? "We don\u2019t have this size in this colour right now. Leave your email and we\u2019ll tell you if it becomes available."
+                : "This size is sold out. Leave your email and we\u2019ll tell you the moment it\u2019s back."
+              : <>Leave your email and we&rsquo;ll let you know the moment this shade is back.</>}
           </p>
           {notifyState === "done" ? (
             <p className="mt-4 text-[13px] font-semibold text-ink">You&rsquo;re on the list ✓</p>
