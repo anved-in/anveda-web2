@@ -2253,7 +2253,7 @@
       "2.6",
       "2.8"
      ],
-     "inStock": false,
+     "inStock": true,
      "focal": "45.3% 48.75%",
      "zoom": 1
     },
