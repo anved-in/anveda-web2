@@ -2652,13 +2652,13 @@
      ],
      "inStock": true,
      "stockQty": 12,
-     "focal": "50% 80.5%",
-     "zoom": 1,
+     "focal": "39.6% 65%",
+     "zoom": 1.45,
      "gallery": [
       {
        "image": "square-edge-glass-bangles-lavender.webp",
-       "focal": "41.88% 49.76%",
-       "zoom": 1
+       "focal": "22.1% 58.4%",
+       "zoom": 1.4
       }
      ]
     },
