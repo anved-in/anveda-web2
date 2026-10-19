@@ -1926,7 +1926,7 @@
    "group": "ornate",
    "name": "Designer Side Bangles",
    "price": 180,
-   "priceMax": 1200,
+   "priceMax": 1250,
    "pieces": 4,
    "unit": "set",
    "sizes": [
@@ -1943,15 +1943,13 @@
      "colour": "Bell Pearl Flower Set of 4",
      "image": "designer-side-bangles-bell-pearl-flower-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 485,
+     "price": 420,
      "pieces": 4,
      "sizes": [
-      "2.2",
-      "2.4",
       "2.6"
      ],
      "inStock": true,
-     "stockQty": 12,
+     "stockQty": 1,
      "focal": "46.69% 54.33%",
      "zoom": 1
     },
@@ -1960,7 +1958,7 @@
      "colour": "Diamond Shaped Set of 2",
      "image": "designer-side-bangles-diamond-shaped-set-of-2.webp",
      "hex": "#e2d8c4",
-     "price": 1200,
+     "price": 660,
      "pieces": 2,
      "sizes": [
       "2.2",
@@ -1969,7 +1967,7 @@
       "2.8"
      ],
      "inStock": true,
-     "stockQty": 12,
+     "stockQty": 1,
      "focal": "48.29% 50.96%",
      "zoom": 1
     },
@@ -1985,7 +1983,6 @@
       "2.6"
      ],
      "inStock": false,
-     "stockQty": 12,
      "focal": "47.3% 54.97%",
      "zoom": 1
     },
@@ -2003,7 +2000,6 @@
       "2.8"
      ],
      "inStock": false,
-     "stockQty": 12,
      "focal": "5.7% 58%",
      "zoom": 1.33
     },
@@ -2020,7 +2016,6 @@
       "2.6"
      ],
      "inStock": false,
-     "stockQty": 12,
      "focal": "51.95% 54.54%",
      "zoom": 1
     },
@@ -2037,7 +2032,7 @@
       "2.6"
      ],
      "inStock": true,
-     "stockQty": 12,
+     "stockQty": 3,
      "focal": "53.11% 64.53%",
      "zoom": 1
     },
@@ -2054,7 +2049,7 @@
       "2.6"
      ],
      "inStock": true,
-     "stockQty": 12,
+     "stockQty": 4,
      "focal": "53.7% 56.69%",
      "zoom": 1
     },
@@ -2072,7 +2067,7 @@
       "2.8"
      ],
      "inStock": true,
-     "stockQty": 12,
+     "stockQty": 3,
      "focal": "43.57% 51.9%",
      "zoom": 1
     },
@@ -2089,8 +2084,8 @@
       "2.6",
       "2.8"
      ],
-     "inStock": false,
-     "stockQty": 12,
+     "inStock": true,
+     "stockQty": 4,
      "focal": "49.76% 51.22%",
      "zoom": 1
     },
@@ -2099,15 +2094,16 @@
      "colour": "Lakshmi with Kemp Stones Set of 4",
      "image": "designer-side-bangles-lakshmi-with-kemp-stones-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 399,
+     "price": 450,
      "pieces": 4,
      "sizes": [
       "2.2",
       "2.4",
-      "2.6"
+      "2.6",
+      "2.8"
      ],
-     "inStock": false,
-     "stockQty": 12,
+     "inStock": true,
+     "stockQty": 11,
      "focal": "50.19% 53.38%",
      "zoom": 1
     },
@@ -2123,8 +2119,8 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
-     "stockQty": 12,
+     "inStock": true,
+     "stockQty": 1,
      "focal": "61.5% 70.55%",
      "zoom": 1
     },
@@ -2140,8 +2136,8 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
-     "stockQty": 12,
+     "inStock": true,
+     "stockQty": 1,
      "focal": "45.64% 54.31%",
      "zoom": 1
     },
@@ -2157,8 +2153,8 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
-     "stockQty": 12,
+     "inStock": true,
+     "stockQty": 2,
      "focal": "51.74% 58.05%",
      "zoom": 1
     },
@@ -2174,8 +2170,8 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
-     "stockQty": 12,
+     "inStock": true,
+     "stockQty": 2,
      "focal": "44.28% 57.54%",
      "zoom": 1
     },
@@ -2191,8 +2187,8 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
-     "stockQty": 12,
+     "inStock": true,
+     "stockQty": 3,
      "focal": "52.44% 73.29%",
      "zoom": 1
     },
@@ -2209,8 +2205,8 @@
       "2.6",
       "2.8"
      ],
-     "inStock": false,
-     "stockQty": 12,
+     "inStock": true,
+     "stockQty": 4,
      "focal": "50.11% 44.88%",
      "zoom": 1
     },
@@ -2219,21 +2215,21 @@
      "colour": "Pearl Floral Square Set of 4",
      "image": "designer-side-bangles-pearl-floral-square-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 499,
+     "price": 530,
      "pieces": 4,
      "sizes": [
       "2.2",
       "2.4",
       "2.6"
      ],
-     "inStock": false,
-     "stockQty": 12,
+     "inStock": true,
+     "stockQty": 1,
      "focal": "45.63% 50.49%",
      "zoom": 1
     },
     {
      "id": 106,
-     "colour": "Premium Ad Flower Set of 2",
+     "colour": "Tara AD Flower Set of 2",
      "image": "designer-side-bangles-premium-ad-flower-set-of-2.webp",
      "hex": "#e2d8c4",
      "price": 650,
@@ -2244,16 +2240,15 @@
       "2.6"
      ],
      "inStock": false,
-     "stockQty": 12,
-     "focal": "49.15% 70.4%",
-     "zoom": 1
+     "focal": "41.6% 88.6%",
+     "zoom": 1.75
     },
     {
      "id": 107,
-     "colour": "Premium White Stone Flower Set of 4",
+     "colour": "Laya White Stone Flower Set of 4",
      "image": "designer-side-bangles-premium-white-stone-flower-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 1200,
+     "price": 1250,
      "pieces": 4,
      "sizes": [
       "2.2",
@@ -2261,8 +2256,8 @@
       "2.6",
       "2.8"
      ],
-     "inStock": false,
-     "stockQty": 12,
+     "inStock": true,
+     "stockQty": 2,
      "focal": "45.3% 48.75%",
      "zoom": 1
     },
@@ -2278,8 +2273,8 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
-     "stockQty": 12,
+     "inStock": true,
+     "stockQty": 2,
      "focal": "50.41% 53.14%",
      "zoom": 1
     },
@@ -2295,8 +2290,8 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
-     "stockQty": 12,
+     "inStock": true,
+     "stockQty": 4,
      "focal": "46.22% 58.02%",
      "zoom": 1
     },
@@ -2313,7 +2308,6 @@
       "2.6"
      ],
      "inStock": false,
-     "stockQty": 12,
      "focal": "54.87% 58.99%",
      "zoom": 1
     },
@@ -2329,8 +2323,8 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
-     "stockQty": 12,
+     "inStock": true,
+     "stockQty": 1,
      "focal": "49.98% 67.81%",
      "zoom": 1
     },
@@ -2347,7 +2341,7 @@
       "2.6"
      ],
      "inStock": false,
-     "stockQty": 12,
+     "stockQty": 2,
      "focal": "41.68% 55.61%",
      "zoom": 1
     }
@@ -2511,13 +2505,13 @@
      ],
      "inStock": true,
      "stockQty": 12,
-     "focal": "50% 63.2%",
-     "zoom": 1,
+     "focal": "53.8% 59%",
+     "zoom": 1.5,
      "gallery": [
       {
        "image": "square-edge-glass-bangles-aqua.webp",
-       "focal": "55.93% 57.34%",
-       "zoom": 1
+       "focal": "58.5% 63.7%",
+       "zoom": 1.55
       }
      ]
     },
@@ -2536,13 +2530,13 @@
      ],
      "inStock": true,
      "stockQty": 12,
-     "focal": "50% 60.4%",
-     "zoom": 1,
+     "focal": "59.5% 49.1%",
+     "zoom": 1.65,
      "gallery": [
       {
        "image": "square-edge-glass-bangles-black.webp",
        "focal": "46.81% 44.32%",
-       "zoom": 1
+       "zoom": 1.75
       }
      ]
     },
@@ -2579,13 +2573,13 @@
      ],
      "inStock": true,
      "stockQty": 12,
-     "focal": "50% 83.5%",
-     "zoom": 1,
+     "focal": "47.6% 66.2%",
+     "zoom": 1.5,
      "gallery": [
       {
        "image": "square-edge-glass-bangles-dark-green.webp",
-       "focal": "51.1% 40.45%",
-       "zoom": 1
+       "focal": "57.9% 27.4%",
+       "zoom": 1.5
       }
      ]
     },
@@ -2604,15 +2598,8 @@
      ],
      "inStock": true,
      "stockQty": 12,
-     "focal": "50% 70.6%",
-     "zoom": 1,
-     "gallery": [
-      {
-       "image": "square-edge-glass-bangles-dark-pink.webp",
-       "focal": "51.36% 46.11%",
-       "zoom": 1
-      }
-     ]
+     "focal": "85.8% 63.5%",
+     "zoom": 1.4
     },
     {
      "id": 124,
@@ -2629,8 +2616,8 @@
      ],
      "inStock": true,
      "stockQty": 12,
-     "focal": "53.97% 54.84%",
-     "zoom": 1
+     "focal": "65.7% 61.1%",
+     "zoom": 1.4
     },
     {
      "id": 125,
@@ -2648,7 +2635,7 @@
      "inStock": true,
      "stockQty": 12,
      "focal": "50.1% 47%",
-     "zoom": 1
+     "zoom": 1.4
     },
     {
      "id": 126,
@@ -2665,13 +2652,13 @@
      ],
      "inStock": true,
      "stockQty": 12,
-     "focal": "50% 80.5%",
-     "zoom": 1,
+     "focal": "39.6% 65%",
+     "zoom": 1.45,
      "gallery": [
       {
        "image": "square-edge-glass-bangles-lavender.webp",
-       "focal": "41.88% 49.76%",
-       "zoom": 1
+       "focal": "22.1% 58.4%",
+       "zoom": 1.4
       }
      ]
     },
@@ -2715,13 +2702,13 @@
      ],
      "inStock": true,
      "stockQty": 12,
-     "focal": "50% 10.0%",
-     "zoom": 1,
+     "focal": "58.8% 72.3%",
+     "zoom": 1.5,
      "gallery": [
       {
        "image": "square-edge-glass-bangles-mauve.webp",
        "focal": "50.08% 55.42%",
-       "zoom": 1
+       "zoom": 1.5
       }
      ]
     },
