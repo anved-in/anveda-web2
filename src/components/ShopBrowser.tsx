@@ -56,7 +56,7 @@ function DropdownPortal({
   }, [anchorRef]);
   if (!pos) return null;
   return createPortal(
-    <div style={{ position: "fixed", top: pos.top, left: pos.left, width: PANEL_W }} className="z-20 border border-line bg-white py-1.5 shadow-lg">
+    <div data-shop-dropdown style={{ position: "fixed", top: pos.top, left: pos.left, width: PANEL_W }} className="z-20 border border-line bg-white py-1.5 shadow-lg">
       {children}
     </div>,
     document.body,
@@ -106,7 +106,10 @@ export default function ShopBrowser({
 
   useEffect(() => {
     const onDocClick = (e: MouseEvent) => {
-      if (barRef.current && !barRef.current.contains(e.target as Node)) setOpenMenu(null);
+      const t = e.target as HTMLElement;
+      // a click inside an open menu panel (it lives in <body>, outside the bar) is not "outside": the Size menu stays open while several sizes are ticked
+      if (t.closest?.("[data-shop-dropdown]")) return;
+      if (barRef.current && !barRef.current.contains(t)) setOpenMenu(null);
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpenMenu(null);
