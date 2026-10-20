@@ -538,6 +538,69 @@
      },
      "focal": "47.34% 42.95%",
      "zoom": 1
+    },
+    {
+     "id": 148,
+     "colour": "Ruby Red",
+     "price": 320,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 11,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 4,
+      "2.6": 3,
+      "2.8": 4
+     },
+     "zoom": 1
+    },
+    {
+     "id": 149,
+     "colour": "Peach",
+     "price": 320,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 6,
+     "sizeStock": {
+      "2.2": 1,
+      "2.4": 1,
+      "2.6": 3,
+      "2.8": 1
+     },
+     "zoom": 1
+    },
+    {
+     "id": 150,
+     "colour": "Baby Pink",
+     "price": 320,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 4,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 2
+     },
+     "zoom": 1
     }
    ],
    "image": "intricate-glass-bangle-aqua.webp"
