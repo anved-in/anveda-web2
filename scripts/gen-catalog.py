@@ -70,7 +70,7 @@ for _r in reels_in:
         _r["cover"] = webp_name(_cov)
 
 json.dump(
-    {"groups": groups, "collections": collections, "products": products, "colourWall": data.get("colourWall", []), "newArrivals": data.get("newArrivals", [])},
+    {"groups": groups, "collections": collections, "products": products, "colourWall": data.get("colourWall", []), "newArrivals": data.get("newArrivals", []), "announcement": data.get("announcement")},
     open(OUT, "w", encoding="utf-8"),
     ensure_ascii=False,
     indent=1,

@@ -138,6 +138,10 @@ export const colourWallManual: number[] =
 export const newArrivalsManual: number[] =
   (data as { newArrivals?: number[] }).newArrivals ?? [];
 
+/** The offers strip set in the CMS (Settings > Offers strip); null while it is switched off. */
+export const announcement: { text: string; link?: string; bg: string } | null =
+  (data as { announcement?: { text: string; link?: string; bg: string } | null }).announcement ?? null;
+
 export const productsIn = (slug: string): Product[] =>
   products.filter((p) => p.collection === slug);
 

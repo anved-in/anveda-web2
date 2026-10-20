@@ -36,7 +36,8 @@ const check = (ok, what) => { console.log((ok ? 'PASS  ' : 'FAIL  ') + what); if
 // `seedCart` puts items in the bag BEFORE the page starts (no second navigation).
 async function session(width, height, mobile, url, fn, seedCart) {
   const port = 9900 + Math.floor(Math.random() * 40);
-  const proc = spawn(EDGE, [`--remote-debugging-port=${port}`, '--headless=new', '--disable-gpu', '--user-data-dir=' + path.join(process.env.TEMP || '.', 'smoke-site-' + Date.now() + width), 'about:blank'], { stdio: 'ignore' });
+  const prof = path.join(process.env.TEMP || '.', 'smoke-site-' + Date.now() + width);
+  const proc = spawn(EDGE, [`--remote-debugging-port=${port}`, '--headless=new', '--disable-gpu', '--user-data-dir=' + prof, 'about:blank'], { stdio: 'ignore' });
   let t; for (let i = 0; i < 40; i++) { try { t = await (await fetch(`http://127.0.0.1:${port}/json`)).json(); if (t.find((x) => x.type === 'page')) break; } catch {} await sleep(250); }
   const ws = new WebSocket(t.find((x) => x.type === 'page').webSocketDebuggerUrl); await new Promise((r) => (ws.onopen = r));
   let id = 0; const pend = new Map(); ws.onmessage = (m) => { const d = JSON.parse(m.data); if (d.id && pend.has(d.id)) { pend.get(d.id)(d); pend.delete(d.id); } };
@@ -48,7 +49,7 @@ async function session(width, height, mobile, url, fn, seedCart) {
   if (seedCart) await send('Page.addScriptToEvaluateOnNewDocument', { source: "try{localStorage.setItem('anveda.cart.v1', " + JSON.stringify(JSON.stringify(seedCart)) + ")}catch(e){}" });
   await send('Page.navigate', { url }); await sleep(3500);
   const tap =async (x, y) => { await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] }); await sleep(60); await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await sleep(700); };
-  try { await fn({ ev, tap }); } finally { ws.close(); proc.kill(); }
+  try { await fn({ ev, tap }); } finally { ws.close(); proc.kill(); await sleep(1500); try { fs.rmSync(prof, { recursive: true, force: true }); } catch {} }
 }
 const centre = (sel) => `JSON.stringify((function(){var e=document.querySelector(${JSON.stringify(sel)});if(!e)return null;var r=e.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}})())`;
 const reachable = (sel) => `(function(){var es=[].slice.call(document.querySelectorAll(${JSON.stringify(sel)})).filter(function(e){var r=e.getBoundingClientRect();return r.width>0&&r.height>0});var e=es[0];if(!e)return 'missing';var r=e.getBoundingClientRect();var h=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return (h===e||e.contains(h))?'ok':'covered by '+(h?h.tagName+'.'+String(h.className).slice(0,40):'nothing')})()`;
