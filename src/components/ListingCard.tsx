@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "@/components/Link";
-import { sizesOfProduct, framingStyle, imgSrc, imgSrcSmall, listingPrice, listingTitle, sizeState, type Listing } from "@/lib/catalog";
+import { sizesOfProduct, inr, framingStyle, imgSrc, imgSrcSmall, listingPrice, listingTitle, sizeState, type Listing } from "@/lib/catalog";
 import { asset } from "@/lib/site";
 import { useCart } from "@/lib/cart";
 import Price from "./Price";
@@ -99,70 +99,72 @@ export default function ListingCard({
         <Link href={href} className="block truncate text-[13.5px] leading-snug text-ink">
           {title}
         </Link>
-        <div className="mt-1 flex items-center justify-between gap-2">
-          <Link href={href} className="block">
-            <Price price={price} size="sm" muted />
-          </Link>
-          {!v.inStock && <NotifyMe variantId={v.id} label={title} />}
-          {v.inStock && (
-            <div ref={pickerRef} className="relative shrink-0">
-              <button
-                type="button"
-                onClick={() => setSizeOpen((o) => !o)}
-                aria-label={`Add ${title} to bag`}
-                aria-expanded={sizeOpen}
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-ink text-white transition-opacity hover:opacity-80"
-              >
-                {added ? (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M4 12.5l5 5L20 6.5" />
-                  </svg>
-                ) : (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M6 7h12l1 13H5L6 7Z" />
-                    <path d="M9 7a3 3 0 0 1 6 0" />
-                  </svg>
-                )}
-              </button>
+        {v.inStock ? (
+          // ONE button holds the word "Add" and the price. Tapping it asks for the size, in a small panel just above it.
+          <div ref={pickerRef} className="relative mt-2.5">
+            <button
+              type="button"
+              onClick={() => setSizeOpen((o) => !o)}
+              aria-label={`Add ${title} to bag, ${inr(price)}`}
+              aria-expanded={sizeOpen}
+              className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 bg-ink px-3 text-[11.5px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-85"
+            >
+              {added ? (
+                "Added ✓"
+              ) : (
+                <>
+                  <span>Add</span>
+                  <span aria-hidden="true" className="opacity-60">·</span>
+                  <span>{inr(price)}</span>
+                </>
+              )}
+            </button>
 
-              {sizeOpen && (
-                <div className="absolute bottom-[calc(100%+8px)] right-0 z-20 w-max border border-line bg-white p-2.5 shadow-lg">
-                  <p className="px-0.5 pb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ink-faint">Size</p>
-                  <div className="flex gap-1.5">
-                    {sizesOfProduct(p).map((s) => {
-                      const st = sizeState(v, s);
-                      const gone = st !== "ok";
-                      if (gone) {
-                        // not available: open the product on that size, where "Notify me" is offered
-                        return (
-                          <Link
-                            key={s}
-                            href={`${href}${href.includes("?") ? "&" : "?"}size=${encodeURIComponent(s)}`}
-                            aria-label={`Size ${s}, not available: tap to be notified`}
-                            className="min-w-[30px] border border-line bg-cream-2 px-2 py-1 text-center text-[11.5px] font-semibold text-ink-soft/60 line-through transition-colors hover:border-ink"
-                          >
-                            {s}
-                          </Link>
-                        );
-                      }
+            {sizeOpen && (
+              <div className="absolute bottom-[calc(100%+8px)] left-0 right-0 z-20 border border-line bg-white p-2.5 shadow-lg">
+                <p className="px-0.5 pb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ink-faint">Choose a size</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {sizesOfProduct(p).map((s) => {
+                    const st = sizeState(v, s);
+                    const gone = st !== "ok";
+                    if (gone) {
+                      // not available: open the product on that size, where "Notify me" is offered
                       return (
-                        <button
+                        <Link
                           key={s}
-                          type="button"
-                          onClick={() => pickSize(s)}
-                          aria-label={`Size ${s}`}
-                          className="min-w-[30px] border border-line-strong px-2 py-1 text-[11.5px] font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
+                          href={`${href}${href.includes("?") ? "&" : "?"}size=${encodeURIComponent(s)}`}
+                          aria-label={`Size ${s}, not available: tap to be notified`}
+                          className="min-w-[34px] border border-line bg-cream-2 px-2 py-1.5 text-center text-[12px] font-semibold text-ink-soft/60 line-through transition-colors hover:border-ink"
                         >
                           {s}
-                        </button>
+                        </Link>
                       );
-                    })}
-                  </div>
+                    }
+                    return (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => pickSize(s)}
+                        aria-label={`Size ${s}`}
+                        className="min-w-[34px] border border-line-strong px-2 py-1.5 text-[12px] font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
+                      >
+                        {s}
+                      </button>
+                    );
+                  })}
                 </div>
-              )}
-            </div>
-          )}
-        </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          // sold out: there is nothing to add, so the price stays and "Notify me" takes the button's place
+          <div className="mt-1 flex items-center justify-between gap-2">
+            <Link href={href} className="block">
+              <Price price={price} size="sm" muted />
+            </Link>
+            <NotifyMe variantId={v.id} label={title} />
+          </div>
+        )}
       </div>
     </article>
   );

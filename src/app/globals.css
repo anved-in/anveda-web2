@@ -98,7 +98,6 @@ h1, h2, h3, .font-display {
   color: var(--color-maroon);
 }
 .on-dark .eyebrow { color: var(--color-gold); }
-.on-dark .price-was { color: rgba(255, 255, 255, 0.55); }
 /* the price is ink-coloured by default: on a dark panel (the full-screen reel) it vanished */
 .on-dark .price-now { color: #fff; }
 
@@ -158,29 +157,8 @@ a:active { opacity: 0.75; }
 }
 
 /* ------------------------------------------------------------- pricing
-   Every price is shown twice: a struck "was" figure 20% above the real one,
-   and the real catalogue price beside it. The uplift is computed in
-   src/lib/price.ts so the two never drift apart. */
-.price-was {
-  text-decoration: line-through;
-  text-decoration-thickness: 1px;
-  color: var(--color-ink-faint);
-  font-weight: 400;
-}
+   Only the real price is shown. */
 .price-now { color: var(--color-ink); font-weight: 700; }
-
-/* Sale badge, as the reference puts on discounted cards. */
-.badge-sale {
-  display: inline-block;
-  background: var(--color-maroon);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 4px 8px;
-  line-height: 1;
-}
 
 /* Scrolling announcement marquee, as on the reference storefront. */
 .marquee { display: flex; overflow: hidden; user-select: none; }

@@ -1,9 +1,7 @@
 import { priceTag } from "@/lib/price";
 
 /**
- * A price, always shown as a saving: the struck "was" figure first, then the
- * real catalogue price. `from` prefixes it for products whose colourways are
- * priced differently.
+ * A price: the real catalogue price. `from` prefixes it for products whose colourways are priced differently.
  */
 export default function Price({
   price,
@@ -15,9 +13,7 @@ export default function Price({
   price: number;
   from?: boolean;
   size?: "sm" | "md" | "lg";
-  /** Plain small grey instead of the bold sale-red treatment — the grid's
-   *  own name/price order already puts the name first and in black; a loud
-   *  price under it would outrank the thing that's actually meant to lead. */
+  /** The smaller, quieter style used in grids and panels. */
   muted?: boolean;
   className?: string;
 }) {
@@ -30,15 +26,7 @@ export default function Price({
       {from && (
         <span className="text-ink-faint text-[0.75em] tracking-wide">from</span>
       )}
-      {/* Selling price first, struck price after it: the number they pay is
-          the one that should be read first. */}
       <span className={muted ? "font-semibold text-ink" : "price-now"}>{t.nowText}</span>
-      <span
-        className={muted ? "text-[0.85em] font-normal text-ink-faint line-through" : size === "lg" ? "price-was text-[0.62em] !text-[#a3a3a3]" : "price-was text-[0.85em]"}
-        aria-label={`Was ${t.wasText}`}
-      >
-        {t.wasText}
-      </span>
     </span>
   );
 }
