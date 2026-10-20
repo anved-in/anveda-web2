@@ -1177,31 +1177,6 @@
      "zoom": 1
     },
     {
-     "id": 40,
-     "colour": "Emerald Green",
-     "image": "petal-stone-glass-bangle-emerald-green.webp",
-     "hex": "#026600",
-     "price": 320,
-     "pieces": 12,
-     "sizes": [
-      "2.2",
-      "2.4",
-      "2.6",
-      "2.8",
-      "2.10"
-     ],
-     "inStock": false,
-     "sizeStock": {
-      "2.10": 0,
-      "2.2": 0,
-      "2.4": 0,
-      "2.6": 0,
-      "2.8": 0
-     },
-     "focal": "44.37% 50.18%",
-     "zoom": 1
-    },
-    {
      "id": 41,
      "colour": "Ivory",
      "image": "petal-stone-glass-bangle-ivory.webp",
