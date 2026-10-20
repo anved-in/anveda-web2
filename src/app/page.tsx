@@ -4,6 +4,7 @@ import {
   collections,
   imgSrc,
   imgSrcSmall,
+  newArrivalsManual,
   products,
   rangeHref,
   type Listing,
@@ -27,8 +28,16 @@ const lead = (slug: string, n = 0): Listing => {
   };
 };
 
-// New Arrivals: the lead shade of the first four families.
-const arrivals: Listing[] = collections.slice(0, 4).map((c) => lead(c.slug));
+// New Arrivals: the owner's own picks, in the order set in the CMS (Homepage page).
+// Nothing picked there (or none still exist) = the lead shade of the first four families.
+const picked: Listing[] = newArrivalsManual.flatMap((id) => {
+  for (const p of products) {
+    const v = p.variants.find((x) => x.id === id);
+    if (v) return [{ product: p, variant: v, href: `/product/${p.id}/?c=${encodeURIComponent(v.colour)}` }];
+  }
+  return [];
+});
+const arrivals: Listing[] = picked.length ? picked : collections.slice(0, 4).map((c) => lead(c.slug));
 
 // Best Sellers: a different four, at a different shade, so the two grids do
 // not repeat the same photographs down the page.

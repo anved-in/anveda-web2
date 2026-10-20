@@ -125,6 +125,10 @@ export const products: Product[] = data.products;
 export const colourWallManual: number[] =
   (data as { colourWall?: number[] }).colourWall ?? [];
 
+/** The owner's hand-picked, hand-ordered homepage "New Arrivals" (variant ids); empty = automatic. */
+export const newArrivalsManual: number[] =
+  (data as { newArrivals?: number[] }).newArrivals ?? [];
+
 export const productsIn = (slug: string): Product[] =>
   products.filter((p) => p.collection === slug);
 
