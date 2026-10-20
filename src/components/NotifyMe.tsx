@@ -60,8 +60,8 @@ export default function NotifyMe({
     e.preventDefault();
     const em = email.trim();
     const digits = phone.replace(/\D/g, "");
-    if (!em && !digits) return setErr("Please enter an email or a mobile number.");
-    if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return setErr("That email doesn’t look right.");
+    if (!em) return setErr("Please enter your email.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return setErr("That email doesn’t look right.");
     if (digits) {
       const d = digits.length > 10 && digits.startsWith("91") ? digits.slice(2) : digits.length === 11 && digits.startsWith("0") ? digits.slice(1) : digits;
       if (!/^[6-9]\d{9}$/.test(d)) return setErr("Please enter a 10-digit mobile number.");
@@ -126,7 +126,8 @@ export default function NotifyMe({
                   <h2 id="notify-title" className="text-[13px] font-bold uppercase tracking-[0.16em] text-ink">
                     Notify me
                   </h2>
-                  <p className="mt-1 text-[12.5px] text-ink-soft">{label}</p>
+                  <p className="mt-1.5 text-[11px] uppercase tracking-[0.1em] text-ink-faint">Waiting for</p>
+                  <p className="text-[14px] font-semibold text-ink">{label}</p>
                 </div>
                 <button type="button" onClick={close} aria-label="Close" className="-mr-1 -mt-1 flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center text-ink-soft hover:text-ink">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
@@ -145,13 +146,13 @@ export default function NotifyMe({
                 </div>
               ) : (
                 <form onSubmit={submit} noValidate className="mt-4">
-                  <p className="text-[12.5px] text-ink-soft">Leave your email, your mobile number, or both &mdash; and we&rsquo;ll tell you the moment it&rsquo;s back.</p>
+                  <p className="text-[12.5px] text-ink-soft">We&rsquo;ll email you the moment it&rsquo;s back. Add your WhatsApp number too if you&rsquo;d like a message there.</p>
                   <label className="mt-4 block text-[11px] font-bold uppercase tracking-[0.12em] text-ink">
-                    Email
-                    <input ref={firstRef} type="email" inputMode="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className={field} />
+                    Email <span className="text-[#a33a2f]">*</span>
+                    <input ref={firstRef} type="email" required inputMode="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className={field} />
                   </label>
                   <label className="mt-3 block text-[11px] font-bold uppercase tracking-[0.12em] text-ink">
-                    Mobile number
+                    WhatsApp number <span className="font-medium normal-case tracking-normal text-ink-faint">(optional)</span>
                     <input type="tel" inputMode="numeric" autoComplete="tel-national" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="98765 43210" className={field} />
                   </label>
                   {err && (
