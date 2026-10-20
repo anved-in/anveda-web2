@@ -3,17 +3,49 @@
   {
    "slug": "glass",
    "name": "Glass Bangles",
-   "blurb": "Coloured glass, from clear jelly to cut and stone-set work."
+   "blurb": "Coloured glass, from clear jelly to cut and stone-set work.",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8",
+    "2.10"
+   ]
   },
   {
    "slug": "ornate",
    "name": "Ornate Bangles",
-   "blurb": "The worked pieces — statement bangles, kada and designer sides."
+   "blurb": "The worked pieces — statement bangles, kada and designer sides.",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8",
+    "2.10"
+   ]
   },
   {
    "slug": "layering",
    "name": "Layering Bangles",
-   "blurb": "Slim pieces made to sit either side of a statement bangle."
+   "blurb": "Slim pieces made to sit either side of a statement bangle.",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8",
+    "2.10"
+   ]
+  },
+  {
+   "slug": "kids",
+   "name": "Kids Bangles",
+   "blurb": "Small sizes for little wrists.",
+   "sizes": [
+    "1.10",
+    "1.12",
+    "1.14",
+    "2.0"
+   ]
   }
  ],
  "collections": [
@@ -115,6 +147,15 @@
    "story": "A squared edge instead of a round one. It sits flatter on the wrist and gives a stack a harder, more graphic line.",
    "cover": "square-edge-glass-bangles-aqua.webp",
    "order": 10
+  },
+  {
+   "slug": "lil-charms-kids-section",
+   "group": "kids",
+   "name": "Lil' Charms - Kids Section",
+   "blurb": "",
+   "story": "",
+   "cover": "",
+   "order": 11
   }
  ],
  "products": [
@@ -1542,13 +1583,14 @@
       "2.8",
       "2.10"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 3,
      "sizeStock": {
       "2.10": 0,
       "2.2": 0,
-      "2.4": 0,
-      "2.6": 0,
-      "2.8": 0
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 1
      },
      "focal": "41.14% 59.43%",
      "zoom": 1
@@ -1567,13 +1609,14 @@
       "2.8",
       "2.10"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 5,
      "sizeStock": {
-      "2.10": 0,
-      "2.2": 0,
-      "2.4": 0,
-      "2.6": 0,
-      "2.8": 0
+      "2.10": 1,
+      "2.2": 1,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 1
      },
      "focal": "50% 51.14%",
      "zoom": 1
@@ -1592,13 +1635,14 @@
       "2.8",
       "2.10"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 6,
      "sizeStock": {
       "2.10": 0,
-      "2.2": 0,
-      "2.4": 0,
-      "2.6": 0,
-      "2.8": 0
+      "2.2": 1,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 3
      },
      "focal": "50.51% 47.15%",
      "zoom": 1
@@ -1617,13 +1661,14 @@
       "2.8",
       "2.10"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 5,
      "sizeStock": {
       "2.10": 0,
       "2.2": 0,
-      "2.4": 0,
-      "2.6": 0,
-      "2.8": 0
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 3
      },
      "focal": "42.62% 50.83%",
      "zoom": 1
@@ -1642,12 +1687,13 @@
       "2.8",
       "2.10"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 2,
      "sizeStock": {
       "2.10": 0,
       "2.2": 0,
-      "2.4": 0,
-      "2.6": 0,
+      "2.4": 1,
+      "2.6": 1,
       "2.8": 0
      },
      "focal": "47.16% 53.36%",
@@ -1692,12 +1738,13 @@
       "2.8",
       "2.10"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 2,
      "sizeStock": {
       "2.10": 0,
-      "2.2": 0,
+      "2.2": 1,
       "2.4": 0,
-      "2.6": 0,
+      "2.6": 1,
       "2.8": 0
      },
      "focal": "48.4% 61.08%",
@@ -1717,9 +1764,10 @@
       "2.8",
       "2.10"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 1,
      "sizeStock": {
-      "2.10": 0,
+      "2.10": 1,
       "2.2": 0,
       "2.4": 0,
       "2.6": 0,
@@ -1730,7 +1778,7 @@
     },
     {
      "id": 58,
-     "colour": "Wine",
+     "colour": "Deep Mauve",
      "image": "phool-glass-bangle-wine.webp",
      "hex": "#86158e",
      "price": 320,
@@ -1742,15 +1790,39 @@
       "2.8",
       "2.10"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 1,
      "sizeStock": {
       "2.10": 0,
       "2.2": 0,
       "2.4": 0,
       "2.6": 0,
-      "2.8": 0
+      "2.8": 1
      },
      "focal": "54.21% 56.28%",
+     "zoom": 1
+    },
+    {
+     "id": 151,
+     "colour": "Violet",
+     "price": 320,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 4,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 2,
+      "2.6": 1,
+      "2.8": 1
+     },
      "zoom": 1
     }
    ],

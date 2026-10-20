@@ -23,6 +23,8 @@ export interface Group {
   blurb: string;
   /** "Glass Bangles" -> "Glass": the nav is tight at 1024px. */
   short: string;
+  /** The sizes this section is sold in (the kids' section has its own). Set in the CMS. */
+  sizes: string[];
 }
 
 /** One colourway of a product: its own photo, and a swatch hex when we know it. */
@@ -114,6 +116,7 @@ const data = raw as unknown as {
 export const groups: Group[] = (data.groups ?? []).map((g) => ({
   ...g,
   short: g.name.replace(/\s*bangles?\s*$/i, "").trim() || g.name,
+  sizes: (g as Partial<Group>).sizes?.length ? (g as Group).sizes : ["2.2", "2.4", "2.6", "2.8", "2.10"],
 }));
 
 export const collections: Collection[] = [...data.collections].sort(
@@ -270,7 +273,26 @@ export const SIZE_GUIDE: { size: string; label: string; cm: string }[] = [
  * sourced. Showing only the stocked sizes turned a sourcing question into a
  * dead end for the customer, so the picker always offers the full range.
  */
-export const ALL_SIZES: string[] = SIZE_GUIDE.map((s) => s.size);
+export const KIDS_SIZE_GUIDE: { size: string; label: string }[] = [
+  { size: "1.10", label: "Kids" },
+  { size: "1.12", label: "Kids" },
+  { size: "1.14", label: "Kids" },
+  { size: "2.0", label: "Kids" },
+];
+
+/** Every size we sell, smallest first (kids' sizes, then the standard adult sizes). */
+export const ALL_SIZES: string[] = [...KIDS_SIZE_GUIDE.map((s) => s.size), ...SIZE_GUIDE.map((s) => s.size)];
+
+/** The note shown beside a size ("Regular", "Kids"), or undefined. */
+export const sizeInfo = (size: string): { size: string; label: string } | undefined =>
+  SIZE_GUIDE.find((x) => x.size === size) ?? KIDS_SIZE_GUIDE.find((x) => x.size === size);
+
+/** The sizes a design is sold in: those of its section (Kids has its own), in the proper order. */
+export const sizesOfProduct = (p: Product): string[] => {
+  const g = groups.find((x) => x.slug === p.group);
+  const own = g?.sizes?.length ? g.sizes : SIZE_GUIDE.map((s) => s.size);
+  return ALL_SIZES.filter((s) => own.includes(s));
+};
 
 /** Pieces left of one size of a colourway, or null when that size is not counted (then it is always offered). */
 export const sizeLeft = (v: Variant, size: string): number | null => {

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import ListingCard from "./ListingCard";
-import { listingPrice, listingTitle, sizeState, ALL_SIZES, SIZE_GUIDE, type Listing } from "@/lib/catalog";
+import { listingPrice, listingTitle, sizeState, ALL_SIZES, sizeInfo, sizesOfProduct, type Listing } from "@/lib/catalog";
 
 export interface ShopSection {
   slug: string;
@@ -133,6 +133,11 @@ export default function ShopBrowser({
   }, []);
 
   const all = useMemo(() => sections.flatMap((s) => s.items), [sections]);
+  // the size filter offers only the sizes of the designs on this page (the Kids section has its own)
+  const shownSizes = useMemo(() => {
+    const have = new Set(all.flatMap((l) => sizesOfProduct(l.product)));
+    return ALL_SIZES.filter((s) => have.has(s));
+  }, [all]);
   const buckets = useMemo(() => priceBuckets(all), [all]);
   const activeCount = (q.trim() ? 1 : 0) + (sizes.length ? 1 : 0) + (sort !== "featured" ? 1 : 0) + (priceBand !== null ? 1 : 0) + (inStockOnly ? 1 : 0);
   const browsing = q.trim() === "" && sort === "featured" && !inStockOnly && priceBand === null && sizes.length === 0;
@@ -252,9 +257,9 @@ export default function ShopBrowser({
               {openMenu === "size" && (
                 <DropdownPortal anchorRef={sizeBtnRef}>
                   <p className="px-4 pb-1.5 pt-1 text-[10.5px] font-bold uppercase tracking-[0.14em] text-ink-faint">Choose one or more</p>
-                  {ALL_SIZES.map((z) => {
+                  {shownSizes.map((z) => {
                     const on = sizes.includes(z);
-                    const g = SIZE_GUIDE.find((x) => x.size === z);
+                    const g = sizeInfo(z);
                     return (
                       <button
                         key={z}
@@ -459,6 +464,7 @@ export default function ShopBrowser({
                 <h2 className="font-display text-[clamp(24px,3vw,38px)] lg:mt-2.5">{s.name}</h2>
                 <p className="mt-3 hidden max-w-[60ch] text-[13px] text-ink-soft lg:block">{s.blurb}</p>
               </div>
+              {s.items.length === 0 && <p className="text-[13.5px] text-ink-soft">New designs are on their way. Check back soon.</p>}
               <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 xl:grid-cols-4">
                 {s.items.map((l, j) => (
                   <ListingCard key={l.variant.colour + l.product.id} l={l} delay={(j % 4) * 70} priority={i === 0 && j < 4} withFamily={false} instant={touched} />
