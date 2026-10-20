@@ -27,7 +27,7 @@ export const SITE = {
   // ^ WhatsApp is switched OFF: the number is not available (owner, 2026-10-18). Every WhatsApp button, link and
   //   sentence on the site checks HAS_WHATSAPP and falls back to an Instagram message. To switch it back on, put the
   //   new number here (digits with country code, e.g. "919XXXXXXXXX") and deploy: everything returns by itself.
-  email: "anveda.in@gmail.com",
+  email: "hello@anveda.in",
   instagram: "https://www.instagram.com/anveda.in/",
 
   /**
