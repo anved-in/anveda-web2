@@ -115,7 +115,7 @@ h1, h2, h3, .font-display {
 }
 
 /* iPhone Safari zooms the whole page when a text box smaller than 16px is tapped, and does not zoom back.
-   Text boxes are 14px elsewhere (balanced against the headings); on iPhones they stay at 16px so the page never jumps. */
+   Text boxes are 11px elsewhere (smaller than their 12px labels, as the owner prefers); on iPhones they stay at 16px so the page never jumps. */
 @supports (-webkit-touch-callout: none) {
   input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
   select,

@@ -289,7 +289,7 @@ export default function CheckoutForm() {
   // Check one field as soon as the person leaves it (live inline validation helps people fix mistakes where they happen).
   const checkOne = (k: keyof Customer) => setErrs((cur) => ({ ...cur, [k]: validate(c)[k] }));
   const inputCls = (bad: boolean) =>
-    ["mt-1.5 w-full border bg-white px-3.5 py-2.5 text-[14px] outline-none transition-colors", bad ? "border-[#a33a2f]" : "border-line focus:border-ink"].join(" ");
+    ["mt-1.5 w-full border bg-white px-3.5 py-3 text-[11px] outline-none transition-colors", bad ? "border-[#a33a2f]" : "border-line focus:border-ink"].join(" ");
 
   const field = (
     k: keyof Customer,
@@ -309,11 +309,11 @@ export default function CheckoutForm() {
         data-err={errs[k] ? "1" : undefined}
         aria-invalid={!!errs[k]}
         className={[
-          "mt-1.5 w-full border bg-white px-3.5 py-2.5 text-[14px] outline-none transition-colors",
+          "mt-1.5 w-full border bg-white px-3.5 py-3 text-[11px] outline-none transition-colors",
           errs[k] ? "border-[#a33a2f]" : "border-line focus:border-ink",
         ].join(" ")}
       />
-      {help && !errs[k] && <span className="mt-1 block text-[12px] text-ink-faint">{help}</span>}
+      {help && !errs[k] && <span className="mt-1 block text-[11px] text-ink-faint">{help}</span>}
       {errs[k] && <span className="mt-1 block text-[12.5px] text-[#a33a2f]">{errs[k]}</span>}
     </label>
   );
@@ -597,7 +597,7 @@ export default function CheckoutForm() {
               autoComplete="street-address"
               aria-invalid={!!errs.address}
               className={[
-                "mt-1.5 w-full border bg-white px-3.5 py-2.5 text-[14px] outline-none transition-colors",
+                "mt-1.5 w-full border bg-white px-3.5 py-3 text-[11px] outline-none transition-colors",
                 errs.address ? "border-[#a33a2f]" : "border-line focus:border-ink",
               ].join(" ")}
             />
@@ -652,7 +652,7 @@ export default function CheckoutForm() {
               value={c.notes}
               onChange={(e) => set("notes")(e.target.value)}
               placeholder="Anything we should know — gift wrap, delivery timing…"
-              className="mt-1.5 w-full border border-line bg-white px-3.5 py-2.5 text-[14px] outline-none transition-colors focus:border-ink"
+              className="mt-1.5 w-full border border-line bg-white px-3.5 py-3 text-[11px] outline-none transition-colors focus:border-ink"
             />
           </label>
         </div>
