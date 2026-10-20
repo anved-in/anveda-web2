@@ -32,7 +32,7 @@ export default function Price({
       )}
       {/* Selling price first, struck price after it: the number they pay is
           the one that should be read first. */}
-      <span className={muted ? "font-normal text-ink-soft" : "price-now"}>{t.nowText}</span>
+      <span className={muted ? "font-semibold text-ink" : "price-now"}>{t.nowText}</span>
       <span
         className={muted ? "text-[0.85em] font-normal text-ink-faint line-through" : size === "lg" ? "price-was text-[0.62em] !text-[#a3a3a3]" : "price-was text-[0.85em]"}
         aria-label={`Was ${t.wasText}`}

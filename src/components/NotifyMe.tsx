@@ -88,7 +88,7 @@ export default function NotifyMe({
 
   const base = full
     ? "h-11 w-full cursor-pointer bg-ink text-[12px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-espresso-2"
-    : "inline-flex h-7 cursor-pointer items-center border border-ink px-2.5 text-[10.5px] font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-cream";
+    : "inline-flex h-7 shrink-0 cursor-pointer items-center whitespace-nowrap border border-ink px-2 text-[9.5px] font-bold uppercase leading-none tracking-[0.06em] text-ink transition-colors hover:bg-ink hover:text-cream";
 
   const field =
     "mt-1 block w-full border border-line-strong bg-white px-3.5 py-2.5 text-[14px] outline-none focus:border-ink";

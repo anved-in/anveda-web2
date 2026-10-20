@@ -111,14 +111,14 @@ export default function ListingCard({
                 onClick={() => setSizeOpen((o) => !o)}
                 aria-label={`Add ${title} to bag`}
                 aria-expanded={sizeOpen}
-                className="flex h-7 w-7 items-center justify-center text-ink transition-opacity hover:opacity-60"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-ink text-white transition-opacity hover:opacity-80"
               >
                 {added ? (
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M4 12.5l5 5L20 6.5" />
                   </svg>
                 ) : (
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M6 7h12l1 13H5L6 7Z" />
                     <path d="M9 7a3 3 0 0 1 6 0" />
                   </svg>
