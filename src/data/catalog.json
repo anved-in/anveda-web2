@@ -4094,6 +4094,83 @@
     }
    ],
    "image": "u-square-edge-glass-bangles-aqua-hd-1792254278.webp"
+  },
+  {
+   "id": "kids-bangle",
+   "collection": "lil-charms-kids-section",
+   "collectionName": "Lil' Charms - Kids Section",
+   "group": "kids",
+   "name": "Kids Bangle",
+   "price": 210,
+   "priceMax": 210,
+   "pieces": 2,
+   "unit": "set",
+   "sizes": [],
+   "blurb": "",
+   "story": "",
+   "variants": [
+    {
+     "id": 154,
+     "colour": "Gold stone Gunghroo - Set of 4",
+     "image": "u-design-gold-stone-gunghroo-set-of-4-mvghu126.webp",
+     "price": 210,
+     "pieces": 1,
+     "sizes": [
+      "1.10",
+      "1.12",
+      "1.14",
+      "2.0"
+     ],
+     "inStock": true,
+     "zoom": 1
+    },
+    {
+     "id": 155,
+     "colour": "Pearl stone - Set of 4",
+     "image": "u-design-pearl-stone-set-of-4-more-mvghugc0.webp",
+     "price": 180,
+     "pieces": 1,
+     "sizes": [
+      "1.10",
+      "1.12",
+      "1.14",
+      "2.0"
+     ],
+     "inStock": true,
+     "zoom": 1
+    },
+    {
+     "id": 156,
+     "colour": "White Ruby Green Stone",
+     "image": "u-design-white-ruby-green-stone-mvghuscv.webp",
+     "price": 210,
+     "pieces": 1,
+     "sizes": [
+      "1.10",
+      "1.12",
+      "1.14",
+      "2.0"
+     ],
+     "inStock": true,
+     "zoom": 1
+    },
+    {
+     "id": 157,
+     "colour": "White Stone Kashu",
+     "image": "u-design-white-stone-kashu-mvghvghu.webp",
+     "price": 210,
+     "pieces": 1,
+     "sizes": [
+      "1.10",
+      "1.12",
+      "1.14",
+      "2.0"
+     ],
+     "inStock": true,
+     "zoom": 1
+    }
+   ],
+   "image": "u-design-gold-stone-gunghroo-set-of-4-mvghu126.webp"
   }
  ],
  "colourWall": [
