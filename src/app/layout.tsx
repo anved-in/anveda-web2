@@ -11,6 +11,7 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { CartProvider } from "@/lib/cart";
 import { FavProvider } from "@/lib/favourites";
 import { SITE, HAS_WHATSAPP } from "@/lib/site";
+import NavProgress from "@/components/NavProgress";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.anveda.in"),
@@ -78,6 +79,7 @@ export default function RootLayout({
         <CartProvider>
           <FavProvider>
           <Reveal />
+          <NavProgress />
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

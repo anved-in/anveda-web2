@@ -17,6 +17,7 @@ import {
   paymentsEnabled,
 } from "@/lib/payment";
 import { quoteShipping } from "@/lib/shipping";
+import { useSlow, friendlyError, SLOW_NOTE } from "@/lib/useSlow";
 
 /**
  * Reads as the same three-step progress the reference wizard shows — a
@@ -63,6 +64,7 @@ export default function CheckoutForm() {
   const [c, setC] = useState<Customer>(EMPTY);
   const [errs, setErrs] = useState<Partial<Record<keyof Customer, string>>>({});
   const [busy, setBusy] = useState(false);
+  const slow = useSlow(busy);
   const [failure, setFailure] = useState<string | null>(null);
 
   // Coupon: validated live against CMS 2.0's own rules via /api/coupon as the
@@ -253,7 +255,7 @@ export default function CheckoutForm() {
       // null = the customer closed the widget. Not an error; just stop.
       if (paymentId) complete(ref, paymentId);
     } catch (err) {
-      setFailure(err instanceof Error ? err.message : "Payment could not be completed.");
+      setFailure(friendlyError(err, "Payment could not be completed."));
     } finally {
       setBusy(false);
     }
@@ -487,6 +489,7 @@ export default function CheckoutForm() {
                     type="button"
                     onClick={applyCoupon}
                     disabled={couponBusy || !couponInput.trim()}
+                    aria-busy={couponBusy}
                     className="shrink-0 border border-ink px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.14em] transition-colors hover:bg-ink hover:text-cream disabled:opacity-50"
                   >
                     {couponBusy ? "Checking…" : "Apply"}
@@ -544,10 +547,16 @@ export default function CheckoutForm() {
           <button
             type="submit"
             disabled={busy}
+            aria-busy={busy}
             className="mt-5 w-full bg-espresso py-4 text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2 disabled:opacity-60"
           >
             {busy ? "Opening payment…" : `Pay ${inr(total)}`}
           </button>
+          {busy && slow && (
+            <p role="status" className="mt-2 text-center text-[12.5px] text-ink-soft">
+              {SLOW_NOTE}
+            </p>
+          )}
 
           <p className="mt-3 text-center text-[12px] text-ink-soft">
             Secure payment by Razorpay — UPI, card, netbanking or wallet.

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSlow, SLOW_NOTE } from "@/lib/useSlow";
 import { HAS_WHATSAPP } from "@/lib/site";
 
 interface Item {
@@ -27,6 +28,7 @@ export default function ReviewForm() {
   const [items, setItems] = useState<Item[]>([]);
   const [drafts, setDrafts] = useState<Record<number, Draft>>({});
   const [busy, setBusy] = useState(false);
+  const slow = useSlow(busy);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -176,10 +178,12 @@ export default function ReviewForm() {
             type="button"
             onClick={submit}
             disabled={busy}
+            aria-busy={busy}
             className="mt-5 h-11 w-full cursor-pointer bg-ink text-[12px] font-bold uppercase tracking-[0.16em] text-cream transition-colors hover:bg-espresso-2 disabled:opacity-60"
           >
             {busy ? "Sending…" : "Send my review"}
           </button>
+          {busy && slow && <p role="status" className="mt-2 text-center text-[12.5px] text-ink-soft">{SLOW_NOTE}</p>}
         </>
       )}
     </div>

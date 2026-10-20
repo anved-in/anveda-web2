@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useSlow, SLOW_NOTE } from "@/lib/useSlow";
 import { HAS_WHATSAPP } from "@/lib/site";
 
 export default function SignupForm() {
   const [value, setValue] = useState("");
   const [status, setStatus] = useState<"idle" | "busy" | "done" | "error">("idle");
   const [error, setError] = useState("");
+  const slow = useSlow(status === "busy");
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,11 +64,13 @@ export default function SignupForm() {
         <button
           type="submit"
           disabled={status === "busy"}
+          aria-busy={status === "busy"}
           className="shrink-0 bg-gold px-4 py-2.5 text-[11.5px] font-bold uppercase tracking-[0.14em] text-espresso transition-opacity hover:opacity-90 disabled:opacity-60"
         >
           {status === "busy" ? "…" : "Join"}
         </button>
       </div>
+      {status === "busy" && slow && <span className="text-[12px] text-[#e0958a]">{SLOW_NOTE}</span>}
       {status === "error" && (
         <span className="text-[12px] text-[#e0958a]">{error}</span>
       )}

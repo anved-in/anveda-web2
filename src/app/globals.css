@@ -102,6 +102,38 @@ h1, h2, h3, .font-display {
 /* the price is ink-coloured by default: on a dark panel (the full-screen reel) it vanished */
 .on-dark .price-now { color: #fff; }
 
+/* Every tap answers at once: a pressed look the moment a finger or mouse goes down. */
+button:not(:disabled):active,
+[role="button"]:active { opacity: 0.78; }
+a:active { opacity: 0.75; }
+
+/* Waiting for the server: a small spinner in the button, so nobody wonders whether the tap worked. */
+[aria-busy="true"] { cursor: progress; }
+[aria-busy="true"]::before {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-right: 8px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  vertical-align: -2px;
+  animation: av-spin 0.7s linear infinite;
+}
+@keyframes av-spin { to { transform: rotate(360deg); } }
+
+/* Thin line across the top while the next page loads. */
+.nav-progress-run, .nav-progress-done { height: 100%; background: var(--color-gold, #b8923a); }
+.nav-progress-run { width: 8%; animation: av-bar 8s cubic-bezier(0.1, 0.7, 0.2, 1) forwards; }
+.nav-progress-done { width: 100%; animation: av-bar-fade 0.35s ease-out forwards; }
+@keyframes av-bar { to { width: 85%; } }
+@keyframes av-bar-fade { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  [aria-busy="true"]::before { animation-duration: 2s; }
+  .nav-progress-run { animation-duration: 20s; }
+}
+
 /* Reveal-on-scroll. Only applies once JS marks the document, so a visitor
    without JS never loses content to a hidden animation state. */
 .js .reveal {

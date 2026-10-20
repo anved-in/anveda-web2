@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useSlow, friendlyError, SLOW_NOTE } from "@/lib/useSlow";
 
 /**
  * "Notify me" for a sold-out colour (or one sold-out size of it).
@@ -31,6 +32,7 @@ export default function NotifyMe({
   const [phone, setPhone] = useState("");
   const [state, setState] = useState<"idle" | "sending" | "done">("idle");
   const [err, setErr] = useState("");
+  const slow = useSlow(state === "sending");
   const firstRef = useRef<HTMLInputElement>(null);
   const openerRef = useRef<HTMLButtonElement>(null);
 
@@ -80,9 +82,9 @@ export default function NotifyMe({
         setState("idle");
         setErr(data.error || "Something went wrong — please try again.");
       }
-    } catch {
+    } catch (e) {
       setState("idle");
-      setErr("Something went wrong — please try again.");
+      setErr(friendlyError(e, "Something went wrong — please try again."));
     }
   };
 
@@ -160,9 +162,14 @@ export default function NotifyMe({
                       {err}
                     </p>
                   )}
-                  <button type="submit" disabled={state === "sending"} className="mt-5 h-11 w-full cursor-pointer bg-ink text-[12px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-espresso-2 disabled:opacity-60">
+                  <button type="submit" disabled={state === "sending"} aria-busy={state === "sending"} className="mt-5 h-11 w-full cursor-pointer bg-ink text-[12px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-espresso-2 disabled:opacity-60">
                     {state === "sending" ? "Sending…" : "Notify me"}
                   </button>
+                  {state === "sending" && slow && (
+                    <p role="status" className="mt-2 text-center text-[12.5px] text-ink-soft">
+                      {SLOW_NOTE}
+                    </p>
+                  )}
                 </form>
               )}
             </div>

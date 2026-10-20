@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSlow, SLOW_NOTE } from "@/lib/useSlow";
 import { inr } from "@/lib/catalog";
 import { waLink, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 
@@ -33,6 +34,7 @@ export default function TrackForm() {
   const [ref, setRef] = useState("");
   const [phone, setPhone] = useState("");
   const [busy, setBusy] = useState(false);
+  const slow = useSlow(busy);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<{ order: TrackOrder; items: TrackItem[] } | null>(null);
 
@@ -108,10 +110,12 @@ export default function TrackForm() {
         <button
           type="submit"
           disabled={busy}
+          aria-busy={busy}
           className="w-full bg-espresso py-4 text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2 disabled:opacity-60"
         >
           {busy ? "Checking…" : "Track order"}
         </button>
+        {busy && slow && <p role="status" className="mt-2 text-center text-[12.5px] text-ink-soft">{SLOW_NOTE}</p>}
       </form>
 
       {result && (
