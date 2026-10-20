@@ -69,6 +69,9 @@ export default function CheckoutForm() {
   // phone only: the order summary starts folded away, and the optional note starts hidden
   const [summaryOpen, setSummaryOpen] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
+  // the pinned bottom bar steps aside while a field is being typed in (the on-screen keyboard needs the room)
+  const [typing, setTyping] = useState(false);
+  const typingTimer = useRef<number | undefined>(undefined);
   const [failure, setFailure] = useState<string | null>(null);
 
   // Coupon: validated live against CMS 2.0's own rules via /api/coupon as the
@@ -488,7 +491,23 @@ export default function CheckoutForm() {
   const pinOk = /^\d{6}$/.test(c.pin.trim());
 
   return (
-    <form onSubmit={onSubmit} className="mt-6 flex flex-wrap gap-y-8 md:mt-8 md:gap-y-10">
+    <form
+      onSubmit={onSubmit}
+      onFocus={(e) => {
+        if (/^(INPUT|TEXTAREA|SELECT)$/.test((e.target as HTMLElement).tagName)) {
+          window.clearTimeout(typingTimer.current);
+          setTyping(true);
+        }
+      }}
+      onBlur={() => {
+        window.clearTimeout(typingTimer.current);
+        // a short delay: moving from one field to the next must not flash the bar
+        typingTimer.current = window.setTimeout(() => {
+          if (!/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName ?? "")) setTyping(false);
+        }, 150);
+      }}
+      className="mt-6 flex flex-wrap gap-y-8 md:mt-8 md:gap-y-10"
+    >
       {/* ===================================================== PHONE: where you are, and the order in one line */}
       <div className="w-full md:hidden">
         <ol className="flex items-start" aria-label="Checkout steps">
@@ -639,30 +658,47 @@ export default function CheckoutForm() {
         </div>
       </div>
 
-      {/* ============================================= PHONE: the cost, then one clear next step */}
+      {/* ============================================= PHONE: the trust line sits in the page... */}
       <div className="w-full md:hidden">
-        <div className="space-y-1.5 border-t border-line pt-4 text-[14px]">
-          <div className="flex justify-between">
-            <span className="text-ink-soft">Shipping{pinOk ? "" : " (estimate, enter PIN)"}</span>
-            {coupon?.freeShipping ? <span className="font-semibold text-[#2f6e4f]">Free</span> : <span className="font-semibold">{inr(shipping)}</span>}
-          </div>
-          <div className="flex justify-between text-[17px]">
-            <span className="font-semibold">Total</span>
-            <span className="font-semibold">{inr(total)}</span>
-          </div>
-        </div>
+        <p className="border-t border-line pt-4 text-center text-[12px] leading-relaxed text-ink-soft">
+          <svg className="mr-1.5 inline-block align-[-2px]" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="5" y="11" width="14" height="9" rx="2" />
+            <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+          </svg>
+          Secure checkout · Payments by Razorpay (UPI, cards, netbanking)
+        </p>
+        {/* room at the end of the page so the pinned bar never hides the last lines */}
+        <div aria-hidden="true" className="h-[132px]" />
+      </div>
 
+      {/* ============================================= ...and the total + the one big button are PINNED to the bottom of the screen
+          (a "sticky bottom bar"): always in thumb reach and always in view, however far the form is scrolled. */}
+      <div
+        className={[
+          "fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white px-4 pt-3 shadow-[0_-6px_20px_rgba(0,0,0,0.07)] transition-transform duration-200 md:hidden",
+          "pb-[calc(12px+env(safe-area-inset-bottom))]",
+          typing ? "translate-y-full" : "translate-y-0",
+        ].join(" ")}
+      >
         {failure && (
-          <p role="alert" className="mt-4 rounded-2xl border border-[#a33a2f] bg-[#a33a2f]/5 p-3 text-[13px] text-[#a33a2f]">
+          <p role="alert" className="mb-3 rounded-2xl border border-[#a33a2f] bg-[#a33a2f]/5 p-3 text-[13px] text-[#a33a2f]">
             {failure}
           </p>
         )}
-
+        <div className="mb-2.5 flex items-baseline justify-between gap-3">
+          <span className="text-[12.5px] text-ink-soft">
+            {coupon?.freeShipping ? "Free shipping" : pinOk ? `incl. ${inr(shipping)} shipping` : `incl. ${inr(shipping)} shipping (estimate)`}
+          </span>
+          <span className="text-[17px] font-semibold">
+            <span className="mr-2 text-[13px] font-normal text-ink-soft">Total</span>
+            {inr(total)}
+          </span>
+        </div>
         <button
           type="submit"
           disabled={busy}
           aria-busy={busy}
-          className="mt-4 flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-ink text-[12.5px] font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+          className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-ink text-[12.5px] font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90 disabled:opacity-60"
         >
           {busy ? (
             "Opening payment…"
@@ -680,14 +716,6 @@ export default function CheckoutForm() {
             {SLOW_NOTE}
           </p>
         )}
-
-        <p className="mt-3 text-center text-[12px] leading-relaxed text-ink-soft">
-          <svg className="mr-1.5 inline-block align-[-2px]" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <rect x="5" y="11" width="14" height="9" rx="2" />
-            <path d="M8 11V8a4 4 0 0 1 8 0v3" />
-          </svg>
-          Secure checkout · Payments by Razorpay (UPI, cards, netbanking)
-        </p>
       </div>
 
       {/* ------------------------------------------------------ summary (desktop: the side column) */}
