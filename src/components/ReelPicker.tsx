@@ -85,7 +85,7 @@ function Lightbox({ src, caption, onClose }: { src: string; caption: string; onC
   return createPortal(
     <div className="fixed inset-0 z-[400] flex flex-col items-center justify-center bg-black/85 p-4" onClick={onClose} role="dialog" aria-modal="true" aria-label={caption}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={caption} className="max-h-[82dvh] max-w-full rounded-lg object-contain" />
+      <img src={src} alt={caption} className="max-h-[82dvh] max-w-full rounded-md object-contain" />
       <p className="mt-3 text-center text-[13px] text-white/85">{caption}</p>
       <button type="button" aria-label="Close" className="absolute right-3 top-3 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25" onClick={onClose}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
@@ -182,7 +182,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
 
   if (added) {
     return (
-      <div className={`${t.text} rounded-xl border ${t.line} p-4 text-center`}>
+      <div className={`${t.text} rounded-md border ${t.line} p-4 text-center`}>
         <p className="text-[14px] font-semibold">{combo ? "Combo added to your bag ✓" : "Added to your bag ✓"}</p>
         <p className={`mt-1 text-[12.5px] ${t.muted}`}>{combo ? `${reel.title} · ${inr(combo.price)} · Size ${size}` : `${single.p.name} · ${colourLabel(single.p, picked(single)!)} · Size ${size}`}</p>
         <div className="mt-4 flex flex-col gap-2">
@@ -217,7 +217,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
               <button
                 type="button"
                 onClick={() => setZoom({ src: asset(imgSrc(shown.image)), caption: label })}
-                className="relative h-[132px] w-[132px] shrink-0 cursor-zoom-in overflow-hidden rounded-lg bg-black/10"
+                className="relative h-[132px] w-[132px] shrink-0 cursor-zoom-in overflow-hidden rounded-md bg-black/10"
                 aria-label={`View ${label} larger`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}

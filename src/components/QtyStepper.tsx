@@ -22,7 +22,7 @@ export default function QtyStepper({
 }) {
   const cell = size === "sm" ? "h-8 min-w-[32px] text-[14px]" : "h-11 min-w-[44px] text-[17px]";
   return (
-    <div className="grid grid-cols-3 divide-x divide-line-strong overflow-hidden rounded-xl border border-line-strong bg-white">
+    <div className="grid grid-cols-3 divide-x divide-line-strong overflow-hidden rounded-md border border-line-strong bg-white">
       <button
         type="button"
         onClick={onDecrease}

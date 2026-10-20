@@ -7,7 +7,7 @@ import Logo from "./Logo";
 import { useCart } from "@/lib/cart";
 import { useFavs } from "@/lib/favourites";
 import { HEART } from "./FavButton";
-import { collections, groups, collectionsInGroup, rangeHref, productById } from "@/lib/catalog";
+import { groups, collectionsInGroup, rangeHref, productById } from "@/lib/catalog";
 
 /** The reference keeps a short text nav on the left of a single header row. */
 const NAV = [
@@ -285,24 +285,6 @@ export default function Header() {
               </Link>
             );
           })}
-          <span aria-hidden="true" className="my-1 w-px shrink-0 bg-line" />
-          {collections.map((c) => {
-            const on = path === rangeHref(c.slug);
-            return (
-              <Link
-                key={c.slug}
-                href={rangeHref(c.slug)}
-                className={[
-                  "whitespace-nowrap rounded-full border px-3.5 py-1.5 text-[10.5px] uppercase tracking-[0.08em] transition-colors",
-                  on
-                    ? "border-maroon bg-maroon text-white"
-                    : "border-line-strong text-ink",
-                ].join(" ")}
-              >
-                {c.name}
-              </Link>
-            );
-          })}
         </div>
       </div>
 
@@ -325,7 +307,7 @@ export default function Header() {
         aria-label="Menu"
         aria-hidden={menu ? undefined : true}
         className={[
-          "fixed left-0 top-0 z-[95] flex h-[100dvh] w-[84%] max-w-[330px] flex-col rounded-r-3xl bg-white transition-transform duration-300 md:hidden",
+          "fixed left-0 top-0 z-[95] flex h-[100dvh] w-[84%] max-w-[330px] flex-col rounded-r-[14px] bg-white transition-transform duration-300 md:hidden",
           menu ? "translate-x-0 shadow-2xl" : "-translate-x-full",
         ].join(" ")}
       >
@@ -354,60 +336,81 @@ export default function Header() {
             tap. Contrast and size carry that order without needing icons or
             colour to do it; the chevron is the one repeated affordance that
             says "this row goes somewhere," consistent at every level. */}
-        <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-10">
-          {/* A plain-words way home. The logo links home too, but it is centred on a phone, where it is easy to miss. */}
-          <Link
-            href="/"
-            onClick={() => setMenu(false)}
-            className="flex items-center justify-between border-b border-line py-4 text-[13px] uppercase tracking-[0.1em] text-ink"
-          >
-            Home
-            <Chevron />
-          </Link>
-          {NAV.map((n) => (
-            <Link
-              key={n.href}
-              href={n.href}
-              onClick={() => setMenu(false)}
-              className={[
-                "flex items-center justify-between border-b border-line py-4 text-[13px] uppercase tracking-[0.1em]",
-                isActive(path, n.href) ? "font-bold text-ink" : "text-ink",
-              ].join(" ")}
-            >
-              {n.label}
-              <Chevron />
-            </Link>
-          ))}
-
-          {/* Grouped exactly as the catalogue groups them. */}
+        {/* Three clearly separate groups, each with its own small label and a tinted panel:
+              SHOP BY TYPE (the four sections, each with its ranges), EXPLORE, HELP & INFO.
+              Rows are one level only, so a person can scan a panel without reading the others. */}
+        <div className="flex-1 overflow-y-auto overscroll-contain px-5 pb-10 pt-5">
+          <p className="mb-2.5 px-1 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-ink-faint">Shop by type</p>
           {groups.map((g) => (
-            <div key={g.slug}>
+            <section key={g.slug} className="mb-3 overflow-hidden rounded-[10px] bg-cream-2">
               <Link
                 href={`/shop/${g.slug}`}
                 onClick={() => setMenu(false)}
-                className={[
-                  "mt-7 block pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors",
-                  path.startsWith(`/shop/${g.slug}`) ? "text-ink" : "text-ink-faint",
-                ].join(" ")}
+                className="flex items-baseline justify-between px-4 py-3.5 text-[12px] font-semibold uppercase tracking-[0.12em]"
               >
                 {g.name}
+                <span className="text-[11px] font-normal normal-case tracking-normal text-ink-faint">View all</span>
               </Link>
-              {collectionsInGroup(g.slug).map((c) => (
+              {collectionsInGroup(g.slug).length > 0 && (
+                <ul className="border-t border-line">
+                  {collectionsInGroup(g.slug).map((c) => (
+                    <li key={c.slug} className="border-b border-line last:border-b-0">
+                      <Link
+                        href={rangeHref(c.slug)}
+                        onClick={() => setMenu(false)}
+                        className={["flex items-center justify-between px-4 py-3 text-[14px]", path === rangeHref(c.slug) ? "font-semibold" : ""].join(" ")}
+                      >
+                        {c.name}
+                        <Chevron />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          ))}
+
+          <p className="mb-2.5 mt-9 px-1 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-ink-faint">Explore</p>
+          <ul className="overflow-hidden rounded-[10px] bg-cream-2">
+            {[
+              { href: "/", label: "Home" },
+              { href: "/colours", label: "By Colour" },
+              { href: "/reels", label: "Reels" },
+            ].map((n) => (
+              <li key={n.href} className="border-b border-line last:border-b-0">
                 <Link
-                  key={c.slug}
-                  href={rangeHref(c.slug)}
+                  href={n.href}
                   onClick={() => setMenu(false)}
-                  className={[
-                    "flex items-center justify-between border-b border-line py-4 text-[15px]",
-                    path === rangeHref(c.slug) ? "font-semibold text-ink" : "text-ink",
-                  ].join(" ")}
+                  className={["flex items-center justify-between px-4 py-3.5 text-[14px]", isActive(path, n.href) ? "font-semibold" : ""].join(" ")}
                 >
-                  {c.name}
+                  {n.label}
                   <Chevron />
                 </Link>
-              ))}
-            </div>
-          ))}
+              </li>
+            ))}
+          </ul>
+
+          <p className="mb-2.5 mt-9 px-1 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-ink-faint">Help &amp; info</p>
+          <ul className="overflow-hidden rounded-[10px] bg-cream-2">
+            {[
+              { href: "/about", label: "About Us" },
+              { href: "/sizing", label: "Sizing Guide" },
+              { href: "/track", label: "Track Order" },
+              { href: "/shipping", label: "Shipping & Returns" },
+              { href: "/contact", label: "Contact" },
+            ].map((n) => (
+              <li key={n.href} className="border-b border-line last:border-b-0">
+                <Link
+                  href={n.href}
+                  onClick={() => setMenu(false)}
+                  className={["flex items-center justify-between px-4 py-3.5 text-[14px]", isActive(path, n.href) ? "font-semibold" : ""].join(" ")}
+                >
+                  {n.label}
+                  <Chevron />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </nav>
     </header>

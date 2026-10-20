@@ -61,7 +61,7 @@ export default function FavDrawer() {
         aria-hidden={!open}
         inert={!open}
         className={[
-          "fixed right-0 top-0 z-[80] flex h-[100dvh] w-full max-w-[420px] flex-col rounded-l-3xl bg-cream transition-transform duration-300",
+          "fixed right-0 top-0 z-[80] flex h-[100dvh] w-full max-w-[420px] flex-col rounded-l-[14px] bg-cream transition-transform duration-300",
           open ? "translate-x-0 shadow-2xl" : "translate-x-full",
         ].join(" ")}
       >
@@ -84,7 +84,7 @@ export default function FavDrawer() {
             <Link
               href="/shop/glass/"
               onClick={() => setOpen(false)}
-              className="rounded-2xl mt-6 border border-ink px-7 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.2em] transition-colors hover:bg-ink hover:text-cream"
+              className="rounded-md mt-6 border border-ink px-7 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.2em] transition-colors hover:bg-ink hover:text-cream"
             >
               Start shopping
             </Link>
@@ -197,7 +197,7 @@ function FavRow({ p, v }: { p: Product; v: Variant }) {
                       href={`${href}&size=${encodeURIComponent(s)}`}
                       onClick={() => setFavOpen(false)}
                       aria-label={`Size ${s}, not available: tap to be notified`}
-                      className="min-w-[40px] rounded-lg border border-line bg-cream-2 px-2 py-1.5 text-center text-[12.5px] text-ink-soft/60 line-through transition-colors hover:border-ink"
+                      className="min-w-[40px] rounded-md border border-line bg-cream-2 px-2 py-1.5 text-center text-[12.5px] text-ink-soft/60 line-through transition-colors hover:border-ink"
                     >
                       {s}
                     </Link>

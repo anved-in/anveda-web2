@@ -104,7 +104,7 @@ h1, h2, h3, .font-display {
 /* ------------------------------------------------------------- shape
    One rounded shape language across the site (owner's choice, 2026-10). Controls get a soft radius here, in the
    base layer, so any component can still say rounded-full / rounded-none / rounded-lg itself and win. */
-:root { --radius-ctl: 12px; }
+:root { --radius-ctl: 6px; }
 @layer base {
   button,
   select,
@@ -112,6 +112,14 @@ h1, h2, h3, .font-display {
   input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
     border-radius: var(--radius-ctl);
   }
+}
+
+/* iPhone Safari zooms the whole page when a text box smaller than 16px is tapped, and does not zoom back.
+   Text boxes are 14px elsewhere (balanced against the headings); on iPhones they stay at 16px so the page never jumps. */
+@supports (-webkit-touch-callout: none) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select,
+  textarea { font-size: 16px !important; }
 }
 
 /* Every tap answers at once: a pressed look the moment a finger or mouse goes down. */

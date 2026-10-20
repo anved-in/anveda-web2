@@ -209,7 +209,7 @@ export default function ProductBuy({
 
         </>
       ) : (
-        <div className="mt-8 rounded-2xl border border-line-strong bg-cream-2 px-5 py-6 text-center">
+        <div className="mt-8 rounded-[10px] border border-line-strong bg-cream-2 px-5 py-6 text-center">
           <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-ink">
             {unavailableChoice ? `Size ${size} — ${colourLabel(p, variant)}` : `Sold out — ${colourLabel(p, variant)}`}
           </p>

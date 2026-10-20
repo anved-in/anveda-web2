@@ -274,11 +274,11 @@ export default function CheckoutForm() {
 
   if (lines.length === 0) {
     return (
-      <div className="mt-10 rounded-3xl border border-line p-10 text-center">
+      <div className="mt-10 rounded-[14px] border border-line p-10 text-center">
         <p className="text-ink-soft">Your bag is empty.</p>
         <Link
           href="/shop/glass/"
-          className="rounded-2xl mt-6 inline-block border border-ink px-7 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.2em] transition-colors hover:bg-ink hover:text-cream"
+          className="rounded-md mt-6 inline-block border border-ink px-7 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.2em] transition-colors hover:bg-ink hover:text-cream"
         >
           Start shopping
         </Link>
@@ -289,7 +289,7 @@ export default function CheckoutForm() {
   // Check one field as soon as the person leaves it (live inline validation helps people fix mistakes where they happen).
   const checkOne = (k: keyof Customer) => setErrs((cur) => ({ ...cur, [k]: validate(c)[k] }));
   const inputCls = (bad: boolean) =>
-    ["mt-1.5 w-full border bg-white px-3.5 py-3 text-[15px] outline-none transition-colors", bad ? "border-[#a33a2f]" : "border-line focus:border-ink"].join(" ");
+    ["mt-1.5 w-full border bg-white px-3.5 py-2.5 text-[14px] outline-none transition-colors", bad ? "border-[#a33a2f]" : "border-line focus:border-ink"].join(" ");
 
   const field = (
     k: keyof Customer,
@@ -309,7 +309,7 @@ export default function CheckoutForm() {
         data-err={errs[k] ? "1" : undefined}
         aria-invalid={!!errs[k]}
         className={[
-          "mt-1.5 w-full border bg-white px-3.5 py-3 text-[15px] outline-none transition-colors",
+          "mt-1.5 w-full border bg-white px-3.5 py-2.5 text-[14px] outline-none transition-colors",
           errs[k] ? "border-[#a33a2f]" : "border-line focus:border-ink",
         ].join(" ")}
       />
@@ -438,7 +438,7 @@ export default function CheckoutForm() {
             onClick={applyCoupon}
             disabled={couponBusy || !couponInput.trim()}
             aria-busy={couponBusy}
-            className="rounded-2xl shrink-0 border border-ink px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.14em] transition-colors hover:bg-ink hover:text-cream disabled:opacity-50"
+            className="rounded-md shrink-0 border border-ink px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.14em] transition-colors hover:bg-ink hover:text-cream disabled:opacity-50"
           >
             {couponBusy ? "Checking…" : "Apply"}
           </button>
@@ -533,7 +533,7 @@ export default function CheckoutForm() {
           })}
         </ol>
 
-        <div className="mt-5 rounded-2xl bg-cream-2">
+        <div className="mt-5 rounded-[10px] bg-cream-2">
           <button
             type="button"
             onClick={() => setSummaryOpen((o) => !o)}
@@ -597,7 +597,7 @@ export default function CheckoutForm() {
               autoComplete="street-address"
               aria-invalid={!!errs.address}
               className={[
-                "mt-1.5 w-full border bg-white px-3.5 py-3 text-[15px] outline-none transition-colors",
+                "mt-1.5 w-full border bg-white px-3.5 py-2.5 text-[14px] outline-none transition-colors",
                 errs.address ? "border-[#a33a2f]" : "border-line focus:border-ink",
               ].join(" ")}
             />
@@ -620,7 +620,7 @@ export default function CheckoutForm() {
                   autoComplete="address-level1"
                   data-err={errs.state ? "1" : undefined}
                   aria-invalid={!!errs.state}
-                  className={inputCls(!!errs.state) + " h-[50px] appearance-none bg-[length:16px] bg-[right_14px_center] bg-no-repeat pr-10"}
+                  className={inputCls(!!errs.state) + " h-[44px] appearance-none bg-[length:16px] bg-[right_14px_center] bg-no-repeat pr-10"}
                   style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")" }}
                 >
                   <option value="">Select state</option>
@@ -652,7 +652,7 @@ export default function CheckoutForm() {
               value={c.notes}
               onChange={(e) => set("notes")(e.target.value)}
               placeholder="Anything we should know — gift wrap, delivery timing…"
-              className="mt-1.5 w-full border border-line bg-white px-3.5 py-3 text-[15px] outline-none transition-colors focus:border-ink"
+              className="mt-1.5 w-full border border-line bg-white px-3.5 py-2.5 text-[14px] outline-none transition-colors focus:border-ink"
             />
           </label>
         </div>
@@ -681,7 +681,7 @@ export default function CheckoutForm() {
         ].join(" ")}
       >
         {failure && (
-          <p role="alert" className="mb-3 rounded-2xl border border-[#a33a2f] bg-[#a33a2f]/5 p-3 text-[13px] text-[#a33a2f]">
+          <p role="alert" className="mb-3 rounded-[10px] border border-[#a33a2f] bg-[#a33a2f]/5 p-3 text-[13px] text-[#a33a2f]">
             {failure}
           </p>
         )}
@@ -698,7 +698,7 @@ export default function CheckoutForm() {
           type="submit"
           disabled={busy}
           aria-busy={busy}
-          className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-ink text-[12.5px] font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+          className="flex h-14 w-full items-center justify-center gap-3 rounded-md bg-ink text-[12.5px] font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90 disabled:opacity-60"
         >
           {busy ? (
             "Opening payment…"
@@ -720,7 +720,7 @@ export default function CheckoutForm() {
 
       {/* ------------------------------------------------------ summary (desktop: the side column) */}
       <div className="hidden w-full md:block md:w-[42%]">
-        <div className="rounded-3xl bg-cream-2 p-6">
+        <div className="rounded-[14px] bg-cream-2 p-6">
           <SectionHeader n={2} title="Order summary" />
 
           {itemsBlock}
@@ -741,7 +741,7 @@ export default function CheckoutForm() {
             type="submit"
             disabled={busy}
             aria-busy={busy}
-            className="rounded-2xl mt-5 w-full bg-espresso py-4 text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2 disabled:opacity-60"
+            className="rounded-md mt-5 w-full bg-espresso py-4 text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2 disabled:opacity-60"
           >
             {busy ? "Opening payment…" : `Pay ${inr(total)}`}
           </button>

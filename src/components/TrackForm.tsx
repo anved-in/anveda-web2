@@ -119,7 +119,7 @@ export default function TrackForm() {
       </form>
 
       {result && (
-        <div className="mt-8 rounded-2xl border border-line p-6">
+        <div className="mt-8 rounded-[10px] border border-line p-6">
           <div className="flex items-center justify-between">
             <span className="font-display text-[19px]">{result.order.ref}</span>
             <span className="text-[13px] font-semibold text-ink-soft">{inr(result.order.total)}</span>

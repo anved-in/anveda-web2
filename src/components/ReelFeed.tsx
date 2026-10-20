@@ -192,7 +192,7 @@ export default function ReelFeed({
                   above and below on desktop. A definite height fixes that
                   and lets width follow from the aspect ratio; the margin
                   it leaves is now small on purpose, not a sizing bug. */}
-              <div className="relative h-full w-full overflow-hidden md:h-[calc(100dvh-88px)] md:w-auto md:aspect-[9/16] md:rounded-xl">
+              <div className="relative h-full w-full overflow-hidden md:h-[calc(100dvh-88px)] md:w-auto md:aspect-[9/16] md:rounded-md">
                 {r.playable ? (
                   <video
                     ref={(el) => {

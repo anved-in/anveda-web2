@@ -35,7 +35,7 @@ export default function ComboSheet({ reel, onClose }: { reel: ResolvedReel; onCl
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div role="dialog" aria-modal="true" aria-labelledby="combo-title" className="flex max-h-[92dvh] w-full max-w-[520px] flex-col overflow-hidden rounded-t-3xl bg-white shadow-xl sm:rounded-3xl">
+      <div role="dialog" aria-modal="true" aria-labelledby="combo-title" className="flex max-h-[92dvh] w-full max-w-[520px] flex-col overflow-hidden rounded-t-[14px] bg-white shadow-xl sm:rounded-[14px]">
         <div className="flex items-start justify-between gap-3 border-b border-line px-5 py-4">
           <h2 id="combo-title" className="min-w-0 truncate font-display text-[20px] leading-tight">
             {reel.title}

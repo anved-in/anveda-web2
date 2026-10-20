@@ -70,13 +70,13 @@ export default function ListingCard({
 
   return (
     <article
-      className={`${instant ? "group relative" : "reveal group relative"} flex h-full flex-col rounded-[18px] bg-white shadow-[0_1px_6px_rgba(0,0,0,0.05)]`}
+      className={`${instant ? "group relative" : "reveal group relative"} flex h-full flex-col rounded-[10px] bg-white shadow-[0_1px_6px_rgba(0,0,0,0.05)]`}
       data-d={delay}
     >
       <FavButton id={p.id} colour={v.colour} name={title} />
       <Link href={href} className="block">
         {/* The photo runs edge to edge across the top of the card, so it shows as large as the card allows. */}
-        <div className="relative aspect-square overflow-hidden rounded-t-[18px] bg-cream-2">
+        <div className="relative aspect-square overflow-hidden rounded-t-[10px] bg-cream-2">
           {/* Plain <img>: the site builds to a static export, where the Next
               image optimizer is unavailable. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -132,7 +132,7 @@ export default function ListingCard({
                 onClick={() => setSizeOpen((o) => !o)}
                 aria-label={`Add ${title} to bag, ${inr(price)}`}
                 aria-expanded={sizeOpen}
-                className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-cream-2 px-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-white"
+                className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-cream-2 px-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-white"
               >
                 {added ? (
                   "Added ✓"
@@ -148,7 +148,7 @@ export default function ListingCard({
               </button>
 
               {sizeOpen && (
-                <div className="absolute bottom-[calc(100%+8px)] left-0 right-0 z-20 rounded-xl border border-line bg-white p-3 shadow-md">
+                <div className="absolute bottom-[calc(100%+8px)] left-0 right-0 z-20 rounded-md border border-line bg-white p-3 shadow-md">
                   <p className="pb-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-faint">Choose a size</p>
                   <div className="flex flex-wrap gap-1.5">
                     {sizesOfProduct(p).map((s) => {
@@ -161,7 +161,7 @@ export default function ListingCard({
                             key={s}
                             href={`${href}${href.includes("?") ? "&" : "?"}size=${encodeURIComponent(s)}`}
                             aria-label={`Size ${s}, not available: tap to be notified`}
-                            className="min-w-[36px] rounded-lg border border-line bg-cream-2 px-2 py-1.5 text-center text-[11.5px] font-semibold text-ink-soft/60 line-through transition-colors hover:border-ink"
+                            className="min-w-[36px] rounded-md border border-line bg-cream-2 px-2 py-1.5 text-center text-[11.5px] font-semibold text-ink-soft/60 line-through transition-colors hover:border-ink"
                           >
                             {s}
                           </Link>
@@ -173,7 +173,7 @@ export default function ListingCard({
                           type="button"
                           onClick={() => pickSize(s)}
                           aria-label={`Size ${s}`}
-                          className="min-w-[36px] rounded-lg border border-line-strong px-2 py-1.5 text-[11.5px] font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
+                          className="min-w-[36px] rounded-md border border-line-strong px-2 py-1.5 text-[11.5px] font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
                         >
                           {s}
                         </button>
@@ -188,7 +188,7 @@ export default function ListingCard({
             <NotifyMe
               variantId={v.id}
               label={title}
-              className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-line-strong bg-white px-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-white"
+              className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-line-strong bg-white px-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-white"
               icon={
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />

@@ -96,7 +96,7 @@ export default function SizingPage() {
                   </ol>
                 </div>
 
-                <div className="rounded-2xl bg-cream-2 p-5">
+                <div className="rounded-[10px] bg-cream-2 p-5">
                   <p className="text-[14px] leading-relaxed text-ink-soft">
                     <strong className="font-semibold text-ink">If you are between sizes,</strong>{" "}
                     go up rather than down. A bangle that is slightly loose still
@@ -154,7 +154,7 @@ export default function SizingPage() {
                 than it does for a metal bracelet.
               </p>
 
-              <div className="mt-8 rounded-2xl border border-line p-6">
+              <div className="mt-8 rounded-[10px] border border-line p-6">
                 <h3 className="font-display text-[20px]">Still not sure?</h3>
                 <p className="mt-2 text-[14.5px] leading-relaxed text-ink-soft">
                   Send us a photo of your bangle against a ruler and we will tell
@@ -164,7 +164,7 @@ export default function SizingPage() {
                   href={HAS_WHATSAPP ? waLink("Hi ANVEDA! Could you help me work out my bangle size?") : igDmLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-2xl mt-4 inline-block bg-espresso px-7 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.18em] text-cream transition-colors hover:bg-espresso-2"
+                  className="rounded-md mt-4 inline-block bg-espresso px-7 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.18em] text-cream transition-colors hover:bg-espresso-2"
                 >
                   {HAS_WHATSAPP ? "Ask on WhatsApp" : "Ask on Instagram"}
                 </a>
@@ -175,7 +175,7 @@ export default function SizingPage() {
           <div className="mt-14 border-t border-line pt-10 text-center">
             <Link
               href="/shop/glass/"
-              className="rounded-2xl inline-block border border-ink px-9 py-4 text-[11.5px] font-bold uppercase tracking-[0.2em] transition-colors hover:bg-ink hover:text-cream"
+              className="rounded-md inline-block border border-ink px-9 py-4 text-[11.5px] font-bold uppercase tracking-[0.2em] transition-colors hover:bg-ink hover:text-cream"
             >
               Shop by size
             </Link>

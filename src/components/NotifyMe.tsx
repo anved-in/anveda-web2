@@ -125,7 +125,7 @@ export default function NotifyMe({
               role="dialog"
               aria-modal="true"
               aria-labelledby="notify-title"
-              className="w-full max-w-[400px] rounded-t-3xl bg-white px-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] pt-5 shadow-xl sm:rounded-3xl sm:px-6 sm:pb-6"
+              className="w-full max-w-[400px] rounded-t-[14px] bg-white px-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] pt-5 shadow-xl sm:rounded-[14px] sm:px-6 sm:pb-6"
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
