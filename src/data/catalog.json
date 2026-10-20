@@ -2469,6 +2469,31 @@
      },
      "focal": "49.84% 58.09%",
      "zoom": 1
+    },
+    {
+     "id": 158,
+     "colour": "Sapphire Flower Stone",
+     "image": "u-statement-bangles-sapphire-flower-stone-more-mvgi7gdn.webp",
+     "price": 1400,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 1,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 0,
+      "2.6": 0,
+      "2.8": 1
+     },
+     "focal": "53.2% 62.8%",
+     "zoom": 1.3
     }
    ],
    "image": "statement-bangles-elephant-design.webp"
