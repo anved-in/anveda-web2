@@ -8,7 +8,8 @@
    "title": "Viral 10 in 1",
    "caption": "",
    "productId": null,
-   "colour": null
+   "colour": null,
+   "combo": null
   },
   {
    "id": "pastel-palette-glass-bangle",
@@ -18,7 +19,8 @@
    "title": "Pastel Palette Glass Bangle",
    "caption": "Soft, powdery shades made to be stacked and layered.",
    "productId": "pastel-palette-glass-bangle",
-   "colour": null
+   "colour": null,
+   "combo": null
   },
   {
    "id": "petal-stone-glass-bangle",
@@ -28,7 +30,8 @@
    "title": "Petal Stone Glass Bangle",
    "caption": "Petal-set stones running the full round of the bangle.",
    "productId": "petal-stone-glass-bangle",
-   "colour": null
+   "colour": null,
+   "combo": null
   },
   {
    "id": "ratna-collection",
@@ -38,7 +41,51 @@
    "title": "Ratna Collection",
    "caption": "",
    "productId": "square-edge-glass-bangles",
-   "colour": "Aqua"
+   "colour": "Aqua",
+   "combo": {
+    "price": 899,
+    "items": [
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Aqua",
+       "Champagne Gold",
+       "Dark Green",
+       "Dark Pink",
+       "Green (premium Raindrop)",
+       "Lavender",
+       "Maroon",
+       "Parrot Green",
+       "Radium",
+       "Red",
+       "Royal Blue",
+       "Sunset Orange",
+       "Wine",
+       "Grey",
+       "Teal",
+       "Sky Blue",
+       "Golden Yellow",
+       "Classic Blue",
+       "Royal Blue (Raindrop)"
+      ]
+     },
+     {
+      "productId": "designer-side-bangles",
+      "qty": 1,
+      "colours": [
+       "Ratna Lakshmi Set of 4"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Premium non Bendable Diamond Stones"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
