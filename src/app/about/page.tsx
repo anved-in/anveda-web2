@@ -110,7 +110,7 @@ export default function AboutPage() {
         </h2>
         <Link
           href="/shop/glass/"
-          className="mt-7 inline-block bg-espresso px-9 py-4 text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2"
+          className="rounded-2xl mt-7 inline-block bg-espresso px-9 py-4 text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2"
         >
           Shop the collection
         </Link>

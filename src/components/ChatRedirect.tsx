@@ -28,7 +28,7 @@ export default function ChatRedirect() {
       </p>
       <a
         href={href}
-        className="mt-7 inline-block bg-espresso px-8 py-4 text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2"
+        className="rounded-2xl mt-7 inline-block bg-espresso px-8 py-4 text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2"
       >
         Message us on {HAS_WHATSAPP ? "WhatsApp" : "Instagram"}
       </a>

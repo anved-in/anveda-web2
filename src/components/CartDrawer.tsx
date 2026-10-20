@@ -39,7 +39,7 @@ export default function CartDrawer() {
         aria-modal="true"
         aria-label="Your bag"
         className={[
-          "fixed right-0 top-0 z-[80] flex h-[100dvh] w-full max-w-[420px] flex-col bg-cream transition-transform duration-300",
+          "fixed right-0 top-0 z-[80] flex h-[100dvh] w-full max-w-[420px] flex-col rounded-l-3xl bg-cream transition-transform duration-300",
           open ? "translate-x-0 shadow-2xl" : "translate-x-full",
         ].join(" ")}
       >
@@ -60,7 +60,7 @@ export default function CartDrawer() {
             <Link
               href="/shop/glass/"
               onClick={() => setOpen(false)}
-              className="mt-6 border border-ink px-7 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.2em] transition-colors hover:bg-ink hover:text-cream"
+              className="rounded-2xl mt-6 border border-ink px-7 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.2em] transition-colors hover:bg-ink hover:text-cream"
             >
               Start shopping
             </Link>
@@ -154,7 +154,7 @@ export default function CartDrawer() {
               <Link
                 href="/checkout"
                 onClick={() => setOpen(false)}
-                className="mt-5 block bg-espresso py-4 text-center text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2"
+                className="rounded-2xl mt-5 block bg-espresso py-4 text-center text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2"
               >
                 Checkout
               </Link>

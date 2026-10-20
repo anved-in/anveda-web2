@@ -62,8 +62,11 @@ await session(390, 800, true, BASE + '/shop/glass/', async ({ ev, tap }) => {
   const c = JSON.parse(await ev(centre('button[aria-label="Close menu"]')) || 'null');
   if (c) await tap(c.x, c.y);
   check(!(await menuShown()), 'phone: tapping Close shuts the menu');
-  const bagSel = 'nav[aria-label="Quick navigation"] button[aria-label^="Open bag"]';
-  check((await ev(reachable(bagSel))) === 'ok', 'phone: bag button (bottom bar) reachable (' + (await ev(reachable(bagSel))) + ')');
+  // the bag is at the top right of the header; the bottom bar has Shop / Reels / Help / Saved only (no Home, no Bag)
+  const bagSel = 'header button[aria-label^="Open bag"]';
+  check((await ev(reachable(bagSel))) === 'ok', 'phone: bag button (top right) reachable (' + (await ev(reachable(bagSel))) + ')');
+  check(await ev("document.querySelectorAll('nav[aria-label=\"Quick navigation\"] a, nav[aria-label=\"Quick navigation\"] button').length === 4"), 'phone: bottom bar has exactly 4 items');
+  check(await ev("!document.querySelector('nav[aria-label=\"Quick navigation\"] button[aria-label^=\"Open bag\"]') && !/\\bhome\\b/i.test(document.querySelector('nav[aria-label=\"Quick navigation\"]').innerText)"), 'phone: bottom bar has no Home and no Bag');
   const b = JSON.parse(await ev(centre(bagSel)) || 'null');
   if (b) await tap(b.x, b.y);
   check(await ev("/your bag/i.test(document.body.innerText)"), 'phone: tapping the bag button opens the bag');

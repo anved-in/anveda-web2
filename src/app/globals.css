@@ -101,6 +101,19 @@ h1, h2, h3, .font-display {
 /* the price is ink-coloured by default: on a dark panel (the full-screen reel) it vanished */
 .on-dark .price-now { color: #fff; }
 
+/* ------------------------------------------------------------- shape
+   One rounded shape language across the site (owner's choice, 2026-10). Controls get a soft radius here, in the
+   base layer, so any component can still say rounded-full / rounded-none / rounded-lg itself and win. */
+:root { --radius-ctl: 12px; }
+@layer base {
+  button,
+  select,
+  textarea,
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+    border-radius: var(--radius-ctl);
+  }
+}
+
 /* Every tap answers at once: a pressed look the moment a finger or mouse goes down. */
 button:not(:disabled):active,
 [role="button"]:active { opacity: 0.78; }

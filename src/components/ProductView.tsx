@@ -303,7 +303,7 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
     <div className="flex flex-wrap gap-y-4 md:gap-y-8">
       <div className="w-full md:w-[48%] md:pr-10 lg:w-[46%]">
         <div
-          className="relative aspect-square overflow-hidden bg-cream-2"
+          className="relative aspect-square overflow-hidden rounded-2xl bg-cream-2"
           style={{ touchAction: "pan-y" }}
           onTouchStart={(e) => {
             touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY, lock: null };

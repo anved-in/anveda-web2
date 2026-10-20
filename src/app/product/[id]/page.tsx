@@ -138,7 +138,7 @@ export default async function ProductPage({
             <h2 className="font-display text-[clamp(22px,2.6vw,30px)]">Customer reviews</h2>
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {productReviews.map((r) => (
-                <div key={r.id} className="bg-cream-2 p-5">
+                <div key={r.id} className="rounded-2xl bg-cream-2 p-5">
                   <Stars n={r.rating} size={14} />
                   {r.body && <p className="mt-3 text-[14px] leading-relaxed text-ink">&ldquo;{r.body}&rdquo;</p>}
                   <p className="mt-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-ink-soft">

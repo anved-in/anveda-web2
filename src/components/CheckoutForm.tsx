@@ -267,11 +267,11 @@ export default function CheckoutForm() {
 
   if (lines.length === 0) {
     return (
-      <div className="mt-10 border border-line p-10 text-center">
+      <div className="mt-10 rounded-3xl border border-line p-10 text-center">
         <p className="text-ink-soft">Your bag is empty.</p>
         <Link
           href="/shop/glass/"
-          className="mt-6 inline-block border border-ink px-7 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.2em] transition-colors hover:bg-ink hover:text-cream"
+          className="rounded-2xl mt-6 inline-block border border-ink px-7 py-3.5 text-[11.5px] font-bold uppercase tracking-[0.2em] transition-colors hover:bg-ink hover:text-cream"
         >
           Start shopping
         </Link>
@@ -373,7 +373,7 @@ export default function CheckoutForm() {
 
       {/* ------------------------------------------------------ summary */}
       <div className="w-full md:w-[42%]">
-        <div className="bg-cream-2 p-6">
+        <div className="rounded-3xl bg-cream-2 p-6">
           <SectionHeader n={2} title="Order summary" />
 
           <div className="mt-5">
@@ -490,7 +490,7 @@ export default function CheckoutForm() {
                     onClick={applyCoupon}
                     disabled={couponBusy || !couponInput.trim()}
                     aria-busy={couponBusy}
-                    className="shrink-0 border border-ink px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.14em] transition-colors hover:bg-ink hover:text-cream disabled:opacity-50"
+                    className="rounded-2xl shrink-0 border border-ink px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.14em] transition-colors hover:bg-ink hover:text-cream disabled:opacity-50"
                   >
                     {couponBusy ? "Checking…" : "Apply"}
                   </button>
@@ -548,7 +548,7 @@ export default function CheckoutForm() {
             type="submit"
             disabled={busy}
             aria-busy={busy}
-            className="mt-5 w-full bg-espresso py-4 text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2 disabled:opacity-60"
+            className="rounded-2xl mt-5 w-full bg-espresso py-4 text-[12px] font-bold uppercase tracking-[0.2em] text-cream transition-colors hover:bg-espresso-2 disabled:opacity-60"
           >
             {busy ? "Opening payment…" : `Pay ${inr(total)}`}
           </button>

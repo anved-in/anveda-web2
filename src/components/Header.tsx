@@ -222,13 +222,11 @@ export default function Header() {
                 </span>
               )}
             </button>
-            {/* Desktop only: on a phone the fixed bottom tab bar already
-                carries a bag button, and two of them on one screen was simply
-                confusing. See <TabBar />. */}
+            {/* The bag sits at the top right on every screen size (the phone's bottom bar no longer carries one). */}
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="relative -mr-2 hidden p-2 md:block"
+              className="relative -mr-2 p-2"
               aria-label={`Open bag${ready && count ? `, ${count} items` : ""}`}
             >
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
@@ -327,7 +325,7 @@ export default function Header() {
         aria-label="Menu"
         aria-hidden={menu ? undefined : true}
         className={[
-          "fixed left-0 top-0 z-[95] flex h-[100dvh] w-[84%] max-w-[330px] flex-col bg-white transition-transform duration-300 md:hidden",
+          "fixed left-0 top-0 z-[95] flex h-[100dvh] w-[84%] max-w-[330px] flex-col rounded-r-3xl bg-white transition-transform duration-300 md:hidden",
           menu ? "translate-x-0 shadow-2xl" : "-translate-x-full",
         ].join(" ")}
       >
@@ -357,6 +355,15 @@ export default function Header() {
             colour to do it; the chevron is the one repeated affordance that
             says "this row goes somewhere," consistent at every level. */}
         <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-10">
+          {/* A plain-words way home. The logo links home too, but it is centred on a phone, where it is easy to miss. */}
+          <Link
+            href="/"
+            onClick={() => setMenu(false)}
+            className="flex items-center justify-between border-b border-line py-4 text-[13px] uppercase tracking-[0.1em] text-ink"
+          >
+            Home
+            <Chevron />
+          </Link>
           {NAV.map((n) => (
             <Link
               key={n.href}

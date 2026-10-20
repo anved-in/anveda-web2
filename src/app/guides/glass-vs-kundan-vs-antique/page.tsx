@@ -197,7 +197,7 @@ export default function MaterialGuidePage() {
                 <Link
                   key={g.slug}
                   href={`/shop/${g.slug}/`}
-                  className="border border-ink px-6 py-3 text-[11.5px] font-bold uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-cream"
+                  className="rounded-2xl border border-ink px-6 py-3 text-[11.5px] font-bold uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-cream"
                 >
                   {g.name}
                 </Link>

@@ -8,6 +8,7 @@ import { useCart } from "@/lib/cart";
 import Price from "./Price";
 import FavButton from "./FavButton";
 import NotifyMe from "./NotifyMe";
+import { ratingFor } from "@/lib/reviews";
 
 /**
  * Grid tile for one colourway: a plain square photo, then the name small,
@@ -65,11 +66,16 @@ export default function ListingCard({
     window.setTimeout(() => setAdded(false), 1800);
   };
 
+  const rating = ratingFor(p.id);
+
   return (
-    <article className={instant ? "group relative" : "reveal group relative"} data-d={delay}>
+    <article
+      className={`${instant ? "group relative" : "reveal group relative"} flex h-full flex-col rounded-[20px] bg-white p-2 shadow-[0_2px_14px_rgba(0,0,0,0.07)]`}
+      data-d={delay}
+    >
       <FavButton id={p.id} colour={v.colour} name={title} />
       <Link href={href} className="block">
-        <div className="relative aspect-square overflow-hidden rounded-lg bg-cream-2">
+        <div className="relative aspect-square overflow-hidden rounded-2xl bg-cream-2">
           {/* Plain <img>: the site builds to a static export, where the Next
               image optimizer is unavailable. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -88,83 +94,107 @@ export default function ListingCard({
             decoding="async"
           />
           {!v.inStock && (
-            <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink py-1.5 text-center font-bold uppercase text-white text-[10px] tracking-[0.14em]">
+            <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink py-2 text-center font-bold uppercase text-white text-[11px] tracking-[0.18em]">
               Sold out
             </span>
           )}
         </div>
       </Link>
 
-      <div className="px-1 pt-3">
-        <Link href={href} className="block truncate text-[13.5px] leading-snug text-ink">
+      <div className="flex flex-1 flex-col px-1.5 pb-1 pt-3">
+        <Link href={href} className="line-clamp-2 text-[15px] leading-snug text-ink">
           {title}
         </Link>
-        {v.inStock ? (
-          // ONE button holds the word "Add" and the price. Tapping it asks for the size, in a small panel just above it.
-          <div ref={pickerRef} className="relative mt-2.5">
-            <button
-              type="button"
-              onClick={() => setSizeOpen((o) => !o)}
-              aria-label={`Add ${title} to bag, ${inr(price)}`}
-              aria-expanded={sizeOpen}
-              className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 bg-ink px-3 text-[11.5px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-85"
-            >
-              {added ? (
-                "Added ✓"
-              ) : (
-                <>
-                  <span>Add</span>
-                  <span aria-hidden="true" className="opacity-60">·</span>
-                  <span>{inr(price)}</span>
-                </>
-              )}
-            </button>
+        <div className="mt-1.5 flex items-center justify-between gap-2">
+          <Link href={href} className="block">
+            <Price price={price} size="lg" />
+          </Link>
+          {/* Stars appear only for designs that really have customer reviews. */}
+          {rating && (
+            <span className="flex shrink-0 items-center gap-1 text-[12.5px] text-ink-soft" aria-label={`Rated ${rating.avg.toFixed(1)} out of 5 from ${rating.count} review${rating.count > 1 ? "s" : ""}`}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#c9a24b" aria-hidden="true">
+                <path d="M12 2.5l2.9 6.2 6.6.8-4.9 4.6 1.3 6.6L12 17.4 6.1 20.7l1.3-6.6L2.5 9.5l6.6-.8L12 2.5Z" />
+              </svg>
+              {rating.avg.toFixed(1)} <span className="text-ink-faint">({rating.count})</span>
+            </span>
+          )}
+        </div>
 
-            {sizeOpen && (
-              <div className="absolute bottom-[calc(100%+8px)] left-0 right-0 z-20 border border-line bg-white p-2.5 shadow-lg">
-                <p className="px-0.5 pb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ink-faint">Choose a size</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {sizesOfProduct(p).map((s) => {
-                    const st = sizeState(v, s);
-                    const gone = st !== "ok";
-                    if (gone) {
-                      // not available: open the product on that size, where "Notify me" is offered
+        <div className="mt-auto pt-3">
+          {v.inStock ? (
+            // One big rounded button. Tapping it asks for the size, in a small panel just above it.
+            <div ref={pickerRef} className="relative">
+              <button
+                type="button"
+                onClick={() => setSizeOpen((o) => !o)}
+                aria-label={`Add ${title} to bag, ${inr(price)}`}
+                aria-expanded={sizeOpen}
+                className="relative flex h-12 w-full cursor-pointer items-center justify-center rounded-2xl bg-ink whitespace-nowrap pl-2 pr-9 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
+              >
+                {added ? (
+                  "Added ✓"
+                ) : (
+                  <>
+                    Add to bag
+                    <svg className="absolute right-4" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M6 7h12l1 13H5L6 7Z" />
+                      <path d="M9 7a3 3 0 0 1 6 0" />
+                    </svg>
+                  </>
+                )}
+              </button>
+
+              {sizeOpen && (
+                <div className="absolute bottom-[calc(100%+8px)] left-0 right-0 z-20 rounded-2xl border border-line bg-white p-3 shadow-lg">
+                  <p className="px-0.5 pb-2 text-[10.5px] font-bold uppercase tracking-[0.1em] text-ink-faint">Choose a size</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {sizesOfProduct(p).map((s) => {
+                      const st = sizeState(v, s);
+                      const gone = st !== "ok";
+                      if (gone) {
+                        // not available: open the product on that size, where "Notify me" is offered
+                        return (
+                          <Link
+                            key={s}
+                            href={`${href}${href.includes("?") ? "&" : "?"}size=${encodeURIComponent(s)}`}
+                            aria-label={`Size ${s}, not available: tap to be notified`}
+                            className="min-w-[38px] rounded-lg border border-line bg-cream-2 px-2 py-2 text-center text-[12.5px] font-semibold text-ink-soft/60 line-through transition-colors hover:border-ink"
+                          >
+                            {s}
+                          </Link>
+                        );
+                      }
                       return (
-                        <Link
+                        <button
                           key={s}
-                          href={`${href}${href.includes("?") ? "&" : "?"}size=${encodeURIComponent(s)}`}
-                          aria-label={`Size ${s}, not available: tap to be notified`}
-                          className="min-w-[34px] border border-line bg-cream-2 px-2 py-1.5 text-center text-[12px] font-semibold text-ink-soft/60 line-through transition-colors hover:border-ink"
+                          type="button"
+                          onClick={() => pickSize(s)}
+                          aria-label={`Size ${s}`}
+                          className="min-w-[38px] rounded-lg border border-line-strong px-2 py-2 text-[12.5px] font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
                         >
                           {s}
-                        </Link>
+                        </button>
                       );
-                    }
-                    return (
-                      <button
-                        key={s}
-                        type="button"
-                        onClick={() => pickSize(s)}
-                        aria-label={`Size ${s}`}
-                        className="min-w-[34px] border border-line-strong px-2 py-1.5 text-[12px] font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
-                      >
-                        {s}
-                      </button>
-                    );
-                  })}
+                    })}
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          // sold out: there is nothing to add, so the price stays and "Notify me" takes the button's place
-          <div className="mt-1 flex items-center justify-between gap-2">
-            <Link href={href} className="block">
-              <Price price={price} size="sm" muted />
-            </Link>
-            <NotifyMe variantId={v.id} label={title} />
-          </div>
-        )}
+              )}
+            </div>
+          ) : (
+            // sold out: there is nothing to add, so the same-sized rounded button says "Notify me" instead
+            <NotifyMe
+              variantId={v.id}
+              label={title}
+              className="relative flex h-12 w-full cursor-pointer items-center justify-center rounded-2xl border border-ink bg-white whitespace-nowrap pl-2 pr-9 text-[11px] font-bold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-ink hover:text-white"
+              icon={
+                <svg className="absolute right-4" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+                  <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                </svg>
+              }
+            />
+          )}
+        </div>
       </div>
     </article>
   );
