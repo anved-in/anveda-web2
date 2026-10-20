@@ -3720,6 +3720,104 @@
        "zoom": 1
       }
      ]
+    },
+    {
+     "id": 142,
+     "colour": "Grey",
+     "image": "u-square-edge-glass-bangles-grey-more-mvg8e8ij.webp",
+     "price": 230,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 6,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 2,
+      "2.6": 2,
+      "2.8": 2
+     },
+     "zoom": 1.5
+    },
+    {
+     "id": 144,
+     "colour": "Sky Blue",
+     "image": "u-square-edge-glass-bangles-sky-blue-more-mvg8c9at.webp",
+     "price": 230,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 7,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 3,
+      "2.6": 3,
+      "2.8": 1
+     },
+     "focal": "51.5% 64%",
+     "zoom": 1.5
+    },
+    {
+     "id": 145,
+     "colour": "Golden Yellow",
+     "image": "u-square-edge-glass-bangles-golden-yellow-mvg8bbp3.webp",
+     "price": 230,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 6,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 2,
+      "2.6": 2,
+      "2.8": 2
+     },
+     "focal": "49.1% 61.8%",
+     "zoom": 1.5
+    },
+    {
+     "id": 146,
+     "colour": "Classic Blue",
+     "image": "u-square-edge-glass-bangles-classic-blue-more-mvg8aq3q.webp",
+     "price": 230,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 6,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 2,
+      "2.6": 2,
+      "2.8": 2
+     },
+     "zoom": 1.5
     }
    ],
    "image": "u-square-edge-glass-bangles-aqua-hd-1792254278.webp"
