@@ -1,113 +1,101 @@
 import Link from "@/components/Link";
-import Logo from "./Logo";
 import SignupForm from "./SignupForm";
-import { SITE, waLink, HAS_WHATSAPP, igDmLink } from "@/lib/site";
+import FooterGroup from "./FooterGroup";
+import { SITE, igDmLink } from "@/lib/site";
 import { collections, rangeHref } from "@/lib/catalog";
+
+/**
+ * The footer follows the owner's reference (2026-10-22): light grey panel, small uppercase titles, a newsletter
+ * block with ONE input and ONE black "Subscribe" button, link groups that fold up into accordion rows on a phone,
+ * and a customer-service block. Palette: #f1f1f1 panel, #111 text, #626262 quiet text, #d9d9d9 lines.
+ */
+const LINK = "block py-2 text-[13px] text-[#111] transition-opacity hover:opacity-60";
 
 export default function Footer() {
   return (
-    <footer className="on-dark bg-espresso px-5 pb-8 pt-16 text-[#b3aca4] sm:px-6 md:pt-20">
-      <div className="mx-auto max-w-[1320px]">
-        <div className="flex flex-wrap gap-y-9">
-          <div className="w-full pr-8 md:w-[36%]">
-            <div className="h-[22px] text-gold">
-              <Logo />
-            </div>
-            <p className="mt-5 max-w-[38ch] text-[14px] leading-relaxed">
-              {SITE.description}
-            </p>
-            <a
-              href={SITE.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center gap-2 text-[13px] transition-colors hover:text-gold"
-            >
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-              </svg>
-              @anveda.in
-            </a>
-
-            <h3 className="mb-3 mt-8 text-[11px] font-bold uppercase tracking-[0.24em] text-gold">
-              New arrivals, first
-            </h3>
-            <p className="mb-3 max-w-[38ch] text-[13px] leading-relaxed">
-              {HAS_WHATSAPP ? "Leave your email or WhatsApp" : "Leave your email"} — we&apos;ll let you know when a new batch drops.
-            </p>
+    <footer className="bg-[#f1f1f1] px-5 pb-8 pt-12 text-[13px] text-[#111] sm:px-6 md:pt-16">
+      <div className="mx-auto max-w-[1320px] md:grid md:grid-cols-[1.5fr_1fr_1fr_1.2fr] md:gap-x-12">
+        {/* ----------------------------------------------------------- newsletter */}
+        <div>
+          <h3 className="text-[12px] font-normal uppercase tracking-[0.08em]" style={{ fontFamily: "var(--font-sans)" }}>Newsletter</h3>
+          <p className="mt-5 max-w-[40ch] text-[13px] leading-relaxed">
+            Sign up to hear first when a new batch of bangles drops.
+          </p>
+          <div className="mt-5">
             <SignupForm />
           </div>
+          <p className="mt-4 max-w-[44ch] text-[12px] leading-relaxed text-[#626262]">
+            By signing up to our newsletter, you agree with our{" "}
+            <Link href="/privacy" className="underline underline-offset-2">
+              privacy policy
+            </Link>
+            .
+          </p>
+        </div>
 
-          <div className="w-1/2 pr-6 sm:w-1/3 md:w-[21%]">
-            <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.24em] text-gold">
-              Shop
-            </h3>
-            <div className="flex flex-col">
-              {collections.slice(0, 5).map((c) => (
-                <Link
-                  key={c.slug}
-                  href={rangeHref(c.slug)}
-                  className="py-[5px] text-[14px] transition-colors hover:text-gold"
-                >
-                  {c.name}
-                </Link>
+        {/* ------------------------------------------- link groups (accordion rows on a phone) */}
+        <div className="mt-9 md:col-span-2 md:mt-0 md:grid md:grid-cols-2 md:gap-x-12">
+          <FooterGroup title="Shop">
+            <ul>
+              {collections.map((c) => (
+                <li key={c.slug}>
+                  <Link href={rangeHref(c.slug)} className={LINK}>
+                    {c.name}
+                  </Link>
+                </li>
               ))}
-              <Link href="/shop/glass/" className="py-[5px] text-[14px] transition-colors hover:text-gold">
-                View all
-              </Link>
-            </div>
-          </div>
-
-          <div className="w-1/2 pr-6 sm:w-1/3 md:w-[21%]">
-            <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.24em] text-gold">
-              Company
-            </h3>
-            <div className="flex flex-col">
-              <Link href="/about" className="py-[5px] text-[14px] transition-colors hover:text-gold">Our story</Link>
-              <Link href="/sizing" className="py-[5px] text-[14px] transition-colors hover:text-gold">Sizing guide</Link>
-              <Link href="/guides/glass-vs-kundan-vs-antique" className="py-[5px] text-[14px] transition-colors hover:text-gold">Glass vs Kundan vs Antique</Link>
-              <Link href="/shipping" className="py-[5px] text-[14px] transition-colors hover:text-gold">Shipping &amp; returns</Link>
-              <Link href="/track" className="py-[5px] text-[14px] transition-colors hover:text-gold">Track order</Link>
-              <Link href="/contact" className="py-[5px] text-[14px] transition-colors hover:text-gold">Contact</Link>
-            </div>
-          </div>
-
-          <div className="w-full sm:w-1/3 md:w-[22%]">
-            <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.24em] text-gold">
-              Order
-            </h3>
-            <div className="flex flex-col">
-              <a
-                href={HAS_WHATSAPP ? waLink("Hi ANVEDA! I would like to know more about your bangles.") : igDmLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-[5px] text-[14px] transition-colors hover:text-gold"
-              >
-                {HAS_WHATSAPP ? "WhatsApp us" : "Message us on Instagram"}
-              </a>
-              <a href={`mailto:${SITE.email}`} className="py-[5px] text-[14px] transition-colors hover:text-gold">
-                {SITE.email}
-              </a>
-            </div>
-          </div>
+              <li>
+                <Link href="/shop/glass/" className={LINK}>
+                  View all
+                </Link>
+              </li>
+            </ul>
+          </FooterGroup>
+          <FooterGroup title="Policies & more">
+            <ul>
+              {[
+                ["/about", "Our story"],
+                ["/sizing", "Sizing guide"],
+                ["/guides/glass-vs-kundan-vs-antique", "Glass vs Kundan vs Antique"],
+                ["/shipping", "Shipping & returns"],
+                ["/track", "Track order"],
+                ["/contact", "Contact"],
+                ["/terms", "Terms & Conditions"],
+                ["/privacy", "Privacy Policy"],
+                ["/shipping", "Refund Policy"],
+              ].map(([href, label]) => (
+                <li key={label}>
+                  <Link href={href} className={LINK}>
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </FooterGroup>
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-gold/20 pt-6 text-[12.5px]">
-          <span>© {new Date().getFullYear()} ANVEDA. All rights reserved.</span>
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <Link href="/terms" className="transition-colors hover:text-gold">
-              Terms &amp; Conditions
-            </Link>
-            <Link href="/privacy" className="transition-colors hover:text-gold">
-              Privacy Policy
-            </Link>
-            <Link href="/shipping" className="transition-colors hover:text-gold">
-              Refund Policy
-            </Link>
-          </div>
-          <span className="text-[#8a837b]">Made in India</span>
+        {/* -------------------------------------------------------- customer service */}
+        <div className="mt-9 md:mt-0">
+          <h3 className="text-[12px] font-normal uppercase tracking-[0.08em]" style={{ fontFamily: "var(--font-sans)" }}>Customer service</h3>
+          <p className="mt-5 max-w-[40ch] text-[13px] leading-relaxed">
+            Questions about an order or a size? Message us on Instagram or write to us at the address below.
+          </p>
+          <p className="mt-4">
+            <a href={igDmLink} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-2">
+              @anveda.in on Instagram
+            </a>
+          </p>
+          <p className="mt-2">
+            <a href={`mailto:${SITE.email}`} className="underline underline-offset-2">
+              {SITE.email}
+            </a>
+          </p>
         </div>
+      </div>
+
+      <div className="mx-auto mt-10 flex max-w-[1320px] flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-[#d9d9d9] pt-5 text-[12px] text-[#626262]">
+        <span>© {new Date().getFullYear()} ANVEDA. All rights reserved.</span>
+        <span>Made in India</span>
       </div>
     </footer>
   );

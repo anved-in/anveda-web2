@@ -176,7 +176,7 @@ export default function ProductBuy({
             <button
               type="button"
               onClick={onAdd}
-              className="ml-auto h-11 w-[58%] cursor-pointer bg-ink text-[12px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-espresso-2 md:ml-0 md:w-[250px] md:tracking-[0.16em]"
+              className="av-btn ml-auto w-[58%] cursor-pointer md:ml-0 md:w-[250px]"
             >
               {added ? "Added to bag ✓" : (
                 <>

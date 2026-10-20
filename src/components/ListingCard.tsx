@@ -132,17 +132,13 @@ export default function ListingCard({
                 onClick={() => setSizeOpen((o) => !o)}
                 aria-label={`Add ${title} to bag, ${inr(price)}`}
                 aria-expanded={sizeOpen}
-                className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-cream-2 px-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-white"
+                className="av-btn w-full cursor-pointer px-3"
               >
                 {added ? (
                   "Added ✓"
                 ) : (
                   <>
                     Add to bag
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d="M6 7h12l1 13H5L6 7Z" />
-                      <path d="M9 7a3 3 0 0 1 6 0" />
-                    </svg>
                   </>
                 )}
               </button>
@@ -188,13 +184,7 @@ export default function ListingCard({
             <NotifyMe
               variantId={v.id}
               label={title}
-              className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-line-strong bg-white px-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-white"
-              icon={
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-                  <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-                </svg>
-              }
+              className="av-btn-outline w-full cursor-pointer px-3"
             />
           )}
         </div>

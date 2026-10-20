@@ -104,7 +104,7 @@ h1, h2, h3, .font-display {
 /* ------------------------------------------------------------- shape
    One rounded shape language across the site (owner's choice, 2026-10). Controls get a soft radius here, in the
    base layer, so any component can still say rounded-full / rounded-none / rounded-lg itself and win. */
-:root { --radius-ctl: 6px; }
+:root { --radius-ctl: 4px; }
 @layer base {
   button,
   select,
@@ -120,6 +120,36 @@ h1, h2, h3, .font-display {
   input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
   select,
   textarea { font-size: 16px !important; }
+}
+
+/* ------------------------------------------------------------- the reference button
+   Measured from the owner's reference (the "Subscribe" button, 2026-10-22), on a 412px-wide phone:
+   about 122 x 44px, solid near-black, white 12px uppercase label, 4px corners, about 28px of space left and right.
+   Use .av-btn for every main button, .av-btn-outline for the quiet twin. Utilities (w-full, px-3...) can still adjust it. */
+@layer components {
+  .av-btn,
+  .av-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 28px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border: 1px solid #050505;
+    transition: opacity 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+  }
+  .av-btn { background: #050505; color: #fff; }
+  .av-btn:hover { opacity: 0.85; }
+  .av-btn:disabled { opacity: 0.6; }
+  .av-btn-outline { background: transparent; color: #050505; }
+  .av-btn-outline:hover { background: #050505; color: #fff; }
 }
 
 /* Every tap answers at once: a pressed look the moment a finger or mouse goes down. */
