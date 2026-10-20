@@ -4126,7 +4126,7 @@
    "collectionName": "Lil' Charms - Kids Section",
    "group": "kids",
    "name": "Kids Bangle",
-   "price": 210,
+   "price": 180,
    "priceMax": 210,
    "pieces": 2,
    "unit": "set",
@@ -4146,7 +4146,13 @@
       "1.14",
       "2.0"
      ],
-     "inStock": true,
+     "inStock": false,
+     "sizeStock": {
+      "1.10": 0,
+      "1.12": 0,
+      "1.14": 0,
+      "2.0": 0
+     },
      "zoom": 1.15
     },
     {
@@ -4161,7 +4167,13 @@
       "1.14",
       "2.0"
      ],
-     "inStock": true,
+     "inStock": false,
+     "sizeStock": {
+      "1.10": 0,
+      "1.12": 0,
+      "1.14": 0,
+      "2.0": 0
+     },
      "focal": "50% 88.2%",
      "zoom": 1
     },
@@ -4177,7 +4189,13 @@
       "1.14",
       "2.0"
      ],
-     "inStock": true,
+     "inStock": false,
+     "sizeStock": {
+      "1.10": 0,
+      "1.12": 0,
+      "1.14": 0,
+      "2.0": 0
+     },
      "focal": "100% 77.2%",
      "zoom": 1.25
     },
@@ -4193,8 +4211,15 @@
       "1.14",
       "2.0"
      ],
-     "inStock": true,
-     "zoom": 1
+     "inStock": false,
+     "sizeStock": {
+      "1.10": 0,
+      "1.12": 0,
+      "1.14": 0,
+      "2.0": 0
+     },
+     "focal": "73.4% 66.8%",
+     "zoom": 1.55
     }
    ],
    "image": "u-design-gold-stone-gunghroo-set-of-4-mvghu126.webp"
