@@ -104,7 +104,7 @@ export default async function GroupPage({
                         on ? "border-ink text-ink" : "border-transparent text-ink-faint",
                       ].join(" ")}
                     >
-                      {grp.name}
+                      {grp.short}
                     </Link>
                   );
                 })}

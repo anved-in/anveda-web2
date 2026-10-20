@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "@/components/Link";
-import { ALL_SIZES, framingStyle, imgSrc, imgSrcSmall, listingPrice, listingTitle, sizeState, type Listing } from "@/lib/catalog";
+import { sizesOfProduct, framingStyle, imgSrc, imgSrcSmall, listingPrice, listingTitle, sizeState, type Listing } from "@/lib/catalog";
 import { asset } from "@/lib/site";
 import { useCart } from "@/lib/cart";
 import Price from "./Price";
@@ -111,14 +111,14 @@ export default function ListingCard({
                 onClick={() => setSizeOpen((o) => !o)}
                 aria-label={`Add ${title} to bag`}
                 aria-expanded={sizeOpen}
-                className="flex h-7 w-7 items-center justify-center text-ink transition-opacity hover:opacity-60"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-ink text-white transition-opacity hover:opacity-80"
               >
                 {added ? (
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M4 12.5l5 5L20 6.5" />
                   </svg>
                 ) : (
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M6 7h12l1 13H5L6 7Z" />
                     <path d="M9 7a3 3 0 0 1 6 0" />
                   </svg>
@@ -129,7 +129,7 @@ export default function ListingCard({
                 <div className="absolute bottom-[calc(100%+8px)] right-0 z-20 w-max border border-line bg-white p-2.5 shadow-lg">
                   <p className="px-0.5 pb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ink-faint">Size</p>
                   <div className="flex gap-1.5">
-                    {ALL_SIZES.map((s) => {
+                    {sizesOfProduct(p).map((s) => {
                       const st = sizeState(v, s);
                       const gone = st !== "ok";
                       if (gone) {

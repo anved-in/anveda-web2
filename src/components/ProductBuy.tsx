@@ -6,7 +6,7 @@ import Link from "@/components/Link";
 import QtyStepper from "@/components/QtyStepper";
 import NotifyMe from "@/components/NotifyMe";
 import { useCart } from "@/lib/cart";
-import { inr, variantPrice, colourLabel, sizeLeft, sizeLeftNote, sizeState, ALL_SIZES, SIZE_GUIDE, type Product, type Variant } from "@/lib/catalog";
+import { inr, variantPrice, colourLabel, sizeLeft, sizeLeftNote, sizeState, ALL_SIZES, sizeInfo, sizesOfProduct, type Product, type Variant } from "@/lib/catalog";
 
 /**
  * The buy box: size, quantity, add to bag. Colour is picked one level up
@@ -35,7 +35,7 @@ export default function ProductBuy({
   // a wrong-size delivery. The customer must choose deliberately.
   // (a size can arrive in the link, e.g. from the shop card's size picker: ?size=2.10)
   const sizeFromLink = useSearchParams().get("size");
-  const [size, setSize] = useState<string | null>(() => (sizeFromLink && ALL_SIZES.includes(sizeFromLink) ? sizeFromLink : null));
+  const [size, setSize] = useState<string | null>(() => (sizeFromLink && ALL_SIZES.includes(sizeFromLink) && sizesOfProduct(p).includes(sizeFromLink) ? sizeFromLink : null));
   const sizeRef = useRef<HTMLDivElement>(null);
   const [err, setErr] = useState(false);
   const [added, setAdded] = useState(false);
@@ -93,8 +93,8 @@ export default function ProductBuy({
             the row equally instead of a fixed min-width forcing a 3+2 wrap
             on a phone. */}
         <div className="mt-2 flex gap-1.5 md:flex-wrap">
-          {ALL_SIZES.map((s) => {
-            const g = SIZE_GUIDE.find((x) => x.size === s);
+          {sizesOfProduct(p).map((s) => {
+            const g = sizeInfo(s);
             const on = size === s;
             const st = sizeState(variant, s);
             const gone = st !== "ok";
