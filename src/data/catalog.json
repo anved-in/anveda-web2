@@ -279,7 +279,7 @@
      "colour": "Pearl glass bangles",
      "image": "u-border-bangles-pearl-glass-bangles-mvggiygj.webp",
      "price": 320,
-     "pieces": 1,
+     "pieces": 12,
      "sizes": [
       "2.2",
       "2.4",
@@ -303,7 +303,7 @@
      "colour": "Crystal Side Bangles",
      "image": "u-border-bangles-crystal-side-bangles-mvggp8hf.webp",
      "price": 160,
-     "pieces": 1,
+     "pieces": 4,
      "sizes": [
       "2.2",
       "2.4",
@@ -322,6 +322,30 @@
      },
      "focal": "58.8% 68.2%",
      "zoom": 1.5
+    },
+    {
+     "id": 182,
+     "colour": "Premium White Stones",
+     "image": "u-border-bangles-premium-white-stones-mvgzfa0v.webp",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": false,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 0,
+      "2.6": 0,
+      "2.8": 0
+     },
+     "focal": "62.1% 56.9%",
+     "zoom": 1.45
     }
    ],
    "image": "border-bangles-kundan-border-bangles.webp"
