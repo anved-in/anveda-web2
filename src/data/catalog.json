@@ -278,6 +278,30 @@
      },
      "focal": "60.6% 59.9%",
      "zoom": 1.6
+    },
+    {
+     "id": 152,
+     "colour": "Pearl glass bangles",
+     "image": "u-border-bangles-pearl-glass-bangles-mvggiygj.webp",
+     "price": 320,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 5,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 2,
+      "2.6": 0,
+      "2.8": 3
+     },
+     "zoom": 1.25
     }
    ],
    "image": "border-bangles-kundan-border-bangles.webp"
