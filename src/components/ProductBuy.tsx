@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "@/components/Link";
 import QtyStepper from "@/components/QtyStepper";
+import NotifyMe from "@/components/NotifyMe";
 import { useCart } from "@/lib/cart";
 import { inr, variantPrice, colourLabel, sizeLeft, sizeLeftNote, sizeState, ALL_SIZES, SIZE_GUIDE, type Product, type Variant } from "@/lib/catalog";
 
@@ -38,8 +39,6 @@ export default function ProductBuy({
   const sizeRef = useRef<HTMLDivElement>(null);
   const [err, setErr] = useState(false);
   const [added, setAdded] = useState(false);
-  const [notifyEmail, setNotifyEmail] = useState("");
-  const [notifyState, setNotifyState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const { add, setOpen: setBagOpen } = useCart();
   const left = size ? sizeLeft(variant, size) : null;
   const [overErr, setOverErr] = useState<string | null>(null);
@@ -50,7 +49,6 @@ export default function ProductBuy({
   const showNotify = !variant.inStock || unavailableChoice;
   useEffect(() => {
     setOverErr(null);
-    setNotifyState("idle");
   }, [variant, size]);
 
   const onAdd = () => {
@@ -67,23 +65,6 @@ export default function ProductBuy({
     add(p.id, size, qty, variant.colour);
     setAdded(true);
     window.setTimeout(() => setAdded(false), 2200);
-  };
-
-  const onNotify = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!notifyEmail.includes("@")) return;
-    setNotifyState("sending");
-    try {
-      const res = await fetch("/api/notify-stock", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ variantId: variant.id, email: notifyEmail, size: unavailableChoice ? size : null }),
-      });
-      const data = await res.json();
-      setNotifyState(data.ok ? "done" : "error");
-    } catch {
-      setNotifyState("error");
-    }
   };
 
   return (
@@ -237,34 +218,16 @@ export default function ProductBuy({
               ? choice === "na"
                 ? "We don\u2019t have this size in this colour right now. Leave your email and we\u2019ll tell you if it becomes available."
                 : "This size is sold out. Leave your email and we\u2019ll tell you the moment it\u2019s back."
-              : <>Leave your email and we&rsquo;ll let you know the moment this shade is back.</>}
+              : <>Tap below and we&rsquo;ll let you know the moment this shade is back.</>}
           </p>
-          {notifyState === "done" ? (
-            <p className="mt-4 text-[13px] font-semibold text-ink">You&rsquo;re on the list ✓</p>
-          ) : (
-            <form onSubmit={onNotify} className="mt-4 flex gap-2">
-              <input
-                type="email"
-                required
-                value={notifyEmail}
-                onChange={(e) => setNotifyEmail(e.target.value)}
-                placeholder="you@example.com"
-                className="min-w-0 flex-1 border border-line-strong bg-white px-3.5 py-2.5 text-[13px] outline-none focus:border-ink"
-              />
-              <button
-                type="submit"
-                disabled={notifyState === "sending"}
-                className="shrink-0 cursor-pointer bg-ink px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.1em] text-cream transition-opacity hover:bg-espresso-2 disabled:opacity-60"
-              >
-                {notifyState === "sending" ? "…" : "Notify me"}
-              </button>
-            </form>
-          )}
-          {notifyState === "error" && (
-            <p role="alert" className="mt-2 text-[12px] text-[#a33a2f]">
-              Something went wrong — please try again.
-            </p>
-          )}
+          <div className="mt-4">
+            <NotifyMe
+              full
+              variantId={variant.id}
+              size={unavailableChoice ? size : null}
+              label={unavailableChoice ? `${p.name} — ${colourLabel(p, variant)}, size ${size}` : `${p.name} — ${colourLabel(p, variant)}`}
+            />
+          </div>
         </div>
       )}
     </div>
