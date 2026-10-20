@@ -44,6 +44,9 @@ if os.path.exists(REELS):
         else:
             keep.add(fn)
 
+# The plain tile shown for a colour that has no photo yet (see catalog.ts).
+keep.add("no-photo.webp")
+
 # Each kept file has a "@480" thumbnail sitting next to it (see
 # optimize-images.js) that never appears in the catalog itself — keep those
 # too, or every build would generate them just to have prune delete them.

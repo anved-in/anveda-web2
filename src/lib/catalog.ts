@@ -119,7 +119,13 @@ export const groups: Group[] = (data.groups ?? []).map((g) => ({
 export const collections: Collection[] = [...data.collections].sort(
   (a, b) => a.order - b.order,
 );
-export const products: Product[] = data.products;
+/** Plain tile for a colour added in the CMS before its photo is uploaded: without it the page cannot be built. */
+export const NO_PHOTO = "no-photo.webp";
+export const products: Product[] = data.products.map((p) => ({
+  ...p,
+  image: p.image || NO_PHOTO,
+  variants: p.variants.map((v) => (v.image ? v : { ...v, image: NO_PHOTO })),
+}));
 
 /** The owner's hand-arranged order for the By Colour wall (variant ids); empty = fully automatic. */
 export const colourWallManual: number[] =
