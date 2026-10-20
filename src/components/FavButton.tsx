@@ -65,7 +65,7 @@ export default function FavButton({
       aria-pressed={on}
       aria-label={label}
       // A white round button on the photo: legible on any picture, and big enough for a thumb.
-      className="absolute right-[18px] top-[18px] z-10 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white/90 text-ink shadow-[0_1px_6px_rgba(0,0,0,0.18)] transition-opacity hover:opacity-90"
+      className="absolute right-2.5 top-2.5 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white/80 text-ink transition-opacity hover:bg-white"
     >
       {icon}
     </button>

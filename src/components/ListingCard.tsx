@@ -70,12 +70,13 @@ export default function ListingCard({
 
   return (
     <article
-      className={`${instant ? "group relative" : "reveal group relative"} flex h-full flex-col rounded-[20px] bg-white p-2 shadow-[0_2px_14px_rgba(0,0,0,0.07)]`}
+      className={`${instant ? "group relative" : "reveal group relative"} flex h-full flex-col rounded-[18px] bg-white shadow-[0_1px_6px_rgba(0,0,0,0.05)]`}
       data-d={delay}
     >
       <FavButton id={p.id} colour={v.colour} name={title} />
       <Link href={href} className="block">
-        <div className="relative aspect-square overflow-hidden rounded-2xl bg-cream-2">
+        {/* The photo runs edge to edge across the top of the card, so it shows as large as the card allows. */}
+        <div className="relative aspect-square overflow-hidden rounded-t-[18px] bg-cream-2">
           {/* Plain <img>: the site builds to a static export, where the Next
               image optimizer is unavailable. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -94,25 +95,26 @@ export default function ListingCard({
             decoding="async"
           />
           {!v.inStock && (
-            <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink py-2 text-center font-bold uppercase text-white text-[11px] tracking-[0.18em]">
+            <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink/75 py-1.5 text-center font-semibold uppercase text-white text-[10px] tracking-[0.14em]">
               Sold out
             </span>
           )}
         </div>
       </Link>
 
-      <div className="flex flex-1 flex-col px-1.5 pb-1 pt-3">
-        <Link href={href} className="line-clamp-2 text-[15px] leading-snug text-ink">
+      {/* Spacing is on a 4px grid: 12px around the text block, 4px between name and price, 12px before the button. */}
+      <div className="flex flex-1 flex-col px-3 pb-3 pt-3">
+        <Link href={href} className="line-clamp-2 text-[13.5px] leading-snug text-ink">
           {title}
         </Link>
-        <div className="mt-1.5 flex items-center justify-between gap-2">
+        <div className="mt-1 flex items-center justify-between gap-2">
           <Link href={href} className="block">
-            <Price price={price} size="lg" />
+            <Price price={price} size="sm" muted />
           </Link>
           {/* Stars appear only for designs that really have customer reviews. */}
           {rating && (
-            <span className="flex shrink-0 items-center gap-1 text-[12.5px] text-ink-soft" aria-label={`Rated ${rating.avg.toFixed(1)} out of 5 from ${rating.count} review${rating.count > 1 ? "s" : ""}`}>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="#c9a24b" aria-hidden="true">
+            <span className="flex shrink-0 items-center gap-1 text-[12px] text-ink-soft" aria-label={`Rated ${rating.avg.toFixed(1)} out of 5 from ${rating.count} review${rating.count > 1 ? "s" : ""}`}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="#c9a24b" aria-hidden="true">
                 <path d="M12 2.5l2.9 6.2 6.6.8-4.9 4.6 1.3 6.6L12 17.4 6.1 20.7l1.3-6.6L2.5 9.5l6.6-.8L12 2.5Z" />
               </svg>
               {rating.avg.toFixed(1)} <span className="text-ink-faint">({rating.count})</span>
@@ -122,21 +124,22 @@ export default function ListingCard({
 
         <div className="mt-auto pt-3">
           {v.inStock ? (
-            // One big rounded button. Tapping it asks for the size, in a small panel just above it.
+            // A calm, soft button: the word and a small bag, centred, with comfortable room on every side
+            // (40px high; 16px of space left and right of the label, about twice the space above and below it).
             <div ref={pickerRef} className="relative">
               <button
                 type="button"
                 onClick={() => setSizeOpen((o) => !o)}
                 aria-label={`Add ${title} to bag, ${inr(price)}`}
                 aria-expanded={sizeOpen}
-                className="relative flex h-12 w-full cursor-pointer items-center justify-center rounded-2xl bg-ink whitespace-nowrap pl-2 pr-9 text-[11px] font-bold uppercase tracking-[0.12em] text-white transition-opacity hover:opacity-90"
+                className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-cream-2 px-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-white"
               >
                 {added ? (
                   "Added ✓"
                 ) : (
                   <>
                     Add to bag
-                    <svg className="absolute right-4" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                       <path d="M6 7h12l1 13H5L6 7Z" />
                       <path d="M9 7a3 3 0 0 1 6 0" />
                     </svg>
@@ -145,8 +148,8 @@ export default function ListingCard({
               </button>
 
               {sizeOpen && (
-                <div className="absolute bottom-[calc(100%+8px)] left-0 right-0 z-20 rounded-2xl border border-line bg-white p-3 shadow-lg">
-                  <p className="px-0.5 pb-2 text-[10.5px] font-bold uppercase tracking-[0.1em] text-ink-faint">Choose a size</p>
+                <div className="absolute bottom-[calc(100%+8px)] left-0 right-0 z-20 rounded-xl border border-line bg-white p-3 shadow-md">
+                  <p className="pb-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-faint">Choose a size</p>
                   <div className="flex flex-wrap gap-1.5">
                     {sizesOfProduct(p).map((s) => {
                       const st = sizeState(v, s);
@@ -158,7 +161,7 @@ export default function ListingCard({
                             key={s}
                             href={`${href}${href.includes("?") ? "&" : "?"}size=${encodeURIComponent(s)}`}
                             aria-label={`Size ${s}, not available: tap to be notified`}
-                            className="min-w-[38px] rounded-lg border border-line bg-cream-2 px-2 py-2 text-center text-[12.5px] font-semibold text-ink-soft/60 line-through transition-colors hover:border-ink"
+                            className="min-w-[36px] rounded-lg border border-line bg-cream-2 px-2 py-1.5 text-center text-[11.5px] font-semibold text-ink-soft/60 line-through transition-colors hover:border-ink"
                           >
                             {s}
                           </Link>
@@ -170,7 +173,7 @@ export default function ListingCard({
                           type="button"
                           onClick={() => pickSize(s)}
                           aria-label={`Size ${s}`}
-                          className="min-w-[38px] rounded-lg border border-line-strong px-2 py-2 text-[12.5px] font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
+                          className="min-w-[36px] rounded-lg border border-line-strong px-2 py-1.5 text-[11.5px] font-semibold transition-colors hover:border-ink hover:bg-ink hover:text-cream"
                         >
                           {s}
                         </button>
@@ -181,13 +184,13 @@ export default function ListingCard({
               )}
             </div>
           ) : (
-            // sold out: there is nothing to add, so the same-sized rounded button says "Notify me" instead
+            // sold out: the same-sized calm button, outlined, says "Notify me" instead
             <NotifyMe
               variantId={v.id}
               label={title}
-              className="relative flex h-12 w-full cursor-pointer items-center justify-center rounded-2xl border border-ink bg-white whitespace-nowrap pl-2 pr-9 text-[11px] font-bold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-ink hover:text-white"
+              className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-line-strong bg-white px-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-ink transition-colors hover:bg-ink hover:text-white"
               icon={
-                <svg className="absolute right-4" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
                   <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
                 </svg>
