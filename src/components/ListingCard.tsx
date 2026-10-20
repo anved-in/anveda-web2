@@ -7,6 +7,7 @@ import { asset } from "@/lib/site";
 import { useCart } from "@/lib/cart";
 import Price from "./Price";
 import FavButton from "./FavButton";
+import NotifyMe from "./NotifyMe";
 
 /**
  * Grid tile for one colourway: a plain square photo, then the name small,
@@ -102,6 +103,7 @@ export default function ListingCard({
           <Link href={href} className="block">
             <Price price={price} size="sm" muted />
           </Link>
+          {!v.inStock && <NotifyMe variantId={v.id} label={title} />}
           {v.inStock && (
             <div ref={pickerRef} className="relative shrink-0">
               <button
