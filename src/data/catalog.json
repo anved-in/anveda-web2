@@ -2745,6 +2745,128 @@
       "2.8": 0
      },
      "zoom": 1.35
+    },
+    {
+     "id": 169,
+     "colour": "Devi Stone",
+     "image": "u-statement-bangles-devi-stone-more-mvgp9sv9.webp",
+     "price": 900,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 2,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "zoom": 1.3
+    },
+    {
+     "id": 170,
+     "colour": "Flower Kemp",
+     "image": "u-statement-bangles-flower-kemp-more-mvgpcgt5.webp",
+     "price": 1199,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 1,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 0,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "focal": "47.7% 60.5%",
+     "zoom": 1.55
+    },
+    {
+     "id": 171,
+     "colour": "Leaf Ruby Stone",
+     "image": "u-statement-bangles-leaf-ruby-stone-mvgpe8ex.webp",
+     "price": 1199,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": false,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 0,
+      "2.6": 0,
+      "2.8": 0
+     },
+     "focal": "45.3% 80.8%",
+     "zoom": 1.25
+    },
+    {
+     "id": 172,
+     "colour": "Leaf White Stone",
+     "image": "u-statement-bangles-leaf-white-stone-more-mvgpg6h3.webp",
+     "price": 1199,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": false,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 0,
+      "2.6": 0,
+      "2.8": 0
+     },
+     "focal": "70.5% 75.6%",
+     "zoom": 1.35
+    },
+    {
+     "id": 173,
+     "colour": "Ruby Flower Stone",
+     "image": "u-statement-bangles-ruby-flower-stone-more-mvgpj13p.webp",
+     "price": 1400,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 1,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 0,
+      "2.8": 0
+     },
+     "focal": "50% 71.1%",
+     "zoom": 1
     }
    ],
    "image": "statement-bangles-elephant-design.webp"
