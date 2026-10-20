@@ -3,17 +3,49 @@
   {
    "slug": "glass",
    "name": "Glass Bangles",
-   "blurb": "Coloured glass, from clear jelly to cut and stone-set work."
+   "blurb": "Coloured glass, from clear jelly to cut and stone-set work.",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8",
+    "2.10"
+   ]
   },
   {
    "slug": "ornate",
    "name": "Ornate Bangles",
-   "blurb": "The worked pieces — statement bangles, kada and designer sides."
+   "blurb": "The worked pieces — statement bangles, kada and designer sides.",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8",
+    "2.10"
+   ]
   },
   {
    "slug": "layering",
    "name": "Layering Bangles",
-   "blurb": "Slim pieces made to sit either side of a statement bangle."
+   "blurb": "Slim pieces made to sit either side of a statement bangle.",
+   "sizes": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "2.8",
+    "2.10"
+   ]
+  },
+  {
+   "slug": "kids",
+   "name": "Kids Bangles",
+   "blurb": "Small sizes for little wrists.",
+   "sizes": [
+    "1.10",
+    "1.12",
+    "1.14",
+    "2.0"
+   ]
   }
  ],
  "collections": [
@@ -118,6 +150,15 @@
   },
   {
    "slug": "lil-charms-kids-section",
+   "group": "kids",
+   "name": "Lil' Charms - Kids Section",
+   "blurb": "",
+   "story": "",
+   "cover": "",
+   "order": 11
+  },
+  {
+   "slug": "lil-charms-kids-section-2",
    "group": "layering",
    "name": "Lil' Charms - Kids Section",
    "blurb": "",
