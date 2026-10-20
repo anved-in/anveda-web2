@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useCart, lineProduct } from "@/lib/cart";
 import QtyStepper from "@/components/QtyStepper";
+import ComboBagRow from "@/components/ComboBagRow";
 import { useFavs } from "@/lib/favourites";
 import { HEART } from "@/components/FavButton";
 import { framingStyle, imgSrc, inr, unitPrice, productById, colourLabel } from "@/lib/catalog";
@@ -77,6 +78,13 @@ export default function CheckoutForm() {
   // Shipping is quoted from the PIN code the customer is typing, and re-quotes
   // as they type it, so the total is never a surprise at the last step.
   const pieces = lines.reduce((n, l) => {
+    if (l.combo) {
+      return n + l.qty * l.combo.picks.reduce((s, k) => {
+        const cp = productById(k.id);
+        const cv = cp?.variants.find((x) => x.colour === k.colour);
+        return s + (cv?.pieces ?? cp?.pieces ?? 12) * k.qty;
+      }, 0);
+    }
     const p = productById(l.id);
     const v = p?.variants.find((x) => x.colour === l.colour);
     return n + (v?.pieces ?? p?.pieces ?? 12) * l.qty;
@@ -179,17 +187,25 @@ export default function CheckoutForm() {
         body: JSON.stringify({
           name: c.name || undefined,
           phone: digits,
-          lines: lines.map((l) => {
+          lines: lines.flatMap((l) => {
+            if (l.combo) {
+              // a combination is recorded as its designs, so a forgotten bag shows what was in it
+              return l.combo.picks.map((k) => {
+                const cp = productById(k.id);
+                const cv = cp?.variants.find((x) => x.colour === k.colour);
+                return { productId: k.id, name: `${cp?.name ?? k.id} (combo)`, colour: k.colour, size: k.size, qty: k.qty * l.qty, price: cv?.price ?? cp?.price ?? 0 };
+              });
+            }
             const p = productById(l.id);
             const v = p?.variants.find((x) => x.colour === l.colour);
-            return {
+            return [{
               productId: l.id,
               name: p?.name ?? l.id,
               colour: l.colour,
               size: l.size,
               qty: l.qty,
               price: v?.price ?? p?.price ?? 0,
-            };
+            }];
           }),
           subtotal,
           total,
@@ -360,6 +376,7 @@ export default function CheckoutForm() {
 
           <div className="mt-5">
             {lines.map((l) => {
+              if (l.combo) return <ComboBagRow key={`${l.id}__${l.size}`} l={l} setQty={setQty} remove={remove} pad="py-4" />;
               const p = lineProduct(l);
               if (!p) return null;
               const v = p.variants.find((x) => x.colour === l.colour);

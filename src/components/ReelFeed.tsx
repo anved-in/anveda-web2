@@ -6,6 +6,8 @@ import Link from "@/components/Link";
 import { asset } from "@/lib/site";
 import { imgSrcSmall, listingTitle, variantPrice } from "@/lib/catalog";
 import Price from "@/components/Price";
+import ComboSheet from "@/components/ComboSheet";
+import { inr, productById } from "@/lib/catalog";
 import type { ResolvedReel } from "@/lib/reels";
 
 /**
@@ -31,6 +33,22 @@ import type { ResolvedReel } from "@/lib/reels";
  * fixed-height rounded card and the same details move into a column on its
  * right, the way instagram.com/reels does.
  */
+/** A few of the combination's designs as small round photos. */
+function ComboThumbs({ r, size }: { r: ResolvedReel; size: string }) {
+  const imgs = (r.combo?.items ?? []).slice(0, 3).flatMap((it) => {
+    const cp = productById(it.productId);
+    return cp ? [{ id: it.productId, src: cp.variants[0].image }] : [];
+  });
+  return (
+    <span className="flex shrink-0 -space-x-2.5">
+      {imgs.map((m) => (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img key={m.id} src={asset(imgSrcSmall(m.src))} alt="" className={`${size} rounded-full border-2 border-black/60 object-cover`} loading="lazy" />
+      ))}
+    </span>
+  );
+}
+
 export default function ReelFeed({
   items,
   initialId,
@@ -48,6 +66,10 @@ export default function ReelFeed({
     ? Math.max(0, items.findIndex((r) => r.id === initialId))
     : 0;
   const [active, setActive] = useState(startIndex);
+  // the reel whose combination picker is open
+  const [sheet, setSheet] = useState<ResolvedReel | null>(null);
+  const sheetOpen = useRef(false);
+  sheetOpen.current = sheet !== null;
 
   // Scrolls the feed's own container only — never scrollIntoView, which
   // walks every scrollable ancestor including the page itself. That silently
@@ -106,6 +128,7 @@ export default function ReelFeed({
   // Keyboard paging, so the feed works without a touchscreen.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (sheetOpen.current) return;
       if (e.key === "ArrowDown" || e.key === "PageDown") {
         e.preventDefault();
         go(1);
@@ -124,6 +147,7 @@ export default function ReelFeed({
   if (items.length === 0) return null;
 
   return (
+    <>
     <div
       ref={wrap}
       className="no-bar h-[calc(100dvh-56px-58px)] snap-y snap-mandatory overflow-y-auto overscroll-contain bg-black md:h-[calc(100dvh-64px)]"
@@ -223,7 +247,21 @@ export default function ReelFeed({
                       {r.caption}
                     </p>
                   )}
-                  {r.product && v && (
+                  {r.combo && (
+                    <button
+                      type="button"
+                      onClick={() => setSheet(r)}
+                      className="on-dark pointer-events-auto mt-2.5 flex w-full items-center gap-2.5 rounded-full border border-white/20 bg-black/35 py-1.5 pl-1.5 pr-3 text-left backdrop-blur-md transition-colors hover:border-white/40 hover:bg-black/50"
+                    >
+                      <ComboThumbs r={r} size="h-9 w-9" />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[11.5px] font-semibold text-white">Combo · {r.combo.items.length} designs</span>
+                        <span className="block text-[12px] font-bold text-white">{inr(r.combo.price)}</span>
+                      </span>
+                      <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-white/85">Choose &amp; buy</span>
+                    </button>
+                  )}
+                  {!r.combo && r.product && v && (
                     <Link
                       href={r.href}
                       className="on-dark pointer-events-auto mt-2.5 flex items-center gap-2.5 rounded-full border border-white/20 bg-black/35 py-1.5 pl-1.5 pr-3 backdrop-blur-md transition-colors hover:border-white/40 hover:bg-black/50"
@@ -289,7 +327,35 @@ export default function ReelFeed({
                     </p>
                   )}
                 </div>
-                {r.product && v && (
+                {r.combo && (
+                  <div className="on-dark rounded-xl border border-white/15 bg-white/[0.06] p-3 backdrop-blur-md">
+                    <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-white/70">Combo · {r.combo.items.length} designs</p>
+                    <ul className="mt-2 space-y-1.5">
+                      {r.combo.items.map((it) => {
+                        const cp = productById(it.productId);
+                        return cp ? (
+                          <li key={it.productId} className="flex items-center gap-2.5 text-[13px]">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={asset(imgSrcSmall(cp.variants[0].image))} alt="" className="h-9 w-9 shrink-0 rounded-md object-cover" loading="lazy" />
+                            <span className="min-w-0 flex-1 truncate">{cp.name}</span>
+                            <span className="shrink-0 text-white/70">{it.qty > 1 ? `× ${it.qty}` : "× 1"}</span>
+                          </li>
+                        ) : null;
+                      })}
+                    </ul>
+                    <div className="mt-3 flex items-center justify-between gap-3">
+                      <span className="text-[20px] font-bold">{inr(r.combo.price)}</span>
+                      <button
+                        type="button"
+                        onClick={() => setSheet(r)}
+                        className="shrink-0 cursor-pointer rounded-full border border-white/30 px-4 py-2 text-[10.5px] font-bold uppercase tracking-[0.14em] text-white transition-colors hover:border-maroon hover:bg-maroon"
+                      >
+                        Choose &amp; buy
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {!r.combo && r.product && v && (
                   <Link
                     href={r.href}
                     className="on-dark group flex items-center gap-3 rounded-xl border border-white/15 bg-white/[0.06] p-3 backdrop-blur-md transition-colors hover:border-white/30 hover:bg-white/[0.1]"
@@ -327,5 +393,7 @@ export default function ReelFeed({
         );
       })}
     </div>
+    {sheet && <ComboSheet reel={sheet} onClose={() => setSheet(null)} />}
+    </>
   );
 }

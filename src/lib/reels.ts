@@ -25,6 +25,14 @@ export interface Reel {
   productId: string;
   /** Optional colourway to preselect on the product page. */
   colour: string | null;
+  /** Set in the CMS: the reel's designs sold together at ONE price. Absent = each design sells on its own. */
+  combo?: ReelCombo | null;
+}
+
+export interface ReelCombo {
+  price: number;
+  /** One entry per design: how many pieces come in one combo, and which colours the shopper may choose from (empty = all). */
+  items: { productId: string; qty: number; colours: string[] }[];
 }
 
 const data = raw as { reels: Reel[] };
@@ -53,5 +61,8 @@ export const reels = (): ResolvedReel[] =>
     })
     // A reel with neither a video nor a link is not a reel.
     .filter((r) => r.video || r.instagram);
+
+/** The combo a reel offers right now (used to keep prices in the bag current). */
+export const comboOf = (reelId: string): ReelCombo | undefined => data.reels.find((r) => r.id === reelId)?.combo ?? undefined;
 
 export const hasReels = (): boolean => reels().length > 0;

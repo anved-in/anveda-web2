@@ -28,8 +28,9 @@ async function handleCheckout(request, env) {
     return json({ ok: false, error: "invalid JSON" }, 400);
   }
 
-  const { ref, customer, lines, subtotal, shipping, couponCode } = body || {};
-  if (!ref || !customer?.phone || !Array.isArray(lines) || lines.length === 0 || !subtotal) {
+  const { ref, customer, lines, combos, subtotal, shipping, couponCode } = body || {};
+  const comboList = Array.isArray(combos) ? combos : [];
+  if (!ref || !customer?.phone || !Array.isArray(lines) || (lines.length === 0 && comboList.length === 0) || !subtotal) {
     return json({ ok: false, error: "invalid payload" }, 400);
   }
 
@@ -119,6 +120,7 @@ async function handleCheckout(request, env) {
         ref,
         customer,
         lines: lineItems,
+        combos: comboList,
         subtotal,
         shipping,
         total,

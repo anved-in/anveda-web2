@@ -110,6 +110,7 @@ for r in reels_in:
         "caption": r.get("caption") or "",
         "productId": r.get("productId"),
         "colour": r.get("colour"),
+        "combo": r.get("combo"),
     })
 
 json.dump({"reels": reels_out}, open(REELS_OUT, "w", encoding="utf-8"),

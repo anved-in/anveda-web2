@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { productById, unitPrice, type Product } from "./catalog";
+import { comboOf } from "./reels";
 
 /**
  * A line is a product AT a size — the same design in two sizes is two lines,
@@ -20,7 +21,21 @@ export interface Line {
   qty: number;
   /** Chosen colourway. Part of the identity: same design, two colours = two lines. */
   colour: string;
+  /** Set when this line is a COMBINATION bought from a reel: the designs picked (colour + size each) at one price. */
+  combo?: { reelId: string; title: string; price: number; picks: ComboPick[] };
 }
+
+export interface ComboPick {
+  id: string;
+  colour: string;
+  size: string;
+  /** pieces of this design in one combo */
+  qty: number;
+}
+
+/** What one cart line costs now. A combo costs the reel's own price (read fresh, so a price change in the CMS is never stale here). */
+export const lineTotal = (l: Line): number =>
+  l.combo ? (comboOf(l.combo.reelId)?.price ?? l.combo.price) * l.qty : unitPrice(l.id, l.colour) * l.qty;
 
 interface CartCtx {
   lines: Line[];
@@ -29,6 +44,7 @@ interface CartCtx {
   count: number;
   subtotal: number;
   add: (id: string, size: string, qty?: number, colour?: string) => void;
+  addCombo: (reelId: string, title: string, price: number, picks: ComboPick[]) => void;
   setQty: (id: string, size: string, colour: string, qty: number) => void;
   remove: (id: string, size: string, colour: string) => void;
   clear: () => void;
@@ -75,7 +91,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 typeof (l as Line).size === "string" &&
                 typeof (l as Line).colour === "string" &&
                 Number.isFinite((l as Line).qty) &&
-                !!productById((l as Line).id),
+                ((l as Line).combo
+                  ? Array.isArray((l as Line).combo?.picks) && !!(l as Line).combo?.picks.every((k) => !!productById(k.id))
+                  : !!productById((l as Line).id)),
             );
           }
         }
@@ -111,6 +129,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
+  // The same combination (same designs, colours and sizes) added twice is one line with quantity 2.
+  const addCombo = useCallback((reelId: string, title: string, price: number, picks: ComboPick[]) => {
+    const id = `combo:${reelId}`;
+    const size = picks.map((k) => `${k.id}|${k.colour}|${k.size}`).join(";");
+    setLines((cur) => {
+      const i = cur.findIndex((l) => keyOf(l.id, l.size, l.colour) === keyOf(id, size, ""));
+      if (i === -1) return [...cur, { id, size, qty: 1, colour: "", combo: { reelId, title, price, picks } }];
+      const next = [...cur];
+      next[i] = { ...next[i], qty: Math.min(99, next[i].qty + 1) };
+      return next;
+    });
+  }, []);
+
   const setQty = useCallback(
     (id: string, size: string, colour: string, qty: number) => {
       setLines((cur) =>
@@ -138,13 +169,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const subtotal = useMemo(
     () =>
-      lines.reduce((n, l) => n + unitPrice(l.id, l.colour) * l.qty, 0),
+      lines.reduce((n, l) => n + lineTotal(l), 0),
     [lines],
   );
 
   const value = useMemo(
-    () => ({ lines, ready, count, subtotal, add, setQty, remove, clear, open, setOpen }),
-    [lines, ready, count, subtotal, add, setQty, remove, clear, open],
+    () => ({ lines, ready, count, subtotal, add, addCombo, setQty, remove, clear, open, setOpen }),
+    [lines, ready, count, subtotal, add, addCombo, setQty, remove, clear, open],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
@@ -157,4 +188,4 @@ export function useCart(): CartCtx {
 }
 
 /** Join a cart line back to its product record for display. */
-export const lineProduct = (l: Line): Product | undefined => productById(l.id);
+export const lineProduct = (l: Line): Product | undefined => (l.combo ? undefined : productById(l.id));

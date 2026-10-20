@@ -4,6 +4,7 @@ import Link from "@/components/Link";
 import { useEffect } from "react";
 import { useCart, lineProduct } from "@/lib/cart";
 import QtyStepper from "@/components/QtyStepper";
+import ComboBagRow from "@/components/ComboBagRow";
 import { framingStyle, imgSrc, inr, unitPrice, packLabel, colourLabel } from "@/lib/catalog";
 import { asset } from "@/lib/site";
 
@@ -68,6 +69,7 @@ export default function CartDrawer() {
           <>
             <div className="flex-1 overflow-y-auto px-6">
               {lines.map((l) => {
+                if (l.combo) return <ComboBagRow key={`${l.id}__${l.size}`} l={l} setQty={setQty} remove={remove} />;
                 const p = lineProduct(l);
                 if (!p) return null;
                 return (

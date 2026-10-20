@@ -80,7 +80,13 @@ const createOrder = async (
     body: JSON.stringify({
       ref,
       customer: c,
-      lines: o.lines,
+      // ordinary lines as before; a combination goes separately and is priced by the reel on the server
+      lines: o.lines.filter((l) => !l.combo),
+      combos: o.lines.filter((l) => l.combo).map((l) => ({
+        reelId: l.combo!.reelId,
+        qty: l.qty,
+        picks: l.combo!.picks.map((k) => ({ productId: k.id, colour: k.colour, size: k.size })),
+      })),
       subtotal: o.subtotal,
       shipping: o.shipping,
       couponCode: o.couponCode || undefined,
@@ -121,6 +127,14 @@ export const orderNotes = (
 ): Record<string, string> => {
   const items = o.lines
     .map((l) => {
+      if (l.combo) {
+        const parts = l.combo.picks.map((k) => {
+          const cp = productById(k.id);
+          const cv = cp?.variants.find((x) => x.colour === k.colour);
+          return `${cp?.name ?? k.id} (${cp && cv ? colourLabel(cp, cv) : k.colour}) size ${k.size}${k.qty > 1 ? ` x${k.qty}` : ""}`;
+        });
+        return `COMBO ${l.combo.title} x${l.qty}: ${parts.join(", ")}`;
+      }
       const p = productById(l.id);
       if (!p) return null;
       const v = p.variants.find((x) => x.colour === l.colour);
