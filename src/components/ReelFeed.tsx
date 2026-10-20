@@ -7,6 +7,7 @@ import { asset } from "@/lib/site";
 import { imgSrcSmall, listingTitle, variantPrice } from "@/lib/catalog";
 import Price from "@/components/Price";
 import ComboSheet from "@/components/ComboSheet";
+import ReelPicker from "@/components/ReelPicker";
 import { inr, productById } from "@/lib/catalog";
 import type { ResolvedReel } from "@/lib/reels";
 
@@ -318,7 +319,7 @@ export default function ReelFeed({
               </div>
 
               {/* -------------------------------- desktop-only right panel */}
-              <div className="hidden md:flex md:w-[320px] md:flex-col md:gap-5 md:self-center md:text-white">
+              <div className="no-bar hidden md:flex md:max-h-[calc(100dvh-96px)] md:w-[340px] md:flex-col md:gap-5 md:self-center md:overflow-y-auto md:text-white">
                 <div>
                   <h2 className="font-display text-[24px]">{r.title}</h2>
                   {r.caption && (
@@ -327,57 +328,8 @@ export default function ReelFeed({
                     </p>
                   )}
                 </div>
-                {r.combo && (
-                  <div className="on-dark rounded-xl border border-white/15 bg-white/[0.06] p-3 backdrop-blur-md">
-                    <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-white/70">Combo · {r.combo.items.length} designs</p>
-                    <ul className="mt-2 space-y-1.5">
-                      {r.combo.items.map((it) => {
-                        const cp = productById(it.productId);
-                        return cp ? (
-                          <li key={it.productId} className="flex items-center gap-2.5 text-[13px]">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={asset(imgSrcSmall(cp.variants[0].image))} alt="" className="h-9 w-9 shrink-0 rounded-md object-cover" loading="lazy" />
-                            <span className="min-w-0 flex-1 truncate">{cp.name}</span>
-                            <span className="shrink-0 text-white/70">{it.qty > 1 ? `× ${it.qty}` : "× 1"}</span>
-                          </li>
-                        ) : null;
-                      })}
-                    </ul>
-                    <div className="mt-3 flex items-center justify-between gap-3">
-                      <span className="text-[20px] font-bold">{inr(r.combo.price)}</span>
-                      <button
-                        type="button"
-                        onClick={() => setSheet(r)}
-                        className="shrink-0 cursor-pointer rounded-full border border-white/30 px-4 py-2 text-[10.5px] font-bold uppercase tracking-[0.14em] text-white transition-colors hover:border-maroon hover:bg-maroon"
-                      >
-                        Choose &amp; buy
-                      </button>
-                    </div>
-                  </div>
-                )}
-                {!r.combo && r.product && v && (
-                  <Link
-                    href={r.href}
-                    className="on-dark group flex items-center gap-3 rounded-xl border border-white/15 bg-white/[0.06] p-3 backdrop-blur-md transition-colors hover:border-white/30 hover:bg-white/[0.1]"
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={asset(imgSrcSmall(v.image))}
-                      alt=""
-                      className="h-14 w-14 shrink-0 rounded-lg object-cover"
-                      loading="lazy"
-                    />
-                    <div className="min-w-0 flex-1">
-                      <div className="truncate text-[13.5px] font-semibold">
-                        {listingTitle(r.product, v)}
-                      </div>
-                      <Price price={variantPrice(r.product, v)} />
-                    </div>
-                    <span className="shrink-0 rounded-full border border-white/30 px-4 py-2 text-[10.5px] font-bold uppercase tracking-[0.14em] text-white transition-colors group-hover:border-maroon group-hover:bg-maroon">
-                      Buy now
-                    </span>
-                  </Link>
-                )}
+                {/* everything needed to choose and buy sits right here, beside the video */}
+                {(r.combo || (r.product && v)) && <ReelPicker reel={r} dark />}
                 <Link
                   href={closeHref}
                   className="mt-1 inline-flex items-center gap-2 text-[11.5px] uppercase tracking-[0.14em] text-white/70 hover:text-white"

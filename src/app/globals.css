@@ -99,6 +99,8 @@ h1, h2, h3, .font-display {
 }
 .on-dark .eyebrow { color: var(--color-gold); }
 .on-dark .price-was { color: rgba(255, 255, 255, 0.55); }
+/* the price is ink-coloured by default: on a dark panel (the full-screen reel) it vanished */
+.on-dark .price-now { color: #fff; }
 
 /* Reveal-on-scroll. Only applies once JS marks the document, so a visitor
    without JS never loses content to a hidden animation state. */
