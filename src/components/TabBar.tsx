@@ -43,6 +43,9 @@ export default function TabBar() {
     { href: "/contact", label: "Help", icon: ICONS.help },
   ];
 
+  // Checkout is a focused task: the bottom bar is hidden there (the header and menu are still there if someone needs to leave).
+  if (path.startsWith("/checkout")) return null;
+
   /**
    * Which tab is lit.
    *

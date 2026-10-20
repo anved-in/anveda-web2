@@ -18,6 +18,7 @@ import {
 } from "@/lib/payment";
 import { quoteShipping } from "@/lib/shipping";
 import { useSlow, friendlyError, SLOW_NOTE } from "@/lib/useSlow";
+import { INDIAN_STATES } from "@/lib/states";
 
 /**
  * Reads as the same three-step progress the reference wizard shows — a
@@ -65,6 +66,9 @@ export default function CheckoutForm() {
   const [errs, setErrs] = useState<Partial<Record<keyof Customer, string>>>({});
   const [busy, setBusy] = useState(false);
   const slow = useSlow(busy);
+  // phone only: the order summary starts folded away, and the optional note starts hidden
+  const [summaryOpen, setSummaryOpen] = useState(false);
+  const [noteOpen, setNoteOpen] = useState(false);
   const [failure, setFailure] = useState<string | null>(null);
 
   // Coupon: validated live against CMS 2.0's own rules via /api/coupon as the
@@ -279,10 +283,16 @@ export default function CheckoutForm() {
     );
   }
 
+  // Check one field as soon as the person leaves it (live inline validation helps people fix mistakes where they happen).
+  const checkOne = (k: keyof Customer) => setErrs((cur) => ({ ...cur, [k]: validate(c)[k] }));
+  const inputCls = (bad: boolean) =>
+    ["mt-1.5 w-full border bg-white px-3.5 py-3 text-[15px] outline-none transition-colors", bad ? "border-[#a33a2f]" : "border-line focus:border-ink"].join(" ");
+
   const field = (
     k: keyof Customer,
     label: string,
     extra: React.InputHTMLAttributes<HTMLInputElement> = {},
+    help?: string,
   ) => (
     <label className="block">
       <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-ink-soft">
@@ -292,6 +302,7 @@ export default function CheckoutForm() {
         {...extra}
         value={c[k] ?? ""}
         onChange={(e) => set(k)(e.target.value)}
+        onBlur={() => checkOne(k)}
         data-err={errs[k] ? "1" : undefined}
         aria-invalid={!!errs[k]}
         className={[
@@ -299,26 +310,258 @@ export default function CheckoutForm() {
           errs[k] ? "border-[#a33a2f]" : "border-line focus:border-ink",
         ].join(" ")}
       />
+      {help && !errs[k] && <span className="mt-1 block text-[12px] text-ink-faint">{help}</span>}
       {errs[k] && <span className="mt-1 block text-[12.5px] text-[#a33a2f]">{errs[k]}</span>}
     </label>
   );
 
+  // The order summary pieces, used by the desktop side column and by the phone's folded summary.
+  const itemsBlock = (
+    <>
+  <div className="mt-5">
+    {lines.map((l) => {
+      if (l.combo) return <ComboBagRow key={`${l.id}__${l.size}`} l={l} setQty={setQty} remove={remove} pad="py-4" />;
+      const p = lineProduct(l);
+      if (!p) return null;
+      const v = p.variants.find((x) => x.colour === l.colour);
+      const shade = v ? colourLabel(p, v) : l.colour;
+      const saved = hasFav(l.id, l.colour);
+      return (
+        <div key={`${l.id}__${l.size}__${l.colour}`} className="flex gap-3.5 border-b border-line py-4">
+          <div className="h-[64px] w-[52px] shrink-0 overflow-hidden bg-cream">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={asset(imgSrc(v?.image ?? p.image))}
+              alt={p.name}
+              className="h-full w-full object-cover"
+              loading="lazy"
+              style={framingStyle(v)}
+            />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="text-[10px] uppercase tracking-[0.16em] text-ink-faint">
+              {p.collectionName}
+            </div>
+            <div className="truncate text-[13.5px] font-semibold">{p.name}</div>
+            <div className="mt-0.5 text-[12px] text-ink-soft">
+              {shade && `${shade} · `}Size {l.size}
+            </div>
+            <div className="mt-1.5 text-[13.5px] font-semibold">
+              {inr(unitPrice(l.id, l.colour) * l.qty)}
+            </div>
+
+            <div className="mt-2.5 flex items-center justify-between gap-3">
+              <QtyStepper
+                qty={l.qty}
+                onDecrease={() => setQty(l.id, l.size, l.colour, l.qty - 1)}
+                onIncrease={() => setQty(l.id, l.size, l.colour, l.qty + 1)}
+                label={p.name}
+                size="sm"
+              />
+
+              <div className="flex shrink-0 items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => toggleFav(l.id, l.colour)}
+                  aria-pressed={saved}
+                  aria-label={saved ? `Remove ${p.name} from favourites` : `Save ${p.name} for later`}
+                  className={["transition-colors", saved ? "text-ink" : "text-ink-faint hover:text-ink"].join(" ")}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" aria-hidden="true">
+                    <path d={HEART} />
+                  </svg>
+                </button>
+                <span className="h-4 w-px bg-line" aria-hidden="true" />
+                <button
+                  type="button"
+                  onClick={() => remove(l.id, l.size, l.colour)}
+                  aria-label={`Remove ${p.name} from your bag`}
+                  className="text-ink-faint transition-colors hover:text-ink"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M4 7h16M9 7V4h6v3M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13M10 11v6M14 11v6" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+    </>
+  );
+  const couponBlock = (
+    <>
+  {/* ---------------------------------------------------- coupon */}
+  <div className="mt-4">
+    {coupon && !coupon.auto ? (
+      <div className="flex items-center justify-between gap-3 border border-line bg-white px-3.5 py-2.5">
+        <span className="min-w-0 truncate text-[13px]" title={coupon.code}>
+          <span className="font-semibold uppercase tracking-[0.08em]">{coupon.code}</span>
+          <span className="ml-1.5 text-ink-soft">
+            applied
+            {coupon.discount > 0 && ` — ${inr(coupon.discount)} off`}
+            {coupon.freeShipping && (coupon.discount > 0 ? " + free shipping" : " — free shipping")}
+          </span>
+        </span>
+        <button
+          type="button"
+          onClick={removeCoupon}
+          className="shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] text-ink-soft underline underline-offset-2 hover:text-ink"
+        >
+          Remove
+        </button>
+      </div>
+    ) : (
+      <>
+        {coupon?.auto && (
+          <p className="mb-2 text-[12.5px] font-semibold text-[#2f6e4f]">
+            ✓ {coupon.freeShipping ? "Free shipping" : inr(coupon.discount) + " off"} applied automatically
+          </p>
+        )}
+        <div className="flex gap-2">
+          <input
+            value={couponInput}
+            onChange={(e) => { setCouponInput(e.target.value); setCouponError(null); }}
+            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyCoupon(); } }}
+            placeholder="Have a coupon code?"
+            autoComplete="off"
+            maxLength={32}
+            className="min-w-0 flex-1 border border-line bg-white px-3.5 py-2.5 text-[14px] uppercase outline-none transition-colors focus:border-ink"
+          />
+          <button
+            type="button"
+            onClick={applyCoupon}
+            disabled={couponBusy || !couponInput.trim()}
+            aria-busy={couponBusy}
+            className="rounded-2xl shrink-0 border border-ink px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.14em] transition-colors hover:bg-ink hover:text-cream disabled:opacity-50"
+          >
+            {couponBusy ? "Checking…" : "Apply"}
+          </button>
+        </div>
+      </>
+    )}
+    {couponError && (
+      <p className="mt-1.5 text-[12.5px] text-[#a33a2f]">{couponError}</p>
+    )}
+  </div>
+    </>
+  );
+  const totalsBlock = (
+    <>
+  <div className="mt-4 space-y-1.5 text-[14px]">
+    <div className="flex justify-between">
+      <span className="text-ink-soft">Subtotal</span>
+      <span className="font-semibold">{inr(subtotal)}</span>
+    </div>
+    {coupon && coupon.discount > 0 && (
+      <div className="flex justify-between gap-3">
+        <span className="min-w-0 truncate text-ink-soft" title={`Coupon (${coupon.code})`}>
+          Coupon ({coupon.code})
+        </span>
+        <span className="shrink-0 font-semibold text-[#2f6e4f]">−{inr(coupon.discount)}</span>
+      </div>
+    )}
+    <div className="flex justify-between">
+      <span className="text-ink-soft">
+        Shipping
+      </span>
+      {coupon?.freeShipping ? (
+        <span className="font-semibold text-[#2f6e4f]">
+          <span className="mr-1.5 text-ink-faint line-through">{inr(quote.amount)}</span>
+          Free
+        </span>
+      ) : (
+        <span className="font-semibold">{inr(shipping)}</span>
+      )}
+    </div>
+  </div>
+  <div className="mt-3 flex justify-between border-t border-line pt-3 text-[17px]">
+    <span className="font-semibold">Total</span>
+    <span className="font-semibold">{inr(total)}</span>
+  </div>
+    </>
+  );
+
+  const itemCount = lines.reduce((n, l) => n + l.qty, 0);
+  const pinOk = /^\d{6}$/.test(c.pin.trim());
+
   return (
-    <form onSubmit={onSubmit} className="mt-8 flex flex-wrap gap-y-10">
+    <form onSubmit={onSubmit} className="mt-6 flex flex-wrap gap-y-8 md:mt-8 md:gap-y-10">
+      {/* ===================================================== PHONE: where you are, and the order in one line */}
+      <div className="w-full md:hidden">
+        <ol className="flex items-start" aria-label="Checkout steps">
+          {["Shipping", "Payment", "Confirmed"].map((label, i) => {
+            const n = i + 1;
+            const cur = busy ? 2 : 1;
+            const on = n === cur;
+            const done = n < cur;
+            return (
+              <li key={label} className="relative flex flex-1 flex-col items-center gap-1.5 text-[12.5px]" aria-current={on ? "step" : undefined}>
+                {i > 0 && <span className={`absolute right-1/2 top-[15px] h-px w-full ${n <= cur ? "bg-maroon" : "bg-line-strong"}`} aria-hidden="true" />}
+                <span
+                  className={[
+                    "relative z-10 flex h-[30px] w-[30px] items-center justify-center rounded-full border text-[13px] font-semibold",
+                    on ? "border-maroon bg-maroon text-white" : done ? "border-maroon bg-white text-maroon" : "border-line-strong bg-cream text-ink-soft",
+                  ].join(" ")}
+                >
+                  {done ? "✓" : n}
+                </span>
+                <span className={on ? "font-semibold text-ink" : "text-ink-soft"}>{label}</span>
+              </li>
+            );
+          })}
+        </ol>
+
+        <div className="mt-5 rounded-2xl bg-cream-2">
+          <button
+            type="button"
+            onClick={() => setSummaryOpen((o) => !o)}
+            aria-expanded={summaryOpen}
+            aria-controls="phone-summary"
+            className="flex w-full items-center gap-3 px-4 py-3.5 text-left"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+              <path d="M6 7h12l1 13H5L6 7Z" />
+              <path d="M9 7a3 3 0 0 1 6 0" />
+            </svg>
+            <span className="min-w-0 flex-1 text-[14px]">
+              <span className="font-semibold">Order summary</span>
+              <span className="text-ink-soft"> · {itemCount} {itemCount === 1 ? "item" : "items"}</span>
+            </span>
+            <span className="text-[15px] font-semibold">{inr(total)}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" className={summaryOpen ? "rotate-180" : ""}>
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
+          {summaryOpen && (
+            <div id="phone-summary" className="border-t border-line px-4 pb-4">
+              {itemsBlock}
+              {couponBlock}
+              {totalsBlock}
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* ------------------------------------------------------- details */}
       <div className="w-full md:w-[58%] md:pr-12">
-        <SectionHeader n={1} title="Shipping details" />
+        <div className="hidden md:block">
+          <SectionHeader n={1} title="Shipping details" />
+        </div>
+        <h2 className="font-display text-[24px] md:hidden">Shipping details</h2>
 
         <div className="mt-5 space-y-4">
-          {field("name", "Full name *", { autoComplete: "name" })}
-          <div className="flex flex-wrap gap-4">
-            <div className="min-w-[200px] flex-1">
+          {field("name", "Full name *", { autoComplete: "name", placeholder: "Enter your full name" })}
+          <div className="flex flex-col gap-4 md:flex-row md:flex-wrap">
+            <div className="md:min-w-[200px] md:flex-1">
               {field("phone", "Mobile number *", {
-                inputMode: "numeric", autoComplete: "tel", maxLength: 12,
-              })}
+                inputMode: "numeric", autoComplete: "tel-national", maxLength: 12, placeholder: "Enter mobile number",
+              }, "Used for delivery updates")}
             </div>
-            <div className="min-w-[200px] flex-1">
-              {field("email", "Email", { type: "email", autoComplete: "email" })}
+            <div className="md:min-w-[200px] md:flex-1">
+              {field("email", "Email (optional)", { type: "email", autoComplete: "email", placeholder: "Enter email address" })}
             </div>
           </div>
 
@@ -330,6 +573,8 @@ export default function CheckoutForm() {
               rows={3}
               value={c.address}
               onChange={(e) => set("address")(e.target.value)}
+              onBlur={() => checkOne("address")}
+              placeholder="House no, building, street, area, landmark"
               autoComplete="street-address"
               aria-invalid={!!errs.address}
               className={[
@@ -342,21 +587,44 @@ export default function CheckoutForm() {
             )}
           </label>
 
-          <div className="flex flex-wrap gap-4">
-            <div className="min-w-[150px] flex-1">
-              {field("city", "City *", { autoComplete: "address-level2" })}
+          <div className="flex flex-col gap-4 md:flex-row md:flex-wrap">
+            <div className="md:min-w-[150px] md:flex-1">
+              {field("city", "City *", { autoComplete: "address-level2", placeholder: "Enter city" })}
             </div>
-            <div className="min-w-[150px] flex-1">
-              {field("state", "State *", { autoComplete: "address-level1" })}
+            <div className="md:min-w-[150px] md:flex-1">
+              <label className="block">
+                <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-ink-soft">State *</span>
+                <select
+                  value={c.state}
+                  onChange={(e) => set("state")(e.target.value)}
+                  onBlur={() => checkOne("state")}
+                  autoComplete="address-level1"
+                  data-err={errs.state ? "1" : undefined}
+                  aria-invalid={!!errs.state}
+                  className={inputCls(!!errs.state) + " h-[50px] appearance-none bg-[length:16px] bg-[right_14px_center] bg-no-repeat pr-10"}
+                  style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")" }}
+                >
+                  <option value="">Select state</option>
+                  {INDIAN_STATES.map((st) => (
+                    <option key={st} value={st}>{st}</option>
+                  ))}
+                </select>
+                {errs.state && <span className="mt-1 block text-[12.5px] text-[#a33a2f]">{errs.state}</span>}
+              </label>
             </div>
-            <div className="min-w-[120px] flex-1">
+            <div className="md:min-w-[120px] md:flex-1">
               {field("pin", "PIN code *", {
-                inputMode: "numeric", autoComplete: "postal-code", maxLength: 6,
+                inputMode: "numeric", autoComplete: "postal-code", maxLength: 6, placeholder: "Enter PIN code",
               })}
             </div>
           </div>
 
-          <label className="block">
+          {!noteOpen && !c.notes && (
+            <button type="button" onClick={() => setNoteOpen(true)} className="text-[13.5px] font-semibold underline underline-offset-4 md:hidden">
+              + Add a note for the order
+            </button>
+          )}
+          <label className={["block", noteOpen || c.notes ? "" : "hidden md:block"].join(" ")}>
             <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-ink-soft">
               Order notes
             </span>
@@ -371,168 +639,65 @@ export default function CheckoutForm() {
         </div>
       </div>
 
-      {/* ------------------------------------------------------ summary */}
-      <div className="w-full md:w-[42%]">
-        <div className="rounded-3xl bg-cream-2 p-6">
-          <SectionHeader n={2} title="Order summary" />
-
-          <div className="mt-5">
-            {lines.map((l) => {
-              if (l.combo) return <ComboBagRow key={`${l.id}__${l.size}`} l={l} setQty={setQty} remove={remove} pad="py-4" />;
-              const p = lineProduct(l);
-              if (!p) return null;
-              const v = p.variants.find((x) => x.colour === l.colour);
-              const shade = v ? colourLabel(p, v) : l.colour;
-              const saved = hasFav(l.id, l.colour);
-              return (
-                <div key={`${l.id}__${l.size}__${l.colour}`} className="flex gap-3.5 border-b border-line py-4">
-                  <div className="h-[64px] w-[52px] shrink-0 overflow-hidden bg-cream">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={asset(imgSrc(v?.image ?? p.image))}
-                      alt={p.name}
-                      className="h-full w-full object-cover"
-                      loading="lazy"
-                      style={framingStyle(v)}
-                    />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="text-[10px] uppercase tracking-[0.16em] text-ink-faint">
-                      {p.collectionName}
-                    </div>
-                    <div className="truncate text-[13.5px] font-semibold">{p.name}</div>
-                    <div className="mt-0.5 text-[12px] text-ink-soft">
-                      {shade && `${shade} · `}Size {l.size}
-                    </div>
-                    <div className="mt-1.5 text-[13.5px] font-semibold">
-                      {inr(unitPrice(l.id, l.colour) * l.qty)}
-                    </div>
-
-                    <div className="mt-2.5 flex items-center justify-between gap-3">
-                      <QtyStepper
-                        qty={l.qty}
-                        onDecrease={() => setQty(l.id, l.size, l.colour, l.qty - 1)}
-                        onIncrease={() => setQty(l.id, l.size, l.colour, l.qty + 1)}
-                        label={p.name}
-                        size="sm"
-                      />
-
-                      <div className="flex shrink-0 items-center gap-3">
-                        <button
-                          type="button"
-                          onClick={() => toggleFav(l.id, l.colour)}
-                          aria-pressed={saved}
-                          aria-label={saved ? `Remove ${p.name} from favourites` : `Save ${p.name} for later`}
-                          className={["transition-colors", saved ? "text-ink" : "text-ink-faint hover:text-ink"].join(" ")}
-                        >
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" aria-hidden="true">
-                            <path d={HEART} />
-                          </svg>
-                        </button>
-                        <span className="h-4 w-px bg-line" aria-hidden="true" />
-                        <button
-                          type="button"
-                          onClick={() => remove(l.id, l.size, l.colour)}
-                          aria-label={`Remove ${p.name} from your bag`}
-                          className="text-ink-faint transition-colors hover:text-ink"
-                        >
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                            <path d="M4 7h16M9 7V4h6v3M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13M10 11v6M14 11v6" />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+      {/* ============================================= PHONE: the cost, then one clear next step */}
+      <div className="w-full md:hidden">
+        <div className="space-y-1.5 border-t border-line pt-4 text-[14px]">
+          <div className="flex justify-between">
+            <span className="text-ink-soft">Shipping{pinOk ? "" : " (estimate, enter PIN)"}</span>
+            {coupon?.freeShipping ? <span className="font-semibold text-[#2f6e4f]">Free</span> : <span className="font-semibold">{inr(shipping)}</span>}
           </div>
-
-          {/* ---------------------------------------------------- coupon */}
-          <div className="mt-4">
-            {coupon && !coupon.auto ? (
-              <div className="flex items-center justify-between gap-3 border border-line bg-white px-3.5 py-2.5">
-                <span className="min-w-0 truncate text-[13px]" title={coupon.code}>
-                  <span className="font-semibold uppercase tracking-[0.08em]">{coupon.code}</span>
-                  <span className="ml-1.5 text-ink-soft">
-                    applied
-                    {coupon.discount > 0 && ` — ${inr(coupon.discount)} off`}
-                    {coupon.freeShipping && (coupon.discount > 0 ? " + free shipping" : " — free shipping")}
-                  </span>
-                </span>
-                <button
-                  type="button"
-                  onClick={removeCoupon}
-                  className="shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] text-ink-soft underline underline-offset-2 hover:text-ink"
-                >
-                  Remove
-                </button>
-              </div>
-            ) : (
-              <>
-                {coupon?.auto && (
-                  <p className="mb-2 text-[12.5px] font-semibold text-[#2f6e4f]">
-                    ✓ {coupon.freeShipping ? "Free shipping" : inr(coupon.discount) + " off"} applied automatically
-                  </p>
-                )}
-                <div className="flex gap-2">
-                  <input
-                    value={couponInput}
-                    onChange={(e) => { setCouponInput(e.target.value); setCouponError(null); }}
-                    onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyCoupon(); } }}
-                    placeholder="Have a coupon code?"
-                    autoComplete="off"
-                    maxLength={32}
-                    className="min-w-0 flex-1 border border-line bg-white px-3.5 py-2.5 text-[14px] uppercase outline-none transition-colors focus:border-ink"
-                  />
-                  <button
-                    type="button"
-                    onClick={applyCoupon}
-                    disabled={couponBusy || !couponInput.trim()}
-                    aria-busy={couponBusy}
-                    className="rounded-2xl shrink-0 border border-ink px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.14em] transition-colors hover:bg-ink hover:text-cream disabled:opacity-50"
-                  >
-                    {couponBusy ? "Checking…" : "Apply"}
-                  </button>
-                </div>
-              </>
-            )}
-            {couponError && (
-              <p className="mt-1.5 text-[12.5px] text-[#a33a2f]">{couponError}</p>
-            )}
-          </div>
-
-          <div className="mt-4 space-y-1.5 text-[14px]">
-            <div className="flex justify-between">
-              <span className="text-ink-soft">Subtotal</span>
-              <span className="font-semibold">{inr(subtotal)}</span>
-            </div>
-            {coupon && coupon.discount > 0 && (
-              <div className="flex justify-between gap-3">
-                <span className="min-w-0 truncate text-ink-soft" title={`Coupon (${coupon.code})`}>
-                  Coupon ({coupon.code})
-                </span>
-                <span className="shrink-0 font-semibold text-[#2f6e4f]">−{inr(coupon.discount)}</span>
-              </div>
-            )}
-            <div className="flex justify-between">
-              <span className="text-ink-soft">
-                Shipping
-              </span>
-              {coupon?.freeShipping ? (
-                <span className="font-semibold text-[#2f6e4f]">
-                  <span className="mr-1.5 text-ink-faint line-through">{inr(quote.amount)}</span>
-                  Free
-                </span>
-              ) : (
-                <span className="font-semibold">{inr(shipping)}</span>
-              )}
-            </div>
-          </div>
-          <div className="mt-3 flex justify-between border-t border-line pt-3 text-[17px]">
+          <div className="flex justify-between text-[17px]">
             <span className="font-semibold">Total</span>
             <span className="font-semibold">{inr(total)}</span>
           </div>
+        </div>
+
+        {failure && (
+          <p role="alert" className="mt-4 rounded-2xl border border-[#a33a2f] bg-[#a33a2f]/5 p-3 text-[13px] text-[#a33a2f]">
+            {failure}
+          </p>
+        )}
+
+        <button
+          type="submit"
+          disabled={busy}
+          aria-busy={busy}
+          className="mt-4 flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-ink text-[12.5px] font-bold uppercase tracking-[0.18em] text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+        >
+          {busy ? (
+            "Opening payment…"
+          ) : (
+            <>
+              Continue to payment
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </>
+          )}
+        </button>
+        {busy && slow && (
+          <p role="status" className="mt-2 text-center text-[12.5px] text-ink-soft">
+            {SLOW_NOTE}
+          </p>
+        )}
+
+        <p className="mt-3 text-center text-[12px] leading-relaxed text-ink-soft">
+          <svg className="mr-1.5 inline-block align-[-2px]" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="5" y="11" width="14" height="9" rx="2" />
+            <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+          </svg>
+          Secure checkout · Payments by Razorpay (UPI, cards, netbanking)
+        </p>
+      </div>
+
+      {/* ------------------------------------------------------ summary (desktop: the side column) */}
+      <div className="hidden w-full md:block md:w-[42%]">
+        <div className="rounded-3xl bg-cream-2 p-6">
+          <SectionHeader n={2} title="Order summary" />
+
+          {itemsBlock}
+          {couponBlock}
+          {totalsBlock}
 
           <div className="mt-6 border-t border-line pt-5">
             <SectionHeader n={3} title="Payment" />

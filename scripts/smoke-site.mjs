@@ -32,7 +32,9 @@ const EDGE = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
 let failures = 0;
 const check = (ok, what) => { console.log((ok ? 'PASS  ' : 'FAIL  ') + what); if (!ok) failures++; };
 
-async function session(width, height, mobile, url, fn) {
+// NOTE: simulated touches only work on a browser's FIRST page load, so each scenario loads its page exactly once.
+// `seedCart` puts items in the bag BEFORE the page starts (no second navigation).
+async function session(width, height, mobile, url, fn, seedCart) {
   const port = 9900 + Math.floor(Math.random() * 40);
   const proc = spawn(EDGE, [`--remote-debugging-port=${port}`, '--headless=new', '--disable-gpu', '--user-data-dir=' + path.join(process.env.TEMP || '.', 'smoke-site-' + Date.now() + width), 'about:blank'], { stdio: 'ignore' });
   let t; for (let i = 0; i < 40; i++) { try { t = await (await fetch(`http://127.0.0.1:${port}/json`)).json(); if (t.find((x) => x.type === 'page')) break; } catch {} await sleep(250); }
@@ -43,8 +45,9 @@ async function session(width, height, mobile, url, fn) {
   await send('Page.enable');
   await send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile });
   if (mobile) await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
+  if (seedCart) await send('Page.addScriptToEvaluateOnNewDocument', { source: "try{localStorage.setItem('anveda.cart.v1', " + JSON.stringify(JSON.stringify(seedCart)) + ")}catch(e){}" });
   await send('Page.navigate', { url }); await sleep(3500);
-  const tap = async (x, y) => { await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] }); await sleep(60); await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await sleep(700); };
+  const tap =async (x, y) => { await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] }); await sleep(60); await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await sleep(700); };
   try { await fn({ ev, tap }); } finally { ws.close(); proc.kill(); }
 }
 const centre = (sel) => `JSON.stringify((function(){var e=document.querySelector(${JSON.stringify(sel)});if(!e)return null;var r=e.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2}})())`;
@@ -89,6 +92,21 @@ for (const [w, h, mob] of [[390, 800, true], [1280, 800, false]]) {
     for (const sel of list) { const r = await ev(reachable(sel)); check(r === 'ok', `${w}px: ${sel.slice(0, 48)} reachable (${r})`); }
   });
 }
+// phone checkout: a bag with items, the folded summary opens with a real tap, the one big button is reachable, no bottom bar
+await session(390, 800, true, BASE + '/checkout/', async ({ ev, tap }) => {
+  check(await ev("location.pathname.indexOf('checkout') > -1"), 'checkout: page opened');
+  check(await ev("!document.querySelector('nav[aria-label=\"Quick navigation\"]')"), 'checkout: no bottom bar on the phone');
+  const sum = 'button[aria-controls="phone-summary"]';
+  check((await ev(reachable(sum))) === 'ok', 'checkout: order-summary row reachable (' + (await ev(reachable(sum))) + ')');
+  const s = JSON.parse(await ev(centre(sum)) || 'null');
+  if (s) await tap(s.x, s.y);
+  check(await ev("!!document.getElementById('phone-summary')"), 'checkout: tapping the summary row opens it');
+  const cta = 'form button[type="submit"]';
+  const r = await ev("(async function(){var b=[].slice.call(document.querySelectorAll('" + cta + "')).filter(function(e){return e.offsetParent})[0];if(!b)return 'missing';b.scrollIntoView({block:'center',behavior:'instant'});await new Promise(function(r){setTimeout(r,900)});var q=b.getBoundingClientRect();var h=document.elementFromPoint(q.left+q.width/2,q.top+q.height/2);return (h===b||b.contains(h))?'ok':'covered by '+(h?h.tagName+'.'+String(h.className).slice(0,60):'nothing')})()");
+  check(r === 'ok', 'checkout: the Continue-to-payment button is reachable (' + r + ')');
+  check(await ev("/continue to payment/i.test(document.body.innerText)"), 'checkout: button says Continue to payment');
+}, [{ id: 'intricate-glass-bangle', size: '2.4', qty: 2, colour: 'Aqua' }]);
+
 server.close();
 console.log(failures ? `\n${failures} CHECK(S) FAILED - do not publish.` : '\nAll smoke checks passed.');
 process.exit(failures ? 1 : 0);
