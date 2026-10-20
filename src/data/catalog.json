@@ -174,7 +174,7 @@
    "collectionName": "Border Bangles",
    "group": "layering",
    "name": "Border Bangles",
-   "price": 240,
+   "price": 160,
    "priceMax": 320,
    "pieces": 12,
    "unit": "dozen",
@@ -302,6 +302,31 @@
       "2.8": 3
      },
      "zoom": 1.25
+    },
+    {
+     "id": 153,
+     "colour": "Crystal Side Bangles",
+     "image": "u-border-bangles-crystal-side-bangles-mvggp8hf.webp",
+     "price": 160,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 16,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 4,
+      "2.4": 8,
+      "2.6": 4,
+      "2.8": 0
+     },
+     "focal": "58.8% 68.2%",
+     "zoom": 1.5
     }
    ],
    "image": "border-bangles-kundan-border-bangles.webp"
