@@ -4361,7 +4361,7 @@
     {
      "id": 121,
      "colour": "Champagne Gold",
-     "image": "square-edge-glass-bangles-champagne-gold.webp",
+     "image": "u-square-edge-glass-bangles-champagne-gold-more-mvibv6b2.webp",
      "hex": "#dbc08a",
      "price": 230,
      "pieces": 12,
@@ -4379,8 +4379,15 @@
       "2.6": 4,
       "2.8": 2
      },
-     "focal": "44.29% 49.25%",
-     "zoom": 1
+     "focal": "28.4% 75%",
+     "zoom": 1.5,
+     "gallery": [
+      {
+       "image": "square-edge-glass-bangles-champagne-gold.webp",
+       "focal": "0% 53.9%",
+       "zoom": 1.15
+      }
+     ]
     },
     {
      "id": 122,
