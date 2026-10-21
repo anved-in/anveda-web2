@@ -45,7 +45,7 @@ export default function AnnouncementBar() {
   if (hidden || !announcement) return null;
 
   const text = (
-    <span className="mx-auto block max-w-[1320px] px-4 py-2.5 text-center text-[12px] font-medium uppercase leading-snug tracking-[0.08em] sm:px-6">
+    <span className="mx-auto block max-w-[1320px] px-4 py-1.5 text-center text-[11px] font-medium uppercase leading-[1.35] tracking-[0.06em] sm:px-6">
       {announcement.text}
     </span>
   );
