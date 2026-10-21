@@ -3263,6 +3263,29 @@
      },
      "focal": "48.8% 67.9%",
      "zoom": 2
+    },
+    {
+     "id": 199,
+     "colour": "Premium 4 in 1 Diamond Kada (Free Size Openable)",
+     "price": 1799,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 2,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 0,
+      "2.6": 2,
+      "2.8": 0
+     },
+     "zoom": 1
     }
    ],
    "image": "kada-green-ball-kada-set-of-2.webp"
