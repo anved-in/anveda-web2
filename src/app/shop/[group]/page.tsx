@@ -111,19 +111,6 @@ export default async function GroupPage({
               </div>
             </nav>
 
-            {/* Jump list straight to a range by anchor — the desktop
-                sidebar does this job from 1024px up instead. */}
-            <div className="no-bar flex gap-2 overflow-x-auto border-b border-line px-4 py-3 sm:px-6">
-              {ranges.map((c) => (
-                <Link
-                  key={c.slug}
-                  href={`#${c.slug}`}
-                  className="shrink-0 rounded-full border border-line-strong px-3.5 py-1.5 text-[10.5px] uppercase tracking-[0.08em]"
-                >
-                  {c.name}
-                </Link>
-              ))}
-            </div>
           </div>
         }
       />

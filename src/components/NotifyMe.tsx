@@ -16,6 +16,7 @@ export default function NotifyMe({
   className,
   buttonText = "Notify me",
   full = false,
+  icon,
 }: {
   variantId: number;
   /** a single sold-out size; null = the whole colour */
@@ -26,6 +27,8 @@ export default function NotifyMe({
   buttonText?: string;
   /** stretch to a full-width primary button (product page) */
   full?: boolean;
+  /** shown inside the button after the text (the shop card puts a bell there) */
+  icon?: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -89,7 +92,7 @@ export default function NotifyMe({
   };
 
   const base = full
-    ? "h-11 w-full cursor-pointer bg-ink text-[12px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-espresso-2"
+    ? "av-btn w-full cursor-pointer"
     : "inline-flex h-7 shrink-0 cursor-pointer items-center whitespace-nowrap border border-ink px-2 text-[9.5px] font-bold uppercase leading-none tracking-[0.06em] text-ink transition-colors hover:bg-ink hover:text-cream";
 
   const field =
@@ -108,6 +111,7 @@ export default function NotifyMe({
         className={className ?? base}
       >
         {buttonText}
+        {icon}
       </button>
       {open &&
         createPortal(
@@ -121,7 +125,7 @@ export default function NotifyMe({
               role="dialog"
               aria-modal="true"
               aria-labelledby="notify-title"
-              className="w-full max-w-[400px] bg-white px-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] pt-5 shadow-xl sm:px-6 sm:pb-6"
+              className="w-full max-w-[400px] rounded-t-[14px] bg-white px-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] pt-5 shadow-xl sm:rounded-[14px] sm:px-6 sm:pb-6"
             >
               <div className="flex items-start justify-between gap-3">
                 <div>

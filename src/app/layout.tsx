@@ -12,6 +12,7 @@ import { CartProvider } from "@/lib/cart";
 import { FavProvider } from "@/lib/favourites";
 import { SITE, HAS_WHATSAPP } from "@/lib/site";
 import NavProgress from "@/components/NavProgress";
+import AnnouncementBar from "@/components/AnnouncementBar";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.anveda.in"),
@@ -80,7 +81,10 @@ export default function RootLayout({
           <FavProvider>
           <Reveal />
           <NavProgress />
+          <div className="sticky top-0 z-50">
+          <AnnouncementBar />
           <Header />
+          </div>
           <main className="flex-1">{children}</main>
           <Footer />
           <CartDrawer />

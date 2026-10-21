@@ -270,7 +270,7 @@ export default function Hero3D({ slides }: { slides: Slide[] }) {
             </p>
             <Link
               href={s.href}
-              className="mt-7 inline-flex w-fit items-center gap-3 border border-white/70 px-7 py-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-white hover:text-ink"
+              className="rounded-md mt-7 inline-flex w-fit items-center gap-3 border border-white/70 px-7 py-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-white hover:text-ink"
             >
               Shop now
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">

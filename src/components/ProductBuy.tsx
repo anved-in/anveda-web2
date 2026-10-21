@@ -176,7 +176,7 @@ export default function ProductBuy({
             <button
               type="button"
               onClick={onAdd}
-              className="ml-auto h-11 w-[58%] cursor-pointer bg-ink text-[12px] font-bold uppercase tracking-[0.14em] text-cream transition-colors hover:bg-espresso-2 md:ml-0 md:w-[250px] md:tracking-[0.16em]"
+              className="av-btn ml-auto w-[58%] cursor-pointer md:ml-0 md:w-[250px]"
             >
               {added ? "Added to bag ✓" : (
                 <>
@@ -209,7 +209,7 @@ export default function ProductBuy({
 
         </>
       ) : (
-        <div className="mt-8 border border-line-strong bg-cream-2 px-5 py-6 text-center">
+        <div className="mt-8 rounded-[10px] border border-line-strong bg-cream-2 px-5 py-6 text-center">
           <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-ink">
             {unavailableChoice ? `Size ${size} — ${colourLabel(p, variant)}` : `Sold out — ${colourLabel(p, variant)}`}
           </p>

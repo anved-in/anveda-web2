@@ -35,10 +35,11 @@ const ALLOW = [
 const LIVE_HOSTS = new Set(["anveda.in", "www.anveda.in", "anveda-web-pages.pages.dev"]);
 const isTestCopy = (host) => host.endsWith(".anveda-web-pages.pages.dev") && !LIVE_HOSTS.has(host);
 const TEST_READ_OK = ["/api/coupon", "/api/track", "/api/review-lookup"];
+// A thin strip across the FULL width, in the normal flow at the very top of the page (above the header, taking no space
+// from the header's own padding). It is black on purpose, so it can never be mistaken for the shop's red offers strip.
 const TEST_TAG =
-  '<div aria-hidden="true" style="position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:2147483647;' +
-  'background:#b3122b;color:#fff;font:700 9px/1 system-ui,sans-serif;letter-spacing:.12em;padding:3px 10px;' +
-  'border-radius:0 0 6px 6px;pointer-events:none;opacity:.92">TEST COPY &middot; ORDERS OFF</div>';
+  '<div aria-hidden="true" style="width:100%;background:#111;color:#fff;font:700 10px/1 system-ui,sans-serif;' +
+  'letter-spacing:.14em;text-align:center;padding:7px 10px;box-sizing:border-box">TEST COPY &middot; ORDERS OFF</div>';
 
 async function testCopy(next, request, url) {
   const path = url.pathname;
@@ -54,7 +55,7 @@ async function testCopy(next, request, url) {
   headers.set("x-robots-tag", "noindex, nofollow, noarchive");
   const out = new Response(res.body, { status: res.status, statusText: res.statusText, headers });
   if ((headers.get("content-type") || "").includes("text/html")) {
-    return new HTMLRewriter().on("body", { element(el) { el.append(TEST_TAG, { html: true }); } }).transform(out);
+    return new HTMLRewriter().on("body", { element(el) { el.prepend(TEST_TAG, { html: true }); } }).transform(out);
   }
   return out;
 }

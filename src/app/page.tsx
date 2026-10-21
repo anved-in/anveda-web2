@@ -116,7 +116,7 @@ export default function Home() {
           <div className="mt-11 text-center">
             <Link
               href="/shop/glass/"
-              className="inline-block border border-ink px-9 py-3.5 text-[11.5px] uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-white"
+              className="rounded-md inline-block border border-ink px-9 py-3.5 text-[11.5px] uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-white"
             >
               View all {allListings().length} designs
             </Link>
@@ -156,7 +156,7 @@ export default function Home() {
               </p>
               <Link
                 href="/about"
-                className="mt-7 inline-block border border-ink px-8 py-3.5 text-[11.5px] uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-white"
+                className="rounded-md mt-7 inline-block border border-ink px-8 py-3.5 text-[11.5px] uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-white"
               >
                 Read our story
               </Link>

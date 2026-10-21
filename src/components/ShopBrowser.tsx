@@ -66,7 +66,7 @@ function DropdownPortal({
   }, [anchorRef]);
   if (!pos) return null;
   return createPortal(
-    <div data-shop-dropdown style={{ position: "fixed", top: pos.top, left: pos.left, width: PANEL_W }} className="z-20 border border-line bg-white py-1.5 shadow-lg">
+    <div data-shop-dropdown style={{ position: "fixed", top: pos.top, left: pos.left, width: PANEL_W }} className="z-20 rounded-[10px] border border-line bg-white py-1.5 shadow-lg">
       {children}
     </div>,
     document.body,
@@ -179,7 +179,7 @@ export default function ShopBrowser({
           so as a card scrolled under this bar, its heart (later in the DOM)
           rendered on top of the bar instead of being covered by it. This bar
           needs to unambiguously outrank anything that scrolls underneath it. */}
-      <div ref={barRef} className="sticky top-[56px] z-30 border-b border-line bg-cream/95 backdrop-blur-sm md:top-[64px]">
+      <div ref={barRef} className="sticky top-[calc(56px+var(--strip-h,0px))] z-30 border-b border-line bg-cream/95 backdrop-blur-sm md:top-[calc(64px+var(--strip-h,0px))]">
         {header}
         {/* Everything here must fit one row with no horizontal scroll, even on
             a narrow phone — search collapses to an icon that expands in place
@@ -196,7 +196,7 @@ export default function ShopBrowser({
         */}
         <div className="mx-auto flex max-w-[1320px] items-center px-3 py-3 sm:px-6 md:flex-wrap md:justify-between md:gap-x-5 md:gap-y-3 md:py-4">
           {/* ------------------------------------------------------------ search */}
-          <div className="flex min-w-0 flex-1 items-center gap-1.5 md:h-10 md:w-[300px] md:flex-none md:gap-2.5 md:border md:border-line-strong md:bg-white md:px-3.5 md:transition-colors md:focus-within:border-ink">
+          <div className="flex min-w-0 flex-1 items-center gap-1.5 md:h-10 md:w-[300px] md:flex-none md:gap-2.5 md:rounded-md md:border md:border-line-strong md:bg-white md:px-3.5 md:transition-colors md:focus-within:border-ink">
             <svg className="shrink-0 text-ink-faint" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <circle cx="11" cy="11" r="7" />
               <path d="m21 21-4.3-4.3" />

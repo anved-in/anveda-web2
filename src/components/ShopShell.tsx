@@ -62,7 +62,7 @@ export default function ShopShell({ children }: { children: React.ReactNode }) {
       <aside
         aria-label="Shop categories"
         className={[
-          "sticky top-[64px] hidden h-[calc(100svh-64px)] shrink-0 self-start overflow-y-auto border-r border-line transition-[width] duration-200 lg:block",
+          "sticky top-[calc(64px+var(--strip-h,0px))] hidden h-[calc(100svh-64px-var(--strip-h,0px))] shrink-0 self-start overflow-y-auto border-r border-line transition-[width] duration-200 lg:block",
           collapsed ? "w-[52px]" : "w-[272px] px-7 py-8",
         ].join(" ")}
       >

@@ -18,7 +18,7 @@ export default function ReelsGrid({ items }: { items: ResolvedReel[] }) {
         </p>
         <Link
           href="/shop/glass/"
-          className="mt-6 border border-ink px-8 py-3.5 text-[11.5px] uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-white"
+          className="rounded-md mt-6 border border-ink px-8 py-3.5 text-[11.5px] uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-white"
         >
           Browse the shop
         </Link>

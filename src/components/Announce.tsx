@@ -5,7 +5,6 @@
  */
 const LINES = [
   "Handpicked in small batches",
-  "Flat 20% off — this week only",
   "Packed with care, set by set",
 ];
 

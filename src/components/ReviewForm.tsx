@@ -126,7 +126,7 @@ export default function ReviewForm() {
           />
 
           {items.map((i) => (
-            <div key={i.id} className="mt-5 border border-line p-4">
+            <div key={i.id} className="mt-5 rounded-[10px] border border-line p-4">
               <p className="text-[14px] font-semibold">
                 {i.name} <span className="font-normal text-ink-soft">· {i.colour}</span>
               </p>

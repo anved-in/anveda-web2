@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSlow, SLOW_NOTE } from "@/lib/useSlow";
 import { HAS_WHATSAPP } from "@/lib/site";
 
+/** The footer's newsletter box: one white input and the owner's reference black "Subscribe" button side by side. */
 export default function SignupForm() {
   const [value, setValue] = useState("");
   const [status, setStatus] = useState<"idle" | "busy" | "done" | "error">("idle");
@@ -42,38 +43,31 @@ export default function SignupForm() {
   };
 
   if (status === "done") {
-    return (
-      <p className="text-[13px] text-gold">
-        You&apos;re on the list — thank you!
-      </p>
-    );
+    return <p className="text-[13px] font-semibold text-[#111]">You&apos;re on the list — thank you!</p>;
   }
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-2">
       <div className="flex gap-2">
         <input
+          type="text"
+          inputMode="email"
+          autoComplete="email"
           value={value}
           onChange={(e) => {
             setValue(e.target.value);
             if (status === "error") setStatus("idle");
           }}
-          placeholder={HAS_WHATSAPP ? "Email or WhatsApp number" : "Your email address"}
-          className="min-w-0 flex-1 border border-gold/25 bg-transparent px-3 py-2.5 text-[13.5px] text-[#f4efe9] outline-none placeholder:text-[#8a837b] focus:border-gold"
+          placeholder={HAS_WHATSAPP ? "E-mail or WhatsApp number" : "E-mail"}
+          aria-label="Your email address"
+          className="h-11 min-w-0 flex-1 rounded border border-[#d9d9d9] bg-white px-4 text-[13px] text-[#111] outline-none placeholder:text-[#626262] focus:border-[#111]"
         />
-        <button
-          type="submit"
-          disabled={status === "busy"}
-          aria-busy={status === "busy"}
-          className="shrink-0 bg-gold px-4 py-2.5 text-[11.5px] font-bold uppercase tracking-[0.14em] text-espresso transition-opacity hover:opacity-90 disabled:opacity-60"
-        >
-          {status === "busy" ? "…" : "Join"}
+        <button type="submit" disabled={status === "busy"} aria-busy={status === "busy"} className="av-btn shrink-0 cursor-pointer">
+          {status === "busy" ? "…" : "Subscribe"}
         </button>
       </div>
-      {status === "busy" && slow && <span className="text-[12px] text-[#e0958a]">{SLOW_NOTE}</span>}
-      {status === "error" && (
-        <span className="text-[12px] text-[#e0958a]">{error}</span>
-      )}
+      {status === "busy" && slow && <span className="text-[12px] text-[#626262]">{SLOW_NOTE}</span>}
+      {status === "error" && <span className="text-[12px] text-[#a33a2f]">{error}</span>}
     </form>
   );
 }
