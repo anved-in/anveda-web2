@@ -4745,7 +4745,7 @@
     {
      "id": 134,
      "colour": "Rose Pink",
-     "image": "square-edge-glass-bangles-rose-pink.webp",
+     "image": "u-square-edge-glass-bangles-rose-pink-more-mvibwm0u.webp",
      "hex": "#fd729c",
      "price": 230,
      "pieces": 12,
@@ -4763,8 +4763,14 @@
       "2.6": 1,
       "2.8": 0
      },
-     "focal": "49.14% 53.05%",
-     "zoom": 1
+     "zoom": 1.25,
+     "gallery": [
+      {
+       "image": "square-edge-glass-bangles-rose-pink.webp",
+       "focal": "49.14% 53.05%",
+       "zoom": 1
+      }
+     ]
     },
     {
      "id": 135,
