@@ -228,7 +228,7 @@
     },
     {
      "id": 3,
-     "colour": "Premium non Bendable Diamond Stones",
+     "colour": "White Stones (Non Bendable)",
      "image": "border-bangles-premium-non-bendable-diamond-stones.webp",
      "hex": "#e2d8c4",
      "price": 240,
@@ -252,7 +252,7 @@
     },
     {
      "id": 4,
-     "colour": "Premium non Bendable Gold Stones",
+     "colour": "Gold Stones (Non Bendable)",
      "image": "border-bangles-premium-non-bendable-gold-stones.webp",
      "hex": "#e2d8c4",
      "price": 240,
@@ -332,17 +332,14 @@
      "sizes": [
       "2.2",
       "2.4",
-      "2.6",
-      "2.8",
-      "2.10"
+      "2.6"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 4,
      "sizeStock": {
-      "2.10": 0,
-      "2.2": 0,
-      "2.4": 0,
-      "2.6": 0,
-      "2.8": 0
+      "2.2": 1,
+      "2.4": 1,
+      "2.6": 2
      },
      "focal": "62.1% 56.9%",
      "zoom": 1.45
