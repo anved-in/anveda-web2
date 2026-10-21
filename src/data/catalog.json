@@ -4076,6 +4076,56 @@
       "2.8": 1
      },
      "zoom": 1.4
+    },
+    {
+     "id": 195,
+     "colour": "Premium Devi White stones Set of 4",
+     "image": "u-designer-side-bangles-premium-devi-white-stones-mvi7948e.webp",
+     "price": 1500,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 2,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "focal": "58.8% 59.1%",
+     "zoom": 1.4
+    },
+    {
+     "id": 196,
+     "colour": "Gold Kashu Set of 4",
+     "image": "u-designer-side-bangles-gold-kashu-set-of-4-mvi7b0u1.webp",
+     "price": 499,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 2,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "focal": "41% 60.1%",
+     "zoom": 1.6
     }
    ],
    "image": "designer-side-bangles-bell-pearl-flower-set-of-4.webp"
