@@ -4590,7 +4590,7 @@
     {
      "id": 129,
      "colour": "Multicolor",
-     "image": "square-edge-glass-bangles-multicolor.webp",
+     "image": "u-square-edge-glass-bangles-multicolor-more-mvibw21i.webp",
      "hex": "#c7c5c2",
      "price": 230,
      "pieces": 12,
@@ -4608,8 +4608,15 @@
       "2.6": 0,
       "2.8": 0
      },
-     "focal": "46.62% 55.09%",
-     "zoom": 1
+     "focal": "67.1% 45.2%",
+     "zoom": 1.5,
+     "gallery": [
+      {
+       "image": "square-edge-glass-bangles-multicolor.webp",
+       "focal": "46.62% 55.09%",
+       "zoom": 1
+      }
+     ]
     },
     {
      "id": 130,
