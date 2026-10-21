@@ -5176,5 +5176,9 @@
   8,
   9,
   10
- ]
+ ],
+ "announcement": {
+  "text": "Welcome to anveda.in",
+  "bg": "black"
+ }
 }
