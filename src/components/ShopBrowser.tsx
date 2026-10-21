@@ -179,7 +179,7 @@ export default function ShopBrowser({
           so as a card scrolled under this bar, its heart (later in the DOM)
           rendered on top of the bar instead of being covered by it. This bar
           needs to unambiguously outrank anything that scrolls underneath it. */}
-      <div ref={barRef} className="sticky top-[56px] z-30 border-b border-line bg-cream/95 backdrop-blur-sm md:top-[64px]">
+      <div ref={barRef} className="sticky top-[calc(56px+var(--strip-h,0px))] z-30 border-b border-line bg-cream/95 backdrop-blur-sm md:top-[calc(64px+var(--strip-h,0px))]">
         {header}
         {/* Everything here must fit one row with no horizontal scroll, even on
             a narrow phone — search collapses to an icon that expands in place
