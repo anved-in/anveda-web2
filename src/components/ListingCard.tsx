@@ -8,6 +8,7 @@ import { useCart } from "@/lib/cart";
 import Price from "./Price";
 import FavButton from "./FavButton";
 import NotifyMe from "./NotifyMe";
+import BagIcon from "./BagIcon";
 import { ratingFor } from "@/lib/reviews";
 
 /**
@@ -132,12 +133,13 @@ export default function ListingCard({
                 onClick={() => setSizeOpen((o) => !o)}
                 aria-label={`Add ${title} to bag, ${inr(price)}`}
                 aria-expanded={sizeOpen}
-                className="av-btn w-full cursor-pointer px-3"
+                className="av-btn av-btn-sm w-full cursor-pointer px-3"
               >
                 {added ? (
                   "Added ✓"
                 ) : (
                   <>
+                    <BagIcon />
                     Add to bag
                   </>
                 )}
@@ -184,7 +186,7 @@ export default function ListingCard({
             <NotifyMe
               variantId={v.id}
               label={title}
-              className="av-btn-outline w-full cursor-pointer px-3"
+              className="av-btn-outline av-btn-sm w-full cursor-pointer px-3"
             />
           )}
         </div>

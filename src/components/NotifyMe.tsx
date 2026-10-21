@@ -92,7 +92,7 @@ export default function NotifyMe({
   };
 
   const base = full
-    ? "av-btn w-full cursor-pointer"
+    ? "av-btn av-btn-sm w-full cursor-pointer"
     : "inline-flex h-7 shrink-0 cursor-pointer items-center whitespace-nowrap border border-ink px-2 text-[9.5px] font-bold uppercase leading-none tracking-[0.06em] text-ink transition-colors hover:bg-ink hover:text-cream";
 
   const field =

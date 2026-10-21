@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "@/components/Link";
 import QtyStepper from "@/components/QtyStepper";
 import NotifyMe from "@/components/NotifyMe";
+import BagIcon from "@/components/BagIcon";
 import { useCart } from "@/lib/cart";
 import { inr, variantPrice, colourLabel, sizeLeft, sizeLeftNote, sizeState, ALL_SIZES, sizeInfo, sizesOfProduct, type Product, type Variant } from "@/lib/catalog";
 
@@ -176,10 +177,11 @@ export default function ProductBuy({
             <button
               type="button"
               onClick={onAdd}
-              className="av-btn ml-auto w-[58%] cursor-pointer md:ml-0 md:w-[250px]"
+              className="av-btn av-btn-sm ml-auto w-[58%] cursor-pointer md:ml-0 md:w-[250px]"
             >
               {added ? "Added to bag ✓" : (
                 <>
+                  <BagIcon />
                   Add to bag<span className="hidden md:inline"> — {inr(variantPrice(p, variant) * qty)}</span>
                 </>
               )}

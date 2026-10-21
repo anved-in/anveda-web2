@@ -148,6 +148,9 @@ h1, h2, h3, .font-display {
   .av-btn { background: #050505; color: #fff; }
   .av-btn:hover { opacity: 0.85; }
   .av-btn:disabled { opacity: 0.6; }
+  /* The compact size (owner, 2026-10-22): Add to bag / Notify me on cards and the product page. 36px high,
+     11px label (never smaller), 16px left and right, a small bag icon beside the label. */
+  .av-btn-sm { height: 36px; padding: 0 16px; font-size: 11px; gap: 6px; }
   .av-btn-outline { background: transparent; color: #050505; }
   .av-btn-outline:hover { background: #050505; color: #fff; }
 }
