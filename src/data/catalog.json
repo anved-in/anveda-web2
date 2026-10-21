@@ -3513,7 +3513,7 @@
     {
      "id": 98,
      "colour": "Ratna Lakshmi Set of 4",
-     "image": "designer-side-bangles-lakshmi-with-kemp-stones-set-of-4.webp",
+     "image": "u-designer-side-bangles-ratna-lakshmi-set-of-4-more-mvidfldd.webp",
      "hex": "#e2d8c4",
      "price": 450,
      "pieces": 4,
@@ -3531,8 +3531,15 @@
       "2.6": 5,
       "2.8": 4
      },
-     "focal": "50.19% 53.38%",
-     "zoom": 1
+     "focal": "5.5% 53.9%",
+     "zoom": 1.35,
+     "gallery": [
+      {
+       "image": "designer-side-bangles-lakshmi-with-kemp-stones-set-of-4.webp",
+       "focal": "50.19% 53.38%",
+       "zoom": 1
+      }
+     ]
     },
     {
      "id": 99,
