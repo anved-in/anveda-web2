@@ -1924,6 +1924,29 @@
       "2.8": 0
      },
      "zoom": 1
+    },
+    {
+     "id": 198,
+     "colour": "Dark Green",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 1,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 0,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "zoom": 1
     }
    ],
    "image": "phool-glass-bangle-black.webp"
