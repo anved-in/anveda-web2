@@ -451,6 +451,36 @@
      }
     ]
    }
+  },
+  {
+   "id": "plum-lilac",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DeZS9n_zxFt/?obrf=Y2lhd3lhaWc3cTM5",
+   "cover": null,
+   "title": "Plum & Lilac",
+   "caption": "",
+   "productId": "square-edge-glass-bangles",
+   "colour": "Lavender",
+   "combo": {
+    "price": 700,
+    "items": [
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Lavender",
+       "Wine"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "White Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
