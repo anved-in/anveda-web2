@@ -71,7 +71,7 @@ export default function Footer() {
                 </li>
               ))}
               <AccountLink liClassName="" className={LINK}>
-                My orders
+                My account
               </AccountLink>
             </ul>
           </FooterGroup>

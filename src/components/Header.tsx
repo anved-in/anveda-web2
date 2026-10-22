@@ -206,7 +206,7 @@ export default function Header() {
               </svg>
             </a>
             {/* My orders: shown only while a way of logging in is switched on in the CMS. Phones reach it from the menu. */}
-            <AccountLink className="hidden shrink-0 p-2 transition-colors hover:text-maroon md:block" label="My orders">
+            <AccountLink className="hidden shrink-0 p-2 transition-colors hover:text-maroon md:block" label="My account">
               <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true">
                 <circle cx="12" cy="8" r="3.6" />
                 <path d="M4.5 20c.9-3.6 3.9-5.4 7.5-5.4s6.6 1.8 7.5 5.4" />
@@ -423,7 +423,7 @@ export default function Header() {
               onClick={() => setMenu(false)}
               className="flex items-center justify-between px-4 py-3.5 text-[14px]"
             >
-              My Orders
+              My Account
               <Chevron />
             </AccountLink>
           </ul>
