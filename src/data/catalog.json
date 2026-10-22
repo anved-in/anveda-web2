@@ -3653,11 +3653,11 @@
     },
     {
      "id": 104,
-     "colour": "Peacock Set of 4",
+     "colour": "Peacock Set of 2",
      "image": "designer-side-bangles-peacock-set-of-4.webp",
      "hex": "#e2d8c4",
-     "price": 950,
-     "pieces": 4,
+     "price": 470,
+     "pieces": 2,
      "sizes": [
       "2.2",
       "2.4",
@@ -3668,8 +3668,8 @@
      "stockQty": 4,
      "sizeStock": {
       "2.2": 1,
-      "2.4": 0,
-      "2.6": 3,
+      "2.4": 3,
+      "2.6": 0,
       "2.8": 0
      },
      "focal": "50.11% 44.88%",
