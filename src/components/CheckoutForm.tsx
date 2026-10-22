@@ -20,7 +20,7 @@ import {
 import { useShipping, offerLine, porterMessage, porterLink, PORTER_WHATSAPP_DISPLAY } from "@/lib/shipping";
 import { useSlow, friendlyError, SLOW_NOTE } from "@/lib/useSlow";
 import { INDIAN_STATES } from "@/lib/states";
-import { accountPost, loadLoginMethods, anyLogin } from "@/lib/account";
+import { accountPost, loadLoginMethods, anyLogin, type SavedAddress } from "@/lib/account";
 
 /**
  * Reads as the same three-step progress the reference wizard shows, a
@@ -68,6 +68,22 @@ export default function CheckoutForm() {
   // "in": details were filled from the customer's account; "out": login is on but nobody is logged in; "none": no login
   const [acct, setAcct] = useState<"unknown" | "in" | "out" | "none">("unknown");
   const [errs, setErrs] = useState<Partial<Record<keyof Customer, string>>>({});
+  // saved addresses (logged-in customers): one is picked, and its details fill the form
+  const [book, setBook] = useState<SavedAddress[]>([]);
+  const [pick, setPick] = useState<number | "new" | null>(null);
+  const [contactPhone, setContactPhone] = useState("");
+  const useSaved = (a: SavedAddress) => {
+    setPick(a.id);
+    // WhatsApp updates go to the chosen number; the courier's contact number is kept separately when it differs
+    setContactPhone(a.phone !== a.notifyPhone ? a.phone : "");
+    setC((cur) => ({ ...cur, name: a.name, phone: a.notifyPhone, address: a.address, city: a.city, state: a.state, pin: a.pin }));
+    setErrs({});
+  };
+  const useNew = () => {
+    setPick("new");
+    setContactPhone("");
+    setC((cur) => ({ ...cur, address: "", city: "", state: "", pin: "" }));
+  };
   const [busy, setBusy] = useState(false);
   const slow = useSlow(busy);
   // phone only: the order summary starts folded away, and the optional note starts hidden
@@ -122,13 +138,36 @@ export default function CheckoutForm() {
         setAcct("none");
         return;
       }
-      const { status, data } = await accountPost<{ profile?: { name: string; phone: string; email: string; address: string; city: string; state: string; pin: string } }>("profile");
+      const [{ status, data }, ab] = await Promise.all([
+        accountPost<{ profile?: { name: string; phone: string; email: string; address: string; city: string; state: string; pin: string } }>("profile"),
+        accountPost<{ addresses?: SavedAddress[] }>("addresses"),
+      ]);
       if (!alive) return;
       if (status !== 200 || !data.ok || !data.profile) {
         setAcct("out");
         return;
       }
       const p = data.profile;
+      const saved = ab.data.ok && Array.isArray(ab.data.addresses) ? ab.data.addresses : [];
+      if (saved.length) {
+        // the main address fills the form (only boxes the customer has not already typed in)
+        const a = saved[0];
+        setBook(saved);
+        setPick(a.id);
+        setContactPhone(a.phone !== a.notifyPhone ? a.phone : "");
+        setC((cur) => ({
+          ...cur,
+          name: cur.name || a.name || p.name,
+          phone: cur.phone || a.notifyPhone,
+          email: cur.email || p.email,
+          address: cur.address || a.address,
+          city: cur.city || a.city,
+          state: cur.state || a.state,
+          pin: cur.pin || a.pin,
+        }));
+        setAcct("in");
+        return;
+      }
       setC((cur) => ({
         ...cur,
         name: cur.name || p.name,
@@ -303,7 +342,7 @@ export default function CheckoutForm() {
       const paymentId = await payWithRazorpay(
         ref,
         { lines, subtotal, shipping, total, couponCode: coupon?.code, delivery: usePorter ? "porter" : "standard" },
-        c,
+        { ...c, contactPhone: contactPhone || undefined },
       );
       // null = the customer closed the widget. Not an error; just stop.
       if (paymentId) complete(ref, paymentId);
@@ -633,7 +672,7 @@ export default function CheckoutForm() {
           <SectionHeader n={1} title="Shipping details" />
         </div>
         <h2 className="font-display text-[24px] md:hidden">Shipping details</h2>
-        {acct === "in" && <p className="mt-2 text-[12px] text-ink-faint">Filled in from your account. <a href="/account/" className="underline underline-offset-2">Change your saved details</a></p>}
+        {acct === "in" && <p className="mt-2 text-[12px] text-ink-faint">Filled in from your account. <a href="/account/addresses" className="underline underline-offset-2">Manage your saved addresses</a></p>}
         {acct === "out" && (
           <p className="mt-2 text-[12px] text-ink-faint">
             Ordered before? <a href="/account/?next=/checkout" className="underline underline-offset-2">Log in</a> to fill this in with your saved details.
@@ -641,12 +680,31 @@ export default function CheckoutForm() {
         )}
 
         <div className="mt-5 space-y-4">
+          {book.length > 0 && (
+            <fieldset className="w-full min-w-0 border border-line bg-white p-4">
+              <legend className="px-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-ink-soft">Deliver to</legend>
+              {book.map((a) => (
+                <label key={a.id} className="flex cursor-pointer items-start gap-3 py-2 text-[13.5px]">
+                  <input type="radio" name="saved-address" checked={pick === a.id} onChange={() => useSaved(a)} className="mt-1 accent-[#2b2724]" />
+                  <span className="min-w-0 flex-1">
+                    <span className="font-semibold">{a.name}</span>
+                    {a.isDefault && <span className="ml-2 text-[11px] uppercase tracking-[0.1em] text-ink-faint">Main</span>}
+                    <span className="block truncate text-[12px] text-ink-soft">{a.address}, {a.city} {a.pin}</span>
+                  </span>
+                </label>
+              ))}
+              <label className="flex cursor-pointer items-start gap-3 border-t border-line py-2 pt-3 text-[13.5px]">
+                <input type="radio" name="saved-address" checked={pick === "new"} onChange={useNew} className="mt-1 accent-[#2b2724]" />
+                <span className="font-semibold">Use a different address</span>
+              </label>
+            </fieldset>
+          )}
           {field("name", "Full name *", { autoComplete: "name", placeholder: "Enter your full name" })}
           <div className="flex flex-col gap-4 md:flex-row md:flex-wrap">
             <div className="md:min-w-[200px] md:flex-1">
               {field("phone", "Mobile number *", {
                 inputMode: "numeric", autoComplete: "tel-national", maxLength: 12, placeholder: "Enter mobile number",
-              }, "Used for delivery updates")}
+              }, contactPhone ? `WhatsApp updates go here. The courier will call +91 ${contactPhone} for this address.` : "Used for delivery updates")}
             </div>
             <div className="md:min-w-[200px] md:flex-1">
               {field("email", "Email (optional)", { type: "email", autoComplete: "email", placeholder: "Enter email address" })}
@@ -708,7 +766,7 @@ export default function CheckoutForm() {
           </div>
 
           {porterOffered && (
-            <fieldset className="border border-line bg-white p-4">
+            <fieldset className="w-full min-w-0 border border-line bg-white p-4">
               <legend className="px-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-ink-soft">How should we deliver?</legend>
               <label className="flex cursor-pointer items-start gap-3 py-2">
                 <input type="radio" name="delivery-method" checked={!usePorter} onChange={() => setMethod("standard")} className="mt-1 accent-[#2b2724]" />

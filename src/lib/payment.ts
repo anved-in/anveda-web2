@@ -35,6 +35,8 @@ export interface Customer {
   state: string;
   pin: string;
   notes?: string;
+  /** The mobile number at the delivery address, when it is not the number WhatsApp updates go to. */
+  contactPhone?: string;
 }
 
 export interface OrderSummary {

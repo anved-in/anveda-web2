@@ -4,6 +4,7 @@ import AccountShell from "./AccountShell";
 import ProfileHub from "./ProfileHub";
 import OrdersView from "./OrdersView";
 import DetailsForm from "./DetailsForms";
+import AddressBook from "./AddressBook";
 
 const Heading = ({ title, intro }: { title: string; intro?: string }) => (
   <>
@@ -44,11 +45,11 @@ export function AccountProfilePage() {
 
 export function AccountAddressPage() {
   return (
-    <AccountShell title="Saved address" back>
-      {(me, api) => (
+    <AccountShell title="Saved addresses" back>
+      {(me) => (
         <>
-          <Heading title="Saved address" intro="Checkout fills this in for you, so you only confirm and pay." />
-          <DetailsForm me={me} mode="address" onSaved={api.setProfile} onRefresh={api.refresh} />
+          <Heading title="Saved addresses" intro="Save up to 5 addresses, each with its own mobile number. At checkout you pick one and only confirm and pay." />
+          <AddressBook me={me} />
         </>
       )}
     </AccountShell>

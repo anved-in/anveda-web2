@@ -12,6 +12,20 @@ export interface LoginMethods {
 /** True when at least one way of logging in is switched on. */
 export const anyLogin = (m: LoginMethods): boolean => m.email || m.whatsapp || !!m.google;
 
+/** One saved delivery address. `notifyPhone` is where WhatsApp order updates go for it. */
+export interface SavedAddress {
+  id: number;
+  name: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  pin: string;
+  isDefault: boolean;
+  notifyTo: "account" | "address";
+  notifyPhone: string;
+}
+
 export async function accountPost<T = Record<string, unknown>>(
   path: string,
   body: Record<string, unknown> = {},

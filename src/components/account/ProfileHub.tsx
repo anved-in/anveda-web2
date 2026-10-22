@@ -71,7 +71,7 @@ export default function ProfileHub({ me, onLogout }: { me: Me; onLogout: (all: b
           sub={me.orders.length ? "Order updates and tracking" : "You have no orders yet"}
           badge={onTheWay > 0 ? <span className="rounded-full bg-ink px-2 py-0.5 text-[10.5px] font-semibold text-cream">{onTheWay} on the way</span> : undefined}
         />
-        <Row href="/account/addresses" title="Saved address" sub={place ? `Delivering to ${place}` : "Add or update your delivery address"} />
+        <Row href="/account/addresses" title="Saved addresses" sub={place ? `Main address: ${place}` : "Add up to 5 delivery addresses"} />
         <Row
           onClick={() => fav.setOpen(true)}
           title="Saved designs"
