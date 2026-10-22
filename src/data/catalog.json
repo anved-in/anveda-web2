@@ -1764,7 +1764,7 @@
     {
      "id": 47,
      "colour": "Parrot Green",
-     "image": "petal-stone-glass-bangle-parrot-green.webp",
+     "image": "u-petal-stone-glass-bangle-parrot-green-1a161d5efaf.webp",
      "hex": "#35d016",
      "price": 320,
      "pieces": 12,
@@ -1784,11 +1784,12 @@
       "2.6": 1,
       "2.8": 0
      },
-     "focal": "42.55% 50.25%",
-     "zoom": 1,
+     "focal": "54.5% 56.5%",
+     "zoom": 1.6,
      "gallery": [
       {
-       "image": "u-petal-stone-glass-bangle-parrot-green-1a161d5efaf.webp",
+       "image": "petal-stone-glass-bangle-parrot-green.webp",
+       "focal": "42.55% 50.25%",
        "zoom": 1
       }
      ]
