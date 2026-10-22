@@ -624,11 +624,13 @@
       "2.6": 1,
       "2.8": 4
      },
-     "zoom": 1,
+     "focal": "48.9% 55.7%",
+     "zoom": 1.7,
      "gallery": [
       {
        "image": "u-intricate-glass-bangle-purple-2-1a161d5ef9c.webp",
-       "zoom": 1
+       "focal": "45.7% 59.5%",
+       "zoom": 1.7
       }
      ]
     },
@@ -653,7 +655,8 @@
       "2.6": 1,
       "2.8": 1
      },
-     "zoom": 1,
+     "focal": "37.5% 55.3%",
+     "zoom": 1.65,
      "gallery": [
       {
        "image": "intricate-glass-bangle-radium.webp",
@@ -683,12 +686,13 @@
       "2.6": 3,
       "2.8": 2
      },
-     "zoom": 1,
+     "focal": "30% 54.8%",
+     "zoom": 1.7,
      "gallery": [
       {
        "image": "intricate-glass-bangle-rose-pink.webp",
-       "focal": "50.55% 42.87%",
-       "zoom": 1
+       "focal": "46.8% 35.2%",
+       "zoom": 1.6
       }
      ]
     },
@@ -713,7 +717,8 @@
       "2.6": 1,
       "2.8": 0
      },
-     "zoom": 1,
+     "focal": "31.5% 46.1%",
+     "zoom": 1.75,
      "gallery": [
       {
        "image": "intricate-glass-bangle-royal-blue.webp",
