@@ -2390,7 +2390,8 @@
       "2.6": 0,
       "2.8": 1
      },
-     "zoom": 1,
+     "focal": "39.5% 60.8%",
+     "zoom": 1.45,
      "gallery": [
       {
        "image": "statement-bangles-lakshmi-with-white-stone.webp",
@@ -2418,14 +2419,8 @@
       "2.4": 1,
       "2.6": 2
      },
-     "zoom": 1,
-     "gallery": [
-      {
-       "image": "statement-bangles-mantap-lakshmi.webp",
-       "focal": "37.84% 58.24%",
-       "zoom": 1
-      }
-     ]
+     "focal": "45% 75.4%",
+     "zoom": 1.45
     },
     {
      "id": 69,
