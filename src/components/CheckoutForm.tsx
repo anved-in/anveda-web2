@@ -20,7 +20,7 @@ import {
 import { useShipping, offerLine, porterMessage, porterLink, PORTER_WHATSAPP_DISPLAY } from "@/lib/shipping";
 import { useSlow, friendlyError, SLOW_NOTE } from "@/lib/useSlow";
 import { INDIAN_STATES } from "@/lib/states";
-import { accountPost, loadLoginMethods } from "@/lib/account";
+import { accountPost, loadLoginMethods, anyLogin } from "@/lib/account";
 
 /**
  * Reads as the same three-step progress the reference wizard shows, a
@@ -116,9 +116,9 @@ export default function CheckoutForm() {
   useEffect(() => {
     let alive = true;
     (async () => {
-      const methods = await loadLoginMethods().catch(() => ({ email: false, whatsapp: false }));
+      const methods = await loadLoginMethods().catch(() => ({ email: false, whatsapp: false, google: "" }));
       if (!alive) return;
-      if (!methods.email && !methods.whatsapp) {
+      if (!anyLogin(methods)) {
         setAcct("none");
         return;
       }

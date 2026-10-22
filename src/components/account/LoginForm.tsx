@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "@/components/Link";
-import { accountPost, type LoginMethods } from "@/lib/account";
+import { accountPost, anyLogin, type LoginMethods } from "@/lib/account";
+import GoogleButton from "./GoogleButton";
 import PasteCode from "./PasteCode";
 
 const LABEL = "text-[12px] font-semibold uppercase tracking-[0.14em] text-ink-soft";
@@ -33,7 +34,7 @@ export default function LoginForm({ methods, onLoggedIn }: { methods: LoginMetho
     return () => clearTimeout(t);
   }, [wait]);
 
-  if (!methods.email && !methods.whatsapp) {
+  if (!anyLogin(methods)) {
     return (
       <div className="mt-8 rounded-[10px] border border-line p-6 text-[14px] text-ink-soft">
         Logging in is not available right now. You can still check an order with its reference and phone number.
@@ -91,9 +92,31 @@ export default function LoginForm({ methods, onLoggedIn }: { methods: LoginMetho
   };
 
   const both = methods.email && methods.whatsapp;
+  const codeLogin = methods.email || methods.whatsapp;
+  const afterLogin = async () => {
+    const ok = await onLoggedIn();
+    if (!ok) {
+      setError("Logged in, but we could not load your account. Please refresh the page.");
+      return;
+    }
+    // sent here from the checkout? go straight back
+    if (new URLSearchParams(window.location.search).get("next") === "/checkout") router.push("/checkout");
+  };
   return (
     <div className="mt-7">
-      {step === "ask" ? (
+      {methods.google && step === "ask" && (
+        <div className="mb-5">
+          <GoogleButton clientId={methods.google} onDone={afterLogin} onError={setError} />
+          {codeLogin && (
+            <div className="mt-5 flex items-center gap-3 text-[12px] uppercase tracking-[0.14em] text-ink-faint" aria-hidden="true">
+              <span className="h-px flex-1 bg-line" />or<span className="h-px flex-1 bg-line" />
+            </div>
+          )}
+        </div>
+      )}
+      {!codeLogin ? (
+        error && <p role="alert" className="border border-[#a33a2f] bg-[#a33a2f]/5 p-3 text-[13px] text-[#a33a2f]">{error}</p>
+      ) : step === "ask" ? (
         <form onSubmit={sendCode} className="space-y-4" noValidate>
           {both && (
             <div role="group" aria-label="How do you want to log in" className="flex gap-2">

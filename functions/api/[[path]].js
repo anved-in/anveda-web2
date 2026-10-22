@@ -347,7 +347,7 @@ const account = (cmsPath) => async (request, env) => {
   });
   const data = await res.json().catch(() => ({ ok: false, error: "bad response" }));
   const headers = { "content-type": "application/json", "cache-control": "no-store" };
-  if (cmsPath === "/verify" && res.ok && data.token) {
+  if ((cmsPath === "/verify" || cmsPath === "/google") && res.ok && data.token) {
     headers["set-cookie"] = accountCookie(data.token, ACCOUNT_DAYS * 86400);
     delete data.token; // the browser never sees it, only the cookie holds it
   }
@@ -371,6 +371,7 @@ const ROUTES = {
   "/api/account/config": account("/config"),
   "/api/account/request": account("/request"),
   "/api/account/verify": account("/verify"),
+  "/api/account/google": account("/google"),
   "/api/account/me": account("/me"),
   "/api/account/logout": account("/logout"),
 };

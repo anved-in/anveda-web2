@@ -3,7 +3,7 @@
 import Link from "@/components/Link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { loadLoginMethods } from "@/lib/account";
+import { loadLoginMethods, anyLogin } from "@/lib/account";
 import { useFavs } from "@/lib/favourites";
 import { HEART } from "./FavButton";
 
@@ -50,7 +50,7 @@ export default function TabBar() {
   useEffect(() => {
     let alive = true;
     loadLoginMethods()
-      .then((m) => alive && setProfileOn(m.email || m.whatsapp))
+      .then((m) => alive && setProfileOn(anyLogin(m)))
       .catch(() => {});
     return () => {
       alive = false;

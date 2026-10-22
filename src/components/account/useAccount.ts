@@ -43,7 +43,7 @@ export interface Me {
 /** The logged-in customer, shared by every account page. */
 export function useAccount() {
   const [phase, setPhase] = useState<"loading" | "out" | "in">("loading");
-  const [methods, setMethods] = useState<LoginMethods>({ email: false, whatsapp: false });
+  const [methods, setMethods] = useState<LoginMethods>({ email: false, whatsapp: false, google: "" });
   const [me, setMe] = useState<Me | null>(null);
 
   const refresh = useCallback(async (): Promise<boolean> => {
@@ -61,7 +61,7 @@ export function useAccount() {
   useEffect(() => {
     let alive = true;
     (async () => {
-      const [m] = await Promise.all([loadLoginMethods().catch(() => ({ email: false, whatsapp: false })), refresh()]);
+      const [m] = await Promise.all([loadLoginMethods().catch(() => ({ email: false, whatsapp: false, google: "" })), refresh()]);
       if (alive) setMethods(m);
     })();
     return () => {

@@ -41,7 +41,7 @@ export default function AccountShell({
             <span className="eyebrow">{eyebrow}</span>
             <h1 className="mt-3 font-display text-[clamp(30px,4.4vw,46px)]">{api.phase === "out" ? "Log in" : title}</h1>
             <p className="mt-4 text-[15px] text-ink-soft">
-              {intro ?? "See your orders and where each one is, and save your delivery address so checkout is faster. There is no password: we send a one-time code to your email or WhatsApp number."}
+              {intro ?? "See your orders and where each one is, and save your delivery address so checkout is faster. There is no password: continue with Google, or we send a one-time code to your WhatsApp number."}
             </p>
           </>
         )}

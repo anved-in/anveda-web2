@@ -5,7 +5,12 @@
 export interface LoginMethods {
   email: boolean;
   whatsapp: boolean;
+  /** Google's (public) client id when "Continue with Google" is on, otherwise empty. */
+  google: string;
 }
+
+/** True when at least one way of logging in is switched on. */
+export const anyLogin = (m: LoginMethods): boolean => m.email || m.whatsapp || !!m.google;
 
 export async function accountPost<T = Record<string, unknown>>(
   path: string,
@@ -25,7 +30,7 @@ export async function accountPost<T = Record<string, unknown>>(
   }
 }
 
-const CACHE_KEY = "anveda.login.methods.v1";
+const CACHE_KEY = "anveda.login.methods.v2";
 
 /** Which login methods are on. Remembered for 5 minutes in this tab so the header does not ask on every page. */
 export async function loadLoginMethods(): Promise<LoginMethods> {
@@ -39,7 +44,7 @@ export async function loadLoginMethods(): Promise<LoginMethods> {
     /* storage can be blocked */
   }
   const { data } = await accountPost<LoginMethods>("config");
-  const m = { email: !!data.email, whatsapp: !!data.whatsapp };
+  const m = { email: !!data.email, whatsapp: !!data.whatsapp, google: typeof data.google === "string" ? data.google : "" };
   try {
     sessionStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), m }));
   } catch {

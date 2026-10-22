@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import Link from "@/components/Link";
-import { loadLoginMethods } from "@/lib/account";
+import { loadLoginMethods, anyLogin } from "@/lib/account";
 
 /**
  * A link to the "My orders" page that exists only while the owner has switched at least one way of logging in ON in
@@ -26,7 +26,7 @@ export default function AccountLink({
   useEffect(() => {
     let alive = true;
     loadLoginMethods()
-      .then((m) => alive && setOn(m.email || m.whatsapp))
+      .then((m) => alive && setOn(anyLogin(m)))
       .catch(() => {});
     return () => {
       alive = false;
