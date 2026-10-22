@@ -402,6 +402,36 @@
      }
     ]
    }
+  },
+  {
+   "id": "sapphire-parrot",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/Dc_H-HnTsyF/?vrfl=Y2h6aDgyNXo5MDh6",
+   "cover": "/img/products/border-bangles-premium-non-bendable-gold-stones.webp",
+   "title": "Sapphire & Parrot",
+   "caption": "",
+   "productId": "intricate-glass-bangle",
+   "colour": "Royal Blue",
+   "combo": {
+    "price": 880,
+    "items": [
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Emerald Green",
+       "Royal Blue"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
