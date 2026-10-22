@@ -175,6 +175,28 @@
      }
     ]
    }
+  },
+  {
+   "id": "ad-ball-kada-white",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/Dcn6rAxTs0D/?utm_source=ig_web_copy_link&xtok=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==",
+   "cover": "/img/products/kada-white-ball-kada-set-of-2.webp",
+   "title": "AD Ball Kada White",
+   "caption": "",
+   "productId": "kada",
+   "colour": "White Ball Kada Set of 2",
+   "combo": {
+    "price": 699,
+    "items": [
+     {
+      "productId": "kada",
+      "qty": 1,
+      "colours": [
+       "White Ball Kada Set of 2"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
