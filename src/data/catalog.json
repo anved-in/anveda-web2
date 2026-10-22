@@ -5459,6 +5459,51 @@
      },
      "focal": "58.5% 32.2%",
      "zoom": 1.15
+    },
+    {
+     "id": 200,
+     "colour": "Wine (Raindrop)",
+     "price": 210,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 6,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 1,
+      "2.4": 2,
+      "2.6": 2,
+      "2.8": 1
+     },
+     "zoom": 1
+    },
+    {
+     "id": 201,
+     "colour": "Red (Raindrop)",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": false,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 0,
+      "2.6": 0,
+      "2.8": 0
+     },
+     "zoom": 1
     }
    ],
    "image": "u-square-edge-glass-bangles-aqua-hd-1792254278.webp"
