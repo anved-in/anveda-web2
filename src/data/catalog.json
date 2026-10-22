@@ -3994,7 +3994,7 @@
     {
      "id": 109,
      "colour": "Two Layer White Ball Set of 2",
-     "image": "designer-side-bangles-two-layer-white-ball-set-of-2.webp",
+     "image": "u-designer-side-bangles-two-layer-white-ball-set-of-2-more-mvj3qlcc.webp",
      "hex": "#e2d8c4",
      "price": 670,
      "pieces": 2,
@@ -4010,8 +4010,15 @@
       "2.4": 1,
       "2.6": 0
      },
-     "focal": "43.3% 73.7%",
-     "zoom": 1.25
+     "focal": "72.7% 77.5%",
+     "zoom": 1.5,
+     "gallery": [
+      {
+       "image": "designer-side-bangles-two-layer-white-ball-set-of-2.webp",
+       "focal": "43.3% 73.7%",
+       "zoom": 1.25
+      }
+     ]
     },
     {
      "id": 110,
