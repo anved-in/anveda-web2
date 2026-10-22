@@ -4127,7 +4127,7 @@
     {
      "id": 110,
      "colour": "White Gold Flower Set of 4",
-     "image": "designer-side-bangles-white-gold-flower-set-of-4.webp",
+     "image": "u-designer-side-bangles-white-gold-flower-set-of-4-more-mvjei6wa.webp",
      "hex": "#e2d8c4",
      "price": 180,
      "pieces": 4,
@@ -4143,8 +4143,15 @@
       "2.4": 2,
       "2.6": 0
      },
-     "focal": "59.8% 69.4%",
-     "zoom": 1.7
+     "focal": "65.2% 64.7%",
+     "zoom": 1.45,
+     "gallery": [
+      {
+       "image": "designer-side-bangles-white-gold-flower-set-of-4.webp",
+       "focal": "59.8% 69.4%",
+       "zoom": 1.7
+      }
+     ]
     },
     {
      "id": 111,
