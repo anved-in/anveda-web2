@@ -1661,7 +1661,7 @@
       "2.8": 1
      },
      "focal": "51.24% 48.2%",
-     "zoom": 1
+     "zoom": 1.5
     },
     {
      "id": 44,
@@ -1687,7 +1687,7 @@
       "2.8": 2
      },
      "focal": "47.4% 49.47%",
-     "zoom": 1,
+     "zoom": 1.7,
      "gallery": [
       {
        "image": "u-petal-stone-glass-bangle-maroon-1a161d5efac.webp",
