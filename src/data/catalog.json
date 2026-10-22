@@ -730,7 +730,7 @@
     {
      "id": 15,
      "colour": "Sky Blue",
-     "image": "u-intricate-glass-bangle-sky-blue-1a161d5efa0.webp",
+     "image": "intricate-glass-bangle-sky-blue.webp",
      "hex": "#17deda",
      "price": 320,
      "pieces": 12,
@@ -748,13 +748,13 @@
       "2.6": 1,
       "2.8": 1
      },
-     "focal": "47.9% 56.6%",
-     "zoom": 2.2,
+     "focal": "52.5% 32.4%",
+     "zoom": 1.45,
      "gallery": [
       {
-       "image": "intricate-glass-bangle-sky-blue.webp",
-       "focal": "52.5% 32.4%",
-       "zoom": 1.45
+       "image": "u-intricate-glass-bangle-sky-blue-more-mvjhjiu6.webp",
+       "focal": "46.4% 59.7%",
+       "zoom": 2.2
       }
      ]
     },
