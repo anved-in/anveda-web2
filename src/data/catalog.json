@@ -2864,14 +2864,16 @@
      "sizes": [
       "2.2",
       "2.4",
-      "2.6"
+      "2.6",
+      "2.8"
      ],
      "inStock": true,
-     "stockQty": 2,
+     "stockQty": 3,
      "sizeStock": {
       "2.2": 0,
       "2.4": 1,
-      "2.6": 1
+      "2.6": 1,
+      "2.8": 1
      },
      "focal": "29.1% 49.9%",
      "zoom": 1.45
@@ -2880,7 +2882,7 @@
      "id": 162,
      "colour": "Flower Lakshmi",
      "image": "u-statement-bangles-flower-lakshmi-mvgobcns.webp",
-     "price": 850,
+     "price": 950,
      "pieces": 2,
      "sizes": [
       "2.2",
@@ -2888,9 +2890,9 @@
       "2.6"
      ],
      "inStock": true,
-     "stockQty": 2,
+     "stockQty": 3,
      "sizeStock": {
-      "2.2": 0,
+      "2.2": 1,
       "2.4": 1,
       "2.6": 1
      },
@@ -3305,7 +3307,7 @@
      "id": 181,
      "colour": "Flower Enamel Lakshmi",
      "image": "u-statement-bangles-flower-enamel-lakshmi-more-mvgzb29j.webp",
-     "price": 899,
+     "price": 420,
      "pieces": 2,
      "sizes": [
       "2.2",
