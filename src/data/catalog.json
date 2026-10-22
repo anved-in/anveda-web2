@@ -1886,7 +1886,7 @@
     {
      "id": 50,
      "colour": "Black",
-     "image": "phool-glass-bangle-black.webp",
+     "image": "u-phool-glass-bangle-black-1a161d5efb2.webp",
      "hex": "#130101",
      "price": 320,
      "pieces": 12,
@@ -1906,11 +1906,12 @@
       "2.6": 1,
       "2.8": 1
      },
-     "focal": "41.14% 59.43%",
-     "zoom": 1,
+     "focal": "51.1% 61.9%",
+     "zoom": 1.75,
      "gallery": [
       {
-       "image": "u-phool-glass-bangle-black-1a161d5efb2.webp",
+       "image": "phool-glass-bangle-black.webp",
+       "focal": "41.14% 59.43%",
        "zoom": 1
       }
      ]
@@ -2247,7 +2248,7 @@
      "zoom": 1
     }
    ],
-   "image": "phool-glass-bangle-black.webp"
+   "image": "u-phool-glass-bangle-black-1a161d5efb2.webp"
   },
   {
    "id": "statement-bangles",
