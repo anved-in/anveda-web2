@@ -19,8 +19,8 @@
 const ALLOW = [
   "/_next/", "/fonts/", "/img/", "/video/",
   "/icon", "/apple-touch-icon", "/favicon", "/manifest", "/robots.txt",
-  "/teaser", "/track", "/chat", "/privacy", "/terms", "/review", "/colour-order",
-  "/api/track", "/api/review", "/go/",
+  "/teaser", "/track", "/account", "/chat", "/privacy", "/terms", "/review", "/colour-order",
+  "/api/track", "/api/account", "/api/review", "/go/",
 ];
 // ---------------------------------------------------------------- test copies
 // Cloudflare Pages publishes every branch other than the live one on its own
@@ -34,7 +34,7 @@ const ALLOW = [
 // The live addresses are listed below; anything else under pages.dev is a test copy.
 const LIVE_HOSTS = new Set(["anveda.in", "www.anveda.in", "anveda-web-pages.pages.dev"]);
 const isTestCopy = (host) => host.endsWith(".anveda-web-pages.pages.dev") && !LIVE_HOSTS.has(host);
-const TEST_READ_OK = ["/api/coupon", "/api/track", "/api/review-lookup"];
+const TEST_READ_OK = ["/api/coupon", "/api/track", "/api/review-lookup", "/api/account"];
 // A thin strip across the FULL width, in the normal flow at the very top of the page (above the header, taking no space
 // from the header's own padding). It is black on purpose, so it can never be mistaken for the shop's red offers strip.
 const TEST_TAG =

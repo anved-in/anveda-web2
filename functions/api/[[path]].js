@@ -263,6 +263,56 @@ const proxy = (cmsPath) => async (request, env) => {
   return json(data, res.status);
 };
 
+// Customer login ("My orders"). The browser only ever talks to these /api/account/* routes; this function adds the secret
+// the CMS requires, keeps the session token in an HttpOnly cookie (JavaScript on the page can never read it), and
+// passes the visitor's IP so the CMS can rate-limit code requests.
+const ACCOUNT_COOKIE = "av_acct";
+const ACCOUNT_DAYS = 30;
+const cookieValue = (request, name) => {
+  const raw = request.headers.get("cookie") || "";
+  for (const part of raw.split(";")) {
+    const i = part.indexOf("=");
+    if (i > -1 && part.slice(0, i).trim() === name) return decodeURIComponent(part.slice(i + 1).trim());
+  }
+  return "";
+};
+const accountCookie = (value, maxAge) =>
+  `${ACCOUNT_COOKIE}=${encodeURIComponent(value)}; Path=/; Max-Age=${maxAge}; HttpOnly; Secure; SameSite=Lax`;
+
+const account = (cmsPath) => async (request, env) => {
+  if (!(request.headers.get("content-type") || "").includes("application/json")) {
+    return json({ ok: false, error: "invalid request" }, 400);
+  }
+  let body = {};
+  try {
+    body = await request.json();
+  } catch {
+    body = {};
+  }
+  if (!env.CMS || !env.ORDERS_API_SECRET) return json({ ok: false, error: "not configured" }, 500);
+  const token = cookieValue(request, ACCOUNT_COOKIE);
+  const res = await env.CMS.fetch(`https://internal/account${cmsPath}`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-api-secret": env.ORDERS_API_SECRET,
+      "x-client-ip": request.headers.get("cf-connecting-ip") || "",
+      ...(token ? { "x-account-token": token } : {}),
+    },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({ ok: false, error: "bad response" }));
+  const headers = { "content-type": "application/json", "cache-control": "no-store" };
+  if (cmsPath === "/verify" && res.ok && data.token) {
+    headers["set-cookie"] = accountCookie(data.token, ACCOUNT_DAYS * 86400);
+    delete data.token; // the browser never sees it, only the cookie holds it
+  }
+  if (cmsPath === "/logout") headers["set-cookie"] = accountCookie("", 0);
+  // an expired or unknown session: clear the stale cookie so the page shows the login form
+  if (cmsPath === "/me" && res.status === 401) headers["set-cookie"] = accountCookie("", 0);
+  return new Response(JSON.stringify(data), { status: res.status, headers });
+};
+
 const ROUTES = {
   "/api/review-lookup": proxy("/review/lookup"),
   "/api/review-submit": proxy("/review/submit"),
@@ -272,6 +322,11 @@ const ROUTES = {
   "/api/coupon": handleCouponValidate,
   "/api/cart-capture": handleCartCapture,
   "/api/notify-stock": handleNotifyStock,
+  "/api/account/config": account("/config"),
+  "/api/account/request": account("/request"),
+  "/api/account/verify": account("/verify"),
+  "/api/account/me": account("/me"),
+  "/api/account/logout": account("/logout"),
 };
 
 export async function onRequestPost({ request, env }) {

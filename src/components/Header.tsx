@@ -1,5 +1,6 @@
 "use client";
 
+import AccountLink from "@/components/AccountLink";
 import Link from "@/components/Link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -204,6 +205,13 @@ export default function Header() {
                 <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
               </svg>
             </a>
+            {/* My orders: shown only while a way of logging in is switched on in the CMS. Phones reach it from the menu. */}
+            <AccountLink className="hidden shrink-0 p-2 transition-colors hover:text-maroon md:block" label="My orders">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true">
+                <circle cx="12" cy="8" r="3.6" />
+                <path d="M4.5 20c.9-3.6 3.9-5.4 7.5-5.4s6.6 1.8 7.5 5.4" />
+              </svg>
+            </AccountLink>
             <button
               type="button"
               onClick={() => fav.setOpen(true)}
@@ -410,6 +418,14 @@ export default function Header() {
                 </Link>
               </li>
             ))}
+            <AccountLink
+              liClassName="border-b border-line last:border-b-0"
+              onClick={() => setMenu(false)}
+              className="flex items-center justify-between px-4 py-3.5 text-[14px]"
+            >
+              My Orders
+              <Chevron />
+            </AccountLink>
           </ul>
         </div>
       </nav>

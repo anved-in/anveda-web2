@@ -28,6 +28,10 @@ const SECTIONS: { h: string; body: string }[] = [
     body: "This site keeps your shopping bag and favourites in your browser's own local storage, so they survive a page reload. That data stays on your device. It is not sent to us or to any third party until you actually place an order.",
   },
   {
+    h: "Logging in to see your orders",
+    body: "On the My orders page you can log in with a one-time code sent to the email or WhatsApp number you ordered with. There is no password. We keep a record of the code request (the email or number, the time and your IP address, for about two days, to stop misuse) and a login cookie in your browser for 30 days. Log out, or choose Log out everywhere, on that page to end it. Logging in only shows you the orders already linked to that email or number.",
+  },
+  {
     h: "How long we keep it",
     body: "Order records are kept as long as needed for accounting, warranty and dispute purposes, in line with what Indian law requires of a business selling goods. You can ask us to tell you what we hold on you, or to delete it where we are not legally required to keep it, by writing to us.",
   },

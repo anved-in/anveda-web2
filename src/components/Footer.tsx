@@ -1,5 +1,6 @@
 import Link from "@/components/Link";
 import SignupForm from "./SignupForm";
+import AccountLink from "@/components/AccountLink";
 import FooterGroup from "./FooterGroup";
 import { SITE, igDmLink } from "@/lib/site";
 import { collections, rangeHref } from "@/lib/catalog";
@@ -69,6 +70,9 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <AccountLink liClassName="" className={LINK}>
+                My orders
+              </AccountLink>
             </ul>
           </FooterGroup>
         </div>
