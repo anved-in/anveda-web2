@@ -1919,7 +1919,7 @@
     {
      "id": 51,
      "colour": "Champagne Gold",
-     "image": "phool-glass-bangle-champagne-gold.webp",
+     "image": "u-phool-glass-bangle-champagne-gold-1a161d5efb3.webp",
      "hex": "#dbc08a",
      "price": 320,
      "pieces": 12,
@@ -1939,12 +1939,13 @@
       "2.6": 1,
       "2.8": 1
      },
-     "focal": "50% 51.14%",
-     "zoom": 1,
+     "focal": "32% 59.8%",
+     "zoom": 1.7,
      "gallery": [
       {
-       "image": "u-phool-glass-bangle-champagne-gold-1a161d5efb3.webp",
-       "zoom": 1
+       "image": "phool-glass-bangle-champagne-gold.webp",
+       "focal": "50% 51.14%",
+       "zoom": 1.25
       }
      ]
     },
