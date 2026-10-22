@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "@/components/Link";
+import { INDIAN_STATES } from "@/lib/states";
 import { accountPost, loadLoginMethods, type LoginMethods } from "@/lib/account";
 import { inr } from "@/lib/catalog";
 import { waLink, HAS_WHATSAPP, igDmLink } from "@/lib/site";
@@ -22,9 +24,21 @@ interface Order {
   trackingNo?: string | null;
   items: OrderItem[];
 }
+interface Profile {
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+  city: string;
+  state: string;
+  pin: string;
+  complete: boolean;
+}
 interface Me {
   who: string;
+  channel: string;
   name: string | null;
+  profile: Profile;
   orders: Order[];
 }
 
@@ -37,6 +51,7 @@ const day = (s: string): string => {
 };
 
 const LABEL = "text-[12px] font-semibold uppercase tracking-[0.14em] text-ink-soft";
+const SELECT_ARROW = "h-[44px] appearance-none bg-[length:16px] bg-[right_14px_center] bg-no-repeat pr-10";
 const INPUT = "mt-1.5 w-full border border-line bg-white px-3.5 py-3 text-[11px] outline-none transition-colors focus:border-ink";
 
 function Progress({ fulfilment }: { fulfilment: string }) {
@@ -59,7 +74,120 @@ function Progress({ fulfilment }: { fulfilment: string }) {
   );
 }
 
+/** Name, email and delivery address. Saved to the customer record, which checkout and the shop's order list both use. */
+function DetailsCard({ me, onSaved }: { me: Me; onSaved: (p: Profile) => void }) {
+  const p = me.profile;
+  const byEmail = me.channel === "email";
+  const [open, setOpen] = useState(!p.complete);
+  const [f, setF] = useState({ name: p.name, phone: p.phone, email: p.email, address: p.address, city: p.city, state: p.state, pin: p.pin });
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const [saved, setSaved] = useState(false);
+  const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setF((x) => ({ ...x, [k]: e.target.value }));
+    setSaved(false);
+  };
+  // a phone is only asked for when the person logged in by email and nothing is on file under that email yet
+  const needsPhone = byEmail && !p.phone;
+
+  const save = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErr(null);
+    setBusy(true);
+    const { data } = await accountPost<{ profile: Profile }>("profile/save", f);
+    setBusy(false);
+    if (!data.ok || !data.profile) {
+      setErr(data.error || "Could not save. Please try again.");
+      return;
+    }
+    setSaved(true);
+    setOpen(false);
+    onSaved(data.profile);
+  };
+
+  if (!open) {
+    return (
+      <div className="mt-6 rounded-[10px] border border-line p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 text-[13px] text-ink-soft">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-ink-soft">Your details</p>
+            <p className="mt-2 font-semibold text-ink">{p.name}</p>
+            <p className="mt-0.5">{[p.address, p.city, p.state, p.pin].filter(Boolean).join(", ")}</p>
+            <p className="mt-0.5">{[p.phone ? `+91 ${p.phone}` : "", p.email].filter(Boolean).join(" · ")}</p>
+            {saved && <p role="status" className="mt-2 text-[12px] text-ink-faint">Saved. Checkout will fill these in for you.</p>}
+          </div>
+          <button type="button" onClick={() => setOpen(true)} className="shrink-0 text-[12px] font-semibold underline underline-offset-2 hover:text-maroon">Edit</button>
+        </div>
+      </div>
+    );
+  }
+
+  const box = "mt-1.5 w-full border border-line bg-white px-3.5 py-3 text-[11px] outline-none transition-colors focus:border-ink";
+  return (
+    <form onSubmit={save} noValidate className="mt-6 space-y-4 rounded-[10px] border border-line p-5">
+      <div>
+        <p className="font-display text-[20px]">Your details</p>
+        <p className="mt-1 text-[13px] text-ink-soft">Save your name and delivery address once. Checkout then fills them in for you, so you only confirm and pay.</p>
+      </div>
+      <label className="block">
+        <span className={LABEL}>Full name *</span>
+        <input value={f.name} onChange={set("name")} autoComplete="name" placeholder="Enter your full name" className={box} />
+      </label>
+      {needsPhone && (
+        <label className="block">
+          <span className={LABEL}>Mobile number *</span>
+          <input value={f.phone} onChange={set("phone")} inputMode="numeric" autoComplete="tel-national" maxLength={12} placeholder="10 digit mobile number" className={box} />
+          <span className="mt-1 block text-[11px] text-ink-faint">Used for delivery updates.</span>
+        </label>
+      )}
+      {!byEmail && (
+        <label className="block">
+          <span className={LABEL}>Email (optional)</span>
+          <input value={f.email} onChange={set("email")} type="email" autoComplete="email" placeholder="Enter email address" className={box} />
+        </label>
+      )}
+      <label className="block">
+        <span className={LABEL}>Address</span>
+        <textarea value={f.address} onChange={set("address")} rows={2} autoComplete="street-address" placeholder="House number, street, area" className={box + " resize-none"} />
+      </label>
+      <div className="flex flex-col gap-4 sm:flex-row">
+        <label className="block sm:flex-1">
+          <span className={LABEL}>City</span>
+          <input value={f.city} onChange={set("city")} autoComplete="address-level2" placeholder="City" className={box} />
+        </label>
+        <label className="block sm:flex-1">
+          <span className={LABEL}>PIN code</span>
+          <input value={f.pin} onChange={set("pin")} inputMode="numeric" maxLength={6} autoComplete="postal-code" placeholder="6 digits" className={box} />
+        </label>
+      </div>
+      <label className="block">
+        <span className={LABEL}>State</span>
+        <select
+          value={f.state}
+          onChange={set("state")}
+          autoComplete="address-level1"
+          className={box + " " + SELECT_ARROW}
+          style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")" }}
+        >
+          <option value="">Select state</option>
+          {INDIAN_STATES.map((s) => (
+            <option key={s} value={s}>{s}</option>
+          ))}
+        </select>
+      </label>
+      {err && <p role="alert" className="border border-[#a33a2f] bg-[#a33a2f]/5 p-3 text-[13px] text-[#a33a2f]">{err}</p>}
+      <div className="flex items-center gap-3">
+        <button type="submit" disabled={busy} aria-busy={busy} className="av-btn av-btn-sm cursor-pointer">{busy ? "Saving…" : "Save details"}</button>
+        {p.complete && (
+          <button type="button" onClick={() => { setOpen(false); setErr(null); }} className="text-[12px] underline underline-offset-2 hover:text-maroon">Cancel</button>
+        )}
+      </div>
+    </form>
+  );
+}
+
 export default function AccountView() {
+  const router = useRouter();
   const [phase, setPhase] = useState<"loading" | "out" | "in">("loading");
   const [methods, setMethods] = useState<LoginMethods>({ email: false, whatsapp: false });
   const [channel, setChannel] = useState<"email" | "whatsapp">("email");
@@ -76,7 +204,7 @@ export default function AccountView() {
   const loadMe = useCallback(async (): Promise<boolean> => {
     const { status, data } = await accountPost<Me>("me");
     if (status === 200 && data.ok) {
-      setMe({ who: data.who, name: data.name, orders: data.orders ?? [] });
+      setMe({ who: data.who, channel: data.channel, name: data.name, profile: data.profile, orders: data.orders ?? [] });
       setPhase("in");
       return true;
     }
@@ -142,7 +270,12 @@ export default function AccountView() {
     }
     const ok = await loadMe();
     setBusy(false);
-    if (!ok) setError("Logged in, but we could not load your orders. Please refresh the page.");
+    if (!ok) {
+      setError("Logged in, but we could not load your account. Please refresh the page.");
+      return;
+    }
+    // sent here from the checkout? go straight back
+    if (new URLSearchParams(window.location.search).get("next") === "/checkout") router.push("/checkout");
   };
 
   const logout = async (all: boolean) => {
@@ -159,7 +292,7 @@ export default function AccountView() {
   }
 
   if (phase === "in" && me) {
-    const first = me.name ? me.name.split(" ")[0] : null;
+    const first = (me.profile?.name || me.name || "").split(" ")[0] || null;
     return (
       <div>
         <div className="mt-6 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
@@ -172,9 +305,11 @@ export default function AccountView() {
           </div>
         </div>
 
+        <DetailsCard me={me} onSaved={(profile) => setMe((m) => (m ? { ...m, profile, name: profile.name || m.name } : m))} />
+
         {me.orders.length === 0 ? (
-          <div className="mt-8 rounded-[10px] border border-line p-6 text-[14px] text-ink-soft">
-            No paid orders under this {me.who.includes("@") ? "email" : "number"} yet. If you ordered with a different email or number, log out and log in with that one.
+          <div className="mt-6 rounded-[10px] border border-line p-6 text-[14px] text-ink-soft">
+            No orders yet under this {me.who.includes("@") ? "email" : "number"}. If you ordered with a different email or number, log out and log in with that one.
             <div className="mt-4">
               <Link href="/shop/glass" className="av-btn av-btn-sm inline-flex">Shop bangles</Link>
             </div>
@@ -277,7 +412,7 @@ export default function AccountView() {
               className={INPUT}
             />
             <span className="mt-1 block text-[11px] text-ink-faint">
-              Use the {channel === "email" ? "email" : "number"} you ordered with. We will send a 6 digit code, no password needed.
+              We will send a 6 digit code, no password needed. New here? Just log in and save your details.
             </span>
           </label>
           {error && <p role="alert" className="border border-[#a33a2f] bg-[#a33a2f]/5 p-3 text-[13px] text-[#a33a2f]">{error}</p>}

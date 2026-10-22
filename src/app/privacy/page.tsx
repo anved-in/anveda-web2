@@ -28,8 +28,8 @@ const SECTIONS: { h: string; body: string }[] = [
     body: "This site keeps your shopping bag and favourites in your browser's own local storage, so they survive a page reload. That data stays on your device. It is not sent to us or to any third party until you actually place an order.",
   },
   {
-    h: "Logging in to see your orders",
-    body: "On the My orders page you can log in with a one-time code sent to the email or WhatsApp number you ordered with. There is no password. We keep a record of the code request (the email or number, the time and your IP address, for about two days, to stop misuse) and a login cookie in your browser for 30 days. Log out, or choose Log out everywhere, on that page to end it. Logging in only shows you the orders already linked to that email or number.",
+    h: "Logging in and saved details",
+    body: "On the My orders page you can log in with a one-time code sent to the email or WhatsApp number you ordered with. There is no password. We keep a record of the code request (the email or number, the time and your IP address, for about two days, to stop misuse) and a login cookie in your browser for 30 days. Log out, or choose Log out everywhere, on that page to end it. Once logged in you can save your name, email and delivery address. We store them with your order details so that checkout can fill them in for you, and you can change them any time on that page.",
   },
   {
     h: "How long we keep it",

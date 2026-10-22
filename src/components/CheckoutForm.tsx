@@ -19,6 +19,7 @@ import {
 import { quoteShipping } from "@/lib/shipping";
 import { useSlow, friendlyError, SLOW_NOTE } from "@/lib/useSlow";
 import { INDIAN_STATES } from "@/lib/states";
+import { accountPost, loadLoginMethods } from "@/lib/account";
 
 /**
  * Reads as the same three-step progress the reference wizard shows, a
@@ -63,6 +64,8 @@ export default function CheckoutForm() {
   const { lines, subtotal, clear, ready, setQty, remove } = useCart();
   const { has: hasFav, toggle: toggleFav } = useFavs();
   const [c, setC] = useState<Customer>(EMPTY);
+  // "in": details were filled from the customer's account; "out": login is on but nobody is logged in; "none": no login
+  const [acct, setAcct] = useState<"unknown" | "in" | "out" | "none">("unknown");
   const [errs, setErrs] = useState<Partial<Record<keyof Customer, string>>>({});
   const [busy, setBusy] = useState(false);
   const slow = useSlow(busy);
@@ -110,6 +113,40 @@ export default function CheckoutForm() {
   // number that no longer matches the rules. An auto-applied coupon instead
   // just re-checks itself below (couponInput is empty for those, so there's
   // nothing for the customer to "re-apply").
+  // If the customer is logged in, fill in their saved details (only the boxes they have not typed in yet).
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      const methods = await loadLoginMethods().catch(() => ({ email: false, whatsapp: false }));
+      if (!alive) return;
+      if (!methods.email && !methods.whatsapp) {
+        setAcct("none");
+        return;
+      }
+      const { status, data } = await accountPost<{ profile?: { name: string; phone: string; email: string; address: string; city: string; state: string; pin: string } }>("profile");
+      if (!alive) return;
+      if (status !== 200 || !data.ok || !data.profile) {
+        setAcct("out");
+        return;
+      }
+      const p = data.profile;
+      setC((cur) => ({
+        ...cur,
+        name: cur.name || p.name,
+        phone: cur.phone || p.phone,
+        email: cur.email || p.email,
+        address: cur.address || p.address,
+        city: cur.city || p.city,
+        state: cur.state || p.state,
+        pin: cur.pin || p.pin,
+      }));
+      setAcct("in");
+    })();
+    return () => {
+      alive = false;
+    };
+  }, []);
+
   const couponSubtotalRef = useRef(subtotal);
   useEffect(() => {
     if (coupon && !coupon.auto && couponSubtotalRef.current !== subtotal) {
@@ -570,6 +607,12 @@ export default function CheckoutForm() {
           <SectionHeader n={1} title="Shipping details" />
         </div>
         <h2 className="font-display text-[24px] md:hidden">Shipping details</h2>
+        {acct === "in" && <p className="mt-2 text-[12px] text-ink-faint">Filled in from your account. <a href="/account/" className="underline underline-offset-2">Change your saved details</a></p>}
+        {acct === "out" && (
+          <p className="mt-2 text-[12px] text-ink-faint">
+            Ordered before? <a href="/account/?next=/checkout" className="underline underline-offset-2">Log in</a> to fill this in with your saved details.
+          </p>
+        )}
 
         <div className="mt-5 space-y-4">
           {field("name", "Full name *", { autoComplete: "name", placeholder: "Enter your full name" })}
