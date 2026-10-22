@@ -815,7 +815,7 @@
     {
      "id": 149,
      "colour": "Peach",
-     "image": "u-intricate-glass-bangle-peach-1a161d5efa3.webp",
+     "image": "u-intricate-glass-bangle-peach-more-mvjhk5b2.webp",
      "price": 320,
      "pieces": 1,
      "sizes": [
@@ -832,7 +832,8 @@
       "2.6": 3,
       "2.8": 1
      },
-     "zoom": 1.85
+     "focal": "61.3% 53.2%",
+     "zoom": 1.7
     },
     {
      "id": 150,
