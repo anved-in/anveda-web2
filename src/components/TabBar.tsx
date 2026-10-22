@@ -2,6 +2,8 @@
 
 import Link from "@/components/Link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { loadLoginMethods } from "@/lib/account";
 import { useFavs } from "@/lib/favourites";
 import { HEART } from "./FavButton";
 
@@ -16,6 +18,12 @@ const ICONS = {
       <rect x="14" y="3" width="7" height="7" rx="1" />
       <rect x="3" y="14" width="7" height="7" rx="1" />
       <rect x="14" y="14" width="7" height="7" rx="1" />
+    </>
+  ),
+  profile: (
+    <>
+      <circle cx="12" cy="8" r="3.6" />
+      <path d="M4.5 20c.9-3.6 3.9-5.4 7.5-5.4s6.6 1.8 7.5 5.4" />
     </>
   ),
   help: (
@@ -36,11 +44,24 @@ const ICONS = {
 export default function TabBar() {
   const path = usePathname();
   const fav = useFavs();
+  // While the owner has customer login switched on, the last tab is Profile (and Saved designs lives inside it).
+  // With login off there is no Profile page to go to, so Saved stays where it was.
+  const [profileOn, setProfileOn] = useState(false);
+  useEffect(() => {
+    let alive = true;
+    loadLoginMethods()
+      .then((m) => alive && setProfileOn(m.email || m.whatsapp))
+      .catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   const items = [
     { href: "/shop/glass/", label: "Shop", icon: ICONS.shop },
     { href: "/reels", label: "Reels", icon: ICONS.reels },
     { href: "/contact", label: "Help", icon: ICONS.help },
+    ...(profileOn ? [{ href: "/account", label: "Profile", icon: ICONS.profile }] : []),
   ];
 
   // Checkout is a focused task: the bottom bar is hidden there (the header and menu are still there if someone needs to leave).
@@ -95,6 +116,7 @@ export default function TabBar() {
           {it.label}
         </Link>
       ))}
+      {!profileOn && (
       <button
         type="button"
         onClick={() => fav.setOpen(true)}
@@ -114,6 +136,7 @@ export default function TabBar() {
           </span>
         )}
       </button>
+      )}
     </nav>
   );
 }

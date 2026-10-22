@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import Link from "@/components/Link";
 import LoginForm from "./LoginForm";
+import SavedRow from "./SavedRow";
 import { useAccount, type Me } from "./useAccount";
 
 type Api = ReturnType<typeof useAccount>;
@@ -46,6 +47,7 @@ export default function AccountShell({
         )}
         {api.phase === "loading" && <p role="status" className="mt-8 text-[13.5px] text-ink-soft">Loading…</p>}
         {api.phase === "out" && <LoginForm methods={api.methods} onLoggedIn={api.refresh} />}
+        {api.phase === "out" && <SavedRow />}
         {api.phase === "in" && api.me && children(api.me, api)}
       </div>
     </section>
