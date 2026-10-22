@@ -27,7 +27,7 @@ export const SITE = {
   // ^ WhatsApp is switched OFF: the number is not available (owner, 2026-10-18). Every WhatsApp button, link and
   //   sentence on the site checks HAS_WHATSAPP and falls back to an Instagram message. To switch it back on, put the
   //   new number here (digits with country code, e.g. "919XXXXXXXXX") and deploy: everything returns by itself.
-  email: "anveda.in@gmail.com",
+  email: "hello@anveda.in",
   instagram: "https://www.instagram.com/anveda.in/",
 
   /**
@@ -38,9 +38,9 @@ export const SITE = {
    *
    * We ship by DTDC, whose price depends on the destination zone and the
    * parcel weight, so a single number would be wrong for most orders. DTDC's
-   * published domestic rates for a small parcel run roughly ₹40 to 100 (Lite) to
-   * ₹150 to 250 (Plus) before fuel surcharge (~30%) and 18% GST, which is why a
-   * real bangle parcel almost always lands above ₹100.
+   * published domestic rates for a small parcel run roughly â‚¹40 to 100 (Lite) to
+   * â‚¹150 to 250 (Plus) before fuel surcharge (~30%) and 18% GST, which is why a
+   * real bangle parcel almost always lands above â‚¹100.
    *
    * So the site does NOT quote a fixed figure. It shows `shippingFrom` as an
    * indicative minimum, states that the exact amount depends on the PIN code,
