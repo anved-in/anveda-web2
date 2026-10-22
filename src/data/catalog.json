@@ -2141,12 +2141,13 @@
       "2.6": 0,
       "2.8": 0
      },
-     "focal": "50% 53.91%",
+     "focal": "50% 82.4%",
      "zoom": 1,
      "gallery": [
       {
        "image": "u-phool-glass-bangle-snow-1a161d5efba.webp",
-       "zoom": 1
+       "focal": "48.4% 58.3%",
+       "zoom": 1.65
       }
      ]
     },
@@ -2173,12 +2174,13 @@
       "2.6": 0,
       "2.8": 1
      },
-     "focal": "54.21% 56.28%",
-     "zoom": 1,
+     "focal": "50.5% 62.1%",
+     "zoom": 1.55,
      "gallery": [
       {
        "image": "u-phool-glass-bangle-deep-mauve-1a161d5efbb.webp",
-       "zoom": 1
+       "focal": "62.6% 64.3%",
+       "zoom": 1.85
       }
      ]
     },
