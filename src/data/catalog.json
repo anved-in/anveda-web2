@@ -1797,7 +1797,7 @@
     {
      "id": 48,
      "colour": "Pista",
-     "image": "petal-stone-glass-bangle-pista.webp",
+     "image": "u-petal-stone-glass-bangle-pista-1a161d5efb0.webp",
      "hex": "#aef494",
      "price": 320,
      "pieces": 12,
@@ -1817,19 +1817,20 @@
       "2.6": 1,
       "2.8": 0
      },
-     "focal": "43.7% 53.75%",
-     "zoom": 1,
+     "focal": "49.5% 64.9%",
+     "zoom": 1.45,
      "gallery": [
       {
-       "image": "u-petal-stone-glass-bangle-pista-1a161d5efb0.webp",
-       "zoom": 1
+       "image": "petal-stone-glass-bangle-pista.webp",
+       "focal": "17.1% 54.6%",
+       "zoom": 1.45
       }
      ]
     },
     {
      "id": 49,
      "colour": "Sky Blue",
-     "image": "petal-stone-glass-bangle-sky-blue.webp",
+     "image": "u-petal-stone-glass-bangle-sky-blue-1a161d5efb1.webp",
      "hex": "#17deda",
      "price": 320,
      "pieces": 12,
@@ -1849,11 +1850,12 @@
       "2.6": 1,
       "2.8": 0
      },
-     "focal": "48.43% 45.53%",
-     "zoom": 1,
+     "focal": "73.5% 60.6%",
+     "zoom": 1.35,
      "gallery": [
       {
-       "image": "u-petal-stone-glass-bangle-sky-blue-1a161d5efb1.webp",
+       "image": "petal-stone-glass-bangle-sky-blue.webp",
+       "focal": "48.43% 45.53%",
        "zoom": 1
       }
      ]
