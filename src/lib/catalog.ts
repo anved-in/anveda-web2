@@ -12,7 +12,7 @@ export interface Collection {
 }
 
 /**
- * The catalogue's three top-level groups — Glass, Ornate, Layering — with the
+ * The catalogue's three top-level groups, Glass, Ornate, Layering, with the
  * families hanging underneath. Taken from the ANVEDA catalog's own grouping
  * (see GROUPS in scripts/gen-catalog.py), so the shop and the catalogue can
  * never disagree about what belongs where.
@@ -29,13 +29,13 @@ export interface Group {
 
 /** One colourway of a product: its own photo, and a swatch hex when we know it. */
 export interface Variant {
-  /** CMS 2.0's own variant row id — used only for "notify me when back in stock". */
+  /** CMS 2.0's own variant row id, used only for "notify me when back in stock". */
   id: number;
   colour: string;
   image: string;
   /** null when the shade has no single representative colour ("Assorted"). */
   hex: string | null;
-  /** Colourways are priced individually — a family can span ₹180 to ₹899. */
+  /** Colourways are priced individually, a family can span ₹180 to ₹899. */
   price: number | null;
   /** Bangles per set/dozen/pair for this colourway. */
   pieces: number | null;
@@ -50,7 +50,7 @@ export interface Variant {
   gallery?: { image: string; focal?: string | null; zoom?: number | null }[];
   /** Admin-set crop focus, as a CSS object-position value. */
   focal: string | null;
-  /** Admin-set crop zoom — a scale factor, 1 = no zoom. Paired with focal. */
+  /** Admin-set crop zoom, a scale factor, 1 = no zoom. Paired with focal. */
   zoom: number | null;
 }
 
@@ -92,7 +92,7 @@ export interface Product {
   /** Top-level group: "glass" | "ornate" | "layering". */
   group: string | null;
   name: string;
-  /** Lowest colourway price — what "from ₹x" shows. */
+  /** Lowest colourway price, what "from ₹x" shows. */
   price: number;
   /** Highest colourway price; equals `price` when the family is flat-priced. */
   priceMax: number;
@@ -103,7 +103,7 @@ export interface Product {
   blurb: string;
   story: string;
   variants: Variant[];
-  /** Lead photo — the first variant's image. */
+  /** Lead photo, the first variant's image. */
   image: string;
 }
 
@@ -159,7 +159,7 @@ export const productById = (id: string): Product | undefined =>
 export interface Listing {
   product: Product;
   variant: Variant;
-  /** /product/<id>?c=<colour> — the product page reads `c` and preselects it. */
+  /** /product/<id>?c=<colour>, the product page reads `c` and preselects it. */
   href: string;
 }
 
@@ -209,7 +209,7 @@ export const imgSrc = (file: string): string => `/img/products/${file}`;
 
 /**
  * The 480px-wide companion of a product photo (see scripts/optimize-images.js)
- * — for srcset on grid tiles, which never render wider than a few hundred
+ *, for srcset on grid tiles, which never render wider than a few hundred
  * pixels but were downloading the full ~1000px master on every device.
  */
 export const imgSrcSmall = (file: string): string => {
@@ -284,12 +284,25 @@ export const KIDS_SIZE_GUIDE: { size: string; label: string }[] = [
   { size: "2.0", label: "Kids" },
 ];
 
-/** Every size we sell, smallest first (kids' sizes, then the standard adult sizes). */
-export const ALL_SIZES: string[] = [...KIDS_SIZE_GUIDE.map((s) => s.size), ...SIZE_GUIDE.map((s) => s.size)];
+/**
+ * Sizes that are rarely made (2.12). They are shown ONLY where a colourway really has them in stock: when one is not
+ * available it is not shown at all (not even greyed out or struck through), and it is not listed on the size guide page.
+ */
+export const OPTIONAL_SIZES: string[] = ["2.0", "2.12"];
+const OPTIONAL_SIZE_GUIDE: { size: string; label: string }[] = [{ size: "2.0", label: "Extra small" }, { size: "2.12", label: "Extra large" }];
+
+/** Is this a rare size for this design? 2.0 is an ordinary size in the Kids section, but a rare one on the adult sections. */
+export const isRareSize = (p: Product, size: string): boolean => OPTIONAL_SIZES.includes(size) && !(size === "2.0" && p.group === "kids");
+
+/** Every size we sell, smallest first (kids' sizes, then the standard adult sizes, then the rare ones). */
+export const ALL_SIZES: string[] = ["1.10", "1.12", "1.14", "2.0", "2.2", "2.4", "2.6", "2.8", "2.10", "2.12"];
 
 /** The note shown beside a size ("Regular", "Kids"), or undefined. */
-export const sizeInfo = (size: string): { size: string; label: string } | undefined =>
-  SIZE_GUIDE.find((x) => x.size === size) ?? KIDS_SIZE_GUIDE.find((x) => x.size === size);
+export const sizeInfo = (size: string, p?: Product): { size: string; label: string } | undefined =>
+  SIZE_GUIDE.find((x) => x.size === size) ??
+  (size === "2.0" && p && p.group !== "kids" ? OPTIONAL_SIZE_GUIDE.find((x) => x.size === size) : undefined) ??
+  KIDS_SIZE_GUIDE.find((x) => x.size === size) ??
+  OPTIONAL_SIZE_GUIDE.find((x) => x.size === size);
 
 /** The sizes a design is sold in: those of its section (Kids has its own), in the proper order. */
 export const sizesOfProduct = (p: Product): string[] => {
@@ -297,6 +310,10 @@ export const sizesOfProduct = (p: Product): string[] => {
   const own = g?.sizes?.length ? g.sizes : SIZE_GUIDE.map((s) => s.size);
   return ALL_SIZES.filter((s) => own.includes(s));
 };
+
+/** The sizes to SHOW for one colourway: its section's sizes, with a rare size (2.12) left out unless it can be bought right now. */
+export const visibleSizes = (p: Product, v: Variant): string[] =>
+  sizesOfProduct(p).filter((s) => !isRareSize(p, s) || sizeState(v, s) === "ok");
 
 /** Pieces left of one size of a colourway, or null when that size is not counted (then it is always offered). */
 export const sizeLeft = (v: Variant, size: string): number | null => {
@@ -324,7 +341,7 @@ export const sizeLeftNote = (left: number): string => (left < 2 ? "Less than 2 l
 /** True when a family's colourways are not all the same price. */
 export const hasPriceRange = (p: Product): boolean => p.priceMax > p.price;
 
-/** The price to show for a listing — the colourway's own, or the family's. */
+/** The price to show for a listing, the colourway's own, or the family's. */
 export const listingPrice = (l: Listing): number =>
   l.variant.price ?? l.product.price;
 
@@ -348,15 +365,15 @@ export const variantPrice = (p: Product, v: Variant): number =>
  * A colourway's name, cleaned for display.
  *
  * The catalogue stores pack size inside some shade names ("Bell Pearl Flower
- * Set of 4", "Kundan Border Bangles"). Pack size does not belong in a NAME — it
- * is stated properly next to the quantity picker, via packLabel() — and
+ * Set of 4", "Kundan Border Bangles"). Pack size does not belong in a NAME, it
+ * is stated properly next to the quantity picker, via packLabel(), and
  * repeating the family name inside the shade produces tiles like "Border
- * Bangles — Kundan Border Bangles", so both are stripped here.
+ * Bangles: Kundan Border Bangles", so both are stripped here.
  */
 export const colourLabel = (p: Product, v: Variant): string => {
   let c = v.colour
-    // "... Set of 4" / "... Pair of 2" — pack size is never shown.
-    .replace(/\s*[-–—]?\s*\b(set|pair|pack)\s+of\s+\d+\b/gi, "")
+    // "... Set of 4" / "... Pair of 2", pack size is never shown.
+    .replace(/\s*[-\u2013\u2014]?\s*\b(set|pair|pack)\s+of\s+\d+\b/gi, "")
     // A trailing repeat of the family's own noun ("Kundan Border Bangles").
     .replace(/\s*\b(glass\s+)?bangles?\b\s*$/i, "")
     .replace(/\s{2,}/g, " ")
@@ -380,7 +397,7 @@ export const colourLabel = (p: Product, v: Variant): string => {
 
 /**
  * The title shown on a grid tile: the family name, plus the shade when the
- * family has more than one. Kept short — the reference storefront's tiles are
+ * family has more than one. Kept short, the reference storefront's tiles are
  * a single readable line, not a full product description.
  */
 export const listingTitle = (
@@ -397,21 +414,21 @@ export const listingTitle = (
   // words, it already describes the product on its own.
   const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
   if (norm(c).includes(norm(p.name)) || norm(c) === norm(p.name)) return c;
-  return `${p.name} — ${c}`;
+  return `${p.name} · ${c}`;
 };
 
 /**
  * How many bangles one unit of a colourway contains, as a short phrase:
  * "set of 4", "pair", "dozen".
  *
- * Pack size is NOT shown on grid tiles — it made the listing read as a
- * wholesale sheet — but on the product page the customer is about to choose a
+ * Pack size is NOT shown on grid tiles, it made the listing read as a
+ * wholesale sheet, but on the product page the customer is about to choose a
  * quantity, and there it is exactly what they need to know: "1" means one set
  * of four, not one bangle. Returns null when we do not have a count.
  */
 export const packLabel = (p: Product, v: Variant): string | null => {
   // `?? p.pieces` only when the variant has NO figure at all. A variant that
-  // genuinely holds one piece — several kada are sold singly — must read as
+  // genuinely holds one piece, several kada are sold singly, must read as
   // "single", never inherit the family's count and claim to be a dozen.
   const n = v.pieces ?? p.pieces;
   if (!n) return null;

@@ -8,7 +8,7 @@ export default function NotFound() {
         This page slipped off the tray.
       </h1>
       <p className="mx-auto mt-4 max-w-[46ch] text-[15px] text-ink-soft">
-        The page you were looking for is not here — but the bangles are.
+        The page you were looking for is not here. But the bangles are.
       </p>
       <div className="mt-9 flex flex-wrap justify-center gap-3.5">
         <Link

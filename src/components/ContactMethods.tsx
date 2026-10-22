@@ -17,7 +17,7 @@ export default function ContactMethods() {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1800);
     } catch {
-      // Clipboard API unavailable (e.g. no permission) — the address is
+      // Clipboard API unavailable (e.g. no permission), the address is
       // still right there as a tappable mailto: link.
     }
   };
@@ -50,8 +50,8 @@ export default function ContactMethods() {
             WhatsApp
           </h2>
           <p className="mt-1 text-[13px] text-ink-soft">
-            For a custom request — a size, a colour combination or a bulk
-            order — if the usual options do not cover it.
+            For a custom request. A size, a colour combination or a bulk
+            order: if the usual options do not cover it.
           </p>
         </div>
         <a

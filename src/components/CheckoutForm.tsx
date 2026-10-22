@@ -21,8 +21,8 @@ import { useSlow, friendlyError, SLOW_NOTE } from "@/lib/useSlow";
 import { INDIAN_STATES } from "@/lib/states";
 
 /**
- * Reads as the same three-step progress the reference wizard shows — a
- * numbered circle per stage — without actually gating anything behind a
+ * Reads as the same three-step progress the reference wizard shows, a
+ * numbered circle per stage, without actually gating anything behind a
  * "Continue" tap. For a cart this small, each extra tap in a multi-step
  * flow is a chance to bounce with no real reduction in how long the form
  * actually is; this keeps the single-scroll, single-submit checkout but
@@ -43,7 +43,7 @@ const EMPTY: Customer = {
 };
 
 // Field-level validation. Kept explicit rather than pulling in a schema library
-// for eight fields — the rules are the business rules, in one readable place.
+// for eight fields, the rules are the business rules, in one readable place.
 const validate = (c: Customer): Partial<Record<keyof Customer, string>> => {
   const e: Partial<Record<keyof Customer, string>> = {};
   if (c.name.trim().length < 2) e.name = "Please enter your full name.";
@@ -76,7 +76,7 @@ export default function CheckoutForm() {
 
   // Coupon: validated live against CMS 2.0's own rules via /api/coupon as the
   // customer types, same "preview, server decides for real" pattern as
-  // payment itself — this discount is never trusted at checkout time either,
+  // payment itself, this discount is never trusted at checkout time either,
   // see /api/checkout's own re-validation.
   interface AppliedCoupon { code: string; discount: number; freeShipping: boolean; auto: boolean }
   const [couponInput, setCouponInput] = useState("");
@@ -104,7 +104,7 @@ export default function CheckoutForm() {
   const total = subtotal - discount + shipping;
   const live = paymentsEnabled();
 
-  // A coupon is validated against a subtotal snapshot — if the bag changes
+  // A coupon is validated against a subtotal snapshot, if the bag changes
   // (qty edited in another tab, say) the discount could be stale, so it's
   // cleared and the customer re-applies rather than silently trusting a
   // number that no longer matches the rules. An auto-applied coupon instead
@@ -114,13 +114,13 @@ export default function CheckoutForm() {
   useEffect(() => {
     if (coupon && !coupon.auto && couponSubtotalRef.current !== subtotal) {
       setCoupon(null);
-      setCouponError("Your bag changed — please re-apply the coupon.");
+      setCouponError("Your bag changed. Please re-apply the coupon.");
     }
     couponSubtotalRef.current = subtotal;
   }, [subtotal, coupon]);
 
   // Silent check for a "no code needed" coupon (e.g. free shipping over
-  // ₹5000) every time the subtotal changes — but never overrides a coupon
+  // ₹5000) every time the subtotal changes, but never overrides a coupon
   // the customer actually typed in themselves.
   useEffect(() => {
     if (coupon && !coupon.auto) return;
@@ -161,7 +161,7 @@ export default function CheckoutForm() {
       setCoupon({ code: data.code || code.toUpperCase(), discount: data.discount, freeShipping: !!data.freeShipping, auto: false });
       couponSubtotalRef.current = subtotal;
     } catch {
-      setCouponError("Could not check that coupon right now — try again.");
+      setCouponError("Could not check that coupon right now. Try again.");
     } finally {
       setCouponBusy(false);
     }
@@ -181,7 +181,7 @@ export default function CheckoutForm() {
   // Abandoned-bag capture: fires once a valid phone number appears, so the
   // owner has something to follow up on if payment never happens. Debounced
   // (typing settles) and deduped per exact number (won't re-fire on every
-  // keystroke after it's already valid). Harmless if they go on to pay —
+  // keystroke after it's already valid). Harmless if they go on to pay,
   // the backend deletes this the moment a real order lands on that phone.
   const capturedPhoneRef = useRef("");
   useEffect(() => {
@@ -404,8 +404,8 @@ export default function CheckoutForm() {
           <span className="font-semibold uppercase tracking-[0.08em]">{coupon.code}</span>
           <span className="ml-1.5 text-ink-soft">
             applied
-            {coupon.discount > 0 && ` — ${inr(coupon.discount)} off`}
-            {coupon.freeShipping && (coupon.discount > 0 ? " + free shipping" : " — free shipping")}
+            {coupon.discount > 0 && ` · ${inr(coupon.discount)} off`}
+            {coupon.freeShipping && (coupon.discount > 0 ? " + free shipping" : ", free shipping")}
           </span>
         </span>
         <button
@@ -651,7 +651,7 @@ export default function CheckoutForm() {
               rows={2}
               value={c.notes}
               onChange={(e) => set("notes")(e.target.value)}
-              placeholder="Anything we should know — gift wrap, delivery timing…"
+              placeholder="Anything we should know. Gift wrap, delivery timing…"
               className="mt-1.5 w-full border border-line bg-white px-3.5 py-3 text-[11px] outline-none transition-colors focus:border-ink"
             />
           </label>
@@ -752,7 +752,7 @@ export default function CheckoutForm() {
           )}
 
           <p className="mt-3 text-center text-[12px] text-ink-soft">
-            Secure payment by Razorpay — UPI, card, netbanking or wallet.
+            Secure payment by Razorpay: UPI, card, netbanking or wallet.
           </p>
 
           <p className="mt-3 text-center text-[12px] text-ink-soft">

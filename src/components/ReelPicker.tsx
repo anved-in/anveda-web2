@@ -6,6 +6,7 @@ import Link from "@/components/Link";
 import { asset } from "@/lib/site";
 import {
   ALL_SIZES,
+  isRareSize,
   colourLabel,
   imgSrc,
   imgSrcSmall,
@@ -133,7 +134,10 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
   const [zoom, setZoom] = useState<{ src: string; caption: string } | null>(null);
 
   // the sizes every design in the reel is sold in
-  const sizes = useMemo(() => ALL_SIZES.filter((s) => rows.every((r) => sizesOfProduct(r.p).includes(s))), [rows]);
+  const sizes = useMemo(
+    () => ALL_SIZES.filter((s) => rows.every((r) => sizesOfProduct(r.p).includes(s) && (!isRareSize(r.p, s) || r.variants.some((x) => sizeState(x, s) === "ok")))),
+    [rows],
+  );
 
   if (rows.length === 0) return null;
 
@@ -254,7 +258,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
                         return (
                           <option key={c.colour} value={c.colour} disabled={!c.inStock || noSize}>
                             {colourLabel(r.p, c)}
-                            {!c.inStock ? " — sold out" : noSize ? ` — no size ${size}` : ""}
+                            {!c.inStock ? ", sold out" : noSize ? `, no size ${size}` : ""}
                           </option>
                         );
                       })}
@@ -332,7 +336,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
           </p>
         )}
         <button type="button" onClick={addToBag} className={`h-11 w-full cursor-pointer text-[11.5px] font-bold uppercase tracking-[0.14em] transition-colors ${complete ? t.btn : t.btnDim}`}>
-          {soldOutRows.length ? "Currently unavailable" : `Add to bag — ${inr(price)}`}
+          {soldOutRows.length ? "Currently unavailable" : `Add to bag · ${inr(price)}`}
         </button>
         {!combo && (
           <Link href={reel.href} className={`mt-3 block text-center text-[11px] uppercase tracking-[0.14em] underline underline-offset-4 ${t.muted}`}>

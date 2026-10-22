@@ -1,10 +1,10 @@
-// Cloudflare Pages Functions version of worker/index.js — same logic, the
+// Cloudflare Pages Functions version of worker/index.js, same logic, the
 // entry shape Pages expects instead of a raw `fetch(request, env)`.
 //
 // Pages Functions only run for a request that matches a file under
 // /functions; everything else falls straight through to the static build in
 // ./out automatically, so (unlike the old Worker) there is no explicit
-// `env.ASSETS.fetch(request)` fallback to write — Pages does that itself.
+// `env.ASSETS.fetch(request)` fallback to write: Pages does that itself.
 //
 // Razorpay's Standard Checkout flow needs a server step to create a real
 // order (locking the amount before payment opens, so it can't be tampered
@@ -35,11 +35,11 @@ async function handleCheckout(request, env) {
   }
 
   // The discount is ALWAYS recomputed here from CMS 2.0's own coupon rules,
-  // never trusted as a `total` the browser sends — this is the step that
+  // never trusted as a `total` the browser sends, this is the step that
   // actually locks the Razorpay charge amount, so a tampered discount here
   // would mean a real underpayment, not just a wrong-looking number. No code
   // sent doesn't mean no coupon: an auto-apply one (e.g. "free shipping over
-  // ₹5000") can still apply with nothing typed by the customer — the browser
+  // ₹5000") can still apply with nothing typed by the customer, the browser
   // only shows a preview of this; this call is what's actually authoritative.
   let discount = 0;
   let freeShipping = false;
@@ -69,7 +69,7 @@ async function handleCheckout(request, env) {
     return json({ ok: false, error: "payments not configured" }, 500);
   }
 
-  // 1. Create the real Razorpay order — this is what locks the amount. The
+  // 1. Create the real Razorpay order, this is what locks the amount. The
   //    checkout widget is opened with this order_id, not a raw amount, so the
   //    browser can no longer influence what gets charged.
   const auth = btoa(`${env.RAZORPAY_KEY_ID}:${env.RAZORPAY_KEY_SECRET}`);
@@ -95,11 +95,11 @@ async function handleCheckout(request, env) {
   }
   const rzOrder = await rzRes.json();
 
-  // 2. Persist the structured order in CMS 2.0 as 'pending' — via a service
+  // 2. Persist the structured order in CMS 2.0 as 'pending', via a service
   //    binding (Worker-to-Worker, same account), not a public fetch. A
   //    *.workers.dev Worker cannot fetch() another *.workers.dev URL directly
   //    (Cloudflare error 1042); a service binding is also the intended way
-  //    for two Workers in one account to talk — no public hop, no DNS.
+  //    for two Workers in one account to talk, no public hop, no DNS.
   if (env.CMS && env.ORDERS_API_SECRET) {
     const lineItems = lines.map((l) => ({
       productId: l.id,
@@ -151,7 +151,7 @@ async function handleCheckout(request, env) {
   });
 }
 
-// Live coupon preview for the checkout page's "Apply" button — before any
+// Live coupon preview for the checkout page's "Apply" button, before any
 // order exists, so this is a pure read, not gated by a secret.
 async function handleCouponValidate(request, env) {
   let body;
@@ -170,7 +170,7 @@ async function handleCouponValidate(request, env) {
   return json(data, res.status);
 }
 
-// Order tracking — same service-binding proxy pattern as checkout, so the
+// Order tracking, same service-binding proxy pattern as checkout, so the
 // browser never talks to CMS 2.0 directly.
 async function handleTrack(request, env) {
   let body;
@@ -189,7 +189,7 @@ async function handleTrack(request, env) {
   return json(data, res.status);
 }
 
-// Footer sign-up capture — same service-binding proxy pattern.
+// Footer sign-up capture, same service-binding proxy pattern.
 async function handleSubscribe(request, env) {
   let body;
   try {
@@ -207,7 +207,7 @@ async function handleSubscribe(request, env) {
   return json(data, res.status);
 }
 
-// Abandoned-bag capture — fired once from checkout when a phone number
+// Abandoned-bag capture, fired once from checkout when a phone number
 // becomes valid but payment hasn't happened yet.
 async function handleCartCapture(request, env) {
   let body;

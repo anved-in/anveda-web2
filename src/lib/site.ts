@@ -18,7 +18,7 @@ export const SITE = {
    *
    * Deliberately NOT read from an environment variable. It used to be, and a
    * stale NEXT_PUBLIC_WHATSAPP repository variable then silently overrode the
-   * source at build time — the number was correct in the code and in a local
+   * source at build time, the number was correct in the code and in a local
    * build, and wrong on the live site, which is the worst way to get this
    * wrong. There is one number, it belongs in version control, and changing
    * it should be a commit like any other.
@@ -33,13 +33,13 @@ export const SITE = {
   /**
    * Shipping.
    *
-   * There is no free-shipping threshold — every order pays postage, and the
+   * There is no free-shipping threshold, every order pays postage, and the
    * total the customer agrees to is item value PLUS shipping.
    *
    * We ship by DTDC, whose price depends on the destination zone and the
    * parcel weight, so a single number would be wrong for most orders. DTDC's
-   * published domestic rates for a small parcel run roughly ₹40–100 (Lite) to
-   * ₹150–250 (Plus) before fuel surcharge (~30%) and 18% GST, which is why a
+   * published domestic rates for a small parcel run roughly ₹40 to 100 (Lite) to
+   * ₹150 to 250 (Plus) before fuel surcharge (~30%) and 18% GST, which is why a
    * real bangle parcel almost always lands above ₹100.
    *
    * So the site does NOT quote a fixed figure. It shows `shippingFrom` as an

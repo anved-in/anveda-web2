@@ -8,12 +8,12 @@ import ProductBuy from "@/components/ProductBuy";
 import Price from "@/components/Price";
 import FavButton from "@/components/FavButton";
 import Stars from "@/components/Stars";
-import { soldOutLast, variantSlides, imgSrc, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
+import { soldOutLast, variantSlides, imgSrc, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, isRareSize, sizeState, type Product, type Variant } from "@/lib/catalog";
 import { asset, SITE, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 
 /**
  * Product page body. A client component because the main photograph has to
- * follow the colour the shopper picks in the buy box — that link is the whole
+ * follow the colour the shopper picks in the buy box, that link is the whole
  * point of having colour variants on one page.
  *
  * `?c=<colour>` preselects a shade, which is how collection grids can still
@@ -25,7 +25,7 @@ function ShareButton({ name, colour }: { name: string; colour: string }) {
   async function share() {
     const url = new URL(window.location.href);
     url.searchParams.set("c", colour);
-    const data = { title: name, text: `${name} — ANVEDA`, url: url.toString() };
+    const data = { title: name, text: `${name} on ANVEDA`, url: url.toString() };
     try {
       if (navigator.share) {
         await navigator.share(data);
@@ -76,7 +76,7 @@ function Info({ p, variant, compact = false }: { p: Product; variant: Variant; c
             ...(packCount(p, variant)
               ? [["In each set", packCount(p, variant) as string] as [string, string]]
               : []),
-            ["Sizes", ALL_SIZES.filter((s) => variant.sizes.includes(s)).join(" · ") || "—"],
+            ["Sizes", ALL_SIZES.filter((s) => variant.sizes.includes(s) && (!isRareSize(p, s) || sizeState(variant, s) === "ok")).join(" · ") || "None"],
           ].map(([k, v]) => (
             <div key={k} className="flex justify-between gap-4 border-b border-line py-2.5">
               <dt className="text-[11.5px] uppercase tracking-[0.12em] text-ink-soft">{k}</dt>
@@ -243,7 +243,7 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
       <FavButton
         id={p.id}
         colour={variant.colour}
-        name={`${p.name} — ${colourLabel(p, variant)}`}
+        name={`${p.name} · ${colourLabel(p, variant)}`}
         variant="inline"
       />
     </div>
@@ -322,7 +322,7 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={asset(imgSrc(sl.image))}
-                    alt={`${p.name} — ${colourLabel(p, variant)}${i > 0 ? ` (photo ${i + 1})` : ""}`}
+                    alt={`${p.name} · ${colourLabel(p, variant)}${i > 0 ? ` (photo ${i + 1})` : ""}`}
                     className={`h-full w-full object-cover ${variant.inStock ? "" : "grayscale"}`}
                     style={framingStyle(sl)}
                     fetchPriority={i === 0 ? "high" : "auto"}
@@ -400,7 +400,7 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
         )}
 
         {/* Thumbnail strip: the colour picker now lives here, directly under
-            the photo it controls, instead of in the buy box further down —
+            the photo it controls, instead of in the buy box further down,
             picking a shade updates a big image right there, no scroll
             needed to see the result. The buy box's own swatch picker is
             gone (see the note in <ProductBuy>) so this is the only one;
@@ -410,7 +410,7 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
       </div>
 
       <div className="w-full md:w-[52%] lg:w-[54%]">
-        {/* Collection eyebrow removed — it repeated the product name itself
+        {/* Collection eyebrow removed, it repeated the product name itself
             in the common case (a design that IS its collection, e.g.
             "Intricate Glass Bangle"), reading as the same line twice before
             anything else loaded. The collection stays reachable from the

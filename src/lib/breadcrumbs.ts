@@ -1,6 +1,6 @@
 const SITE_URL = "https://www.anveda.in";
 
-/** BreadcrumbList structured data — Google shows this trail under a search
+/** BreadcrumbList structured data: Google shows this trail under a search
  * result instead of a raw URL. `url` may be relative ("/shop/glass/"). */
 export const breadcrumbJsonLd = (items: { name: string; url: string }[]) => ({
   "@context": "https://schema.org",

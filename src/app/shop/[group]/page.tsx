@@ -11,7 +11,7 @@ import {
 import { breadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 /**
- * A top-level group — Glass, Ornate or Layering — and the ONLY place its
+ * A top-level group, Glass, Ornate or Layering, and the ONLY place its
  * products are listed. Each range is a titled section on this one page, so
  * browsing a group is a scroll, not a click per range. The sidebar and the
  * chips below jump to a section by anchor.
@@ -58,7 +58,7 @@ export default async function GroupPage({
 
       {/* Desktop only (lg+): the page heading, blurb and ranges/designs
           count. Dropped on mobile entirely, not just hidden behind a
-          toggle — the group tab right above already names where you are,
+          toggle: the group tab right above already names where you are,
           and each range repeats its own name + blurb immediately above its
           own grid a few lines down, so this block was saying the same two
           things twice before any products even appeared. */}
@@ -81,7 +81,7 @@ export default async function GroupPage({
         }))}
         header={
           <div className="lg:hidden">
-            {/* Group switcher — plain underlined tabs. The desktop sidebar
+            {/* Group switcher, plain underlined tabs. The desktop sidebar
                 (ShopShell) does this job from 1024px up instead. */}
             <nav aria-label="Browse bangle types" className="border-b border-line px-4 sm:px-6">
               <div className="mx-auto flex max-w-[1320px]">
@@ -99,7 +99,7 @@ export default async function GroupPage({
                         // its own column and overlaps the next one instead
                         // of shrinking. overflow-hidden + ellipsis is the
                         // fallback if a label is ever still too wide at this
-                        // size — truncating beats overlapping again.
+                        // size, truncating beats overlapping again.
                         "min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap border-b-2 px-1 py-3 text-center text-[9px] font-normal uppercase tracking-[0.02em] transition-colors",
                         on ? "border-ink text-ink" : "border-transparent text-ink-faint",
                       ].join(" ")}

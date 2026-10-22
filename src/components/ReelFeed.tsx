@@ -15,7 +15,7 @@ import type { ResolvedReel } from "@/lib/reels";
  * Vertical reel player, built to feel like Instagram Reels / YouTube Shorts.
  *
  * Opened from ReelsGrid on a specific reel (`initialId`), never the default
- * view itself — see ReelsRoute. `closeHref` is where the X and Escape send
+ * view itself, see ReelsRoute. `closeHref` is where the X and Escape send
  * you back to (the bare grid).
  *
  * The mechanics that make it feel right, rather than like a list of videos:
@@ -72,7 +72,7 @@ export default function ReelFeed({
   const sheetOpen = useRef(false);
   sheetOpen.current = sheet !== null;
 
-  // Scrolls the feed's own container only — never scrollIntoView, which
+  // Scrolls the feed's own container only, never scrollIntoView, which
   // walks every scrollable ancestor including the page itself. That silently
   // scrolled the whole document down by the header's height (the feed sits
   // right below it in flow), which then sat the sticky header directly over
@@ -84,7 +84,7 @@ export default function ReelFeed({
     }
   }, []);
 
-  // Land on the requested reel with no visible animation — a flick between
+  // Land on the requested reel with no visible animation, a flick between
   // reels animates, opening one from the grid should not.
   useEffect(() => {
     scrollToIndex(startIndex, false);
@@ -180,7 +180,7 @@ export default function ReelFeed({
                 ))}
               </div>
 
-              {/* Full bleed on mobile — the video fills the screen edge to
+              {/* Full bleed on mobile, the video fills the screen edge to
                   edge, cropped to fit rather than letterboxed with a blurred
                   fill (that read as padding, not as "fitted"). From md it
                   becomes the bounded, rounded card instagram.com itself
@@ -188,7 +188,7 @@ export default function ReelFeed({
                   desktop viewport would look wrong instead of right. */}
               {/* `h-auto` + `max-h` left the browser with no definite
                   dimension to size aspect-ratio against, so it fell back to
-                  a much smaller intrinsic size — the real cause of the gap
+                  a much smaller intrinsic size. The real cause of the gap
                   above and below on desktop. A definite height fixes that
                   and lets width follow from the aspect ratio; the margin
                   it leaves is now small on purpose, not a sizing bug. */}
@@ -236,7 +236,7 @@ export default function ReelFeed({
                 )}
 
                 {/* ---------------------------- mobile-only bottom overlay
-                    A glass pill, not a solid card — the earlier white block
+                    A glass pill, not a solid card. The earlier white block
                     fought the video for attention. Same information, held
                     at the gradient's own weight instead of announcing itself. */}
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent p-3.5 pb-4 md:hidden">

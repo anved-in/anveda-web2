@@ -16,7 +16,7 @@ import { usePathname } from "next/navigation";
  *  - anything inside a HORIZONTALLY SCROLLING rail is revealed immediately and
  *    never observed. An IntersectionObserver watching the viewport only fires
  *    for what is on screen, and a rail's later items sit off to the right of it
- *    — scrolling the rail sideways does not bring them into the viewport, so
+ *   , scrolling the rail sideways does not bring them into the viewport, so
  *    they would stay at opacity:0 forever and read as blank boxes. This is a
  *    phone-only failure: at desktop widths those rails become grids, every item
  *    is in the viewport, and the bug is invisible.
@@ -24,7 +24,7 @@ import { usePathname } from "next/navigation";
  *    layout, which Next keeps mounted across client-side navigations, so an
  *    effect keyed on [] would run exactly once for the whole session. Every
  *    page reached by clicking a link then rendered fresh .reveal elements that
- *    nothing was observing, and they sat at opacity:0 — a blank page that came
+ *    nothing was observing, and they sat at opacity:0, a blank page that came
  *    right on reload, because reloading remounts the layout. Keying the effect
  *    on the pathname re-observes the new page's elements.
  */
@@ -44,7 +44,7 @@ export default function Reveal() {
   // Re-run on every navigation.
   //
   // Only the pathname, deliberately: useSearchParams() would opt this component
-  // — and therefore the whole root layout — out of static prerendering, which
+  //, and therefore the whole root layout, out of static prerendering, which
   // breaks the build on /order-confirmed. A query change (the product page's
   // ?c= colour swap) can mount NEW .reveal elements ("You may also like" is
   // re-picked for the new colour), so the MutationObserver below adopts any

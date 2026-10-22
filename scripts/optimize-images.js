@@ -1,6 +1,6 @@
 // Runs automatically before every build (see package.json's "prebuild").
 // Caps every product photo at 1000px on the longest edge and re-encodes to
-// webp at quality 80 — a phone photo dropped in at full resolution (2000px+,
+// webp at quality 80, a phone photo dropped in at full resolution (2000px+,
 // 500-800KB) was shipping to a card that only ever displays at a few hundred
 // pixels wide. Idempotent: an image already at or under the cap and already
 // webp is left untouched, so re-running this on an unchanged folder does no
@@ -8,7 +8,7 @@
 //
 // Also generates a second, smaller "@480" variant of each image, for the
 // grid tiles (ListingCard) that never actually render wider than ~450px even
-// on a large phone — the full 1000px image was still the ONLY size on offer
+// on a large phone, the full 1000px image was still the ONLY size on offer
 // there, downloaded in full on every device via srcset with only one
 // candidate. The @480 file sits alongside the full one; nothing references
 // it until ListingCard's srcset is updated to offer both.
@@ -31,7 +31,7 @@ async function main() {
 
   for (const file of files) {
     const fullPath = path.join(DIR, file);
-    // Read into a buffer rather than handing sharp the path directly — sharp
+    // Read into a buffer rather than handing sharp the path directly, sharp
     // keeps an open file handle on a path input, and Windows refuses to
     // delete a file that's still open (EBUSY), which matters right below
     // when the old .jpg/.png needs removing once its .webp replacement

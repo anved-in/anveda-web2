@@ -1,7 +1,7 @@
 import { waLink } from "@/lib/site";
 
 /**
- * Floating "message us" shortcut, fixed to the bottom-right corner — desktop
+ * Floating "message us" shortcut, fixed to the bottom-right corner, desktop
  * only (md+). The mobile tab bar already has its own Help tab for this, so
  * below md the float was a second, redundant way to reach the same thing,
  * on top of the tab bar it had to be offset to clear in the first place.

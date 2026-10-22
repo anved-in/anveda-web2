@@ -71,7 +71,7 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
             /* Every slide loads eagerly, including the ones behind. A hero
                slide is only ever an opacity flip away from being on screen, and
                a lazy image inside an opacity:0 layer does not begin fetching
-               until it is shown — so the slide changed and the visitor watched
+               until it is shown. So the slide changed and the visitor watched
                a grey box fill in. There are three slides; fetching all three up
                front costs far less than a visibly empty hero. */
             loading="eager"

@@ -39,7 +39,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[720px]">
           <div className="space-y-5 text-[16px] leading-[1.8] text-ink-soft">
             <p className="text-[18px] leading-[1.75] text-ink">
-              ANVEDA began the way most good things do at home — with a tray of
+              ANVEDA began the way most good things do at home. With a tray of
               bangles on a dining table and far too many opinions about which
               green was the right green.
             </p>
@@ -51,14 +51,14 @@ export default function AboutPage() {
             </p>
             <p>
               That is also why some designs sell out and stay out for a while. A
-              glass bangle is not a thing you can hurry — the colour has to be
+              glass bangle is not a thing you can hurry. The colour has to be
               right, the finish has to be even, and the set has to sit together
               on the wrist. We would rather wait for the right batch than send
               you an approximate one.
             </p>
             <p>
               Today we carry {products.length} designs across{" "}
-              {collections.length} collections — everyday glass, jelly and
+              {collections.length} collections: everyday glass, jelly and
               acrylic for the ordinary days, and the heavier kundan, antique and
               statement pieces for the ones that are not.
             </p>
@@ -76,7 +76,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* What we promise — the trust block, kept concrete rather than florid. */}
+      {/* What we promise, the trust block, kept concrete rather than florid. */}
       <section className="bg-cream-2 px-5 py-14 sm:px-6 md:py-20">
         <div className="mx-auto max-w-[1320px]">
           <span className="eyebrow">What you can count on</span>
@@ -85,7 +85,7 @@ export default function AboutPage() {
           </h2>
           <div className="mt-9 flex flex-wrap gap-y-8">
             {[
-              ["Picked in person", "Every batch is chosen by hand — never ordered from a photograph."],
+              ["Picked in person", "Every batch is chosen by hand. Never ordered from a photograph."],
               ["Checked piece by piece", "Chips, uneven finishes and off shades are pulled before packing."],
               ["Packed to survive post", "Bubble wrap, rigid boxes and enough padding for Indian courier routes."],
               ["A real person replies", `${HAS_WHATSAPP ? "WhatsApp" : "Instagram"} reaches us directly, not a call centre.`],

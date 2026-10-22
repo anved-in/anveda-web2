@@ -8,7 +8,7 @@ import { products, type Product } from "./catalog";
  * over an Instagram link. A self-hosted file plays inline, silently, and
  * scroll-snaps like Shorts; an Instagram embed cannot be restyled, shows its
  * own chrome and login prompts, and breaks the feel. The link is the fallback
- * for reels that have not been uploaded yet — the card still shows the cover
+ * for reels that have not been uploaded yet, the card still shows the cover
  * and the Buy button, and "Watch on Instagram" opens the real thing.
  */
 export interface Reel {
@@ -21,7 +21,7 @@ export interface Reel {
   cover: string;
   title: string;
   caption: string;
-  /** Product this reel sells — drives the Buy button. */
+  /** Product this reel sells, drives the Buy button. */
   productId: string;
   /** Optional colourway to preselect on the product page. */
   colour: string | null;

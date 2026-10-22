@@ -21,7 +21,7 @@ export default function NotifyMe({
   variantId: number;
   /** a single sold-out size; null = the whole colour */
   size?: string | null;
-  /** what the pop-up says it is for, e.g. "Rose Gold — size 2.4" */
+  /** what the pop-up says it is for, e.g. "Rose Gold, size 2.4" */
   label: string;
   className?: string;
   buttonText?: string;
@@ -83,16 +83,16 @@ export default function NotifyMe({
       if (data.ok) setState("done");
       else {
         setState("idle");
-        setErr(data.error || "Something went wrong — please try again.");
+        setErr(data.error || "Something went wrong. Please try again.");
       }
     } catch (e) {
       setState("idle");
-      setErr(friendlyError(e, "Something went wrong — please try again."));
+      setErr(friendlyError(e, "Something went wrong. Please try again."));
     }
   };
 
   const base = full
-    ? "av-btn w-full cursor-pointer"
+    ? "av-btn av-btn-sm w-full cursor-pointer"
     : "inline-flex h-7 shrink-0 cursor-pointer items-center whitespace-nowrap border border-ink px-2 text-[9.5px] font-bold uppercase leading-none tracking-[0.06em] text-ink transition-colors hover:bg-ink hover:text-cream";
 
   const field =

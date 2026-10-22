@@ -5,13 +5,14 @@ import { useSearchParams } from "next/navigation";
 import Link from "@/components/Link";
 import QtyStepper from "@/components/QtyStepper";
 import NotifyMe from "@/components/NotifyMe";
+import BagIcon from "@/components/BagIcon";
 import { useCart } from "@/lib/cart";
-import { inr, variantPrice, colourLabel, sizeLeft, sizeLeftNote, sizeState, ALL_SIZES, sizeInfo, sizesOfProduct, type Product, type Variant } from "@/lib/catalog";
+import { inr, variantPrice, colourLabel, sizeLeft, sizeLeftNote, sizeState, ALL_SIZES, sizeInfo, sizesOfProduct, visibleSizes, type Product, type Variant } from "@/lib/catalog";
 
 /**
  * The buy box: size, quantity, add to bag. Colour is picked one level up
  * (the thumbnail strip under the photo in <ProductView>) and arrives here
- * as `variant`, already resolved — this component only reads it.
+ * as `variant`, already resolved, this component only reads it.
  */
 export default function ProductBuy({
   p,
@@ -69,7 +70,7 @@ export default function ProductBuy({
 
   return (
     <div>
-      {/* No colour picker here any more — it now lives as a thumbnail strip
+      {/* No colour picker here any more, it now lives as a thumbnail strip
           directly under the main photo in <ProductView>, so picking a shade
           updates a big image right there instead of a small swatch down
           here needing a scroll to see the result. Keeping both would ask
@@ -93,8 +94,8 @@ export default function ProductBuy({
             the row equally instead of a fixed min-width forcing a 3+2 wrap
             on a phone. */}
         <div className="mt-2 flex gap-1.5 md:flex-wrap">
-          {sizesOfProduct(p).map((s) => {
-            const g = sizeInfo(s);
+          {visibleSizes(p, variant).map((s) => {
+            const g = sizeInfo(s, p);
             const on = size === s;
             const st = sizeState(variant, s);
             const gone = st !== "ok";
@@ -176,11 +177,12 @@ export default function ProductBuy({
             <button
               type="button"
               onClick={onAdd}
-              className="av-btn ml-auto w-[58%] cursor-pointer md:ml-0 md:w-[250px]"
+              className="av-btn av-btn-sm ml-auto w-[58%] cursor-pointer md:ml-0 md:w-[250px]"
             >
               {added ? "Added to bag ✓" : (
                 <>
-                  Add to bag<span className="hidden md:inline"> — {inr(variantPrice(p, variant) * qty)}</span>
+                  <BagIcon />
+                  Add to bag<span className="hidden md:inline"> · {inr(variantPrice(p, variant) * qty)}</span>
                 </>
               )}
             </button>
@@ -211,7 +213,7 @@ export default function ProductBuy({
       ) : (
         <div className="mt-8 rounded-[10px] border border-line-strong bg-cream-2 px-5 py-6 text-center">
           <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-ink">
-            {unavailableChoice ? `Size ${size} — ${colourLabel(p, variant)}` : `Sold out — ${colourLabel(p, variant)}`}
+            {unavailableChoice ? `Size ${size}, ${colourLabel(p, variant)}` : `Sold out, ${colourLabel(p, variant)}`}
           </p>
           <p className="mt-1.5 text-[12.5px] text-ink-soft">
             {unavailableChoice
@@ -225,7 +227,7 @@ export default function ProductBuy({
               full
               variantId={variant.id}
               size={unavailableChoice ? size : null}
-              label={unavailableChoice ? `${p.name} — ${colourLabel(p, variant)}, size ${size}` : `${p.name} — ${colourLabel(p, variant)}`}
+              label={unavailableChoice ? `${p.name}, ${colourLabel(p, variant)}, size ${size}` : `${p.name}, ${colourLabel(p, variant)}`}
             />
           </div>
         </div>

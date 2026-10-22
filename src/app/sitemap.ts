@@ -3,7 +3,7 @@ import { products, groups } from "@/lib/catalog";
 
 // Static export + Next's sitemap convention: this runs at BUILD time and
 // writes a real sitemap.xml into ./out, same as every other page here. No
-// server, no runtime cost — it just needs rebuilding when the catalog syncs,
+// server, no runtime cost, it just needs rebuilding when the catalog syncs,
 // which the automatic CMS 2.0 -> GitHub -> Cloudflare pipeline already does.
 const BASE = "https://www.anveda.in";
 
@@ -21,7 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "privacy",
     "track",
     "colours",
-    "guides/glass-vs-kundan-vs-antique",
   ].map((p) => ({
     url: `${BASE}/${p}${p ? "/" : ""}`,
     lastModified: new Date(),

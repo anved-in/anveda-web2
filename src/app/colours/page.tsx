@@ -22,7 +22,7 @@ export default async function ColoursPage() {
           <Link
             key={`${l.product.id}-${l.variant.colour}`}
             href={l.href}
-            aria-label={`${l.product.name} — ${colourLabel(l.product, l.variant)}`}
+            aria-label={`${l.product.name} · ${colourLabel(l.product, l.variant)}`}
             className="relative block aspect-square overflow-hidden bg-cream-2"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}

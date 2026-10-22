@@ -12,31 +12,31 @@
    read out of its live CSS custom properties rather than guessed:
        --color-background 255,255,255   (pure white ground)
        --color-foreground 0,0,0         (pure black type)
-       --color-accent     128,0,32      (#800020 — maroon)
+       --color-accent     128,0,32      (#800020. Maroon)
        --color-border     0,0,0
        buttons: black fill / white text, and white fill / black text + rule
    That is the whole scheme: white, black, one maroon accent. No warm cream,
-   no gold surfaces — the product photography supplies every other colour.
+   no gold surfaces. The product photography supplies every other colour.
 
    ANVEDA's own gold (#c8ae71, sampled from the mark) is retained ONLY as a
    fine accent on rules and eyebrows, the same restraint the reference uses
    with its maroon. Brand typefaces (Luxenta / Salena) are unchanged. */
 @theme {
-  /* Ink — pure black, as the reference uses. */
+  /* Ink, pure black, as the reference uses. */
   --color-ink: #000000;
   --color-ink-soft: #4a4a4a;
   --color-ink-faint: #5f5f5f;   /* 7:1 on white */
 
-  /* Grounds — white, with two off-whites for alternating bands. */
+  /* Grounds, white, with two off-whites for alternating bands. */
   --color-cream: #ffffff;
   --color-cream-2: #f7f5f3;
   --color-cream-3: #efebe7;
 
-  /* Dark bands — near-black, matching the reference's #121212 shadow tone. */
+  /* Dark bands, near-black, matching the reference's #121212 shadow tone. */
   --color-espresso: #121212;
   --color-espresso-2: #232323;
 
-  /* Accent retired to plain black — every text-maroon/bg-maroon/border-maroon
+  /* Accent retired to plain black, every text-maroon/bg-maroon/border-maroon
      utility across the site now resolves here. Kept as its own token (not
      merged into --color-ink) so a future design pass can reintroduce a real
      accent colour without re-touching every call site. -deep is a soft dark
@@ -148,6 +148,9 @@ h1, h2, h3, .font-display {
   .av-btn { background: #050505; color: #fff; }
   .av-btn:hover { opacity: 0.85; }
   .av-btn:disabled { opacity: 0.6; }
+  /* The compact size (owner, 2026-10-22): Add to bag / Notify me on cards and the product page. 36px high,
+     11px label (never smaller), 16px left and right, a small bag icon beside the label. */
+  .av-btn-sm { height: 36px; padding: 0 16px; font-size: 11px; gap: 6px; }
   .av-btn-outline { background: transparent; color: #050505; }
   .av-btn-outline:hover { background: #050505; color: #fff; }
 }

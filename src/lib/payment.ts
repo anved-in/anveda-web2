@@ -4,25 +4,25 @@ import { SITE } from "./site";
 
 /**
  * -------------------------------------------------------------------------
- * PAYMENTS — how this works.
+ * PAYMENTS, how this works.
  * -------------------------------------------------------------------------
  * The site is a static export, but it deploys as a Cloudflare Worker with one
  * small server route: POST /api/checkout (see worker/index.js at the repo
  * root). That route holds the Razorpay secret key and CMS 2.0's shared
- * secret — neither ever reaches the browser.
+ * secret, neither ever reaches the browser.
  *
  * The real flow:
  *   1. createOrder() below calls /api/checkout, which creates a genuine
- *      Razorpay order (locking the amount server-side, before payment opens —
+ *      Razorpay order (locking the amount server-side, before payment opens,
  *      the browser can no longer influence what gets charged) and saves the
  *      structured order in CMS 2.0 as 'pending'.
  *   2. Razorpay Checkout opens with that real order_id, not a raw amount.
  *   3. CMS 2.0's webhook (webhook-razorpay.ts) is the source of truth for
- *      whether payment actually succeeded — signature-verified server to
+ *      whether payment actually succeeded, signature-verified server to
  *      server, independent of anything the browser reports back. It flips
  *      the order to 'paid' regardless of what happens in this tab afterwards.
  *
- * The success screen in this browser is a convenience, not a receipt — always
+ * The success screen in this browser is a convenience, not a receipt, always
  * confirm 'paid' in the CMS 2.0 dashboard before dispatching, same as before.
  */
 
@@ -40,11 +40,11 @@ export interface Customer {
 export interface OrderSummary {
   lines: Line[];
   subtotal: number;
-  /** Estimated postage for the destination PIN — see lib/shipping.ts. */
+  /** Estimated postage for the destination PIN, see lib/shipping.ts. */
   shipping: number;
   /** subtotal - discount + shipping: what the customer is actually charged. */
   total: number;
-  /** Applied coupon, if any — the server re-validates and recomputes the
+  /** Applied coupon, if any, the server re-validates and recomputes the
    * discount from this code; the browser's own discount display is only a
    * preview, never what actually gets charged. */
   couponCode?: string;
@@ -66,7 +66,7 @@ export const paymentsEnabled = (): boolean => true;
 /**
  * Same-origin server route (worker/index.js) that creates the real Razorpay
  * order and saves it in CMS 2.0 before checkout opens. See that file for why
- * this exists — the short version is that a secret key belongs on a server,
+ * this exists, the short version is that a secret key belongs on a server,
  * and until now this static export had none.
  */
 const createOrder = async (
@@ -100,7 +100,7 @@ const createOrder = async (
 };
 
 /**
- * Shipping comes from the destination PIN code — see lib/shipping.ts, which
+ * Shipping comes from the destination PIN code, see lib/shipping.ts, which
  * carries DTDC's zone bands. Re-exported here so callers have one import.
  */
 export { quoteShipping } from "./shipping";
@@ -226,7 +226,7 @@ export const payWithRazorpay = (
       return;
     }
     // The server is authoritative on total/discount (it re-validated the
-    // coupon) — reconcile the local summary before it's used in the Razorpay
+    // coupon), reconcile the local summary before it's used in the Razorpay
     // notes below, so what's shown there matches what's actually charged.
     o = { ...o, total: order.total };
 

@@ -43,7 +43,7 @@ export default function SignupForm() {
   };
 
   if (status === "done") {
-    return <p className="text-[13px] font-semibold text-[#111]">You&apos;re on the list — thank you!</p>;
+    return <p className="text-[13px] font-semibold text-[#111]">You&apos;re on the list. Thank you!</p>;
   }
 
   return (

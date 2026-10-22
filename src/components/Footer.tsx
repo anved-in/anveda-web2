@@ -56,7 +56,6 @@ export default function Footer() {
               {[
                 ["/about", "Our story"],
                 ["/sizing", "Sizing guide"],
-                ["/guides/glass-vs-kundan-vs-antique", "Glass vs Kundan vs Antique"],
                 ["/shipping", "Shipping & returns"],
                 ["/track", "Track order"],
                 ["/contact", "Contact"],
