@@ -5462,7 +5462,7 @@
     },
     {
      "id": 200,
-     "colour": "Wine (Raindrop)",
+     "colour": "Wine (Premium Raindrop)",
      "price": 210,
      "pieces": 12,
      "sizes": [
@@ -5486,6 +5486,28 @@
     {
      "id": 201,
      "colour": "Red (Raindrop)",
+     "price": 210,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": false,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 0,
+      "2.6": 0,
+      "2.8": 0
+     },
+     "zoom": 1
+    },
+    {
+     "id": 202,
+     "colour": "Dark Green (Premium Raindrop)",
      "price": 230,
      "pieces": 12,
      "sizes": [
