@@ -15,7 +15,7 @@
   {
    "slug": "ornate",
    "name": "Ornate Bangles",
-   "blurb": "The worked pieces — statement bangles, kada and designer sides.",
+   "blurb": "The worked pieces: statement bangles, kada and designer sides.",
    "sizes": [
     "2.2",
     "2.4",
@@ -53,8 +53,8 @@
    "slug": "border-bangles",
    "group": "layering",
    "name": "Border Bangles",
-   "blurb": "Glass bangles finished with a worked border — kundan, pearl or set stone.",
-   "story": "The border is where the work shows. Kundan set by hand, pearl-and-gold stone, or the premium non-bendable stones — the body stays plain so the edge can carry the piece.",
+   "blurb": "Glass bangles finished with a worked border: kundan, pearl or set stone.",
+   "story": "The border is where the work shows. Kundan set by hand, pearl-and-gold stone, or the premium non-bendable stones. The body stays plain so the edge can carry the piece.",
    "cover": "border-bangles-kundan-border-bangles.webp",
    "order": 0
   },
@@ -63,7 +63,7 @@
    "group": "glass",
    "name": "Intricate Glass Bangle",
    "blurb": "Fine-cut glass with a hand-set sparkle that catches every light in the room.",
-   "story": "Our most detailed glass work — each bangle cut and set so the light breaks across it rather than sitting flat.",
+   "story": "Our most detailed glass work. Each bangle is cut and set so the light breaks across it rather than sitting flat.",
    "cover": "intricate-glass-bangle-aqua.webp",
    "order": 1
   },
@@ -81,7 +81,7 @@
    "group": "glass",
    "name": "Pastel Palette Glass Bangle",
    "blurb": "Soft, powdery shades made to be stacked and layered.",
-   "story": "Built as a palette rather than single colours — every shade in the range is made to sit next to every other one.",
+   "story": "Built as a palette rather than single colours. Every shade in the range is made to sit next to every other one.",
    "cover": "pastel-palette-glass-bangle-gold.webp",
    "order": 3
   },
@@ -99,7 +99,7 @@
    "group": "glass",
    "name": "Phool Glass Bangle",
    "blurb": "A floral motif worked into the glass, shade by shade.",
-   "story": "Phool — flower. The motif is worked into the glass itself, so it holds its colour and never lifts.",
+   "story": "Phool means flower. The motif is worked into the glass itself, so it holds its colour and never lifts.",
    "cover": "phool-glass-bangle-black.webp",
    "order": 5
   },
@@ -107,7 +107,7 @@
    "slug": "statement-bangles",
    "group": "ornate",
    "name": "Statement Bangles",
-   "blurb": "The wide, worked pieces — the one you build the rest of the stack around.",
+   "blurb": "The wide, worked pieces. The one you build the rest of the stack around.",
    "story": "The widest, most worked pieces we carry. One of these and a few slim side bangles is a full stack.",
    "cover": "statement-bangles-elephant-design.webp",
    "order": 6
@@ -175,8 +175,8 @@
     "2.6",
     "2.8"
    ],
-   "blurb": "Glass bangles finished with a worked border — kundan, pearl or set stone.",
-   "story": "The border is where the work shows. Kundan set by hand, pearl-and-gold stone, or the premium non-bendable stones — the body stays plain so the edge can carry the piece.",
+   "blurb": "Glass bangles finished with a worked border: kundan, pearl or set stone.",
+   "story": "The border is where the work shows. Kundan set by hand, pearl-and-gold stone, or the premium non-bendable stones. The body stays plain so the edge can carry the piece.",
    "variants": [
     {
      "id": 2,
@@ -398,7 +398,7 @@
     "2.8"
    ],
    "blurb": "Fine-cut glass with a hand-set sparkle that catches every light in the room.",
-   "story": "Our most detailed glass work — each bangle cut and set so the light breaks across it rather than sitting flat.",
+   "story": "Our most detailed glass work. Each bangle is cut and set so the light breaks across it rather than sitting flat.",
    "variants": [
     {
      "id": 5,
@@ -1061,7 +1061,7 @@
     "2.8"
    ],
    "blurb": "Soft, powdery shades made to be stacked and layered.",
-   "story": "Built as a palette rather than single colours — every shade in the range is made to sit next to every other one.",
+   "story": "Built as a palette rather than single colours. Every shade in the range is made to sit next to every other one.",
    "variants": [
     {
      "id": 25,
@@ -1857,7 +1857,7 @@
     "2.10"
    ],
    "blurb": "A floral motif worked into the glass, shade by shade.",
-   "story": "Phool — flower. The motif is worked into the glass itself, so it holds its colour and never lifts.",
+   "story": "Phool means flower. The motif is worked into the glass itself, so it holds its colour and never lifts.",
    "variants": [
     {
      "id": 50,
@@ -2256,7 +2256,7 @@
     "2.8",
     "2.10"
    ],
-   "blurb": "The wide, worked pieces — the one you build the rest of the stack around.",
+   "blurb": "The wide, worked pieces. The one you build the rest of the stack around.",
    "story": "The widest, most worked pieces we carry. One of these and a few slim side bangles is a full stack.",
    "variants": [
     {
@@ -3557,10 +3557,10 @@
       "2.10"
      ],
      "inStock": true,
-     "stockQty": 3,
+     "stockQty": 2,
      "sizeStock": {
       "2.10": 0,
-      "2.2": 1,
+      "2.2": 0,
       "2.4": 1,
       "2.6": 1,
       "2.8": 0
