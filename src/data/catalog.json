@@ -4356,7 +4356,7 @@
    "collectionName": "Square Edge Glass Bangles",
    "group": "glass",
    "name": "Square Edge Glass Bangles",
-   "price": 230,
+   "price": 210,
    "priceMax": 230,
    "pieces": 12,
    "unit": "set",
@@ -4522,7 +4522,7 @@
      "colour": "Green (premium Raindrop)",
      "image": "square-edge-glass-bangles-green-premium-raindrop.webp",
      "hex": "#6cd01b",
-     "price": 230,
+     "price": 210,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -4546,7 +4546,7 @@
      "colour": "Ivory (premium Raindrop)",
      "image": "square-edge-glass-bangles-ivory-premium-raindrop.webp",
      "hex": "#fffcf5",
-     "price": 230,
+     "price": 210,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -4696,7 +4696,7 @@
      "colour": "Olive (premium Raindrop)",
      "image": "u-square-edge-glass-bangles-olive-hd-1792254278.webp",
      "hex": "#9ad5a9",
-     "price": 230,
+     "price": 210,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -4943,7 +4943,7 @@
      "colour": "Pink",
      "image": "u-square-edge-glass-bangles-pink-mvibx2am.webp",
      "price": 230,
-     "pieces": 1,
+     "pieces": 12,
      "sizes": [
       "2.2",
       "2.4",
@@ -4968,7 +4968,7 @@
      "colour": "Grey",
      "image": "u-square-edge-glass-bangles-grey-more-mvg8e8ij.webp",
      "price": 230,
-     "pieces": 1,
+     "pieces": 12,
      "sizes": [
       "2.2",
       "2.4",
@@ -4992,7 +4992,7 @@
      "colour": "Teal",
      "image": "u-square-edge-glass-bangles-teal-more-mvg8sc44.webp",
      "price": 230,
-     "pieces": 1,
+     "pieces": 12,
      "sizes": [
       "2.2",
       "2.4",
@@ -5017,7 +5017,7 @@
      "colour": "Sky Blue",
      "image": "u-square-edge-glass-bangles-sky-blue-more-mvg8njbp.webp",
      "price": 230,
-     "pieces": 1,
+     "pieces": 12,
      "sizes": [
       "2.2",
       "2.4",
@@ -5042,7 +5042,7 @@
      "colour": "Golden Yellow",
      "image": "u-square-edge-glass-bangles-golden-yellow-mvg8bbp3.webp",
      "price": 230,
-     "pieces": 1,
+     "pieces": 12,
      "sizes": [
       "2.2",
       "2.4",
@@ -5067,7 +5067,7 @@
      "colour": "Classic Blue",
      "image": "u-square-edge-glass-bangles-classic-blue-more-mvg8aq3q.webp",
      "price": 230,
-     "pieces": 1,
+     "pieces": 12,
      "sizes": [
       "2.2",
       "2.4",
@@ -5090,8 +5090,8 @@
      "id": 147,
      "colour": "Royal Blue (Raindrop)",
      "image": "u-square-edge-glass-bangles-royal-blue-raindrop-more-mvg8kfxx.webp",
-     "price": 230,
-     "pieces": 1,
+     "price": 210,
+     "pieces": 12,
      "sizes": [
       "2.2",
       "2.4",
