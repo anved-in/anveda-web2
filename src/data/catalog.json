@@ -4564,7 +4564,7 @@
     {
      "id": 116,
      "colour": "Kashmiri Gold Stones Set of 4",
-     "image": "u-gunghroo-kashmiri-gold-stones-set-of-4-mvj7vc61.webp",
+     "image": "u-gunghroo-kashmiri-gold-stones-set-of-4-more-mvj7vqi9.webp",
      "hex": "#e2d8c4",
      "price": 200,
      "pieces": 4,
@@ -4580,7 +4580,15 @@
       "2.4": 3,
       "2.6": 0
      },
-     "zoom": 1
+     "focal": "60.7% 71.6%",
+     "zoom": 1.25,
+     "gallery": [
+      {
+       "image": "u-gunghroo-kashmiri-gold-stones-set-of-4-more-mvj7vi97.webp",
+       "focal": "46.1% 81.5%",
+       "zoom": 1.5
+      }
+     ]
     },
     {
      "id": 117,
