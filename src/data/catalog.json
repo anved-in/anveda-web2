@@ -838,7 +838,7 @@
     {
      "id": 150,
      "colour": "Baby Pink",
-     "image": "u-intricate-glass-bangle-baby-pink-1a161d5efa4.webp",
+     "image": "u-intricate-glass-bangle-baby-pink-more-mvjhksy8.webp",
      "price": 320,
      "pieces": 1,
      "sizes": [
@@ -855,7 +855,8 @@
       "2.6": 1,
       "2.8": 2
      },
-     "zoom": 1.9
+     "focal": "59.1% 49%",
+     "zoom": 1.6
     }
    ],
    "image": "u-intricate-glass-bangle-aqua-more-mvjhi52g.webp"
