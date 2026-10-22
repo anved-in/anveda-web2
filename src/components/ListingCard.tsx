@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "@/components/Link";
-import { sizesOfProduct, inr, framingStyle, imgSrc, imgSrcSmall, listingPrice, listingTitle, sizeState, type Listing } from "@/lib/catalog";
+import { visibleSizes, inr, framingStyle, imgSrc, imgSrcSmall, listingPrice, listingTitle, sizeState, type Listing } from "@/lib/catalog";
 import { asset } from "@/lib/site";
 import { useCart } from "@/lib/cart";
 import Price from "./Price";
@@ -149,7 +149,7 @@ export default function ListingCard({
                 <div className="absolute bottom-[calc(100%+8px)] left-0 right-0 z-20 rounded-md border border-line bg-white p-3 shadow-md">
                   <p className="pb-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-faint">Choose a size</p>
                   <div className="flex flex-wrap gap-1.5">
-                    {sizesOfProduct(p).map((s) => {
+                    {visibleSizes(p, v).map((s) => {
                       const st = sizeState(v, s);
                       const gone = st !== "ok";
                       if (gone) {

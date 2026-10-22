@@ -7,7 +7,7 @@ import QtyStepper from "@/components/QtyStepper";
 import NotifyMe from "@/components/NotifyMe";
 import BagIcon from "@/components/BagIcon";
 import { useCart } from "@/lib/cart";
-import { inr, variantPrice, colourLabel, sizeLeft, sizeLeftNote, sizeState, ALL_SIZES, sizeInfo, sizesOfProduct, type Product, type Variant } from "@/lib/catalog";
+import { inr, variantPrice, colourLabel, sizeLeft, sizeLeftNote, sizeState, ALL_SIZES, sizeInfo, sizesOfProduct, visibleSizes, type Product, type Variant } from "@/lib/catalog";
 
 /**
  * The buy box: size, quantity, add to bag. Colour is picked one level up
@@ -94,7 +94,7 @@ export default function ProductBuy({
             the row equally instead of a fixed min-width forcing a 3+2 wrap
             on a phone. */}
         <div className="mt-2 flex gap-1.5 md:flex-wrap">
-          {sizesOfProduct(p).map((s) => {
+          {visibleSizes(p, variant).map((s) => {
             const g = sizeInfo(s);
             const on = size === s;
             const st = sizeState(variant, s);

@@ -284,12 +284,19 @@ export const KIDS_SIZE_GUIDE: { size: string; label: string }[] = [
   { size: "2.0", label: "Kids" },
 ];
 
-/** Every size we sell, smallest first (kids' sizes, then the standard adult sizes). */
-export const ALL_SIZES: string[] = [...KIDS_SIZE_GUIDE.map((s) => s.size), ...SIZE_GUIDE.map((s) => s.size)];
+/**
+ * Sizes that are rarely made (2.12). They are shown ONLY where a colourway really has them in stock: when one is not
+ * available it is not shown at all (not even greyed out or struck through), and it is not listed on the size guide page.
+ */
+export const OPTIONAL_SIZES: string[] = ["2.12"];
+const OPTIONAL_SIZE_GUIDE: { size: string; label: string }[] = [{ size: "2.12", label: "Extra large" }];
+
+/** Every size we sell, smallest first (kids' sizes, then the standard adult sizes, then the rare ones). */
+export const ALL_SIZES: string[] = [...KIDS_SIZE_GUIDE.map((s) => s.size), ...SIZE_GUIDE.map((s) => s.size), ...OPTIONAL_SIZES];
 
 /** The note shown beside a size ("Regular", "Kids"), or undefined. */
 export const sizeInfo = (size: string): { size: string; label: string } | undefined =>
-  SIZE_GUIDE.find((x) => x.size === size) ?? KIDS_SIZE_GUIDE.find((x) => x.size === size);
+  SIZE_GUIDE.find((x) => x.size === size) ?? KIDS_SIZE_GUIDE.find((x) => x.size === size) ?? OPTIONAL_SIZE_GUIDE.find((x) => x.size === size);
 
 /** The sizes a design is sold in: those of its section (Kids has its own), in the proper order. */
 export const sizesOfProduct = (p: Product): string[] => {
@@ -297,6 +304,10 @@ export const sizesOfProduct = (p: Product): string[] => {
   const own = g?.sizes?.length ? g.sizes : SIZE_GUIDE.map((s) => s.size);
   return ALL_SIZES.filter((s) => own.includes(s));
 };
+
+/** The sizes to SHOW for one colourway: its section's sizes, with a rare size (2.12) left out unless it can be bought right now. */
+export const visibleSizes = (p: Product, v: Variant): string[] =>
+  sizesOfProduct(p).filter((s) => !OPTIONAL_SIZES.includes(s) || sizeState(v, s) === "ok");
 
 /** Pieces left of one size of a colourway, or null when that size is not counted (then it is always offered). */
 export const sizeLeft = (v: Variant, size: string): number | null => {

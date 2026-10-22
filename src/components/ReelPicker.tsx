@@ -6,6 +6,7 @@ import Link from "@/components/Link";
 import { asset } from "@/lib/site";
 import {
   ALL_SIZES,
+  OPTIONAL_SIZES,
   colourLabel,
   imgSrc,
   imgSrcSmall,
@@ -133,7 +134,10 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
   const [zoom, setZoom] = useState<{ src: string; caption: string } | null>(null);
 
   // the sizes every design in the reel is sold in
-  const sizes = useMemo(() => ALL_SIZES.filter((s) => rows.every((r) => sizesOfProduct(r.p).includes(s))), [rows]);
+  const sizes = useMemo(
+    () => ALL_SIZES.filter((s) => rows.every((r) => sizesOfProduct(r.p).includes(s) && (!OPTIONAL_SIZES.includes(s) || r.variants.some((x) => sizeState(x, s) === "ok")))),
+    [rows],
+  );
 
   if (rows.length === 0) return null;
 

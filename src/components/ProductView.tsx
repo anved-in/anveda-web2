@@ -8,7 +8,7 @@ import ProductBuy from "@/components/ProductBuy";
 import Price from "@/components/Price";
 import FavButton from "@/components/FavButton";
 import Stars from "@/components/Stars";
-import { soldOutLast, variantSlides, imgSrc, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, type Product, type Variant } from "@/lib/catalog";
+import { soldOutLast, variantSlides, imgSrc, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, OPTIONAL_SIZES, sizeState, type Product, type Variant } from "@/lib/catalog";
 import { asset, SITE, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 
 /**
@@ -76,7 +76,7 @@ function Info({ p, variant, compact = false }: { p: Product; variant: Variant; c
             ...(packCount(p, variant)
               ? [["In each set", packCount(p, variant) as string] as [string, string]]
               : []),
-            ["Sizes", ALL_SIZES.filter((s) => variant.sizes.includes(s)).join(" · ") || "—"],
+            ["Sizes", ALL_SIZES.filter((s) => variant.sizes.includes(s) && (!OPTIONAL_SIZES.includes(s) || sizeState(variant, s) === "ok")).join(" · ") || "—"],
           ].map(([k, v]) => (
             <div key={k} className="flex justify-between gap-4 border-b border-line py-2.5">
               <dt className="text-[11.5px] uppercase tracking-[0.12em] text-ink-soft">{k}</dt>

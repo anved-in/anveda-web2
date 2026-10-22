@@ -12,7 +12,7 @@ import {
   variantPrice,
   colourLabel,
   packLabel,
-  sizesOfProduct,
+  visibleSizes,
   sizeState,
   type Product,
   type Variant,
@@ -186,7 +186,7 @@ function FavRow({ p, v }: { p: Product; v: Variant }) {
         {v.inStock ? (
           <>
             <div className="mt-3 flex flex-wrap gap-1.5" role="group" aria-label="Choose a size">
-              {sizesOfProduct(p).map((s) => {
+              {visibleSizes(p, v).map((s) => {
                 const st = sizeState(v, s);
                 const gone = st !== "ok";
                 if (gone) {
