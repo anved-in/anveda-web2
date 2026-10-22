@@ -205,7 +205,7 @@
     {
      "id": 2,
      "colour": "Pearl Stone Glass Bangles",
-     "image": "border-bangles-pearl-gold-stone-glass-bangles.webp",
+     "image": "u-border-bangles-pearl-gold-stone-glass-bangles-more-mvj79v82.webp",
      "hex": "#e2d8c4",
      "price": 320,
      "pieces": 12,
@@ -223,8 +223,15 @@
       "2.6": 7,
       "2.8": 0
      },
-     "focal": "50% 50%",
-     "zoom": 1.2
+     "focal": "58.3% 54.2%",
+     "zoom": 1.5,
+     "gallery": [
+      {
+       "image": "border-bangles-pearl-gold-stone-glass-bangles.webp",
+       "focal": "50% 50%",
+       "zoom": 1.2
+      }
+     ]
     },
     {
      "id": 3,
