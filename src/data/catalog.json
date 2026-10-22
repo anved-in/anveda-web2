@@ -240,12 +240,12 @@
       "2.8"
      ],
      "inStock": true,
-     "stockQty": 26,
+     "stockQty": 27,
      "sizeStock": {
       "2.2": 6,
       "2.4": 9,
       "2.6": 7,
-      "2.8": 4
+      "2.8": 5
      },
      "focal": "66.3% 49.5%",
      "zoom": 1.45
@@ -261,15 +261,17 @@
       "2.2",
       "2.4",
       "2.6",
-      "2.8"
+      "2.8",
+      "2.10"
      ],
      "inStock": true,
-     "stockQty": 20,
+     "stockQty": 41,
      "sizeStock": {
-      "2.2": 5,
-      "2.4": 5,
-      "2.6": 5,
-      "2.8": 5
+      "2.10": 1,
+      "2.2": 2,
+      "2.4": 13,
+      "2.6": 13,
+      "2.8": 12
      },
      "focal": "60.6% 59.9%",
      "zoom": 1.6
@@ -300,7 +302,7 @@
     },
     {
      "id": 153,
-     "colour": "Crystal Side Bangles",
+     "colour": "Crystal Side Bangles Set of 4",
      "image": "u-border-bangles-crystal-side-bangles-mvggp8hf.webp",
      "price": 160,
      "pieces": 4,
@@ -312,12 +314,12 @@
       "2.10"
      ],
      "inStock": true,
-     "stockQty": 16,
+     "stockQty": 14,
      "sizeStock": {
       "2.10": 0,
-      "2.2": 4,
+      "2.2": 3,
       "2.4": 8,
-      "2.6": 4,
+      "2.6": 3,
       "2.8": 0
      },
      "focal": "58.8% 68.2%",
