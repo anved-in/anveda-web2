@@ -1698,7 +1698,7 @@
     {
      "id": 45,
      "colour": "Pastel Mix",
-     "image": "petal-stone-glass-bangle-multicolor.webp",
+     "image": "u-petal-stone-glass-bangle-pastel-mix-1a161d5efad.webp",
      "hex": "#c7c5c2",
      "price": 320,
      "pieces": 12,
@@ -1718,19 +1718,20 @@
       "2.6": 1,
       "2.8": 0
      },
-     "focal": "46.31% 56.74%",
-     "zoom": 1,
+     "focal": "36.6% 63%",
+     "zoom": 1.7,
      "gallery": [
       {
-       "image": "u-petal-stone-glass-bangle-pastel-mix-1a161d5efad.webp",
-       "zoom": 1
+       "image": "petal-stone-glass-bangle-multicolor.webp",
+       "focal": "46.31% 56.74%",
+       "zoom": 1.55
       }
      ]
     },
     {
      "id": 46,
      "colour": "Golden Yellow",
-     "image": "petal-stone-glass-bangle-mustard-yellow.webp",
+     "image": "u-petal-stone-glass-bangle-golden-yellow-1a161d5efae.webp",
      "hex": "#d9b05e",
      "price": 320,
      "pieces": 12,
@@ -1750,12 +1751,13 @@
       "2.6": 2,
       "2.8": 0
      },
-     "focal": "50.43% 60.33%",
-     "zoom": 1,
+     "focal": "73.8% 55.9%",
+     "zoom": 1.7,
      "gallery": [
       {
-       "image": "u-petal-stone-glass-bangle-golden-yellow-1a161d5efae.webp",
-       "zoom": 1
+       "image": "petal-stone-glass-bangle-mustard-yellow.webp",
+       "focal": "49.9% 73.2%",
+       "zoom": 1.2
       }
      ]
     },
