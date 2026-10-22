@@ -3874,7 +3874,7 @@
     {
      "id": 104,
      "colour": "Peacock Set of 2",
-     "image": "designer-side-bangles-peacock-set-of-4.webp",
+     "image": "u-designer-side-bangles-peacock-set-of-2-more-mvj3poh6.webp",
      "hex": "#e2d8c4",
      "price": 470,
      "pieces": 2,
@@ -3892,8 +3892,15 @@
       "2.6": 0,
       "2.8": 0
      },
-     "focal": "50.11% 44.88%",
-     "zoom": 1
+     "focal": "68.1% 83.3%",
+     "zoom": 1.4,
+     "gallery": [
+      {
+       "image": "designer-side-bangles-peacock-set-of-4.webp",
+       "focal": "50.11% 44.88%",
+       "zoom": 1
+      }
+     ]
     },
     {
      "id": 105,
