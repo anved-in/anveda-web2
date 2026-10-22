@@ -4630,7 +4630,7 @@
     {
      "id": 118,
      "colour": "Gold stone Long Hanging Gunghroo Set of 4",
-     "image": "gunghroo-long-hanging-gunghroo-set-of-4.webp",
+     "image": "u-gunghroo-gold-stone-long-hanging-gunghroo-set-of-4-more-mvj8c7eu.webp",
      "hex": "#e2d8c4",
      "price": 220,
      "pieces": 4,
@@ -4646,8 +4646,35 @@
       "2.4": 6,
       "2.6": 2
      },
-     "focal": "40.17% 49.62%",
-     "zoom": 1
+     "focal": "75.9% 51.9%",
+     "zoom": 1.35,
+     "gallery": [
+      {
+       "image": "u-gunghroo-gold-stone-long-hanging-gunghroo-set-of-4-more-mvj8cg29.webp",
+       "focal": "49.8% 52.9%",
+       "zoom": 1.2
+      },
+      {
+       "image": "u-gunghroo-gold-stone-long-hanging-gunghroo-set-of-4-more-mvj8cni0.webp",
+       "focal": "50% 84%",
+       "zoom": 1
+      },
+      {
+       "image": "u-gunghroo-gold-stone-long-hanging-gunghroo-set-of-4-more-mvj8cw5x.webp",
+       "focal": "100% 27.3%",
+       "zoom": 1.25
+      },
+      {
+       "image": "u-gunghroo-gold-stone-long-hanging-gunghroo-set-of-4-more-mvj8d3ld.webp",
+       "focal": "66.1% 71.4%",
+       "zoom": 1.45
+      },
+      {
+       "image": "u-gunghroo-gold-stone-long-hanging-gunghroo-set-of-4-more-mvj8dbc2.webp",
+       "focal": "100% 70.4%",
+       "zoom": 1.25
+      }
+     ]
     }
    ],
    "image": "gunghroo-acrylic-kashmiri-blue-yellow-set-of-4.webp"
