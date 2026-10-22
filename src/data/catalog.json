@@ -5489,6 +5489,7 @@
     {
      "id": 200,
      "colour": "Wine (Premium Raindrop)",
+     "image": "u-square-edge-glass-bangles-wine-premium-raindrop-mvjc99ub.webp",
      "price": 210,
      "pieces": 12,
      "sizes": [
@@ -5553,7 +5554,8 @@
       "2.6": 0,
       "2.8": 0
      },
-     "zoom": 1
+     "focal": "51.8% 60%",
+     "zoom": 1.6
     }
    ],
    "image": "u-square-edge-glass-bangles-aqua-hd-1792254278.webp"
