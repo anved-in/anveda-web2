@@ -748,12 +748,13 @@
       "2.6": 1,
       "2.8": 1
      },
-     "zoom": 1,
+     "focal": "47.9% 56.6%",
+     "zoom": 2.2,
      "gallery": [
       {
        "image": "intricate-glass-bangle-sky-blue.webp",
-       "focal": "50.34% 41.93%",
-       "zoom": 1
+       "focal": "52.5% 32.4%",
+       "zoom": 1.45
       }
      ]
     },
@@ -778,12 +779,13 @@
       "2.6": 2,
       "2.8": 2
      },
-     "zoom": 1,
+     "focal": "45.7% 60.6%",
+     "zoom": 1.65,
      "gallery": [
       {
        "image": "intricate-glass-bangle-tangerine.webp",
-       "focal": "47.34% 42.95%",
-       "zoom": 1
+       "focal": "38.3% 38%",
+       "zoom": 1.7
       }
      ]
     },
