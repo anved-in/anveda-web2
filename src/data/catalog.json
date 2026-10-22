@@ -4089,7 +4089,7 @@
       "2.6": 1
      },
      "focal": "50.41% 53.14%",
-     "zoom": 1
+     "zoom": 1.5
     },
     {
      "id": 109,
@@ -4110,8 +4110,8 @@
       "2.4": 1,
       "2.6": 0
      },
-     "focal": "72.7% 77.5%",
-     "zoom": 1.5,
+     "focal": "61.5% 72%",
+     "zoom": 1.85,
      "gallery": [
       {
        "image": "designer-side-bangles-two-layer-white-ball-set-of-2.webp",
