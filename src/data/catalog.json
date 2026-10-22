@@ -5035,13 +5035,13 @@
       "2.6": 1,
       "2.8": 4
      },
-     "focal": "50% 60.5%",
-     "zoom": 1,
+     "focal": "56.6% 51.8%",
+     "zoom": 1.45,
      "gallery": [
       {
        "image": "square-edge-glass-bangles-maroon.webp",
        "focal": "58.93% 43.16%",
-       "zoom": 1
+       "zoom": 1.65
       }
      ]
     },
@@ -5128,13 +5128,13 @@
       "2.6": 2,
       "2.8": 1
      },
-     "focal": "50% 10.0%",
-     "zoom": 1,
+     "focal": "66.9% 52.2%",
+     "zoom": 1.4,
      "gallery": [
       {
        "image": "square-edge-glass-bangles-olive-premium-raindrop.webp",
-       "focal": "44.65% 56.64%",
-       "zoom": 1
+       "focal": "0% 72.1%",
+       "zoom": 1.3
       }
      ]
     },
