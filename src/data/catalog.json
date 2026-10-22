@@ -4939,6 +4939,31 @@
      ]
     },
     {
+     "id": 141,
+     "colour": "Pink",
+     "image": "u-square-edge-glass-bangles-pink-mvibx2am.webp",
+     "price": 230,
+     "pieces": 1,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 5,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 2,
+      "2.6": 2,
+      "2.8": 1
+     },
+     "focal": "40.2% 73.2%",
+     "zoom": 1.45
+    },
+    {
      "id": 142,
      "colour": "Grey",
      "image": "u-square-edge-glass-bangles-grey-more-mvg8e8ij.webp",
