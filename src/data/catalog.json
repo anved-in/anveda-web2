@@ -1417,7 +1417,8 @@
      "gallery": [
       {
        "image": "u-petal-stone-glass-bangle-burnt-orange-1a161d5efa5.webp",
-       "zoom": 1
+       "focal": "50.6% 64.6%",
+       "zoom": 2.05
       }
      ]
     },
