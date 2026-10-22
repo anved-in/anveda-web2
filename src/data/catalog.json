@@ -616,7 +616,7 @@
     {
      "id": 12,
      "colour": "Radium",
-     "image": "intricate-glass-bangle-radium.webp",
+     "image": "u-intricate-glass-bangle-radium-1a161d5ef9d.webp",
      "hex": "#037981",
      "price": 320,
      "pieces": 12,
@@ -634,19 +634,19 @@
       "2.6": 1,
       "2.8": 1
      },
-     "focal": "0% 67.8%",
-     "zoom": 1.25,
+     "zoom": 1,
      "gallery": [
       {
-       "image": "u-intricate-glass-bangle-radium-1a161d5ef9d.webp",
-       "zoom": 1
+       "image": "intricate-glass-bangle-radium.webp",
+       "focal": "0% 67.8%",
+       "zoom": 1.25
       }
      ]
     },
     {
      "id": 13,
      "colour": "Rose Pink",
-     "image": "intricate-glass-bangle-rose-pink.webp",
+     "image": "u-intricate-glass-bangle-rose-pink-1a161d5ef9e.webp",
      "hex": "#fd729c",
      "price": 320,
      "pieces": 12,
@@ -664,11 +664,11 @@
       "2.6": 3,
       "2.8": 2
      },
-     "focal": "50.55% 42.87%",
      "zoom": 1,
      "gallery": [
       {
-       "image": "u-intricate-glass-bangle-rose-pink-1a161d5ef9e.webp",
+       "image": "intricate-glass-bangle-rose-pink.webp",
+       "focal": "50.55% 42.87%",
        "zoom": 1
       }
      ]
