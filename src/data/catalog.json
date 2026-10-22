@@ -4593,7 +4593,7 @@
     {
      "id": 117,
      "colour": "Kashmiri White Stones Set of 4",
-     "image": "gunghroo-kashmiri-white-stones-set-of-4.webp",
+     "image": "u-gunghroo-kashmiri-white-stones-set-of-4-more-mvj7wacy.webp",
      "hex": "#e2d8c4",
      "price": 200,
      "pieces": 4,
@@ -4609,8 +4609,20 @@
       "2.4": 3,
       "2.6": 2
      },
-     "focal": "28.5% 85.6%",
-     "zoom": 1.5
+     "focal": "22.8% 62.1%",
+     "zoom": 1.4,
+     "gallery": [
+      {
+       "image": "u-gunghroo-kashmiri-white-stones-set-of-4-more-mvj7wf1e.webp",
+       "focal": "50.8% 59.8%",
+       "zoom": 1.7
+      },
+      {
+       "image": "gunghroo-kashmiri-white-stones-set-of-4.webp",
+       "focal": "41.5% 80.4%",
+       "zoom": 1.7
+      }
+     ]
     },
     {
      "id": 118,
