@@ -2510,7 +2510,7 @@
     {
      "id": 73,
      "colour": "Premium Coral Flower Set of 2",
-     "image": "statement-bangles-premium-coral-flower-set-of-2.webp",
+     "image": "u-statement-bangles-premium-coral-flower-set-of-2-more-mvj3taqp.webp",
      "hex": "#e2d8c4",
      "price": 860,
      "pieces": 2,
@@ -2526,8 +2526,15 @@
       "2.4": 2,
       "2.6": 2
      },
-     "focal": "54.7% 71.7%",
-     "zoom": 1.25
+     "focal": "65% 56.6%",
+     "zoom": 1.65,
+     "gallery": [
+      {
+       "image": "statement-bangles-premium-coral-flower-set-of-2.webp",
+       "focal": "54.7% 71.7%",
+       "zoom": 1.25
+      }
+     ]
     },
     {
      "id": 74,
