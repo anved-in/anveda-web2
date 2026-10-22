@@ -1,5 +1,5 @@
 import raw from "@/data/reels.json";
-import { products, type Product } from "./catalog";
+import { products, imgSrc, type Product } from "./catalog";
 
 /**
  * One reel in the vertical feed.
@@ -51,6 +51,9 @@ export const reels = (): ResolvedReel[] =>
       const product = products.find((p) => p.id === r.productId);
       return {
         ...r,
+        // A reel saved without a cover still shows: its design's own photo stands in. (With neither, it is left out below,
+        // because a tile with no picture is worse than no tile, and a missing cover must never break the whole page.)
+        cover: (r.cover || (product?.image ? imgSrc(product.image) : "")) as string,
         product,
         href: product
           ? `/product/${product.id}/${r.colour ? `?c=${encodeURIComponent(r.colour)}` : ""}`
@@ -60,7 +63,7 @@ export const reels = (): ResolvedReel[] =>
       };
     })
     // A reel with neither a video nor a link is not a reel.
-    .filter((r) => r.video || r.instagram);
+    .filter((r) => (r.video || r.instagram) && r.cover);
 
 /** The combo a reel offers right now (used to keep prices in the bag current). */
 export const comboOf = (reelId: string): ReelCombo | undefined => data.reels.find((r) => r.id === reelId)?.combo ?? undefined;

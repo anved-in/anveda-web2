@@ -374,6 +374,14 @@ const ROUTES = {
   "/api/account/google": account("/google"),
   "/api/account/me": account("/me"),
   "/api/account/logout": account("/logout"),
+  "/api/account/profile": account("/profile"),
+  "/api/account/profile/save": account("/profile/save"),
+  "/api/account/phone/request": account("/phone/request"),
+  "/api/account/phone/confirm": account("/phone/confirm"),
+  "/api/account/addresses": account("/addresses"),
+  "/api/account/addresses/save": account("/addresses/save"),
+  "/api/account/addresses/delete": account("/addresses/delete"),
+  "/api/account/addresses/default": account("/addresses/default"),
 };
 
 export async function onRequestPost({ request, env }) {

@@ -20,6 +20,7 @@ REEL_IMGDIR = os.path.join(ROOT, "public", "img", "reels")
 OUT = os.path.join(ROOT, "src", "data", "catalog.json")
 REELS_OUT = os.path.join(ROOT, "src", "data", "reels.json")
 REVIEWS_OUT = os.path.join(ROOT, "src", "data", "reviews.json")
+FAQS_OUT = os.path.join(ROOT, "src", "data", "faqs.json")
 REELDIR = os.path.join(ROOT, "public", "video", "reels")
 
 
@@ -117,6 +118,13 @@ json.dump({"reels": reels_out}, open(REELS_OUT, "w", encoding="utf-8"),
           ensure_ascii=False, indent=1)
 print(f"{len(reels_out)} reels "
       f"({sum(1 for r in reels_out if r['video'])} with uploaded video) -> {REELS_OUT}")
+
+# ------------------------------------------------------------------ help questions
+# Written only when the CMS actually sent the list, so an older CMS can never blank the page.
+if "faqs" in data:
+    json.dump({"faqs": [{"id": f["id"], "question": f["question"], "answer": f["answer"]} for f in data["faqs"]]},
+              open(FAQS_OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print(f"{len(data['faqs'])} help questions -> {FAQS_OUT}")
 
 # --------------------------------------------------------------- reviews
 json.dump({"reviews": reviews_in}, open(REVIEWS_OUT, "w", encoding="utf-8"),

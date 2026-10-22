@@ -1,0 +1,14 @@
+{
+ "faqs": [
+  {
+   "id": 1,
+   "question": "Can I return something?",
+   "answer": "Only if it arrived broken. Record a continuous unboxing video, starting before you open the package, and send it within 24 hours of delivery: without it, a return or refund cannot be processed. See our [shipping & returns policy](/shipping)."
+  },
+  {
+   "id": 2,
+   "question": "I ordered the wrong size. Can I swap it?",
+   "answer": "Message us as soon as you notice. If the order has not shipped yet, we will simply swap it before it leaves."
+  }
+ ]
+}
