@@ -1425,7 +1425,7 @@
     {
      "id": 35,
      "colour": "Carrot",
-     "image": "petal-stone-glass-bangle-carrot.webp",
+     "image": "u-petal-stone-glass-bangle-carrot-1a161d5efa6.webp",
      "hex": "#ff8d5c",
      "price": 320,
      "pieces": 12,
@@ -1445,11 +1445,11 @@
       "2.6": 1,
       "2.8": 0
      },
-     "focal": "43.66% 44.86%",
-     "zoom": 1,
+     "zoom": 1.4,
      "gallery": [
       {
-       "image": "u-petal-stone-glass-bangle-carrot-1a161d5efa6.webp",
+       "image": "petal-stone-glass-bangle-carrot.webp",
+       "focal": "43.66% 44.86%",
        "zoom": 1
       }
      ]
@@ -1457,7 +1457,7 @@
     {
      "id": 36,
      "colour": "Classic Blue",
-     "image": "petal-stone-glass-bangle-classic-blue.webp",
+     "image": "u-petal-stone-glass-bangle-classic-blue-1a161d5efa7.webp",
      "hex": "#01aed0",
      "price": 320,
      "pieces": 12,
@@ -1477,11 +1477,11 @@
       "2.6": 0,
       "2.8": 0
      },
-     "focal": "53.92% 40.07%",
-     "zoom": 1,
+     "zoom": 1.45,
      "gallery": [
       {
-       "image": "u-petal-stone-glass-bangle-classic-blue-1a161d5efa7.webp",
+       "image": "petal-stone-glass-bangle-classic-blue.webp",
+       "focal": "53.92% 40.07%",
        "zoom": 1
       }
      ]
