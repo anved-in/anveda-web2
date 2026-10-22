@@ -1509,12 +1509,13 @@
       "2.6": 2,
       "2.8": 2
      },
-     "focal": "44.99% 48.62%",
-     "zoom": 1,
+     "focal": "28.8% 48.2%",
+     "zoom": 1.35,
      "gallery": [
       {
        "image": "u-petal-stone-glass-bangle-emerald-green-1a161d5efa8.webp",
-       "zoom": 1
+       "focal": "26.1% 58%",
+       "zoom": 1.3
       }
      ]
     },
