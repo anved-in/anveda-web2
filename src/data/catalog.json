@@ -2088,7 +2088,7 @@
     {
      "id": 56,
      "colour": "Red",
-     "image": "phool-glass-bangle-red.webp",
+     "image": "u-phool-glass-bangle-red-1a161d5efb9.webp",
      "hex": "#e81111",
      "price": 320,
      "pieces": 12,
@@ -2108,11 +2108,12 @@
       "2.6": 1,
       "2.8": 0
      },
-     "focal": "48.4% 61.08%",
-     "zoom": 1,
+     "focal": "59.4% 53.8%",
+     "zoom": 1.5,
      "gallery": [
       {
-       "image": "u-phool-glass-bangle-red-1a161d5efb9.webp",
+       "image": "phool-glass-bangle-red.webp",
+       "focal": "48.4% 61.08%",
        "zoom": 1
       }
      ]
