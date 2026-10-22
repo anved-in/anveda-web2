@@ -289,13 +289,13 @@ const account = (cmsPath) => async (request, env) => {
   } catch {
     body = {};
   }
-  if (!env.CMS || !env.ORDERS_API_SECRET) return json({ ok: false, error: "not configured" }, 500);
+  if (!env.CMS || !env.ACCOUNT_API_SECRET) return json({ ok: false, error: "not configured" }, 500);
   const token = cookieValue(request, ACCOUNT_COOKIE);
   const res = await env.CMS.fetch(`https://internal/account${cmsPath}`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "x-api-secret": env.ORDERS_API_SECRET,
+      "x-api-secret": env.ACCOUNT_API_SECRET,
       "x-client-ip": request.headers.get("cf-connecting-ip") || "",
       ...(token ? { "x-account-token": token } : {}),
     },
