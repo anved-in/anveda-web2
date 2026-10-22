@@ -295,7 +295,7 @@ const account = (cmsPath) => async (request, env) => {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "x-api-secret": env.ACCOUNT_API_SECRET,
+      "x-api-secret": env.ACCOUNT_API_SECRET.trim(),
       "x-client-ip": request.headers.get("cf-connecting-ip") || "",
       ...(token ? { "x-account-token": token } : {}),
     },
