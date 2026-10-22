@@ -2402,7 +2402,7 @@
     {
      "id": 68,
      "colour": "Mantap Lakshmi",
-     "image": "statement-bangles-mantap-lakshmi.webp",
+     "image": "u-statement-bangles-mantap-lakshmi-more-mvj6wqyk.webp",
      "hex": "#e2d8c4",
      "price": 399,
      "pieces": 2,
@@ -2418,8 +2418,14 @@
       "2.4": 1,
       "2.6": 2
      },
-     "focal": "37.84% 58.24%",
-     "zoom": 1
+     "zoom": 1,
+     "gallery": [
+      {
+       "image": "statement-bangles-mantap-lakshmi.webp",
+       "focal": "37.84% 58.24%",
+       "zoom": 1
+      }
+     ]
     },
     {
      "id": 69,
