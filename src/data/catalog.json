@@ -531,12 +531,13 @@
       "2.6": 4,
       "2.8": 4
      },
-     "zoom": 1,
+     "focal": "43.4% 40.6%",
+     "zoom": 1.6,
      "gallery": [
       {
        "image": "intricate-glass-bangle-emerald-green.webp",
-       "focal": "36.29% 49.65%",
-       "zoom": 1
+       "focal": "10.1% 45.5%",
+       "zoom": 1.6
       }
      ]
     },
@@ -561,12 +562,13 @@
       "2.6": 3,
       "2.8": 1
      },
-     "zoom": 1,
+     "focal": "65% 53.9%",
+     "zoom": 1.85,
      "gallery": [
       {
        "image": "intricate-glass-bangle-mocha.webp",
        "focal": "46.28% 47.13%",
-       "zoom": 1
+       "zoom": 1.65
       }
      ]
     },
