@@ -2023,7 +2023,7 @@
     {
      "id": 54,
      "colour": "Pastel Pink",
-     "image": "phool-glass-bangle-pastel-pink.webp",
+     "image": "u-phool-glass-bangle-pastel-pink-1a161d5efb7.webp",
      "hex": "#dcb7d4",
      "price": 320,
      "pieces": 12,
@@ -2043,19 +2043,20 @@
       "2.6": 1,
       "2.8": 0
      },
-     "focal": "47.16% 53.36%",
-     "zoom": 1,
+     "focal": "51.7% 54%",
+     "zoom": 1.7,
      "gallery": [
       {
-       "image": "u-phool-glass-bangle-pastel-pink-1a161d5efb7.webp",
-       "zoom": 1
+       "image": "phool-glass-bangle-pastel-pink.webp",
+       "focal": "47.16% 53.36%",
+       "zoom": 1.4
       }
      ]
     },
     {
      "id": 55,
      "colour": "Purple",
-     "image": "phool-glass-bangle-purple.webp",
+     "image": "u-phool-glass-bangle-purple-1a161d5efb8.webp",
      "hex": "#c75dee",
      "price": 320,
      "pieces": 12,
@@ -2074,11 +2075,12 @@
       "2.6": 0,
       "2.8": 0
      },
-     "focal": "51.57% 44.75%",
-     "zoom": 1,
+     "focal": "52.4% 60%",
+     "zoom": 1.85,
      "gallery": [
       {
-       "image": "u-phool-glass-bangle-purple-1a161d5efb8.webp",
+       "image": "phool-glass-bangle-purple.webp",
+       "focal": "51.57% 44.75%",
        "zoom": 1
       }
      ]
