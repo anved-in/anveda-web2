@@ -1,7 +1,7 @@
 "use client";
 
 import { asset } from "@/lib/site";
-import { colourLabel, imgSrcSmall, inr, productById } from "@/lib/catalog";
+import { colourLabel, framingStyle, imgSrcSmall, inr, productById } from "@/lib/catalog";
 import { lineTotal, type Line } from "@/lib/cart";
 import QtyStepper from "@/components/QtyStepper";
 
@@ -26,7 +26,9 @@ export default function ComboBagRow({
           const v = p?.variants.find((x) => x.colour === k.colour);
           return v ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={k.id} src={asset(imgSrcSmall(v.image))} alt="" className="h-[40px] w-full object-cover" loading="lazy" />
+            <span key={k.id} className="block h-[40px] w-full overflow-hidden">
+              <img src={asset(imgSrcSmall(v.image))} alt="" className="h-full w-full object-cover" style={framingStyle(v)} loading="lazy" />
+            </span>
           ) : null;
         })}
       </div>

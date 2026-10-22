@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "@/components/Link";
 import { asset } from "@/lib/site";
-import { imgSrcSmall, listingTitle, variantPrice } from "@/lib/catalog";
+import { framingStyle, imgSrcSmall, listingTitle, variantPrice } from "@/lib/catalog";
 import Price from "@/components/Price";
 import ComboSheet from "@/components/ComboSheet";
 import ReelPicker from "@/components/ReelPicker";
@@ -268,12 +268,15 @@ export default function ReelFeed({
                       className="on-dark pointer-events-auto mt-2.5 flex items-center gap-2.5 rounded-full border border-white/20 bg-black/35 py-1.5 pl-1.5 pr-3 backdrop-blur-md transition-colors hover:border-white/40 hover:bg-black/50"
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={asset(imgSrcSmall(v.image))}
-                        alt=""
-                        className="h-9 w-9 shrink-0 rounded-full object-cover"
-                        loading="lazy"
-                      />
+                      <span className="block h-9 w-9 shrink-0 overflow-hidden rounded-full">
+                        <img
+                          src={asset(imgSrcSmall(v.image))}
+                          alt=""
+                          className="h-full w-full object-cover"
+                          style={framingStyle(v)}
+                          loading="lazy"
+                        />
+                      </span>
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-[11.5px] font-semibold text-white">
                           {listingTitle(r.product, v)}
