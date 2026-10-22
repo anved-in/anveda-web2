@@ -552,7 +552,7 @@
     {
      "id": 10,
      "colour": "Parrot Green",
-     "image": "intricate-glass-bangle-parrot-green.webp",
+     "image": "u-intricate-glass-bangle-parrot-green-1a161d5ef9a.webp",
      "hex": "#35d016",
      "price": 320,
      "pieces": 12,
@@ -570,19 +570,19 @@
       "2.6": 3,
       "2.8": 2
      },
-     "focal": "37.5% 72%",
-     "zoom": 1.5,
+     "zoom": 1,
      "gallery": [
       {
-       "image": "u-intricate-glass-bangle-parrot-green-1a161d5ef9a.webp",
-       "zoom": 1
+       "image": "intricate-glass-bangle-parrot-green.webp",
+       "focal": "37.5% 72%",
+       "zoom": 1.5
       }
      ]
     },
     {
      "id": 11,
      "colour": "Purple",
-     "image": "intricate-glass-bangle-purple.webp",
+     "image": "u-intricate-glass-bangle-purple-1a161d5ef9b.webp",
      "hex": "#c75dee",
      "price": 320,
      "pieces": 12,
@@ -600,13 +600,8 @@
       "2.6": 1,
       "2.8": 4
      },
-     "focal": "50% 53.73%",
      "zoom": 1,
      "gallery": [
-      {
-       "image": "u-intricate-glass-bangle-purple-1a161d5ef9b.webp",
-       "zoom": 1
-      },
       {
        "image": "u-intricate-glass-bangle-purple-2-1a161d5ef9c.webp",
        "zoom": 1
