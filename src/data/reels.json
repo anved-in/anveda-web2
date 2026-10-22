@@ -379,6 +379,29 @@
      }
     ]
    }
+  },
+  {
+   "id": "sky-blue-royal-blue",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/Da2EOOST28W/?obrf=MWFvNGRjMzN3ajB6Mg==",
+   "cover": "/img/products/u-intricate-glass-bangle-royal-blue-1a161d5ef9f.webp",
+   "title": "Sky blue & Royal blue",
+   "caption": "",
+   "productId": "intricate-glass-bangle",
+   "colour": "Royal Blue",
+   "combo": {
+    "price": 640,
+    "items": [
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Royal Blue",
+       "Sky Blue"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
