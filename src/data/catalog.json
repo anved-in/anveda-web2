@@ -9,7 +9,7 @@
     "2.4",
     "2.6",
     "2.8",
-    "2.10"
+    "2.12"
    ]
   },
   {
@@ -21,7 +21,7 @@
     "2.4",
     "2.6",
     "2.8",
-    "2.10"
+    "2.12"
    ]
   },
   {
@@ -33,7 +33,7 @@
     "2.4",
     "2.6",
     "2.8",
-    "2.10"
+    "2.12"
    ]
   },
   {
@@ -736,7 +736,7 @@
     {
      "id": 16,
      "colour": "Tangerine",
-     "image": "intricate-glass-bangle-tangerine.webp",
+     "image": "u-intricate-glass-bangle-tangerine-1a161d5efa1.webp",
      "hex": "#eda20c",
      "price": 320,
      "pieces": 12,
@@ -754,11 +754,11 @@
       "2.6": 2,
       "2.8": 2
      },
-     "focal": "47.34% 42.95%",
      "zoom": 1,
      "gallery": [
       {
-       "image": "u-intricate-glass-bangle-tangerine-1a161d5efa1.webp",
+       "image": "intricate-glass-bangle-tangerine.webp",
+       "focal": "47.34% 42.95%",
        "zoom": 1
       }
      ]
