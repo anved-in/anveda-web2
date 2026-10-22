@@ -98,6 +98,61 @@
    "productId": "kada",
    "colour": "Premium 4 in 1 Diamond Kada (Free Size Openable)",
    "combo": null
+  },
+  {
+   "id": "sita-set",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DdTxvZmT-P7/?utm_source=ig_web_copy_link&cplk=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==",
+   "cover": "/img/products/u-statement-bangles-ruby-lakshmi-set-of-2-more-mvidsyhg.webp",
+   "title": "Sita Set",
+   "caption": "",
+   "productId": "statement-bangles",
+   "colour": "Sita Ruby Lakshmi Set of 2",
+   "combo": {
+    "price": 1350,
+    "items": [
+     {
+      "productId": "statement-bangles",
+      "qty": 1,
+      "colours": [
+       "Sita Ruby Lakshmi Set of 2"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     },
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Aqua",
+       "Champagne Gold",
+       "Dark Green",
+       "Dark Pink",
+       "Green (premium Raindrop)",
+       "Lavender",
+       "Maroon",
+       "Mauve",
+       "Parrot Green",
+       "Radium",
+       "Red",
+       "Rose Pink",
+       "Royal Blue",
+       "Sunset Orange",
+       "Wine",
+       "Pink",
+       "Teal",
+       "Golden Yellow",
+       "Classic Blue",
+       "Royal Blue (Premium Raindrop)"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
