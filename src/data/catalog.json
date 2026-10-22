@@ -2372,7 +2372,7 @@
     {
      "id": 67,
      "colour": "Lakshmi with White Stone",
-     "image": "statement-bangles-lakshmi-with-white-stone.webp",
+     "image": "u-statement-bangles-lakshmi-with-white-stone-more-mvj6vffm.webp",
      "hex": "#e2d8c4",
      "price": 1150,
      "pieces": 2,
@@ -2390,8 +2390,14 @@
       "2.6": 0,
       "2.8": 1
      },
-     "focal": "43.9% 61.6%",
-     "zoom": 1.55
+     "zoom": 1,
+     "gallery": [
+      {
+       "image": "statement-bangles-lakshmi-with-white-stone.webp",
+       "focal": "43.9% 61.6%",
+       "zoom": 1.55
+      }
+     ]
     },
     {
      "id": 68,
