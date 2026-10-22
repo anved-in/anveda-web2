@@ -492,7 +492,7 @@
     {
      "id": 8,
      "colour": "Emerald Green",
-     "image": "intricate-glass-bangle-emerald-green.webp",
+     "image": "u-intricate-glass-bangle-emerald-green-1a161d5ef98.webp",
      "hex": "#026600",
      "price": 320,
      "pieces": 12,
@@ -510,11 +510,11 @@
       "2.6": 4,
       "2.8": 4
      },
-     "focal": "36.29% 49.65%",
      "zoom": 1,
      "gallery": [
       {
-       "image": "u-intricate-glass-bangle-emerald-green-1a161d5ef98.webp",
+       "image": "intricate-glass-bangle-emerald-green.webp",
+       "focal": "36.29% 49.65%",
        "zoom": 1
       }
      ]
@@ -522,7 +522,7 @@
     {
      "id": 9,
      "colour": "Mocha",
-     "image": "intricate-glass-bangle-mocha.webp",
+     "image": "u-intricate-glass-bangle-mocha-1a161d5ef99.webp",
      "hex": "#7d5608",
      "price": 320,
      "pieces": 12,
@@ -540,11 +540,11 @@
       "2.6": 3,
       "2.8": 1
      },
-     "focal": "46.28% 47.13%",
      "zoom": 1,
      "gallery": [
       {
-       "image": "u-intricate-glass-bangle-mocha-1a161d5ef99.webp",
+       "image": "intricate-glass-bangle-mocha.webp",
+       "focal": "46.28% 47.13%",
        "zoom": 1
       }
      ]
