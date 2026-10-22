@@ -288,15 +288,21 @@ export const KIDS_SIZE_GUIDE: { size: string; label: string }[] = [
  * Sizes that are rarely made (2.12). They are shown ONLY where a colourway really has them in stock: when one is not
  * available it is not shown at all (not even greyed out or struck through), and it is not listed on the size guide page.
  */
-export const OPTIONAL_SIZES: string[] = ["2.12"];
-const OPTIONAL_SIZE_GUIDE: { size: string; label: string }[] = [{ size: "2.12", label: "Extra large" }];
+export const OPTIONAL_SIZES: string[] = ["2.0", "2.12"];
+const OPTIONAL_SIZE_GUIDE: { size: string; label: string }[] = [{ size: "2.0", label: "Extra small" }, { size: "2.12", label: "Extra large" }];
+
+/** Is this a rare size for this design? 2.0 is an ordinary size in the Kids section, but a rare one on the adult sections. */
+export const isRareSize = (p: Product, size: string): boolean => OPTIONAL_SIZES.includes(size) && !(size === "2.0" && p.group === "kids");
 
 /** Every size we sell, smallest first (kids' sizes, then the standard adult sizes, then the rare ones). */
-export const ALL_SIZES: string[] = [...KIDS_SIZE_GUIDE.map((s) => s.size), ...SIZE_GUIDE.map((s) => s.size), ...OPTIONAL_SIZES];
+export const ALL_SIZES: string[] = ["1.10", "1.12", "1.14", "2.0", "2.2", "2.4", "2.6", "2.8", "2.10", "2.12"];
 
 /** The note shown beside a size ("Regular", "Kids"), or undefined. */
-export const sizeInfo = (size: string): { size: string; label: string } | undefined =>
-  SIZE_GUIDE.find((x) => x.size === size) ?? KIDS_SIZE_GUIDE.find((x) => x.size === size) ?? OPTIONAL_SIZE_GUIDE.find((x) => x.size === size);
+export const sizeInfo = (size: string, p?: Product): { size: string; label: string } | undefined =>
+  SIZE_GUIDE.find((x) => x.size === size) ??
+  (size === "2.0" && p && p.group !== "kids" ? OPTIONAL_SIZE_GUIDE.find((x) => x.size === size) : undefined) ??
+  KIDS_SIZE_GUIDE.find((x) => x.size === size) ??
+  OPTIONAL_SIZE_GUIDE.find((x) => x.size === size);
 
 /** The sizes a design is sold in: those of its section (Kids has its own), in the proper order. */
 export const sizesOfProduct = (p: Product): string[] => {
@@ -307,7 +313,7 @@ export const sizesOfProduct = (p: Product): string[] => {
 
 /** The sizes to SHOW for one colourway: its section's sizes, with a rare size (2.12) left out unless it can be bought right now. */
 export const visibleSizes = (p: Product, v: Variant): string[] =>
-  sizesOfProduct(p).filter((s) => !OPTIONAL_SIZES.includes(s) || sizeState(v, s) === "ok");
+  sizesOfProduct(p).filter((s) => !isRareSize(p, s) || sizeState(v, s) === "ok");
 
 /** Pieces left of one size of a colourway, or null when that size is not counted (then it is always offered). */
 export const sizeLeft = (v: Variant, size: string): number | null => {

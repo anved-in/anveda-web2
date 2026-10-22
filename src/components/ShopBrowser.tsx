@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import ListingCard from "./ListingCard";
-import { listingPrice, listingTitle, sizeState, ALL_SIZES, OPTIONAL_SIZES, sizeInfo, sizesOfProduct, type Listing } from "@/lib/catalog";
+import { listingPrice, listingTitle, sizeState, ALL_SIZES, isRareSize, sizeInfo, sizesOfProduct, type Listing } from "@/lib/catalog";
 
 export interface ShopSection {
   slug: string;
@@ -137,7 +137,7 @@ export default function ShopBrowser({
   const shownSizes = useMemo(() => {
     const have = new Set(all.flatMap((l) => sizesOfProduct(l.product)));
     // a rare size (2.12) is offered as a filter only if some colourway on this page really has it
-    return ALL_SIZES.filter((s) => have.has(s) && (!OPTIONAL_SIZES.includes(s) || all.some((l) => sizeState(l.variant, s) === "ok")));
+    return ALL_SIZES.filter((s) => have.has(s) && all.some((l) => sizesOfProduct(l.product).includes(s) && (!isRareSize(l.product, s) || sizeState(l.variant, s) === "ok")));
   }, [all]);
   const buckets = useMemo(() => priceBuckets(all), [all]);
   const activeCount = (q.trim() ? 1 : 0) + (sizes.length ? 1 : 0) + (sort !== "featured" ? 1 : 0) + (priceBand !== null ? 1 : 0) + (inStockOnly ? 1 : 0);
@@ -260,7 +260,7 @@ export default function ShopBrowser({
                   <p className="px-4 pb-1.5 pt-1 text-[10.5px] font-bold uppercase tracking-[0.14em] text-ink-faint">Choose one or more</p>
                   {shownSizes.map((z) => {
                     const on = sizes.includes(z);
-                    const g = sizeInfo(z);
+                    const g = sizeInfo(z, all[0]?.product);
                     return (
                       <button
                         key={z}

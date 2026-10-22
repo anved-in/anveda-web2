@@ -95,7 +95,7 @@ export default function ProductBuy({
             on a phone. */}
         <div className="mt-2 flex gap-1.5 md:flex-wrap">
           {visibleSizes(p, variant).map((s) => {
-            const g = sizeInfo(s);
+            const g = sizeInfo(s, p);
             const on = size === s;
             const st = sizeState(variant, s);
             const gone = st !== "ok";
