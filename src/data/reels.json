@@ -247,6 +247,67 @@
      }
     ]
    }
+  },
+  {
+   "id": "phool-set",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/Dey5DiyT6WW/?utm_source=ig_web_copy_link&obrf=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==",
+   "cover": "/img/products/u-statement-bangles-phool-trio-flower-more-mvgy2eo3.webp",
+   "title": "Phool Set",
+   "caption": "",
+   "productId": "statement-bangles",
+   "colour": "Phool - Trio Flower",
+   "combo": {
+    "price": 1200,
+    "items": [
+     {
+      "productId": "statement-bangles",
+      "qty": 1,
+      "colours": [
+       "Phool - Trio Flower"
+      ]
+     },
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Aqua",
+       "Black",
+       "Champagne Gold",
+       "Dark Green",
+       "Dark Pink",
+       "Green (premium Raindrop)",
+       "Ivory (premium Raindrop)",
+       "Lavender",
+       "Maroon",
+       "Mauve",
+       "Multicolor",
+       "Olive (premium Raindrop)",
+       "Parrot Green",
+       "Radium",
+       "Red",
+       "Rose Pink",
+       "Royal Blue",
+       "Sunset Orange",
+       "Wine",
+       "Pink",
+       "Grey",
+       "Teal",
+       "Sky Blue",
+       "Golden Yellow",
+       "Classic Blue",
+       "Royal Blue (Premium Raindrop)"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
