@@ -2976,7 +2976,7 @@
     {
      "id": 167,
      "colour": "Premium Devi Ruby Flower",
-     "image": "u-statement-bangles-premium-devi-ruby-flower-mvgowcwr.webp",
+     "image": "u-statement-bangles-premium-devi-ruby-flower-more-mvj6zde4.webp",
      "price": 1599,
      "pieces": 2,
      "sizes": [
@@ -2991,8 +2991,15 @@
       "2.4": 0,
       "2.6": 1
      },
-     "focal": "61.5% 72.3%",
-     "zoom": 1.25
+     "focal": "84.1% 67.3%",
+     "zoom": 1.35,
+     "gallery": [
+      {
+       "image": "u-statement-bangles-premium-devi-ruby-flower-more-mvj6zl6n.webp",
+       "focal": "60.1% 70.3%",
+       "zoom": 1.6
+      }
+     ]
     },
     {
      "id": 168,
