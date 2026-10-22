@@ -1990,7 +1990,7 @@
     {
      "id": 53,
      "colour": "Mehendi Green",
-     "image": "phool-glass-bangle-mehendi-green.webp",
+     "image": "u-phool-glass-bangle-mehendi-green-1a161d5efb6.webp",
      "hex": "#4a7e16",
      "price": 320,
      "pieces": 12,
@@ -2010,13 +2010,13 @@
       "2.6": 1,
       "2.8": 3
      },
-     "focal": "21.6% 45.8%",
-     "zoom": 1.35,
+     "focal": "41.3% 65.9%",
+     "zoom": 1.6,
      "gallery": [
       {
-       "image": "u-phool-glass-bangle-mehendi-green-1a161d5efb6.webp",
-       "focal": "41.3% 65.9%",
-       "zoom": 1.6
+       "image": "phool-glass-bangle-mehendi-green.webp",
+       "focal": "21.6% 45.8%",
+       "zoom": 1.35
       }
      ]
     },
