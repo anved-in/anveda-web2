@@ -2010,12 +2010,13 @@
       "2.6": 1,
       "2.8": 3
      },
-     "focal": "42.62% 50.83%",
-     "zoom": 1,
+     "focal": "21.6% 45.8%",
+     "zoom": 1.35,
      "gallery": [
       {
        "image": "u-phool-glass-bangle-mehendi-green-1a161d5efb6.webp",
-       "zoom": 1
+       "focal": "41.3% 65.9%",
+       "zoom": 1.6
       }
      ]
     },
