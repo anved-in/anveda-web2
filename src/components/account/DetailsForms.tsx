@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "@/components/Link";
 import { accountPost } from "@/lib/account";
+import PasteCode from "./PasteCode";
 import { INDIAN_STATES } from "@/lib/states";
 import type { Me, Profile } from "./useAccount";
 
@@ -107,6 +108,7 @@ function PhoneBlock({ me, name, onDone }: { me: Me; name: string; onDone: () => 
             style={{ fontSize: "16px" }}
           />
         )}
+        {step === "code" && <span className="mt-2 block"><PasteCode onCode={(c) => { setCode(c); setErr(null); }} /></span>}
         <span className="mt-1 block text-[11px] text-ink-faint">
           {step === "enter" ? "We will send a code to this number on WhatsApp." : `We sent a code on WhatsApp to +91 ${digits}. It works for 10 minutes.`}
         </span>

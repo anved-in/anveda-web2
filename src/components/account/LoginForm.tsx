@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "@/components/Link";
 import { accountPost, type LoginMethods } from "@/lib/account";
+import PasteCode from "./PasteCode";
 
 const LABEL = "text-[12px] font-semibold uppercase tracking-[0.14em] text-ink-soft";
 const INPUT = "mt-1.5 w-full border border-line bg-white px-3.5 py-3 text-[11px] outline-none transition-colors focus:border-ink";
@@ -147,6 +148,7 @@ export default function LoginForm({ methods, onLoggedIn }: { methods: LoginMetho
               className={INPUT + " text-center tracking-[0.4em]"}
               style={{ fontSize: "16px" }}
             />
+            <span className="mt-2 block"><PasteCode onCode={(c) => { setCode(c); setError(null); }} /></span>
           </label>
           {error && <p role="alert" className="border border-[#a33a2f] bg-[#a33a2f]/5 p-3 text-[13px] text-[#a33a2f]">{error}</p>}
           <button type="submit" disabled={busy} aria-busy={busy} className="av-btn w-full cursor-pointer">
