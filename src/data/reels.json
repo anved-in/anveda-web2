@@ -197,6 +197,56 @@
      }
     ]
    }
+  },
+  {
+   "id": "laya-set",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/Dcir2lPT5Ve/?utm_source=ig_web_copy_link&obrf=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==",
+   "cover": "/img/products/designer-side-bangles-premium-white-stone-flower-set-of-4.webp",
+   "title": "Laya Set",
+   "caption": "",
+   "productId": "designer-side-bangles",
+   "colour": "Laya White Stone Flower Set of 4",
+   "combo": {
+    "price": 1750,
+    "items": [
+     {
+      "productId": "designer-side-bangles",
+      "qty": 1,
+      "colours": [
+       "Laya White Stone Flower Set of 4"
+      ]
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Aqua",
+       "Champagne Gold",
+       "Coffee/Deep Wine",
+       "Emerald Green",
+       "Mocha",
+       "Parrot Green",
+       "Purple",
+       "Radium",
+       "Rose Pink",
+       "Royal Blue",
+       "Sky Blue",
+       "Tangerine",
+       "Ruby Red",
+       "Peach",
+       "Baby Pink"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "White Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
