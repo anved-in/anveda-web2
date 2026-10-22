@@ -5305,7 +5305,7 @@
       {
        "image": "square-edge-glass-bangles-royal-blue.webp",
        "focal": "50.49% 53.35%",
-       "zoom": 1
+       "zoom": 1.85
       }
      ]
     },
@@ -5361,13 +5361,13 @@
       "2.6": 10,
       "2.8": 8
      },
-     "focal": "50% 65.4%",
-     "zoom": 1,
+     "focal": "51.5% 56.2%",
+     "zoom": 1.6,
      "gallery": [
       {
        "image": "square-edge-glass-bangles-wine.webp",
-       "focal": "51.86% 55.88%",
-       "zoom": 1
+       "focal": "48.7% 62.5%",
+       "zoom": 1.7
       }
      ]
     },
