@@ -12,7 +12,7 @@ import { productById, unitPrice, type Product } from "./catalog";
 import { comboOf } from "./reels";
 
 /**
- * A line is a product AT a size — the same design in two sizes is two lines,
+ * A line is a product AT a size, the same design in two sizes is two lines,
  * because that is how it gets picked and packed.
  */
 export interface Line {
@@ -65,7 +65,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
 
   // Read once on mount. Server-rendered HTML must not depend on this, or the
-  // markup mismatches and React discards it — hence the `ready` flag.
+  // markup mismatches and React discards it, hence the `ready` flag.
   //
   // The read is deferred to a microtask so the effect does not call setState
   // synchronously during commit (which would cascade an extra render pass on
@@ -113,7 +113,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     try {
       localStorage.setItem(KEY, JSON.stringify(lines));
     } catch {
-      /* private mode / quota — the cart still works for this session */
+      /* private mode / quota, the cart still works for this session */
     }
   }, [lines, ready]);
 

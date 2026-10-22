@@ -4,7 +4,7 @@ import Stars from "./Stars";
 
 /**
  * Real customer feedback the owner typed in from WhatsApp/Instagram after
- * delivery — see CMS 2.0's Reviews page. Renders nothing at all when there
+ * delivery, see CMS 2.0's Reviews page. Renders nothing at all when there
  * are none yet, rather than showing an empty section or placeholder text.
  */
 export default function Testimonials() {

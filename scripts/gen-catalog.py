@@ -1,13 +1,13 @@
 # Regenerates src/data/catalog.json and src/data/reels.json from CMS 2.0
-# (ANVEDA2 — the Worker the owner actually edits products in) and downloads
+# (ANVEDA2, the Worker the owner actually edits products in) and downloads
 # any new colourway photo into public/img/products/.
 #
 # CMS 2.0's /catalog endpoint returns groups/collections/products/reels in
-# EXACTLY the shape this file already needs (see ANVEDA2/src/catalog.ts) — no
+# EXACTLY the shape this file already needs (see ANVEDA2/src/catalog.ts), no
 # HTML scraping required, unlike v1. Product-photo BLOBS were never migrated
 # into CMS 2.0 (it has no image-upload route yet), so a colourway's image not
 # already on disk here falls back to the LIVE storefront's own copy of that
-# same filename — the one place guaranteed to have every photo that has ever
+# same filename, the one place guaranteed to have every photo that has ever
 # shipped, by the exact name the catalog references it by.
 import json, os, sys, urllib.request
 
@@ -94,7 +94,7 @@ for r in reels_in:
     raw_cover = r.get("cover")
     if raw_cover and raw_cover.startswith("ig:"):
         # Fetched straight from Instagram (ANVEDA2 POST /dash/api/reel/:id/fetch-cover)
-        # rather than being an existing catalog photo — downloaded below, into
+        # rather than being an existing catalog photo, downloaded below, into
         # public/img/reels/ instead of public/img/products/.
         cover = f"/img/reels/{raw_cover[3:]}"
     elif raw_cover:
@@ -184,7 +184,7 @@ for fn in sorted(wanted):
 
 print(f"{new} new photo(s) fetched")
 
-# Reel covers fetched from Instagram — a one-time mirror (Instagram's own
+# Reel covers fetched from Instagram, a one-time mirror (Instagram's own
 # thumbnail link is signed and expires, so ANVEDA2 already downloaded it
 # once into its own R2 bucket; this is just pulling that copy in here, same
 # idea as the catalog photos above, just a different source and folder).

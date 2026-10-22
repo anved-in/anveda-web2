@@ -70,14 +70,14 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white text-ink">
       {/* One compact row, as the reference: text nav left, centred wordmark,
-          icons right. No announcement bar and no second category row — the
+          icons right. No announcement bar and no second category row. The
           reference has neither, and both were making our header twice as tall
           as the one we are matching. */}
       <div className="border-b border-line">
         <div className="mx-auto flex h-[56px] max-w-[1320px] items-center px-4 sm:px-6 md:h-[64px]">
           {/* Empty at 1024px+ (the hamburger is mobile-only and the group
               dropdowns hand off to the sidebar at that width), so it is
-              hidden there rather than left as a blank flex-1 spacer — that
+              hidden there rather than left as a blank flex-1 spacer. That
               spacer was forcing the wordmark to center against nothing on the
               left while the right side carried a full icon cluster, which
               read as lopsided. Logo left, everything else right, from lg. */}
@@ -96,7 +96,7 @@ export default function Header() {
                 <path d="M3 6h18M3 12h14M3 18h18" />
               </svg>
             </button>
-            {/* LEFT: the three catalogue groups — the shopping nav, and the
+            {/* LEFT: the three catalogue groups, the shopping nav, and the
                 only thing that must always be visible. Secondary links live on
                 the right, where there is spare room, so nothing is ever
                 clipped or pushed into the wordmark. */}
@@ -154,7 +154,7 @@ export default function Header() {
 
           {/* No overflow-hidden here (there used to be): the bag button's
               -mr-2 pulls its icon flush with the true edge, which pushed the
-              button — and the count badge sitting at its corner — past that
+              button, and the count badge sitting at its corner, past that
               clip boundary, slicing the badge in half. Nothing in this row
               is unbounded text that could actually force an overflow, so the
               clipping was pure liability with no upside. */}
@@ -248,9 +248,9 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile category chips — the reference's scrolling pill row. An
+      {/* Mobile category chips, the reference's scrolling pill row. An
           allow-list, not a deny-list: it only earns its place where someone
-          is actually mid-browse and a quick jump to another range helps —
+          is actually mid-browse and a quick jump to another range helps,
           that's just the product page. Everywhere else (home, checkout,
           track, the legal pages, guides) it was pure noise: a shopping
           strip over a form, or a duplicate of nav the page already has.
@@ -262,12 +262,12 @@ export default function Header() {
           path.startsWith("/product/") ? "" : "hidden",
         ].join(" ")}
       >
-        {/* Groups lead the row as plain underlined text — same treatment as
+        {/* Groups lead the row as plain underlined text, same treatment as
             the group-switcher tabs on /shop/[group] itself, so the "three
             bangle types" affordance reads the same wherever it shows up
             instead of being a pill-button design in one place and plain
             text in another. Individual ranges after stay their own pill
-            style — there are far more of them, and a scrolling pill row
+            style: there are far more of them, and a scrolling pill row
             suits that list better than equal-width tabs would. */}
         <div className="no-bar flex items-center gap-4 overflow-x-auto px-4 py-2.5">
           {groups.map((g) => {
@@ -291,7 +291,7 @@ export default function Header() {
       {/* ------------------------------------------------- mobile menu drawer
           Fixed to the viewport, NOT rendered inline under the header. It used
           to be a block inside <header>, so opening it halfway down a page put
-          the menu wherever the header happened to be — you had to scroll back
+          the menu wherever the header happened to be. You had to scroll back
           to the top to see it. As an overlay it appears over the page from
           anywhere, and it carries its own close button. */}
       <div
@@ -328,11 +328,11 @@ export default function Header() {
         </div>
 
         {/* Three levels of hierarchy, each reading differently on purpose:
-            top-level nav (REELS/ABOUT US/SIZING) is tracked uppercase —
+            top-level nav (REELS/ABOUT US/SIZING) is tracked uppercase,
             destinations, not catalogue items; a group name (GLASS BANGLES) is
             smaller again and grey, a label introducing what follows rather
             than a row of its own weight; a range (Intricate Glass Bangle) is
-            the largest and plain black — what someone's actually here to
+            the largest and plain black. What someone's actually here to
             tap. Contrast and size carry that order without needing icons or
             colour to do it; the chevron is the one repeated affordance that
             says "this row goes somewhere," consistent at every level. */}

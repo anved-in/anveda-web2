@@ -19,7 +19,7 @@ const SORT_LABEL: Record<Sort, string> = {
   "price-desc": "Price: High to Low",
 };
 
-/** Human-friendly price buckets, Amazon/Flipkart-style — each is an
+/** Human-friendly price buckets, Amazon/Flipkart-style, each is an
  *  inclusive-low/exclusive-high band, "Over X" has no top. */
 function priceBuckets(all: Listing[]): { label: string; min: number; max: number | null }[] {
   const max = Math.max(1000, ...all.map((l) => listingPrice(l)));
@@ -27,7 +27,7 @@ function priceBuckets(all: Listing[]): { label: string; min: number; max: number
   const bands: { label: string; min: number; max: number | null }[] = [];
   for (let lo = 0; lo < max; lo += step) {
     const hi = lo + step;
-    bands.push({ label: hi >= max ? `Over ₹${lo}` : `₹${lo} – ₹${hi}`, min: lo, max: hi >= max ? null : hi });
+    bands.push({ label: hi >= max ? `Over ₹${lo}` : `₹${lo} to ₹${hi}`, min: lo, max: hi >= max ? null : hi });
   }
   return bands.slice(0, 4);
 }
@@ -76,7 +76,7 @@ function DropdownPortal({
 /**
  * Wraps the group page's sectioned listing in an Amazon/Flipkart-style
  * toolbar: dropdown pills for Size (several can be ticked), Sort and Price (the left rail is already the
- * site's category navigator — ShopShell — so a second sidebar would fight
+ * site's category navigator, ShopShell, so a second sidebar would fight
  * it for space; pills are the pattern both reference sites actually use for
  * everything past the primary category nav), plus a plain search box and an
  * in-stock toggle pill. With nothing touched, this renders the exact
@@ -88,12 +88,12 @@ export default function ShopBrowser({
 }: {
   sections: ShopSection[];
   /** Extra content rendered inside this toolbar's own sticky wrapper, above
-   *  the toolbar row — e.g. the group-switcher tabs and collection jump
+   *  the toolbar row, e.g. the group-switcher tabs and collection jump
    *  chips on mobile. Two independently-sticky elements both targeting the
    *  same `top` would overlap once both are stuck instead of stacking (the
    *  second would need `top` offset by the first's height, which isn't knowable
    *  here); putting them inside ONE sticky container sidesteps that
-   *  entirely — they just stack in normal flow and move as one unit. */
+   *  entirely, they just stack in normal flow and move as one unit. */
   header?: React.ReactNode;
 }) {
   const [q, setQ] = useState("");
@@ -103,8 +103,8 @@ export default function ShopBrowser({
   // Sizes ticked in the Size menu (any number). A colourway is kept when it can be bought in AT LEAST ONE ticked size.
   const [sizes, setSizes] = useState<string[]>([]);
   const [openMenu, setOpenMenu] = useState<"sort" | "price" | "size" | null>(null);
-  // Once any control has been touched, every subsequent render — including
-  // returning to the sectioned view via "Clear filters" — mounts fresh
+  // Once any control has been touched, every subsequent render, including
+  // returning to the sectioned view via "Clear filters", mounts fresh
   // .reveal cards the page's scroll observer never gets to see (it only
   // re-scans on navigation). After the first touch, cards render instantly
   // visible instead of relying on that observer; see ListingCard's `instant`.
@@ -170,20 +170,20 @@ export default function ShopBrowser({
   return (
     <>
       {/* top must match the real header height exactly (56px on phones,
-          64px from md: up — see Header.tsx's own h-[56px] md:h-[64px]), or
+          64px from md: up. See Header.tsx's own h-[56px] md:h-[64px]), or
           there's a gap between the fixed header and this sticky bar where
           page content shows through while scrolling. A flat top-[64px] here
           previously left an 8px gap on every phone.
           z-30, not z-10: a product card's favourite heart and its quick-add
           size popup are both z-10/z-20 (ListingCard/FavButton), and at a tie
-          the later-painted DOM element wins regardless of visual intent —
+          the later-painted DOM element wins regardless of visual intent,
           so as a card scrolled under this bar, its heart (later in the DOM)
           rendered on top of the bar instead of being covered by it. This bar
           needs to unambiguously outrank anything that scrolls underneath it. */}
       <div ref={barRef} className="sticky top-[calc(56px+var(--strip-h,0px))] z-30 border-b border-line bg-cream/95 backdrop-blur-sm md:top-[calc(64px+var(--strip-h,0px))]">
         {header}
         {/* Everything here must fit one row with no horizontal scroll, even on
-            a narrow phone — search collapses to an icon that expands in place
+            a narrow phone. Search collapses to an icon that expands in place
             (replacing the other controls while open) instead of claiming
             width permanently, and every pill drops its selected-value suffix
             on the label so the row stays short regardless of what's chosen. */}
@@ -455,7 +455,7 @@ export default function ShopBrowser({
           >
             <div className="mx-auto max-w-[1320px]">
               <div className="mb-8 border-b border-line pb-5">
-                {/* Design count and blurb dropped on mobile — the range
+                {/* Design count and blurb dropped on mobile, the range
                     name alone is enough once it's reached by scrolling or
                     the jump-chips above, and cutting the extra two lines
                     per section keeps the feed moving. Desktop keeps both. */}

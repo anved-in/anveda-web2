@@ -21,7 +21,7 @@ export default function NotifyMe({
   variantId: number;
   /** a single sold-out size; null = the whole colour */
   size?: string | null;
-  /** what the pop-up says it is for, e.g. "Rose Gold — size 2.4" */
+  /** what the pop-up says it is for, e.g. "Rose Gold, size 2.4" */
   label: string;
   className?: string;
   buttonText?: string;
@@ -83,11 +83,11 @@ export default function NotifyMe({
       if (data.ok) setState("done");
       else {
         setState("idle");
-        setErr(data.error || "Something went wrong — please try again.");
+        setErr(data.error || "Something went wrong. Please try again.");
       }
     } catch (e) {
       setState("idle");
-      setErr(friendlyError(e, "Something went wrong — please try again."));
+      setErr(friendlyError(e, "Something went wrong. Please try again."));
     }
   };
 

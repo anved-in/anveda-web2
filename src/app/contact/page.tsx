@@ -5,7 +5,7 @@ import ContactMethods from "@/components/ContactMethods";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Talk to ANVEDA — track an order, email or Instagram.",
+    "Talk to ANVEDA. Track an order, email or Instagram.",
 };
 
 const FAQ: { q: string; a: React.ReactNode }[] = [
@@ -15,7 +15,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
       <>
         Only if it arrived broken. Record a continuous unboxing video,
         starting before you open the package, and send it within 24 hours of
-        delivery — without it, a return or refund cannot be processed. See our{" "}
+        delivery: without it, a return or refund cannot be processed. See our{" "}
         <Link href="/shipping" className="text-maroon underline underline-offset-2">
           shipping &amp; returns policy
         </Link>
@@ -24,7 +24,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     ),
   },
   {
-    q: "I ordered the wrong size — can I swap it?",
+    q: "I ordered the wrong size. Can I swap it?",
     a: "Message us as soon as you notice. If the order has not shipped yet, we will simply swap it before it leaves.",
   },
 ];
@@ -38,7 +38,7 @@ export default function ContactPage() {
           Contact
         </h1>
         <p className="mt-2 text-[14px] text-ink-soft">
-          Sizing, an order, a shade you cannot find — there is a person on
+          Sizing, an order, a shade you cannot find. There is a person on
           the other end.
         </p>
 
@@ -62,7 +62,7 @@ export default function ContactPage() {
               When we reply
             </h3>
             <p className="mt-2 text-[13.5px] leading-relaxed text-ink-soft">
-              Most messages within a few hours, 10am–8pm IST.
+              Most messages within a few hours, 10am to 8pm IST.
               <br />
               Sundays are slower.
             </p>

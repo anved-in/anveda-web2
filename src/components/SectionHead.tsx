@@ -3,7 +3,7 @@ import Link from "@/components/Link";
 /**
  * A section heading used across the home page: a small tracked "eyebrow" +
  * rule on the left, the title centred, and an optional "View all" link on
- * the right — the reference's three-part row. On mobile the eyebrow/link
+ * the right, the reference's three-part row. On mobile the eyebrow/link
  * have no room to sit beside a centred title, so they're dropped there and
  * a short centred rule takes their place instead, same spot as before.
  */

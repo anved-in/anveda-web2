@@ -6,7 +6,7 @@ import { reels } from "@/lib/reels";
 export const metadata: Metadata = {
   title: "Reels",
   description:
-    "Watch the bangles move — and buy what you see, straight from the reel.",
+    "Watch the bangles move. And buy what you see, straight from the reel.",
 };
 
 /**

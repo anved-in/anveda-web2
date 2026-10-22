@@ -101,7 +101,7 @@ export default function CartDrawer() {
                       >
                         {p.name}
                       </Link>
-                      {/* Display only — l.colour stays the raw catalogue value,
+                      {/* Display only, l.colour stays the raw catalogue value,
                           because it is part of the cart line's identity key. */}
                       {(() => {
                         const v = p.variants.find((x) => x.colour === l.colour);
@@ -145,7 +145,7 @@ export default function CartDrawer() {
                 <span className="font-semibold">{inr(subtotal)}</span>
               </div>
               {/* The bag has no address yet, so shipping cannot be priced
-                  here — it is quoted from the PIN code at checkout. */}
+                  here: it is quoted from the PIN code at checkout. */}
               <div className="mt-1.5 flex justify-between text-[14px]">
                 <span className="text-ink-soft">Shipping</span>
                 <span className="text-[13px] text-ink-soft">at checkout</span>

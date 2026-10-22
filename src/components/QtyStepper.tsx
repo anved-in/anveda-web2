@@ -1,5 +1,5 @@
 /**
- * A real 3-cell grid — −, the count, + — each its own bordered box via
+ * A real 3-cell grid, −, the count, +, each its own bordered box via
  * divide-x on the outer border, not just a single outer rectangle with
  * unboxed text floating between two buttons. Shared across the product
  * page, the checkout line items and the bag drawer so quantity always
@@ -16,7 +16,7 @@ export default function QtyStepper({
   onDecrease: () => void;
   onIncrease: () => void;
   /** Appended to the button's accessible name, e.g. "Decrease quantity of
-   *  Border Bangles" — omit for a page with only one stepper on it. */
+   *  Border Bangles", omit for a page with only one stepper on it. */
   label?: string;
   size?: "sm" | "md";
 }) {

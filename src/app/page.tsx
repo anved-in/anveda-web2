@@ -145,8 +145,8 @@ export default function Home() {
             </div>
             <div className="reveal w-full md:w-1/2">
               <p className="text-[15px] leading-relaxed text-ink-soft">
-                ANVEDA is more than a bangle shop. Every batch is chosen by hand
-                — held up to the light, checked for the cut and the colour, and
+                ANVEDA is more than a bangle shop. Every batch is chosen by hand,
+                held up to the light, checked for the cut and the colour, and
                 kept only if it is good enough to gift.
               </p>
               <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">

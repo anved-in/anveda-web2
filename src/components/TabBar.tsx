@@ -7,7 +7,7 @@ import { HEART } from "./FavButton";
 
 /**
  * Fixed bottom tab bar on mobile, as the reference storefront has. Phone-only
- * — on desktop the same destinations live in the header.
+ *, on desktop the same destinations live in the header.
  */
 const ICONS = {
   shop: (

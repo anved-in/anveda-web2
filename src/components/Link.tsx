@@ -6,7 +6,7 @@ import type { ComponentProps } from "react";
  *
  * Why this exists: with `output: "export"` there is no server to serve the RSC
  * prefetch payloads (`__next.<route>.__PAGE__.txt`) that Next requests when a
- * link scrolls into view. On a static host every one of those is a 404 — dozens
+ * link scrolls into view. On a static host every one of those is a 404, dozens
  * of them per page, filling the console and wasting requests, for a prefetch
  * that can never succeed. Turning prefetch off removes the failed request; real
  * navigation is unaffected because each route is a real HTML file already.

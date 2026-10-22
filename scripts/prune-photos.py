@@ -31,7 +31,7 @@ for c in catalog["collections"]:
 # Reel covers split across two directories now: an existing catalog photo
 # (public/img/products/, tracked above like any other product photo) or a
 # one-time mirror of an Instagram thumbnail (public/img/reels/, gen-catalog.py)
-# — a reel's own cover path says which (/img/products/... vs /img/reels/...).
+#, a reel's own cover path says which (/img/products/... vs /img/reels/...).
 keep_reel = set()
 if os.path.exists(REELS):
     for r in json.load(io.open(REELS, encoding="utf-8"))["reels"]:
@@ -48,7 +48,7 @@ if os.path.exists(REELS):
 keep.add("no-photo.webp")
 
 # Each kept file has a "@480" thumbnail sitting next to it (see
-# optimize-images.js) that never appears in the catalog itself — keep those
+# optimize-images.js) that never appears in the catalog itself, keep those
 # too, or every build would generate them just to have prune delete them.
 keep_small = {os.path.splitext(f)[0] + "@480" + os.path.splitext(f)[1] for f in keep}
 keep |= keep_small

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 const SECTIONS: { h: string; body: string }[] = [
   {
     h: "What we collect",
-    body: "When you place an order, we collect your name, phone number, email, and delivery address — enough to pack, ship and contact you about that order. We do not ask for or store your card number, UPI ID or bank details; those go directly to Razorpay, our payment processor, and never pass through our systems.",
+    body: "When you place an order, we collect your name, phone number, email, and delivery address. Enough to pack, ship and contact you about that order. We do not ask for or store your card number, UPI ID or bank details; those go directly to Razorpay, our payment processor, and never pass through our systems.",
   },
   {
     h: "Why we collect it",
@@ -17,15 +17,15 @@ const SECTIONS: { h: string; body: string }[] = [
   },
   {
     h: "WhatsApp messages",
-    body: "Once your payment is confirmed we send one WhatsApp message to the phone number you gave us, with your order reference and a link to track the order. It is about that order only — we do not use it for marketing. WhatsApp is run by Meta, which processes the message to deliver it.",
+    body: "Once your payment is confirmed we send one WhatsApp message to the phone number you gave us, with your order reference and a link to track the order. It is about that order only. We do not use it for marketing. WhatsApp is run by Meta, which processes the message to deliver it.",
   },
   {
     h: "Payment data",
-    body: "All payment processing is handled by Razorpay, which is PCI-DSS compliant. We receive confirmation that a payment succeeded, and a reference id — never your card or bank details themselves.",
+    body: "All payment processing is handled by Razorpay, which is PCI-DSS compliant. We receive confirmation that a payment succeeded, and a reference id. Never your card or bank details themselves.",
   },
   {
     h: "Cookies and local storage",
-    body: "This site keeps your shopping bag and favourites in your browser's own local storage, so they survive a page reload. That data stays on your device — it is not sent to us or to any third party until you actually place an order.",
+    body: "This site keeps your shopping bag and favourites in your browser's own local storage, so they survive a page reload. That data stays on your device. It is not sent to us or to any third party until you actually place an order.",
   },
   {
     h: "How long we keep it",

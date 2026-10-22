@@ -14,8 +14,8 @@ import { ratingFor } from "@/lib/reviews";
 /**
  * Grid tile for one colourway: a plain square photo, then the name small,
  * the price below it, and a bag icon that quick-adds without leaving the
- * grid. A size still has to be chosen — a defaulted size is the commonest
- * cause of a wrong-size delivery (see ProductBuy) — so the bag icon opens a
+ * grid. A size still has to be chosen, a defaulted size is the commonest
+ * cause of a wrong-size delivery (see ProductBuy), so the bag icon opens a
  * small inline size picker instead of skipping that choice.
  *
  * Deliberately nothing else under the photo. Pack size ("dozen", "set of 2")
@@ -37,7 +37,7 @@ export default function ListingCard({
   /** True when this card is mounted after a client-side action (e.g. a
    *  search/filter toggle) rather than the initial page load. The site's
    *  scroll-reveal observer (Reveal.tsx) only re-scans on navigation, so a
-   *  .reveal card added later would never be observed and stay invisible —
+   *  .reveal card added later would never be observed and stay invisible,
    *  this skips the fade-in entirely and renders it already visible. */
   instant?: boolean;
 }) {
@@ -85,11 +85,11 @@ export default function ListingCard({
             src={asset(imgSrc(v.image))}
             srcSet={`${asset(imgSrcSmall(v.image))} 480w, ${asset(imgSrc(v.image))} 1000w`}
             sizes="(max-width: 767px) 46vw, (max-width: 1023px) 30vw, 300px"
-            alt={`${p.name}${showColour ? ` — ${v.colour}` : ""}`}
+            alt={`${p.name}${showColour ? ` · ${v.colour}` : ""}`}
             className={`h-full w-full object-cover ${v.inStock ? "" : "grayscale"} ${v.zoom && v.zoom !== 1 ? "" : "transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04]"}`}
             // An inline transform beats the group-hover Tailwind utility
             // outright (higher specificity, can't compose with it), so a
-            // zoomed photo loses the hover micro-effect — a fine trade for
+            // zoomed photo loses the hover micro-effect, a fine trade for
             // not fighting CSS specificity over a decorative detail.
             style={framingStyle(v)}
             loading={priority ? "eager" : "lazy"}

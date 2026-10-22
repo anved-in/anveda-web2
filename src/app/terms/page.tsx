@@ -17,7 +17,7 @@ const SECTIONS: { h: string; body: React.ReactNode }[] = [
         <a href={`mailto:${SITE.email}`} className="underline underline-offset-2">
           {SITE.email}
         </a>{" "}
-        or {HAS_WHATSAPP ? "on WhatsApp" : "by Instagram message"} — see the{" "}
+        or {HAS_WHATSAPP ? "on WhatsApp" : "by Instagram message"}: see the{" "}
         <Link href="/contact" className="underline underline-offset-2">
           Contact
         </Link>{" "}
@@ -27,15 +27,15 @@ const SECTIONS: { h: string; body: React.ReactNode }[] = [
   },
   {
     h: "Using this site",
-    body: "By placing an order on this site, you confirm that the information you give us — name, address, phone number and email — is accurate, and that you are authorised to use the payment method you check out with. We reserve the right to refuse or cancel an order where the details given appear false, or where we reasonably suspect fraud.",
+    body: "By placing an order on this site, you confirm that the information you give us, name, address, phone number and email, is accurate, and that you are authorised to use the payment method you check out with. We reserve the right to refuse or cancel an order where the details given appear false, or where we reasonably suspect fraud.",
   },
   {
     h: "Products, pricing and availability",
-    body: "Every bangle set is handpicked in small batches, so stock of a given colourway can run out between when a photo was taken and when you order. Prices shown at checkout are the prices you pay — they include the item and, once you enter your delivery PIN code, an itemised shipping charge. We do not add hidden fees at any later step.",
+    body: "Every bangle set is handpicked in small batches, so stock of a given colourway can run out between when a photo was taken and when you order. Prices shown at checkout are the prices you pay. They include the item and, once you enter your delivery PIN code, an itemised shipping charge. We do not add hidden fees at any later step.",
   },
   {
     h: "Payment",
-    body: "Payment is processed by Razorpay, a licensed payment aggregator. We do not see or store your card, UPI or netbanking credentials at any point — they are entered directly into Razorpay's own secure checkout. Once payment succeeds, Razorpay confirms it to us and your order is placed.",
+    body: "Payment is processed by Razorpay, a licensed payment aggregator. We do not see or store your card, UPI or netbanking credentials at any point. They are entered directly into Razorpay's own secure checkout. Once payment succeeds, Razorpay confirms it to us and your order is placed.",
   },
   {
     h: "Shipping, returns and refunds",
@@ -46,7 +46,7 @@ const SECTIONS: { h: string; body: React.ReactNode }[] = [
         <Link href="/shipping" className="underline underline-offset-2">
           Shipping &amp; returns
         </Link>{" "}
-        page — that page is part of these terms.
+        page: that page is part of these terms.
       </>
     ),
   },
@@ -56,7 +56,7 @@ const SECTIONS: { h: string; body: React.ReactNode }[] = [
   },
   {
     h: "Changes to these terms",
-    body: "We may update these terms as the business grows — a new courier, a new payment option, a policy we clarify. The version live on this page at the time you place an order is the one that applies to that order.",
+    body: "We may update these terms as the business grows. A new courier, a new payment option, a policy we clarify. The version live on this page at the time you place an order is the one that applies to that order.",
   },
 ];
 

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const FAQ: { q: string; a: string }[] = [
   {
     q: "How long does delivery take?",
-    a: "Orders are packed within 1–2 working days. After dispatch, most metros receive in 3–5 working days and the rest of India in 5–8. Remote PIN codes can take a little longer.",
+    a: "Orders are packed within 1 to 2 working days. After dispatch, most metros receive in 3 to 5 working days and the rest of India in 5 to 8. Remote PIN codes can take a little longer.",
   },
   {
     q: "What does shipping cost?",
@@ -22,7 +22,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "My bangles arrived broken. What now?",
-    a: "Please record a continuous unboxing video, starting before you open the package — this is required to process a damage claim, since it's the only way to tell a transit breakage from damage after the fact. Only an unboxing video can be accepted: a photo, or a video recorded after the parcel is opened, cannot be considered. Send it to us " + (HAS_WHATSAPP ? "on WhatsApp" : "as a message on Instagram (@anveda.in)") + " within 24 hours of delivery. Breakages in transit are replaced free or refunded in full — that is on us, not on you.",
+    a: "Please record a continuous unboxing video, starting before you open the package, this is required to process a damage claim, since it's the only way to tell a transit breakage from damage after the fact. Only an unboxing video can be accepted: a photo, or a video recorded after the parcel is opened, cannot be considered. Send it to us " + (HAS_WHATSAPP ? "on WhatsApp" : "as a message on Instagram (@anveda.in)") + " within 24 hours of delivery. Breakages in transit are replaced free or refunded in full, that is on us, not on you.",
   },
   {
     q: "Can I return something I simply did not like?",
@@ -34,7 +34,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "How is the order packed?",
-    a: "Each set is wrapped individually, cushioned in bubble wrap and boxed rigid so nothing shifts. We over-pack deliberately — Indian courier routes are hard on glass.",
+    a: "Each set is wrapped individually, cushioned in bubble wrap and boxed rigid so nothing shifts. We over-pack deliberately: Indian courier routes are hard on glass.",
   },
 ];
 
@@ -64,7 +64,7 @@ export default function ShippingPage() {
             Shipping &amp; returns
           </h1>
           <p className="mt-4 max-w-[58ch] text-[15px] text-ink-soft">
-            Everything about how your order reaches you — and what happens when
+            Everything about how your order reaches you. And what happens when
             something goes wrong.
           </p>
         </div>
@@ -74,8 +74,8 @@ export default function ShippingPage() {
         <div className="mx-auto max-w-[1320px]">
           <div className="flex flex-wrap border border-line">
             {[
-              ["Dispatch", "1–2 working days"],
-              ["Delivery", "3–8 working days"],
+              ["Dispatch", "1 to 2 working days"],
+              ["Delivery", "3 to 8 working days"],
               ["Shipping", "Shown at checkout"],
               ["Breakage", "Replaced or refunded"],
             ].map(([t, d], i) => (
@@ -123,7 +123,7 @@ export default function ShippingPage() {
           <div className="mt-10 bg-cream-2 p-7 text-center">
             <h3 className="font-display text-[22px]">Something not covered here?</h3>
             <p className="mx-auto mt-2 max-w-[46ch] text-[14.5px] text-ink-soft">
-              {HAS_WHATSAPP ? "Message us on WhatsApp" : "Message us on Instagram"} — a real person reads it.
+              {HAS_WHATSAPP ? "Message us on WhatsApp" : "Message us on Instagram"}: a real person reads it.
             </p>
             <a
               href={HAS_WHATSAPP ? waLink("Hi ANVEDA! I have a question about shipping.") : igDmLink}

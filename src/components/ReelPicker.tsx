@@ -258,7 +258,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
                         return (
                           <option key={c.colour} value={c.colour} disabled={!c.inStock || noSize}>
                             {colourLabel(r.p, c)}
-                            {!c.inStock ? " — sold out" : noSize ? ` — no size ${size}` : ""}
+                            {!c.inStock ? ", sold out" : noSize ? `, no size ${size}` : ""}
                           </option>
                         );
                       })}
@@ -336,7 +336,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
           </p>
         )}
         <button type="button" onClick={addToBag} className={`h-11 w-full cursor-pointer text-[11.5px] font-bold uppercase tracking-[0.14em] transition-colors ${complete ? t.btn : t.btnDim}`}>
-          {soldOutRows.length ? "Currently unavailable" : `Add to bag — ${inr(price)}`}
+          {soldOutRows.length ? "Currently unavailable" : `Add to bag · ${inr(price)}`}
         </button>
         {!combo && (
           <Link href={reel.href} className={`mt-3 block text-center text-[11px] uppercase tracking-[0.14em] underline underline-offset-4 ${t.muted}`}>

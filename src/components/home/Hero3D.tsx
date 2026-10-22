@@ -10,7 +10,7 @@ export interface Slide {
   blurb: string;
   href: string;
   /** Small tracked label above the title. Same wording across slides by
-   *  default — it names the whole showcase, not the individual slide. */
+   *  default, it names the whole showcase, not the individual slide. */
   eyebrow?: string;
 }
 
@@ -18,7 +18,7 @@ export interface Slide {
  * The home page's opening: the same three featured collections as before, the
  * photograph drawn in WebGL so it can drift gently against the pointer and
  * dissolve into the next slide through a ripple instead of a flat crossfade.
- * No 3D objects float over the photo any more — just the photo itself, with
+ * No 3D objects float over the photo any more, just the photo itself, with
  * that transition and a faint chromatic fringe that responds to pointer speed.
  *
  * The plain HTML slider underneath is the whole component without WebGL: the
@@ -138,7 +138,7 @@ export default function Hero3D({ slides }: { slides: Slide[] }) {
       hooks.fit();
       undo.push(() => { plane.geometry.dispose(); plane.material.dispose(); T.forEach((t) => t.dispose()); });
 
-      // No glass bangle meshes and no `world` placement/rotation any more —
+      // No glass bangle meshes and no `world` placement/rotation any more,
       // just the photo plane. The ripple-dissolve transition between slides
       // lives entirely in that plane's own shader (uMix below), not in
       // anything removed here, so it's untouched.
@@ -284,7 +284,7 @@ export default function Hero3D({ slides }: { slides: Slide[] }) {
       {n > 1 && (
         <>
           {/* Numbered rail (sm+): which slide is active, and a direct jump to
-              any other. Desktop-width real estate only — on a short mobile
+              any other. Desktop-width real estate only. On a short mobile
               hero this and the arrow pair would collide, so mobile falls
               back to plain centred dots instead. */}
           <div className="absolute left-6 top-1/2 hidden -translate-y-1/2 flex-col gap-2.5 sm:flex md:left-10">
@@ -330,7 +330,7 @@ export default function Hero3D({ slides }: { slides: Slide[] }) {
                 "absolute flex h-9 w-9 items-center justify-center rounded-full border border-white/60 text-white transition-colors hover:bg-white hover:text-ink",
                 // Right-offsets must clear each other by at least the 36px
                 // button width + a gap, or the two circles overlap into one
-                // fused blob — sm: 24px vs 72px (36px gap), md: 40px vs 88px
+                // fused blob, sm: 24px vs 72px (36px gap), md: 40px vs 88px
                 // (also 36px). The previous values (40px vs 58px, only an
                 // 18px gap against a 36px button) did exactly that.
                 "top-1/2 -translate-y-1/2 sm:top-auto sm:bottom-6 sm:translate-y-0 md:bottom-10",

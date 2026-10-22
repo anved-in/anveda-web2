@@ -138,7 +138,7 @@ function FavRow({ p, v }: { p: Product; v: Variant }) {
       <button
         type="button"
         onClick={() => remove(p.id, v.colour)}
-        aria-label={`Remove ${p.name} — ${colourLabel(p, v)} from favourites`}
+        aria-label={`Remove ${p.name} · ${colourLabel(p, v)} from favourites`}
         className="absolute right-0 top-5 flex h-7 w-7 cursor-pointer items-center justify-center text-ink-faint transition-colors hover:text-ink"
       >
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
@@ -154,7 +154,7 @@ function FavRow({ p, v }: { p: Product; v: Variant }) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={asset(imgSrc(v.image))}
-          alt={`${p.name} — ${colourLabel(p, v)}`}
+          alt={`${p.name} · ${colourLabel(p, v)}`}
           className={`h-full w-full object-cover ${v.inStock ? "" : "grayscale"}`}
           loading="lazy"
           style={framingStyle(v)}
@@ -164,7 +164,7 @@ function FavRow({ p, v }: { p: Product; v: Variant }) {
         <div className="text-[10px] uppercase tracking-[0.16em] text-maroon">
           {p.collectionName}
         </div>
-        {/* The name IS the "view" action — a separate View link beside Remove
+        {/* The name IS the "view" action, a separate View link beside Remove
             just repeated it. */}
         <Link
           href={href}

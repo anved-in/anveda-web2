@@ -6,7 +6,7 @@ import ReelFeed from "./ReelFeed";
 import type { ResolvedReel } from "@/lib/reels";
 
 /**
- * `/reels` is one route with two faces, switched on the `?v=<id>` query —
+ * `/reels` is one route with two faces, switched on the `?v=<id>` query,
  * mirrors Instagram's own Reels tab: a grid by default, and tapping a tile
  * drops into the swipeable player already built (ReelFeed), opened on that
  * tile. `?v` also makes a single reel a real, shareable link.

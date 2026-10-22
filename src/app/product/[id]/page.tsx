@@ -15,7 +15,7 @@ const SITE_URL = "https://www.anveda.in";
 
 /**
  * Product structured data (schema.org), so Google can show price, stock
- * status, and — once there are real reviews on this design — a star rating
+ * status, and, once there are real reviews on this design, a star rating
  * directly in search results. aggregateRating is only added when reviews
  * actually exist for this product: adding one without real reviews behind it
  * is against Google's structured data policy and risks a manual penalty.
@@ -78,7 +78,7 @@ export async function generateMetadata({
   if (!p) return { title: "Not found" };
   return {
     title: p.name,
-    description: `${p.name} — ${p.variants.length} colourways. ${p.blurb}`,
+    description: `${p.name} · ${p.variants.length} colourways. ${p.blurb}`,
   };
 }
 

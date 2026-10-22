@@ -6,14 +6,14 @@ import { waLink, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Sizing Guide",
   description:
-    "Indian bangle sizing explained — measure once, order confidently. Sizes 2.2 to 2.8.",
+    "Indian bangle sizing explained. Measure once, order confidently. Sizes 2.2 to 2.8.",
 };
 
 const howToJsonLd = {
   "@context": "https://schema.org",
   "@type": "HowTo",
   name: "How to find your bangle size at home",
-  description: "Two ways to work out your Indian bangle size without a jeweller — using a bangle you already own, or measuring your hand.",
+  description: "Two ways to work out your Indian bangle size without a jeweller. Using a bangle you already own, or measuring your hand.",
   step: [
     {
       "@type": "HowToStep",
@@ -23,7 +23,7 @@ const howToJsonLd = {
     {
       "@type": "HowToStep",
       name: "Or measure your hand",
-      text: "Bring your thumb across to touch your little finger, as if slipping a bangle on. Wrap a measuring tape or strip of paper around the widest part and mark where it meets — that length in centimetres is your circumference. Match it against the size chart.",
+      text: "Bring your thumb across to touch your little finger, as if slipping a bangle on. Wrap a measuring tape or strip of paper around the widest part and mark where it meets. That length in centimetres is your circumference. Match it against the size chart.",
     },
     {
       "@type": "HowToStep",
@@ -57,7 +57,7 @@ export default function SizingPage() {
       <section className="px-5 py-14 sm:px-6 md:py-20">
         <div className="mx-auto max-w-[1320px]">
           <div className="flex flex-wrap gap-y-10">
-            {/* How to measure — two honest methods, the easy one first. */}
+            {/* How to measure, two honest methods, the easy one first. */}
             <div className="w-full lg:w-1/2 lg:pr-14">
               <h2 className="font-display text-[clamp(22px,2.6vw,32px)]">
                 How to measure
@@ -66,7 +66,7 @@ export default function SizingPage() {
               <div className="mt-6 space-y-7">
                 <div>
                   <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-maroon">
-                    Easiest — use a bangle you own
+                    Easiest: use a bangle you own
                   </div>
                   <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
                     Take a bangle that already fits comfortably and measure
@@ -78,7 +78,7 @@ export default function SizingPage() {
 
                 <div>
                   <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-maroon">
-                    No bangle handy — measure your hand
+                    No bangle handy. Measure your hand
                   </div>
                   <ol className="mt-2 list-decimal space-y-2 pl-5 text-[15px] leading-relaxed text-ink-soft">
                     <li>
@@ -91,7 +91,7 @@ export default function SizingPage() {
                     </li>
                     <li>
                       Measure the length in centimetres, then find it in the
-                      table — that is the circumference, not the diameter.
+                      table: that is the circumference, not the diameter.
                     </li>
                   </ol>
                 </div>

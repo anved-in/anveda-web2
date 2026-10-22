@@ -17,7 +17,7 @@ const FACES: [family: string, file: string, weight: string][] = [
  *
  * Why: a url() inside a stylesheet is resolved against the stylesheet, and an
  * absolute "/fonts/x.woff2" ignores Next's basePath entirely. On a GitHub Pages
- * PROJECT site (served from /<repo>/) that is a 404 for every face — the site
+ * PROJECT site (served from /<repo>/) that is a 404 for every face, the site
  * still renders, silently, in Georgia and system-sans, which is exactly the
  * kind of breakage nobody notices until the brand looks wrong in production.
  *

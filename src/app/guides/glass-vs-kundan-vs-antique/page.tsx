@@ -4,9 +4,9 @@ import { groups, collectionsInGroup, rangeHref } from "@/lib/catalog";
 import { breadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = {
-  title: "Glass vs Kundan vs Antique Bangles — What's the Difference",
+  title: "Glass vs Kundan vs Antique Bangles: What's the Difference",
   description:
-    "A plain-language guide to glass, kundan-set and antique-style bangles — what each is actually made of, how they wear, what they cost, and which to pick for your stack.",
+    "A plain-language guide to glass, kundan-set and antique-style bangles. What each is actually made of, how they wear, what they cost, and which to pick for your stack.",
 };
 
 const breadcrumb = breadcrumbJsonLd([
@@ -32,10 +32,10 @@ export default function MaterialGuidePage() {
         <div className="mx-auto max-w-[1320px]">
           <span className="eyebrow">Guide</span>
           <h1 className="mt-3 max-w-[20ch] font-display text-[clamp(32px,4.8vw,58px)]">
-            Glass, kundan or antique — what's actually different
+            Glass, kundan or antique. What's actually different
           </h1>
           <p className="mt-4 max-w-[62ch] text-[15px] text-ink-soft">
-            "Bangles" covers a lot of ground — coloured glass, hand-set stonework,
+            "Bangles" covers a lot of ground. Coloured glass, hand-set stonework,
             and the heavier antique-look pieces are three different kinds of
             object, worn for different reasons. Here's what each actually is,
             so you're picking by what suits you, not by a product photo alone.
@@ -54,8 +54,8 @@ export default function MaterialGuidePage() {
               Exactly what it sounds like: coloured glass, shaped into a bangle
               and worn as-is or cut and stone-set for extra sparkle. This is the
               lightest option on the wrist, the one made for stacking six or
-              eight at once, and — because a plain glass bangle needs no
-              hand-set work — the most affordable. Our {glassCollections.length}{" "}
+              eight at once, and because a plain glass bangle needs no
+              hand-set work, it is the most affordable. Our {glassCollections.length}{" "}
               glass ranges run from clear jelly-finish colour to fine-cut,
               stone-set detail:
             </p>
@@ -64,8 +64,8 @@ export default function MaterialGuidePage() {
                 <li key={c.slug}>
                   <Link href={rangeHref(c.slug)} className="text-maroon underline underline-offset-2 hover:no-underline">
                     {c.name}
-                  </Link>{" "}
-                  <span className="text-ink-soft">— {c.blurb}</span>
+                  </Link>
+                  <span className="text-ink-soft">: {c.blurb}</span>
                 </li>
               ))}
             </ul>
@@ -85,19 +85,19 @@ export default function MaterialGuidePage() {
               Kundan and stone-set work
             </h2>
             <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
-              Kundan is a setting technique, not a material — small stones (or
+              Kundan is a setting technique, not a material. Small stones (or
               polished glass standing in for them) set by hand into a border or
               motif, traditionally backed in gold-toned foil so the light
               catches from underneath as well as on top. It's slower, more
               detailed work than a plain bangle, which is why it costs more and
-              why two kundan-set pieces are never quite identical — each one is
+              why two kundan-set pieces are never quite identical. Each one is
               set by hand. Our{" "}
               <Link href={rangeHref("border-bangles")} className="text-maroon underline underline-offset-2 hover:no-underline">
                 Border Bangles
               </Link>{" "}
               range is built entirely around this: the body stays plain glass so
-              the worked border — kundan, pearl-and-gold stone, or a premium
-              non-bendable stone setting — is what carries the whole piece.
+              the worked border. Kundan, pearl-and-gold stone, or a premium
+              non-bendable stone setting. Is what carries the whole piece.
             </p>
           </div>
 
@@ -107,11 +107,11 @@ export default function MaterialGuidePage() {
               Antique-style and statement pieces
             </h2>
             <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
-              "Antique" here describes a look, not age — an oxidised or matte
+              "Antique" here describes a look, not age. An oxidised or matte
               gold-toned finish and heavier, more worked designs styled after
               traditional temple jewellery. These are the pieces a stack gets
               built around rather than filled out with: worn one or two at a
-              time, not six. Our Ornate group covers this ground —{" "}
+              time, not six. Our Ornate group covers this ground:{" "}
               {ornateCollections.map((c, i) => (
                 <span key={c.slug}>
                   <Link href={rangeHref(c.slug)} className="text-maroon underline underline-offset-2 hover:no-underline">
@@ -119,8 +119,8 @@ export default function MaterialGuidePage() {
                   </Link>
                   {i < ornateCollections.length - 2 ? ", " : i === ornateCollections.length - 2 ? " and " : ""}
                 </span>
-              ))}{" "}
-              — the wide, worked bangles, solid kada meant to be worn singly,
+              ))}{" "},
+              the wide, worked bangles, solid kada meant to be worn singly,
               and the slimmer designer sides made to flank them.
             </p>
           </div>
@@ -131,7 +131,7 @@ export default function MaterialGuidePage() {
               Layering pieces
             </h2>
             <p className="mt-3 text-[15px] leading-relaxed text-ink-soft">
-              Not a material at all — a role. Slim, quieter designs made to sit
+              Not a material at all. A role. Slim, quieter designs made to sit
               either side of something bigger, not to lead a stack themselves.{" "}
               {layeringCollections.map((c, i) => (
                 <span key={c.slug}>
@@ -164,8 +164,8 @@ export default function MaterialGuidePage() {
                 </thead>
                 <tbody className="text-[14px]">
                   {[
-                    ["Glass", "Lightest", "Stacked, 4–8 at once", "₹120"],
-                    ["Kundan / stone-set", "Light–medium", "1–2 as the stack's focal point", "₹240"],
+                    ["Glass", "Lightest", "Stacked, 4 to 8 at once", "₹120"],
+                    ["Kundan / stone-set", "Light to medium", "1 to 2 as the stack's focal point", "₹240"],
                     ["Antique / statement", "Heaviest", "Alone or one per wrist", "₹300"],
                     ["Layering", "Light", "Either side of a statement piece", "₹150"],
                   ].map((row) => (
@@ -181,7 +181,7 @@ export default function MaterialGuidePage() {
               </table>
             </div>
             <p className="mt-4 text-[12.5px] text-ink-faint">
-              Indicative starting prices across current stock — see each range for
+              Indicative starting prices across current stock. See each range for
               exact pricing by colourway.
             </p>
           </div>

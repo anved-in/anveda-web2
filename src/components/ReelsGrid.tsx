@@ -4,7 +4,7 @@ import type { ResolvedReel } from "@/lib/reels";
 
 /**
  * Reels landing view: a plain grid of covers, the way Instagram's own Reels
- * tab opens — not the swipeable player. Tapping a tile is what drops into
+ * tab opens, not the swipeable player. Tapping a tile is what drops into
  * that (see ReelsRoute), starting on the tile that was tapped.
  */
 export default function ReelsGrid({ items }: { items: ResolvedReel[] }) {
@@ -44,7 +44,7 @@ export default function ReelsGrid({ items }: { items: ResolvedReel[] }) {
               decoding="async"
             />
             {/* The small reel glyph is Instagram's own marker for "this tile
-                is a reel, not a photo" — keeping it, rather than a big central
+                is a reel, not a photo", keeping it, rather than a big central
                 play button, is what makes the grid read as Instagram's. */}
             <svg
               width="16"
