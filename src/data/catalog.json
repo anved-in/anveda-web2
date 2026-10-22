@@ -676,7 +676,7 @@
     {
      "id": 14,
      "colour": "Royal Blue",
-     "image": "intricate-glass-bangle-royal-blue.webp",
+     "image": "u-intricate-glass-bangle-royal-blue-1a161d5ef9f.webp",
      "hex": "#011ad5",
      "price": 320,
      "pieces": 12,
@@ -694,11 +694,11 @@
       "2.6": 1,
       "2.8": 0
      },
-     "focal": "50% 50%",
      "zoom": 1,
      "gallery": [
       {
-       "image": "u-intricate-glass-bangle-royal-blue-1a161d5ef9f.webp",
+       "image": "intricate-glass-bangle-royal-blue.webp",
+       "focal": "50% 50%",
        "zoom": 1
       }
      ]
@@ -706,7 +706,7 @@
     {
      "id": 15,
      "colour": "Sky Blue",
-     "image": "intricate-glass-bangle-sky-blue.webp",
+     "image": "u-intricate-glass-bangle-sky-blue-1a161d5efa0.webp",
      "hex": "#17deda",
      "price": 320,
      "pieces": 12,
@@ -724,11 +724,11 @@
       "2.6": 1,
       "2.8": 1
      },
-     "focal": "50.34% 41.93%",
      "zoom": 1,
      "gallery": [
       {
-       "image": "u-intricate-glass-bangle-sky-blue-1a161d5efa0.webp",
+       "image": "intricate-glass-bangle-sky-blue.webp",
+       "focal": "50.34% 41.93%",
        "zoom": 1
       }
      ]
