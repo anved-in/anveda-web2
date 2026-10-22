@@ -421,6 +421,36 @@
      }
     ]
    }
+  },
+  {
+   "id": "ruby-citrus",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DeUC9D6TleI/?mdxt=MTEwMnFra2VvYW5iaw==",
+   "cover": null,
+   "title": "Ruby & Citrus",
+   "caption": "The price mentioned is for both hands, and this set is available only as a pair",
+   "productId": "border-bangles",
+   "colour": "Gold Stones (Non Bendable)",
+   "combo": {
+    "price": 880,
+    "items": [
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Tangerine",
+       "Ruby Red"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
