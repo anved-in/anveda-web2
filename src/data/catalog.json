@@ -402,7 +402,7 @@
     {
      "id": 5,
      "colour": "Aqua",
-     "image": "intricate-glass-bangle-aqua.webp",
+     "image": "u-intricate-glass-bangle-aqua-1a161d5ef95.webp",
      "hex": "#0fd2c5",
      "price": 320,
      "pieces": 12,
@@ -420,19 +420,19 @@
       "2.6": 1,
       "2.8": 1
      },
-     "focal": "51.82% 45.11%",
-     "zoom": 1.22,
+     "zoom": 1,
      "gallery": [
       {
-       "image": "u-intricate-glass-bangle-aqua-1a161d5ef95.webp",
-       "zoom": 1
+       "image": "intricate-glass-bangle-aqua.webp",
+       "focal": "51.82% 45.11%",
+       "zoom": 1.22
       }
      ]
     },
     {
      "id": 6,
      "colour": "Champagne Gold",
-     "image": "intricate-glass-bangle-champagne-gold.webp",
+     "image": "u-intricate-glass-bangle-champagne-gold-1a161d5ef96.webp",
      "hex": "#dbc08a",
      "price": 320,
      "pieces": 12,
@@ -450,11 +450,11 @@
       "2.6": 1,
       "2.8": 0
      },
-     "focal": "50.38% 51.34%",
      "zoom": 1,
      "gallery": [
       {
-       "image": "u-intricate-glass-bangle-champagne-gold-1a161d5ef96.webp",
+       "image": "intricate-glass-bangle-champagne-gold.webp",
+       "focal": "50.38% 51.34%",
        "zoom": 1
       }
      ]
@@ -462,7 +462,7 @@
     {
      "id": 7,
      "colour": "Coffee/Deep Wine",
-     "image": "intricate-glass-bangle-coffee.webp",
+     "image": "u-intricate-glass-bangle-coffee-1a161d5ef97.webp",
      "hex": "#4f1212",
      "price": 320,
      "pieces": 12,
@@ -480,14 +480,7 @@
       "2.6": 2,
       "2.8": 2
      },
-     "focal": "50% 48.4%",
-     "zoom": 1,
-     "gallery": [
-      {
-       "image": "u-intricate-glass-bangle-coffee-1a161d5ef97.webp",
-       "zoom": 1
-      }
-     ]
+     "zoom": 1
     },
     {
      "id": 8,
@@ -825,7 +818,7 @@
      "zoom": 1
     }
    ],
-   "image": "intricate-glass-bangle-aqua.webp"
+   "image": "u-intricate-glass-bangle-aqua-1a161d5ef95.webp"
   },
   {
    "id": "jelly-bangles-glass-bangles",
