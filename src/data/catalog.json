@@ -1522,7 +1522,7 @@
     {
      "id": 38,
      "colour": "Dark Pink",
-     "image": "petal-stone-glass-bangle-dark-pink.webp",
+     "image": "u-petal-stone-glass-bangle-dark-pink-1a161d5efa9.webp",
      "hex": "#f20779",
      "price": 320,
      "pieces": 12,
@@ -1542,16 +1542,13 @@
       "2.6": 0,
       "2.8": 2
      },
-     "focal": "46.33% 53.35%",
-     "zoom": 1,
+     "focal": "54.1% 63.1%",
+     "zoom": 1.35,
      "gallery": [
       {
-       "image": "u-petal-stone-glass-bangle-dark-pink-1a161d5efa9.webp",
-       "zoom": 1
-      },
-      {
        "image": "u-petal-stone-glass-bangle-dark-pink-2-1a161d5efaa.webp",
-       "zoom": 1
+       "focal": "62.6% 75.5%",
+       "zoom": 1.4
       }
      ]
     },
@@ -1579,7 +1576,7 @@
       "2.8": 2
      },
      "focal": "47.28% 50.86%",
-     "zoom": 1
+     "zoom": 1.3
     },
     {
      "id": 41,
