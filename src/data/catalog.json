@@ -5599,6 +5599,31 @@
      },
      "focal": "51.8% 60%",
      "zoom": 1.6
+    },
+    {
+     "id": 206,
+     "colour": "Strawberry (Premium Raindrop)",
+     "image": "u-square-edge-glass-bangles-strawberry-premium-raindrop-more-mvje6ke2.webp",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8",
+      "2.10"
+     ],
+     "inStock": true,
+     "stockQty": 8,
+     "sizeStock": {
+      "2.10": 0,
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 3,
+      "2.8": 4
+     },
+     "focal": "43.6% 36.6%",
+     "zoom": 1.35
     }
    ],
    "image": "u-square-edge-glass-bangles-aqua-hd-1792254278.webp"
