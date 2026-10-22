@@ -179,30 +179,6 @@
    "story": "The border is where the work shows. Kundan set by hand, pearl-and-gold stone, or the premium non-bendable stones — the body stays plain so the edge can carry the piece.",
    "variants": [
     {
-     "id": 1,
-     "colour": "Kundan Border Bangles",
-     "image": "border-bangles-kundan-border-bangles.webp",
-     "hex": "#e2d8c4",
-     "price": 250,
-     "pieces": 12,
-     "sizes": [
-      "2.2",
-      "2.4",
-      "2.6",
-      "2.8"
-     ],
-     "inStock": false,
-     "stockQty": 5,
-     "sizeStock": {
-      "2.2": 1,
-      "2.4": 2,
-      "2.6": 2,
-      "2.8": 0
-     },
-     "focal": "44.5% 50.4%",
-     "zoom": 1.2
-    },
-    {
      "id": 2,
      "colour": "Pearl Gold Stone Glass Bangles",
      "image": "u-border-bangles-pearl-gold-stone-glass-bangles-more-mvj79v82.webp",
@@ -403,7 +379,7 @@
      "zoom": 1.3
     }
    ],
-   "image": "border-bangles-kundan-border-bangles.webp"
+   "image": "u-border-bangles-pearl-gold-stone-glass-bangles-more-mvj79v82.webp"
   },
   {
    "id": "intricate-glass-bangle",
