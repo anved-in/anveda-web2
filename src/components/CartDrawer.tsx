@@ -1,15 +1,32 @@
 "use client";
 
 import Link from "@/components/Link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCart, lineProduct } from "@/lib/cart";
 import QtyStepper from "@/components/QtyStepper";
 import ComboBagRow from "@/components/ComboBagRow";
 import { framingStyle, imgSrc, inr, unitPrice, packLabel, colourLabel } from "@/lib/catalog";
 import { asset } from "@/lib/site";
+import { bagPieces, loadOffer, type OfferConfig } from "@/lib/shipping";
 
 export default function CartDrawer() {
   const { open, setOpen, lines, setQty, remove, subtotal, count } = useCart();
+
+  // The big-order delivery offer, from the shop's settings. The bag has no address yet, so it says what is true for every
+  // address and never names a personal saving.
+  const [offer, setOffer] = useState<OfferConfig | null>(null);
+  useEffect(() => {
+    if (open && !offer) loadOffer().then(setOffer);
+  }, [open, offer]);
+  const dozens = bagPieces(lines) / 12;
+  const offerNote = (() => {
+    if (!offer || !offer.on || lines.length === 0) return null;
+    const far = `(${inr(offer.priceFar)} to the North East and J&K)`;
+    if (dozens > offer.maxDozens) return null;
+    if (dozens >= offer.minDozens) return `Big order offer: delivery is ${inr(offer.price)} for this bag ${far}.`;
+    const toGo = Math.ceil(offer.minDozens - dozens);
+    return `Add ${toGo} more ${toGo === 1 ? "dozen" : "dozens"} and delivery is just ${inr(offer.price)} ${far}.`;
+  })();
 
   // Escape closes; body scroll locks while the drawer owns the screen.
   useEffect(() => {
@@ -150,6 +167,9 @@ export default function CartDrawer() {
                 <span className="text-ink-soft">Shipping</span>
                 <span className="text-[13px] text-ink-soft">at checkout</span>
               </div>
+              {offerNote && (
+                <p className="mt-2.5 rounded-[10px] bg-cream-2 px-3 py-2 text-[12.5px] leading-snug text-ink">{offerNote}</p>
+              )}
 
               <Link
                 href="/checkout"

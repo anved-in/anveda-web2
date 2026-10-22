@@ -40,8 +40,10 @@ export interface Customer {
 export interface OrderSummary {
   lines: Line[];
   subtotal: number;
-  /** Estimated postage for the destination PIN, see lib/shipping.ts. */
+  /** Delivery charge for the destination, as quoted by the shop's server (see lib/shipping.ts). */
   shipping: number;
+  /** 'porter' only in Bengaluru, after the shop confirmed a Porter price on WhatsApp. */
+  delivery?: "standard" | "porter";
   /** subtotal - discount + shipping: what the customer is actually charged. */
   total: number;
   /** Applied coupon, if any, the server re-validates and recomputes the
@@ -69,6 +71,15 @@ export const paymentsEnabled = (): boolean => true;
  * this exists, the short version is that a secret key belongs on a server,
  * and until now this static export had none.
  */
+/** The shop worked out a different delivery charge than the one shown; `shipping` is the right one. */
+export class ShippingChanged extends Error {
+  shipping: number;
+  constructor(message: string, shipping: number) {
+    super(message);
+    this.shipping = shipping;
+  }
+}
+
 const createOrder = async (
   ref: string,
   o: OrderSummary,
@@ -89,21 +100,17 @@ const createOrder = async (
       })),
       subtotal: o.subtotal,
       shipping: o.shipping,
+      delivery: { method: o.delivery ?? "standard" },
       couponCode: o.couponCode || undefined,
     }),
   });
   const data = await res.json();
+  if (res.status === 409 && typeof data.shipping === "number") throw new ShippingChanged(data.error || "Delivery price changed.", data.shipping);
   if (!res.ok || !data.ok) {
     throw new Error(data.error || "Could not start payment. Please try again.");
   }
   return data;
 };
-
-/**
- * Shipping comes from the destination PIN code, see lib/shipping.ts, which
- * carries DTDC's zone bands. Re-exported here so callers have one import.
- */
-export { quoteShipping } from "./shipping";
 
 /** A short human-readable reference the customer and owner can both quote. */
 export const makeRef = (): string =>
@@ -148,6 +155,7 @@ export const orderNotes = (
     customer: `${c.name} / ${c.phone}${c.email ? ` / ${c.email}` : ""}`.slice(0, 250),
     ship_to: `${c.address}, ${c.city}, ${c.state} ${c.pin}`.slice(0, 250),
     postage: inr(o.shipping),
+    delivery: o.delivery === "porter" ? "Porter (Bengaluru)" : "DTDC",
   };
   if (o.couponCode) notes.coupon = o.couponCode;
   if (c.notes) notes.buyer_notes = c.notes.slice(0, 250);

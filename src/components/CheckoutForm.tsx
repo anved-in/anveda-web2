@@ -15,8 +15,9 @@ import {
   makeRef,
   payWithRazorpay,
   paymentsEnabled,
+  ShippingChanged,
 } from "@/lib/payment";
-import { quoteShipping } from "@/lib/shipping";
+import { useShipping, offerLine, porterMessage, porterLink, PORTER_WHATSAPP_DISPLAY } from "@/lib/shipping";
 import { useSlow, friendlyError, SLOW_NOTE } from "@/lib/useSlow";
 import { INDIAN_STATES } from "@/lib/states";
 import { accountPost, loadLoginMethods } from "@/lib/account";
@@ -87,22 +88,20 @@ export default function CheckoutForm() {
   const [couponError, setCouponError] = useState<string | null>(null);
   const [couponBusy, setCouponBusy] = useState(false);
 
-  // Shipping is quoted from the PIN code the customer is typing, and re-quotes
-  // as they type it, so the total is never a surprise at the last step.
-  const pieces = lines.reduce((n, l) => {
-    if (l.combo) {
-      return n + l.qty * l.combo.picks.reduce((s, k) => {
-        const cp = productById(k.id);
-        const cv = cp?.variants.find((x) => x.colour === k.colour);
-        return s + (cv?.pieces ?? cp?.pieces ?? 12) * k.qty;
-      }, 0);
-    }
-    const p = productById(l.id);
-    const v = p?.variants.find((x) => x.colour === l.colour);
-    return n + (v?.pieces ?? p?.pieces ?? 12) * l.qty;
-  }, 0);
-  const quote = quoteShipping(c.pin, pieces);
-  const shipping = coupon?.freeShipping ? 0 : quote.amount;
+  // Delivery is priced by the shop's server (real DTDC rates) from the bag, the PIN code and the state, and it
+  // re-prices as those change, so the total is never a surprise at the last step. In Bengaluru there is also a Porter
+  // option: the owner confirms the Porter price on WhatsApp, then it appears here and the customer pays it online.
+  const [method, setMethod] = useState<"standard" | "porter">("standard");
+  const ship = useShipping({ lines, pin: c.pin, state: c.state, phone: c.phone }, method === "porter");
+  const quote = ship.info?.quote ?? null;
+  const shipKnown = !!quote?.known;
+  const porterOffered = !!ship.info?.porter.available;
+  const porterQuote = ship.info?.porter.quote ?? null;
+  const usePorter = method === "porter" && porterOffered;
+  const deliveryAmount: number | null = usePorter ? (porterQuote?.amount ?? null) : shipKnown ? quote!.amount : null;
+  const deliveryReady = deliveryAmount !== null;
+  const shipping = coupon?.freeShipping ? 0 : (deliveryAmount ?? 0);
+  const offerText = !usePorter && quote ? offerLine(quote) : null;
   const discount = coupon?.discount ?? 0;
   const total = subtotal - discount + shipping;
   const live = paymentsEnabled();
@@ -280,6 +279,16 @@ export default function CheckoutForm() {
       return;
     }
     if (lines.length === 0) return;
+    if (!deliveryReady) {
+      setFailure(
+        usePorter
+          ? "Your Porter price is not confirmed yet. Use the WhatsApp button above, and pay once the price appears here."
+          : ship.failed
+            ? "We could not work out delivery. Please check your connection and try again."
+            : "Please enter your PIN code and choose your state, so we can work out delivery.",
+      );
+      return;
+    }
 
     if (!live) {
       setFailure(
@@ -293,13 +302,19 @@ export default function CheckoutForm() {
     try {
       const paymentId = await payWithRazorpay(
         ref,
-        { lines, subtotal, shipping, total, couponCode: coupon?.code },
+        { lines, subtotal, shipping, total, couponCode: coupon?.code, delivery: usePorter ? "porter" : "standard" },
         c,
       );
       // null = the customer closed the widget. Not an error; just stop.
       if (paymentId) complete(ref, paymentId);
     } catch (err) {
-      setFailure(friendlyError(err, "Payment could not be completed."));
+      if (err instanceof ShippingChanged) {
+        // the shop worked out a different delivery charge: show the new total and let the customer decide
+        ship.refresh();
+        setFailure(err.message);
+      } else {
+        setFailure(friendlyError(err, "Payment could not be completed."));
+      }
     } finally {
       setBusy(false);
     }
@@ -503,29 +518,40 @@ export default function CheckoutForm() {
         <span className="shrink-0 font-semibold text-[#2f6e4f]">−{inr(coupon.discount)}</span>
       </div>
     )}
-    <div className="flex justify-between">
+    <div className="flex justify-between gap-3">
       <span className="text-ink-soft">
-        Shipping
+        {usePorter ? "Delivery (Porter)" : "Delivery"}
       </span>
       {coupon?.freeShipping ? (
         <span className="font-semibold text-[#2f6e4f]">
-          <span className="mr-1.5 text-ink-faint line-through">{inr(quote.amount)}</span>
+          {deliveryAmount !== null && <span className="mr-1.5 text-ink-faint line-through">{inr(deliveryAmount)}</span>}
           Free
         </span>
-      ) : (
+      ) : deliveryAmount !== null ? (
         <span className="font-semibold">{inr(shipping)}</span>
+      ) : (
+        <span className="text-right text-[12.5px] text-ink-soft">
+          {usePorter ? "Waiting for the Porter price" : ship.busy ? "Working it out…" : "Add PIN code and state"}
+        </span>
       )}
     </div>
+    {!usePorter && shipKnown && !coupon?.freeShipping && (
+      <p className="text-[12px] leading-snug text-ink-faint">
+        By DTDC to {quote!.label}, {quote!.days}. Insurance is included.
+      </p>
+    )}
+    {offerText && (
+      <p className="text-[12.5px] font-semibold leading-snug text-[#2f6e4f]">{offerText}</p>
+    )}
   </div>
   <div className="mt-3 flex justify-between border-t border-line pt-3 text-[17px]">
     <span className="font-semibold">Total</span>
-    <span className="font-semibold">{inr(total)}</span>
+    <span className="font-semibold">{inr(total)}{!deliveryReady && !coupon?.freeShipping && <span className="ml-1 text-[12px] font-normal text-ink-soft">+ delivery</span>}</span>
   </div>
     </>
   );
 
   const itemCount = lines.reduce((n, l) => n + l.qty, 0);
-  const pinOk = /^\d{6}$/.test(c.pin.trim());
 
   return (
     <form
@@ -681,6 +707,62 @@ export default function CheckoutForm() {
             </div>
           </div>
 
+          {porterOffered && (
+            <fieldset className="border border-line bg-white p-4">
+              <legend className="px-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-ink-soft">How should we deliver?</legend>
+              <label className="flex cursor-pointer items-start gap-3 py-2">
+                <input type="radio" name="delivery-method" checked={!usePorter} onChange={() => setMethod("standard")} className="mt-1 accent-[#2b2724]" />
+                <span className="min-w-0 flex-1 text-[13.5px]">
+                  <span className="font-semibold">Courier (DTDC)</span>
+                  <span className="block text-[12px] text-ink-soft">{shipKnown ? `${inr(quote!.amount)} · ${quote!.days}` : "Price shown once your address is filled in"}</span>
+                </span>
+              </label>
+              <label className="flex cursor-pointer items-start gap-3 border-t border-line py-2 pt-3">
+                <input type="radio" name="delivery-method" checked={usePorter} onChange={() => setMethod("porter")} className="mt-1 accent-[#2b2724]" />
+                <span className="min-w-0 flex-1 text-[13.5px]">
+                  <span className="font-semibold">Porter, within Bengaluru</span>
+                  <span className="block text-[12px] text-ink-soft">{porterQuote ? `${inr(porterQuote.amount)} confirmed for you` : "Quick local delivery. We confirm the price with you on WhatsApp."}</span>
+                </span>
+              </label>
+              {usePorter && (
+                <div className="mt-2 space-y-3 border-t border-line pt-3 text-[12.5px] leading-relaxed text-ink-soft">
+                  {porterQuote ? (
+                    <p className="font-semibold text-[#2f6e4f]">
+                      Your Porter price is confirmed: {inr(porterQuote.amount)}. You can pay now. It stays valid until {new Date(porterQuote.expiresAt.replace(" ", "T") + "Z").toLocaleString("en-IN", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })}.
+                    </p>
+                  ) : (
+                    <>
+                      <p>
+                        Porter prices depend on the distance. Tap the button to send us a ready-made message with your address and bag. We reply with the Porter price, and when we add it, it appears here by itself so you can pay.
+                      </p>
+                      {!/^[6-9]\d{9}$/.test(c.phone.replace(/\D/g, "").slice(-10)) && (
+                        <p className="font-semibold text-[#a33a2f]">Enter your mobile number above first. We match your Porter price to it.</p>
+                      )}
+                      <div className="flex flex-wrap items-center gap-3">
+                        <a
+                          href={porterLink(porterMessage(c, lines))}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="av-btn"
+                        >
+                          Message us on WhatsApp
+                        </a>
+                        <button type="button" onClick={() => ship.refresh()} className="text-[12.5px] font-semibold underline underline-offset-2 hover:text-ink">
+                          {ship.busy ? "Checking…" : "Check for my price"}
+                        </button>
+                      </div>
+                      <p className="text-[12px] text-ink-faint">Or message {PORTER_WHATSAPP_DISPLAY}. Use the same mobile number as above.</p>
+                    </>
+                  )}
+                  <p>You pay for the order and the Porter delivery online, so there is nothing to pay at the door.</p>
+                  <p className="border-l-2 border-line-strong pl-3">
+                    Please record one continuous unboxing video, starting before you open the sealed package. Only an unboxing video counts: a photo, or a video taken after opening, cannot be considered. If anything arrives broken, send the video to us within 24 hours of delivery for a replacement or refund.
+                  </p>
+                </div>
+              )}
+            </fieldset>
+          )}
+
           {!noteOpen && !c.notes && (
             <button type="button" onClick={() => setNoteOpen(true)} className="text-[13.5px] font-semibold underline underline-offset-4 md:hidden">
               + Add a note for the order
@@ -730,7 +812,7 @@ export default function CheckoutForm() {
         )}
         <div className="mb-2.5 flex items-baseline justify-between gap-3">
           <span className="text-[12.5px] text-ink-soft">
-            {coupon?.freeShipping ? "Free shipping" : pinOk ? `incl. ${inr(shipping)} shipping` : `incl. ${inr(shipping)} shipping (estimate)`}
+            {coupon?.freeShipping ? "Free shipping" : deliveryReady ? `incl. ${inr(shipping)} delivery` : usePorter ? "+ Porter delivery (to be confirmed)" : "+ delivery (add PIN and state)"}
           </span>
           <span className="text-[17px] font-semibold">
             <span className="mr-2 text-[13px] font-normal text-ink-soft">Total</span>

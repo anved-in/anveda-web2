@@ -28,7 +28,8 @@ async function handleCheckout(request, env) {
     return json({ ok: false, error: "invalid JSON" }, 400);
   }
 
-  const { ref, customer, lines, combos, subtotal, shipping, couponCode } = body || {};
+  const { ref, customer, lines, combos, subtotal, couponCode, delivery } = body || {};
+  let shipping = body ? body.shipping : 0;
   const comboList = Array.isArray(combos) ? combos : [];
   if (!ref || !customer?.phone || !Array.isArray(lines) || (lines.length === 0 && comboList.length === 0) || !subtotal) {
     return json({ ok: false, error: "invalid payload" }, 400);
@@ -57,6 +58,28 @@ async function handleCheckout(request, env) {
       discount = couponData.discount;
       freeShipping = !!couponData.freeShipping;
     }
+  }
+  // DELIVERY is asked of the shop's server (real DTDC rates, or the Porter price the owner confirmed), never trusted from the browser.
+  // If it differs from what the customer was shown, the order stops here with the right figure and nothing is charged.
+  // (An old page that sends no `delivery` keeps the old behaviour until the new site is everywhere.)
+  if (delivery && env.CMS && env.ACCOUNT_API_SECRET) {
+    const sq = await shippingCall(env, "/quote", {
+      pin: customer.pin, state: customer.state, phone: customer.phone,
+      lines: lines.map((l) => ({ productId: l.id, colour: l.colour, qty: l.qty })), combos: comboList,
+    });
+    if (!sq || !sq.ok) return json({ ok: false, error: (sq && sq.error) || "We could not work out delivery. Please try again." }, 409);
+    if (!sq.quote.known) return json({ ok: false, error: "Please enter a valid PIN code and choose your state, so we can work out delivery." }, 400);
+    let expected = sq.quote.amount;
+    if (delivery.method === "porter") {
+      if (!sq.porter || !sq.porter.available || !sq.porter.quote) {
+        return json({ ok: false, error: "Your Porter delivery price has expired or was not confirmed yet. Please message us on WhatsApp to confirm it again." }, 409);
+      }
+      expected = sq.porter.quote.amount;
+    }
+    if (Math.abs(expected - Number(shipping)) > 1) {
+      return json({ ok: false, shipping: expected, error: "Delivery is now \u20b9" + Math.round(expected) + ". Please check your total and pay again." }, 409);
+    }
+    shipping = expected;
   }
   const total = subtotal - discount + (freeShipping ? 0 : shipping || 0);
 
@@ -125,6 +148,7 @@ async function handleCheckout(request, env) {
         shipping,
         total,
         couponCode: couponCode || undefined,
+        ...(delivery ? { delivery: { method: delivery.method === "porter" ? "porter" : "standard" } } : {}),
       }),
     });
     if (!intakeRes.ok) {
@@ -133,6 +157,7 @@ async function handleCheckout(request, env) {
       if (intakeRes.status === 409) {
         try {
           const parsed = JSON.parse(detail);
+          if (parsed && typeof parsed.shipping === "number") return json({ ok: false, shipping: parsed.shipping, error: String(parsed.error) }, 409);
           if (parsed && parsed.error) return json({ ok: false, error: String(parsed.error) + " Please change it in your bag and try again." }, 409);
         } catch { /* fall through to the technical message */ }
       }
@@ -150,6 +175,25 @@ async function handleCheckout(request, env) {
     freeShipping,
   });
 }
+
+// Delivery quote for the checkout and the bag. A thin, read-only proxy: the browser sends the bag and the address, the shop's
+// server prices it. The secret never leaves this function.
+async function shippingCall(env, cmsPath, body) {
+  if (!env.CMS || !env.ACCOUNT_API_SECRET) return null;
+  const res = await env.CMS.fetch("https://internal/shipping" + cmsPath, {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-api-secret": env.ACCOUNT_API_SECRET.trim() },
+    body: JSON.stringify(body),
+  });
+  return res.json().catch(() => null);
+}
+const shippingProxy = (cmsPath) => async (request, env) => {
+  let body = {};
+  try { body = await request.json(); } catch { body = {}; }
+  const data = await shippingCall(env, cmsPath, body);
+  if (!data) return json({ ok: false, error: "not configured" }, 500);
+  return new Response(JSON.stringify(data), { status: data.ok ? 200 : 409, headers: { "content-type": "application/json", "cache-control": "no-store" } });
+};
 
 // Live coupon preview for the checkout page's "Apply" button, before any
 // order exists, so this is a pure read, not gated by a secret.
@@ -320,6 +364,8 @@ const ROUTES = {
   "/api/track": handleTrack,
   "/api/subscribe": handleSubscribe,
   "/api/coupon": handleCouponValidate,
+  "/api/shipping-quote": shippingProxy("/quote"),
+  "/api/shipping-config": shippingProxy("/config"),
   "/api/cart-capture": handleCartCapture,
   "/api/notify-stock": handleNotifyStock,
   "/api/account/config": account("/config"),
