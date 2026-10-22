@@ -1952,7 +1952,7 @@
     {
      "id": 52,
      "colour": "Dark Pink",
-     "image": "phool-glass-bangle-dark-pink.webp",
+     "image": "u-phool-glass-bangle-dark-pink-1a161d5efb4.webp",
      "hex": "#f20779",
      "price": 320,
      "pieces": 12,
@@ -1972,15 +1972,17 @@
       "2.6": 1,
       "2.8": 3
      },
-     "focal": "50.51% 47.15%",
-     "zoom": 1,
+     "focal": "29.3% 54.6%",
+     "zoom": 1.45,
      "gallery": [
       {
-       "image": "u-phool-glass-bangle-dark-pink-1a161d5efb4.webp",
-       "zoom": 1
+       "image": "u-phool-glass-bangle-dark-pink-2-1a161d5efb5.webp",
+       "focal": "38.5% 58%",
+       "zoom": 1.4
       },
       {
-       "image": "u-phool-glass-bangle-dark-pink-2-1a161d5efb5.webp",
+       "image": "phool-glass-bangle-dark-pink.webp",
+       "focal": "50.51% 47.15%",
        "zoom": 1
       }
      ]
