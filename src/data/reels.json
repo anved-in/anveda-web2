@@ -67,7 +67,8 @@
        "Teal",
        "Sky Blue",
        "Golden Yellow",
-       "Classic Blue"
+       "Classic Blue",
+       "Royal Blue (Premium Raindrop)"
       ]
      },
      {
@@ -80,7 +81,9 @@
      {
       "productId": "border-bangles",
       "qty": 1,
-      "colours": []
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
      }
     ]
    }
