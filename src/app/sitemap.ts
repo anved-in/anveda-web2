@@ -21,7 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "privacy",
     "track",
     "colours",
-    "guides/glass-vs-kundan-vs-antique",
   ].map((p) => ({
     url: `${BASE}/${p}${p ? "/" : ""}`,
     lastModified: new Date(),
