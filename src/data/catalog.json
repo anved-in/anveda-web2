@@ -3004,7 +3004,7 @@
     {
      "id": 168,
      "colour": "Leaf Ruby Emerald Flower",
-     "image": "u-statement-bangles-leaf-ruby-emerald-flower-mvgozbu2.webp",
+     "image": "u-statement-bangles-leaf-ruby-emerald-flower-more-mvj70czi.webp",
      "price": 1050,
      "pieces": 2,
      "sizes": [
@@ -3019,7 +3019,14 @@
       "2.4": 1,
       "2.6": 1
      },
-     "zoom": 1.35
+     "focal": "52% 65.3%",
+     "zoom": 1.7,
+     "gallery": [
+      {
+       "image": "u-statement-bangles-leaf-ruby-emerald-flower-mvgozbu2.webp",
+       "zoom": 1.35
+      }
+     ]
     },
     {
      "id": 169,
