@@ -481,6 +481,36 @@
      }
     ]
    }
+  },
+  {
+   "id": "wine-lime",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DeJ6wmKTpEr/?xtok=MWpremQyMnprOXN0cg==",
+   "cover": null,
+   "title": "Wine & Lime",
+   "caption": "",
+   "productId": "border-bangles",
+   "colour": "Gold Stones (Non Bendable)",
+   "combo": {
+    "price": 700,
+    "items": [
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     },
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Parrot Green",
+       "Wine"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
