@@ -192,11 +192,11 @@
       "2.8"
      ],
      "inStock": false,
-     "stockQty": 15,
+     "stockQty": 6,
      "sizeStock": {
-      "2.2": 5,
-      "2.4": 5,
-      "2.6": 5,
+      "2.2": 2,
+      "2.4": 2,
+      "2.6": 2,
       "2.8": 0
      },
      "focal": "44.5% 50.4%",
@@ -204,7 +204,7 @@
     },
     {
      "id": 2,
-     "colour": "Pearl Stone Glass Bangles",
+     "colour": "Pearl Gold Stone Glass Bangles",
      "image": "u-border-bangles-pearl-gold-stone-glass-bangles-more-mvj79v82.webp",
      "hex": "#e2d8c4",
      "price": 320,
@@ -216,12 +216,12 @@
       "2.8"
      ],
      "inStock": true,
-     "stockQty": 9,
+     "stockQty": 20,
      "sizeStock": {
-      "2.2": 0,
-      "2.4": 2,
-      "2.6": 7,
-      "2.8": 0
+      "2.2": 5,
+      "2.4": 5,
+      "2.6": 5,
+      "2.8": 5
      },
      "focal": "58.3% 54.2%",
      "zoom": 1.5,
@@ -293,11 +293,13 @@
       "2.2",
       "2.4",
       "2.6",
-      "2.8"
+      "2.8",
+      "2.10"
      ],
      "inStock": true,
      "stockQty": 5,
      "sizeStock": {
+      "2.10": 0,
       "2.2": 0,
       "2.4": 2,
       "2.6": 0,
