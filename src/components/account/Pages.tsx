@@ -34,8 +34,8 @@ export function AccountProfilePage() {
     <AccountShell title="Edit profile" back>
       {(me, api) => (
         <>
-          <Heading title="Edit profile" intro="Your name is used on parcels and order messages." />
-          <DetailsForm me={me} mode="person" onSaved={api.setProfile} />
+          <Heading title="Edit profile" intro="Your name and mobile number are used on parcels and for order updates." />
+          <DetailsForm me={me} mode="person" onSaved={api.setProfile} onRefresh={api.refresh} />
         </>
       )}
     </AccountShell>
@@ -48,7 +48,7 @@ export function AccountAddressPage() {
       {(me, api) => (
         <>
           <Heading title="Saved address" intro="Checkout fills this in for you, so you only confirm and pay." />
-          <DetailsForm me={me} mode="address" onSaved={api.setProfile} />
+          <DetailsForm me={me} mode="address" onSaved={api.setProfile} onRefresh={api.refresh} />
         </>
       )}
     </AccountShell>
