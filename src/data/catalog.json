@@ -814,7 +814,7 @@
    "collectionName": "Jelly Bangles - Glass Bangles",
    "group": "glass",
    "name": "Jelly Bangles - Glass Bangles",
-   "price": 220,
+   "price": 150,
    "priceMax": 220,
    "pieces": 8,
    "unit": "set",
@@ -836,13 +836,16 @@
      "sizes": [
       "2.2",
       "2.4",
-      "2.6"
+      "2.6",
+      "2.8"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 3,
      "sizeStock": {
       "2.2": 0,
       "2.4": 0,
-      "2.6": 0
+      "2.6": 2,
+      "2.8": 1
      },
      "focal": "68.5% 75.5%",
      "zoom": 1.35
@@ -857,13 +860,16 @@
      "sizes": [
       "2.2",
       "2.4",
-      "2.6"
+      "2.6",
+      "2.8"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 1,
      "sizeStock": {
       "2.2": 0,
       "2.4": 0,
-      "2.6": 0
+      "2.6": 0,
+      "2.8": 1
      },
      "focal": "55.2% 72.4%",
      "zoom": 1.45
@@ -880,9 +886,10 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 1,
      "sizeStock": {
-      "2.2": 0,
+      "2.2": 1,
       "2.4": 0,
       "2.6": 0
      },
@@ -899,13 +906,16 @@
      "sizes": [
       "2.2",
       "2.4",
-      "2.6"
+      "2.6",
+      "2.8"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 4,
      "sizeStock": {
       "2.2": 0,
-      "2.4": 0,
-      "2.6": 0
+      "2.4": 1,
+      "2.6": 2,
+      "2.8": 1
      },
      "focal": "59.4% 66.7%",
      "zoom": 1.65
@@ -922,9 +932,10 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 1,
      "sizeStock": {
-      "2.2": 0,
+      "2.2": 1,
       "2.4": 0,
       "2.6": 0
      },
@@ -941,13 +952,16 @@
      "sizes": [
       "2.2",
       "2.4",
-      "2.6"
+      "2.6",
+      "2.8"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 3,
      "sizeStock": {
-      "2.2": 0,
+      "2.2": 1,
       "2.4": 0,
-      "2.6": 0
+      "2.6": 1,
+      "2.8": 1
      },
      "focal": "49.83% 53.68%",
      "zoom": 1.7
@@ -962,13 +976,16 @@
      "sizes": [
       "2.2",
       "2.4",
-      "2.6"
+      "2.6",
+      "2.8"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 4,
      "sizeStock": {
       "2.2": 0,
       "2.4": 0,
-      "2.6": 0
+      "2.6": 3,
+      "2.8": 1
      },
      "focal": "39% 55.1%",
      "zoom": 2
@@ -978,8 +995,8 @@
      "colour": "White Acrylic",
      "image": "jelly-bangles-glass-bangles-white-acrylic.webp",
      "hex": "#fafafa",
-     "price": 220,
-     "pieces": 8,
+     "price": 150,
+     "pieces": 12,
      "sizes": [
       "2.2",
       "2.4",
