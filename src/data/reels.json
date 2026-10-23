@@ -1,17 +1,6 @@
 {
  "reels": [
   {
-   "id": "intricate-glass-bangle",
-   "video": null,
-   "instagram": "https://www.instagram.com/reel/DbVsJeKzDPW/?stkn=MTdiM3J5YWhka21kbw==",
-   "cover": "/img/reels/intricate-glass-bangle-cover.jpg",
-   "title": "Viral 10 in 1",
-   "caption": "",
-   "productId": null,
-   "colour": null,
-   "combo": null
-  },
-  {
    "id": "pastel-palette-glass-bangle",
    "video": null,
    "instagram": "https://www.instagram.com/reel/DazYiIEzcO-/",
@@ -62,12 +51,13 @@
        "Royal Blue",
        "Sunset Orange",
        "Wine",
+       "Pink",
        "Grey",
        "Teal",
        "Sky Blue",
        "Golden Yellow",
        "Classic Blue",
-       "Royal Blue (Raindrop)"
+       "Royal Blue (Premium Raindrop)"
       ]
      },
      {
@@ -81,7 +71,502 @@
       "productId": "border-bangles",
       "qty": 1,
       "colours": [
-       "Premium non Bendable Diamond Stones"
+       "Gold Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "premium-4-in-1-diamond-kada-free-size-openable",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DeO7aNHTqhT/?utm_source=ig_web_copy_link&vrfl=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==",
+   "cover": "/img/reels/premium-4-in-1-diamond-kada-free-size-openable-cover.jpg",
+   "title": "Premium 4 in 1 Diamond Kada (Free Size Openable)",
+   "caption": "",
+   "productId": "kada",
+   "colour": "Premium 4 in 1 Diamond Kada (Free Size Openable)",
+   "combo": {
+    "price": 1799,
+    "items": [
+     {
+      "productId": "kada",
+      "qty": 1,
+      "colours": [
+       "Premium 4 in 1 Diamond Kada (Free Size Openable)"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "sita-set",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DdTxvZmT-P7/?utm_source=ig_web_copy_link&cplk=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==",
+   "cover": "/img/reels/sita-set-cover.jpg",
+   "title": "Sita Set",
+   "caption": "",
+   "productId": "statement-bangles",
+   "colour": "Sita Ruby Lakshmi Set of 2",
+   "combo": {
+    "price": 1350,
+    "items": [
+     {
+      "productId": "statement-bangles",
+      "qty": 1,
+      "colours": [
+       "Sita Ruby Lakshmi Set of 2"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     },
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Aqua",
+       "Champagne Gold",
+       "Dark Green",
+       "Dark Pink",
+       "Green (premium Raindrop)",
+       "Lavender",
+       "Maroon",
+       "Mauve",
+       "Parrot Green",
+       "Radium",
+       "Red",
+       "Rose Pink",
+       "Royal Blue",
+       "Sunset Orange",
+       "Wine",
+       "Pink",
+       "Teal",
+       "Golden Yellow",
+       "Classic Blue",
+       "Royal Blue (Premium Raindrop)"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "red-flower-stone",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DdEVLDtTvml/?utm_source=ig_web_copy_link&srtk=MzRlODBiNWFlZA==",
+   "cover": "/img/reels/red-flower-stone-cover.jpg",
+   "title": "Red Flower Stone",
+   "caption": "",
+   "productId": "statement-bangles",
+   "colour": "Red Flower Stone",
+   "combo": {
+    "price": 899,
+    "items": [
+     {
+      "productId": "statement-bangles",
+      "qty": 1,
+      "colours": [
+       "Red Flower Stone"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "ad-ball-kada-white",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/Dcn6rAxTs0D/?utm_source=ig_web_copy_link&xtok=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==",
+   "cover": "/img/reels/ad-ball-kada-white-cover.jpg",
+   "title": "AD Ball Kada White",
+   "caption": "",
+   "productId": "kada",
+   "colour": "White Ball Kada Set of 2",
+   "combo": {
+    "price": 699,
+    "items": [
+     {
+      "productId": "kada",
+      "qty": 1,
+      "colours": [
+       "White Ball Kada Set of 2"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "laya-set",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/Dcir2lPT5Ve/?utm_source=ig_web_copy_link&obrf=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==",
+   "cover": "/img/reels/laya-set-cover.jpg",
+   "title": "Laya Set",
+   "caption": "",
+   "productId": "designer-side-bangles",
+   "colour": "Laya White Stone Flower Set of 4",
+   "combo": {
+    "price": 1750,
+    "items": [
+     {
+      "productId": "designer-side-bangles",
+      "qty": 1,
+      "colours": [
+       "Laya White Stone Flower Set of 4"
+      ]
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Aqua",
+       "Champagne Gold",
+       "Coffee/Deep Wine",
+       "Emerald Green",
+       "Mocha",
+       "Parrot Green",
+       "Purple",
+       "Radium",
+       "Rose Pink",
+       "Royal Blue",
+       "Sky Blue",
+       "Tangerine",
+       "Ruby Red",
+       "Peach",
+       "Baby Pink"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "White Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "phool-set",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/Dey5DiyT6WW/?utm_source=ig_web_copy_link&obrf=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==",
+   "cover": "/img/reels/phool-set-cover.jpg",
+   "title": "Phool Set",
+   "caption": "",
+   "productId": "statement-bangles",
+   "colour": "Phool - Trio Flower",
+   "combo": {
+    "price": 1200,
+    "items": [
+     {
+      "productId": "statement-bangles",
+      "qty": 1,
+      "colours": [
+       "Phool - Trio Flower"
+      ]
+     },
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Aqua",
+       "Black",
+       "Champagne Gold",
+       "Dark Green",
+       "Dark Pink",
+       "Green (premium Raindrop)",
+       "Ivory (premium Raindrop)",
+       "Lavender",
+       "Maroon",
+       "Mauve",
+       "Multicolor",
+       "Olive (premium Raindrop)",
+       "Parrot Green",
+       "Radium",
+       "Red",
+       "Rose Pink",
+       "Royal Blue",
+       "Sunset Orange",
+       "Wine",
+       "Pink",
+       "Grey",
+       "Teal",
+       "Sky Blue",
+       "Golden Yellow",
+       "Classic Blue",
+       "Royal Blue (Premium Raindrop)"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "maya-set",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DeMQYa9Td4W/?utm_source=ig_web_copy_link&xtok=MzRlODBiNWFlZA==&srtk=MzRlODBiNWFlZA==",
+   "cover": "/img/reels/maya-set-cover.jpg",
+   "title": "Maya Set",
+   "caption": "The price mentioned is for both hands together. This set is available exclusively as a complete pair, so you can enjoy the perfect matching look on both hands.",
+   "productId": "designer-side-bangles",
+   "colour": "Maya Square Lakshmi - Set of 4",
+   "combo": {
+    "price": 1799,
+    "items": [
+     {
+      "productId": "designer-side-bangles",
+      "qty": 1,
+      "colours": [
+       "Maya Square Lakshmi - Set of 4"
+      ]
+     },
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Aqua",
+       "Black",
+       "Champagne Gold",
+       "Dark Green",
+       "Dark Pink",
+       "Green (premium Raindrop)",
+       "Lavender",
+       "Maroon",
+       "Mauve",
+       "Multicolor",
+       "Olive (premium Raindrop)",
+       "Parrot Green",
+       "Radium",
+       "Red",
+       "Rose Pink",
+       "Royal Blue",
+       "Sunset Orange",
+       "Wine",
+       "Pink",
+       "Grey",
+       "Teal",
+       "Sky Blue",
+       "Golden Yellow",
+       "Classic Blue",
+       "Royal Blue (Premium Raindrop)"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "sky-blue-royal-blue",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/Da2EOOST28W/?obrf=MWFvNGRjMzN3ajB6Mg==",
+   "cover": "/img/reels/sky-blue-royal-blue-cover.jpg",
+   "title": "Sky blue & Royal blue",
+   "caption": "",
+   "productId": "intricate-glass-bangle",
+   "colour": "Sky Blue",
+   "combo": {
+    "price": 640,
+    "items": [
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Sky Blue"
+      ]
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Royal Blue"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "sapphire-parrot",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/Dc_H-HnTsyF/?vrfl=Y2h6aDgyNXo5MDh6",
+   "cover": "/img/reels/sapphire-parrot-cover.jpg",
+   "title": "Sapphire & Parrot",
+   "caption": "",
+   "productId": "intricate-glass-bangle",
+   "colour": "Royal Blue",
+   "combo": {
+    "price": 880,
+    "items": [
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Emerald Green",
+       "Royal Blue"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "ruby-citrus",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DeUC9D6TleI/?mdxt=MTEwMnFra2VvYW5iaw==",
+   "cover": "/img/reels/ruby-citrus-cover.jpg",
+   "title": "Ruby & Citrus",
+   "caption": "The price mentioned is for both hands, and this set is available only as a pair",
+   "productId": "border-bangles",
+   "colour": "Gold Stones (Non Bendable)",
+   "combo": {
+    "price": 880,
+    "items": [
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Tangerine"
+      ]
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Ruby Red"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "plum-lilac",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DeZS9n_zxFt/?obrf=Y2lhd3lhaWc3cTM5",
+   "cover": "/img/reels/plum-lilac-cover.jpg",
+   "title": "Plum & Lilac",
+   "caption": "The price mentioned is for both hands, and this set is available only as a pair",
+   "productId": "square-edge-glass-bangles",
+   "colour": "Lavender",
+   "combo": {
+    "price": 700,
+    "items": [
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Lavender"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "White Stones (Non Bendable)"
+      ]
+     },
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Wine"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "wine-lime",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DeJ6wmKTpEr/?xtok=MWpremQyMnprOXN0cg==",
+   "cover": "/img/reels/wine-lime-cover.jpg",
+   "title": "Wine & Lime",
+   "caption": "",
+   "productId": "border-bangles",
+   "colour": "Gold Stones (Non Bendable)",
+   "combo": {
+    "price": 700,
+    "items": [
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     },
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Parrot Green"
+      ]
+     },
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Wine"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "baby-pink-emerald-green",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DeHIbt7zQkK/?srtk=MThxeWhxM2Nncmh1eA==",
+   "cover": "/img/reels/baby-pink-emerald-green-cover.jpg",
+   "title": "Baby Pink & Emerald Green",
+   "caption": "",
+   "productId": "border-bangles",
+   "colour": "Gold Stones (Non Bendable)",
+   "combo": {
+    "price": 880,
+    "items": [
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Baby Pink"
+      ]
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Emerald Green"
       ]
      }
     ]
