@@ -571,6 +571,69 @@
      }
     ]
    }
+  },
+  {
+   "id": "lakshmi-stone-set",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DakBscgTj3J/?mdxt=MTM4Ym5iMnkxOTZscA==",
+   "cover": null,
+   "title": "Lakshmi Stone Set",
+   "caption": "Price mentioned is for both hands.",
+   "productId": "square-edge-glass-bangles",
+   "colour": "Aqua",
+   "combo": {
+    "price": 1230,
+    "items": [
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Aqua",
+       "Black",
+       "Champagne Gold",
+       "Dark Green",
+       "Dark Pink",
+       "Green (premium Raindrop)",
+       "Lavender",
+       "Maroon",
+       "Mauve",
+       "Olive (premium Raindrop)",
+       "Parrot Green",
+       "Radium",
+       "Red",
+       "Rose Pink",
+       "Royal Blue",
+       "Sunset Orange",
+       "Wine",
+       "Pink",
+       "Grey",
+       "Teal",
+       "Sky Blue",
+       "Golden Yellow",
+       "Classic Blue",
+       "Royal Blue (Premium Raindrop)",
+       "Wine (Premium Raindrop)",
+       "Red (Raindrop)",
+       "Dark Green (Premium Raindrop)",
+       "Strawberry (Premium Raindrop)"
+      ]
+     },
+     {
+      "productId": "designer-side-bangles",
+      "qty": 1,
+      "colours": [
+       "Lakshmi Stone Set of 2"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Pearl glass bangles"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
