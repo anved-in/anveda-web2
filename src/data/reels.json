@@ -468,8 +468,7 @@
       "productId": "square-edge-glass-bangles",
       "qty": 1,
       "colours": [
-       "Lavender",
-       "Wine"
+       "Lavender"
       ]
      },
      {
@@ -477,6 +476,49 @@
       "qty": 1,
       "colours": [
        "White Stones (Non Bendable)"
+      ]
+     },
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Wine"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "wine-lime",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DeJ6wmKTpEr/?xtok=MWpremQyMnprOXN0cg==",
+   "cover": "/img/reels/wine-lime-cover.jpg",
+   "title": "Wine & Lime",
+   "caption": "",
+   "productId": "border-bangles",
+   "colour": "Gold Stones (Non Bendable)",
+   "combo": {
+    "price": 700,
+    "items": [
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     },
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Parrot Green"
+      ]
+     },
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Wine"
       ]
      }
     ]
