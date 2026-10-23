@@ -535,6 +535,42 @@
      }
     ]
    }
+  },
+  {
+   "id": "baby-pink-emerald-green",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DeHIbt7zQkK/?srtk=MThxeWhxM2Nncmh1eA==",
+   "cover": null,
+   "title": "Baby Pink & Emerald Green",
+   "caption": "",
+   "productId": "border-bangles",
+   "colour": "Gold Stones (Non Bendable)",
+   "combo": {
+    "price": 880,
+    "items": [
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Baby Pink"
+      ]
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Emerald Green"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
