@@ -10,10 +10,9 @@ import { productById, inr, colourLabel } from "./catalog";
  * The checkout asks again when the order is placed, so a stale or edited figure can never be charged.
  */
 
-/** The number customers message to agree a Porter price (Bengaluru only). Deliberately NOT SITE.whatsapp,
- *  which would switch WhatsApp on across the whole site. */
-export const PORTER_WHATSAPP = "917996009966";
-export const PORTER_WHATSAPP_DISPLAY = "+91 79960 09966";
+/** The number customers message to agree a Porter price comes from the CMS (Shipping page, Porter box) with every quote,
+ *  so it can be changed or removed without a deploy. Empty means "no number": the checkout then points to Instagram. */
+export const porterNumberDisplay = (digits: string): string => (/^91\d{10}$/.test(digits) ? `+91 ${digits.slice(2, 7)} ${digits.slice(7)}` : "");
 
 export interface ShipOffer {
   on: boolean;
@@ -48,7 +47,7 @@ export interface ShipQuote {
 
 export interface ShipInfo {
   quote: ShipQuote;
-  porter: { on: boolean; available: boolean; quote: { amount: number; expiresAt: string } | null };
+  porter: { on: boolean; whatsapp?: string; available: boolean; quote: { amount: number; expiresAt: string } | null };
 }
 
 export interface ShipInput {
@@ -166,7 +165,7 @@ export const porterMessage = (c: { name: string; phone: string; address: string;
   ].join("\n");
 };
 
-export const porterLink = (message: string): string => `https://wa.me/${PORTER_WHATSAPP}?text=${encodeURIComponent(message)}`;
+export const porterLink = (digits: string, message: string): string => `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
 
 /** One short line for the offer, or null when there is nothing honest to say. */
 export const offerLine = (q: ShipQuote): string | null => {

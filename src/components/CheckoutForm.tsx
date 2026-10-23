@@ -17,7 +17,7 @@ import {
   paymentsEnabled,
   ShippingChanged,
 } from "@/lib/payment";
-import { useShipping, offerLine, porterMessage, porterLink, PORTER_WHATSAPP_DISPLAY } from "@/lib/shipping";
+import { useShipping, offerLine, porterMessage, porterLink, porterNumberDisplay } from "@/lib/shipping";
 import { useSlow, friendlyError, SLOW_NOTE } from "@/lib/useSlow";
 import { useKeyboardOpen } from "@/lib/useKeyboardOpen";
 import { INDIAN_STATES } from "@/lib/states";
@@ -113,6 +113,7 @@ export default function CheckoutForm() {
   const shipKnown = !!quote?.known;
   const porterOffered = !!ship.info?.porter.available;
   const porterQuote = ship.info?.porter.quote ?? null;
+  const porterWa = ship.info?.porter.whatsapp ?? "";
   const usePorter = method === "porter" && porterOffered;
   const deliveryAmount: number | null = usePorter ? (porterQuote?.amount ?? null) : shipKnown ? quote!.amount : null;
   const deliveryReady = deliveryAmount !== null;
@@ -766,7 +767,7 @@ export default function CheckoutForm() {
                 <input type="radio" name="delivery-method" checked={usePorter} onChange={() => setMethod("porter")} className="mt-1 accent-[#2b2724]" />
                 <span className="min-w-0 flex-1 text-[13.5px]">
                   <span className="font-semibold">Porter, within Bengaluru</span>
-                  <span className="block text-[12px] text-ink-soft">{porterQuote ? `${inr(porterQuote.amount)} confirmed for you` : "Quick local delivery. We confirm the price with you on WhatsApp."}</span>
+                  <span className="block text-[12px] text-ink-soft">{porterQuote ? `${inr(porterQuote.amount)} confirmed for you` : "Quick local delivery. We confirm the price with you."}</span>
                 </span>
               </label>
               {usePorter && (
@@ -778,25 +779,25 @@ export default function CheckoutForm() {
                   ) : (
                     <>
                       <p>
-                        Porter prices depend on the distance. Tap the button to send us a ready-made message with your address and bag. We reply with the Porter price, and when we add it, it appears here by itself so you can pay.
+                        {porterWa ? "Porter prices depend on the distance. Tap the button to send us a ready-made message with your address and bag. We reply with the Porter price, and when we add it, it appears here by itself so you can pay." : "Porter prices depend on the distance. Send us your address and bag on Instagram. We reply with the Porter price, and when we add it, it appears here by itself so you can pay."}
                       </p>
                       {!/^[6-9]\d{9}$/.test(c.phone.replace(/\D/g, "").slice(-10)) && (
                         <p className="font-semibold text-[#a33a2f]">Enter your mobile number above first. We match your Porter price to it.</p>
                       )}
                       <div className="flex flex-wrap items-center gap-3">
                         <a
-                          href={porterLink(porterMessage(c, lines))}
+                          href={porterWa ? porterLink(porterWa, porterMessage(c, lines)) : igDmLink}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="av-btn"
                         >
-                          Message us on WhatsApp
+                          {porterWa ? "Message us on WhatsApp" : "Message us on Instagram"}
                         </a>
                         <button type="button" onClick={() => ship.refresh()} className="text-[12.5px] font-semibold underline underline-offset-2 hover:text-ink">
                           {ship.busy ? "Checking…" : "Check for my price"}
                         </button>
                       </div>
-                      <p className="text-[12px] text-ink-faint">Or message {PORTER_WHATSAPP_DISPLAY}. Use the same mobile number as above.</p>
+                      <p className="text-[12px] text-ink-faint">{porterWa ? `Or message ${porterNumberDisplay(porterWa)}. ` : ""}Use the same mobile number as above.</p>
                     </>
                   )}
                   <p>You pay for the order and the Porter delivery online, so there is nothing to pay at the door.</p>
