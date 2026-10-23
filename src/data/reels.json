@@ -377,7 +377,7 @@
    "title": "Sky blue & Royal blue",
    "caption": "",
    "productId": "intricate-glass-bangle",
-   "colour": "Royal Blue",
+   "colour": "Sky Blue",
    "combo": {
     "price": 640,
     "items": [
@@ -385,8 +385,14 @@
       "productId": "intricate-glass-bangle",
       "qty": 1,
       "colours": [
-       "Royal Blue",
        "Sky Blue"
+      ]
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Royal Blue"
       ]
      }
     ]
