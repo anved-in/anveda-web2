@@ -571,6 +571,139 @@
      }
     ]
    }
+  },
+  {
+   "id": "lakshmi-stone-set",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DakBscgTj3J/?mdxt=MTM4Ym5iMnkxOTZscA==",
+   "cover": "/img/reels/lakshmi-stone-set-cover.jpg",
+   "title": "Lakshmi Stone Set",
+   "caption": "Price mentioned is for both hands.",
+   "productId": "square-edge-glass-bangles",
+   "colour": "Aqua",
+   "combo": {
+    "price": 1230,
+    "items": [
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Aqua",
+       "Black",
+       "Champagne Gold",
+       "Dark Green",
+       "Dark Pink",
+       "Green (premium Raindrop)",
+       "Lavender",
+       "Maroon",
+       "Mauve",
+       "Olive (premium Raindrop)",
+       "Parrot Green",
+       "Radium",
+       "Red",
+       "Rose Pink",
+       "Royal Blue",
+       "Sunset Orange",
+       "Wine",
+       "Pink",
+       "Grey",
+       "Teal",
+       "Sky Blue",
+       "Golden Yellow",
+       "Classic Blue",
+       "Royal Blue (Premium Raindrop)",
+       "Wine (Premium Raindrop)",
+       "Red (Raindrop)",
+       "Dark Green (Premium Raindrop)",
+       "Strawberry (Premium Raindrop)"
+      ]
+     },
+     {
+      "productId": "designer-side-bangles",
+      "qty": 1,
+      "colours": [
+       "Lakshmi Stone Set of 2"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Pearl glass bangles"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "intricate-emerald-green-gunghroo-set",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/Dejhk0Hzn8i/?cplk=eGVmZGd1c3l3ZHlv",
+   "cover": "/img/reels/intricate-emerald-green-gunghroo-set-cover.jpg",
+   "title": "Intricate Emerald Green Gunghroo Set",
+   "caption": "",
+   "productId": "gunghroo",
+   "colour": "Gold stone Long Hanging Gunghroo Set of ",
+   "combo": {
+    "price": 599,
+    "items": [
+     {
+      "productId": "gunghroo",
+      "qty": 1,
+      "colours": []
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Emerald Green"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "grape-emerald",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DdvysnZTDEZ/?srtk=eDlnOXk1ZnVranNq",
+   "cover": "/img/reels/grape-emerald-cover.jpg",
+   "title": "Grape & Emerald",
+   "caption": "",
+   "productId": "intricate-glass-bangle",
+   "colour": "Purple",
+   "combo": {
+    "price": 880,
+    "items": [
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Purple"
+      ]
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Emerald Green"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
