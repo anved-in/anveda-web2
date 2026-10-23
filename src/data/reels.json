@@ -634,6 +634,40 @@
      }
     ]
    }
+  },
+  {
+   "id": "intricate-emerald-green-gunghroo-set",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/Dejhk0Hzn8i/?cplk=eGVmZGd1c3l3ZHlv",
+   "cover": "/img/reels/intricate-emerald-green-gunghroo-set-cover.jpg",
+   "title": "Intricate Emerald Green Gunghroo Set",
+   "caption": "",
+   "productId": "gunghroo",
+   "colour": "Gold stone Long Hanging Gunghroo Set of ",
+   "combo": {
+    "price": 599,
+    "items": [
+     {
+      "productId": "gunghroo",
+      "qty": 1,
+      "colours": []
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Emerald Green"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
