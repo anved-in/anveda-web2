@@ -42,3 +42,11 @@ next-env.d.ts
 /out/
 src/data/_raw.json
 .wrangler/
+
+# local secrets and debug logs: never commit these
+.env
+.env.*
+!.env.example
+.dev.vars
+*.log
+tail_output*.json

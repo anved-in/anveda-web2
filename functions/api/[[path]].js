@@ -13,6 +13,10 @@
 
 const RAZORPAY_ORDERS_URL = "https://api.razorpay.com/v1/orders";
 
+// The real visitor's address, passed to the shop server so ITS per-visitor rate limits (Cloudflare's limiter, see src/guards.ts in the CMS)
+// see the customer and not our own function. Counting in memory here would not work: Cloudflare runs many copies of this function.
+const ipHeader = (request) => ({ "x-client-ip": request.headers.get("cf-connecting-ip") || "" });
+
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -47,7 +51,7 @@ async function handleCheckout(request, env) {
   if (env.CMS) {
     const couponRes = await env.CMS.fetch("https://internal/coupon/validate", {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json", ...ipHeader(request) },
       body: JSON.stringify({ code: couponCode || undefined, subtotal }),
     });
     const couponData = await couponRes.json().catch(() => ({ valid: false, discount: 0, freeShipping: false }));
@@ -138,6 +142,7 @@ async function handleCheckout(request, env) {
         // Tells the CMS this order comes from the CURRENT website, which is the
         // only one allowed to place orders while maintenance mode is on.
         "x-via": "pages-v2",
+        ...ipHeader(request),
       },
       body: JSON.stringify({
         ref,
@@ -207,7 +212,7 @@ async function handleCouponValidate(request, env) {
   if (!env.CMS) return json({ valid: false, reason: "not configured", discount: 0 }, 500);
   const res = await env.CMS.fetch("https://internal/coupon/validate", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...ipHeader(request) },
     body: JSON.stringify(body),
   });
   const data = await res.json().catch(() => ({ valid: false, reason: "bad response", discount: 0 }));
@@ -226,7 +231,7 @@ async function handleTrack(request, env) {
   if (!env.CMS) return json({ ok: false, error: "not configured" }, 500);
   const res = await env.CMS.fetch("https://internal/track", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...ipHeader(request) },
     body: JSON.stringify(body),
   });
   const data = await res.json().catch(() => ({ ok: false, error: "bad response" }));
@@ -244,7 +249,7 @@ async function handleSubscribe(request, env) {
   if (!env.CMS) return json({ ok: false, error: "not configured" }, 500);
   const res = await env.CMS.fetch("https://internal/subscribe", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...ipHeader(request) },
     body: JSON.stringify(body),
   });
   const data = await res.json().catch(() => ({ ok: false, error: "bad response" }));
@@ -263,7 +268,7 @@ async function handleCartCapture(request, env) {
   if (!env.CMS) return json({ ok: false, error: "not configured" }, 500);
   const res = await env.CMS.fetch("https://internal/cart-capture", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...ipHeader(request) },
     body: JSON.stringify(body),
   });
   const data = await res.json().catch(() => ({ ok: false, error: "bad response" }));
@@ -281,7 +286,7 @@ async function handleNotifyStock(request, env) {
   if (!env.CMS) return json({ ok: false, error: "not configured" }, 500);
   const res = await env.CMS.fetch("https://internal/notify-stock", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...ipHeader(request) },
     body: JSON.stringify(body),
   });
   const data = await res.json().catch(() => ({ ok: false, error: "bad response" }));
@@ -300,7 +305,7 @@ const proxy = (cmsPath) => async (request, env) => {
   if (!env.CMS) return json({ ok: false, error: "not configured" }, 500);
   const res = await env.CMS.fetch(`https://internal${cmsPath}`, {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...ipHeader(request) },
     body: JSON.stringify(body),
   });
   const data = await res.json().catch(() => ({ ok: false, error: "bad response" }));

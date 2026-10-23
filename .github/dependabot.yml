@@ -1,0 +1,19 @@
+# GitHub opens a pull request when a library or a pinned GitHub Action has a newer version or a security fix, so nothing quietly
+# goes stale. Nothing is merged automatically: a person reviews each one (the "Checks" workflow runs on it first).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 3

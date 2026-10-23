@@ -20,7 +20,8 @@ The CMS / shop server has its own map: `F:\ANTIGRAVITY\ANVEDA2\CODEMAP.md`. (Old
 | `functions/_middleware.js` | Runs on every request: maintenance page, test-copy rules (blocks writes on staging, "TEST COPY" tag). |
 | `functions/go/[token].js` | Short review / order links. |
 | `public/` | Static files: `img/products`, `img/reels`, fonts, `video/`, `teaser.html`. |
-| `scripts/` | `gen-catalog.py` (CMS -> data + photos), `staging-sync.js` (runs it on test builds), `optimize-images.js`, `smoke-site.mjs` (release check), `check-routes.mjs` (route check). |
+| `.github/workflows/` | `sync-catalog.yml` (CMS to live data: checked, collision-proof), `checks.yml` (CI on every push). `.github/dependabot.yml`: weekly update proposals. |
+| `scripts/` | `gen-catalog.py` (CMS -> data + photos), `staging-sync.js` (runs it on test builds), `optimize-images.js`, `smoke-site.mjs` (release check), `check-routes.mjs` (route check), `validate-data.py` (refuses bad shop data before it is published), `sync-publish.sh` (commit + push that survives collisions). |
 | `worker/index.js`, `wrangler.jsonc` | Old Worker entry / config (service binding `CMS` -> `anveda2`). |
 
 ## Pages (`src/app`)
@@ -73,7 +74,8 @@ Label 12px / box text 11px (iPhone boxes stay 16px), control corners 4px (`.av-b
 4. `node scripts/smoke-site.mjs`: serves `out/` and drives headless Edge with real touches (menu, bag, checkout, pinned bar, keyboard simulation). It sometimes hangs once; kill `node`/`msedge`, delete `%TEMP%\smoke-*`, run again.
 5. `git add -A src functions scripts; git commit; git push origin staging`; wait ~3 minutes; then `curl` the real route on `https://staging.anveda-web-pages.pages.dev` (a logged-out account call must answer 401, never "not found").
 6. Reel combos: `tests/reel_pair_prep.py` (adds a temporary same-design-twice reel to `src/data/reels.json`), `npm run build`, `node tests/test_reel_pair.mjs <screenshot folder>`, then `git checkout -- src/data/reels.json`.
-7. Tests that need the real chain (website function -> CMS -> database) live in `tests/` here and in `ANVEDA2\tests`.
+7. Sync scripts: `bash tests/test_sync.sh` (collision recovery, refuses empty or shrunken data). Website guards: `node tests/test_site_guards.mjs`.
+8. Tests that need the real chain (website function -> CMS -> database) live in `tests/` here and in `ANVEDA2\tests`.
 - Commit messages end with `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>`.
 
 ## Gotchas

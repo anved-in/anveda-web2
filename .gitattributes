@@ -1,0 +1,4 @@
+# scripts that run on Linux (GitHub Actions) must always have LF line endings
+*.sh text eol=lf
+*.py text eol=lf
+*.yml text eol=lf

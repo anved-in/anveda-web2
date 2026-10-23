@@ -1,0 +1,52 @@
+name: Checks
+
+# Runs on every push to staging / main and on pull requests, so a mistake is caught BEFORE it reaches a deploy:
+# types, the website-to-server route map, the shop data, the production dependencies, and the sync scripts' own self-test.
+# (This does not deploy anything: Cloudflare Pages deploys on its own.)
+
+on:
+  push:
+    branches: [staging, main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1  # v7.1.0
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install (exactly what package-lock.json says)
+        run: npm ci
+
+      - name: Types
+        run: npx tsc --noEmit
+
+      - name: Every call the site makes is routed
+        run: node scripts/check-routes.mjs
+
+      - name: The shop data is valid
+        run: python3 scripts/validate-data.py
+
+      - name: The sync scripts still recover from collisions and refuse bad data
+        run: PYTHON=python3 bash tests/test_sync.sh
+
+      - name: Build the site
+        run: npm run build
+
+      - name: Production dependencies have no high or critical known vulnerabilities
+        run: npm audit --omit=dev --audit-level=high

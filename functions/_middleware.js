@@ -124,7 +124,32 @@ async function maintenanceResponse(env, url, isApi) {
   return new Response(r.body, { status: 503, headers });
 }
 
+// Standard browser protections added to EVERY response (pages, files, API, maintenance page, test copies).
+//   X-Frame-Options              nobody can put the shop inside another site's frame (clickjacking)
+//   Strict-Transport-Security    browsers insist on https for a year
+//   Permissions-Policy           the shop never needs the camera, microphone or location
+//   X-Permitted-Cross-Domain-Policies  old Flash/PDF cross-domain rules are refused
+// (nosniff and the referrer policy are already set by Cloudflare.) A Content-Security-Policy is planned separately: it must be tried in
+// report-only mode first, because Razorpay's payment window and Google sign-in load code from their own addresses (see SECURITY.md).
+const SECURITY_HEADERS = {
+  "x-frame-options": "DENY",
+  "strict-transport-security": "max-age=31536000",
+  "permissions-policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+  "x-permitted-cross-domain-policies": "none",
+  "x-content-type-options": "nosniff",
+  "referrer-policy": "strict-origin-when-cross-origin",
+};
+function withSecurityHeaders(res) {
+  const h = new Headers(res.headers);
+  for (const [k, v] of Object.entries(SECURITY_HEADERS)) if (!h.has(k)) h.set(k, v);
+  return new Response(res.body, { status: res.status, statusText: res.statusText, headers: h });
+}
+
 export async function onRequest(context) {
+  return withSecurityHeaders(await handle(context));
+}
+
+async function handle(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
   const path = url.pathname;
