@@ -117,13 +117,14 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
     return reel.product ? [{ p: reel.product, qty: 1, variants: reel.product.variants }] : [];
   }, [combo, reel.product]);
 
-  const [colour, setColour] = useState<Record<string, string>>(() => {
-    const init: Record<string, string> = {};
-    rows.forEach((r) => {
+  // keyed by the entry's POSITION in the combo (not by design): the same design can be in it twice, each with its own colour
+  const [colour, setColour] = useState<Record<number, string>>(() => {
+    const init: Record<number, string> = {};
+    rows.forEach((r, i) => {
       const open = r.variants.filter((v) => v.inStock);
       // the reel's own colour (single design), or the only colour left, is chosen for them
-      if (!combo && reel.colour && open.some((v) => v.colour === reel.colour)) init[r.p.id] = reel.colour;
-      else if (open.length === 1) init[r.p.id] = open[0].colour;
+      if (!combo && reel.colour && open.some((v) => v.colour === reel.colour)) init[i] = reel.colour;
+      else if (open.length === 1) init[i] = open[0].colour;
     });
     return init;
   });
@@ -142,19 +143,19 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
 
   if (rows.length === 0) return null;
 
-  const picked = (r: Row) => r.variants.find((v) => v.colour === colour[r.p.id]);
+  const picked = (r: Row, i: number) => r.variants.find((v) => v.colour === colour[i]);
   const soldOutRows = rows.filter((r) => !r.variants.some((v) => v.inStock));
-  const complete = soldOutRows.length === 0 && !!size && rows.every((r) => colour[r.p.id]);
-  const missingColours = rows.filter((r) => !colour[r.p.id]).length;
+  const complete = soldOutRows.length === 0 && !!size && rows.every((_, i) => colour[i]);
+  const missingColours = rows.filter((_, i) => !colour[i]).length;
 
   // one price for a combination; otherwise the chosen colour's price
-  const first = picked(rows[0]) ?? rows[0].variants[0];
+  const first = picked(rows[0], 0) ?? rows[0].variants[0];
   const price = combo ? combo.price : variantPrice(rows[0].p, first) * qty;
   const single = rows[0];
-  const leftNote = !combo && size && picked(single) ? sizeLeft(picked(single)!, size) : null;
+  const leftNote = !combo && size && picked(single, 0) ? sizeLeft(picked(single, 0)!, size) : null;
 
-  const chooseColour = (r: Row, name: string) => {
-    setColour((cur) => ({ ...cur, [r.p.id]: name }));
+  const chooseColour = (i: number, r: Row, name: string) => {
+    setColour((cur) => ({ ...cur, [i]: name }));
     const c = r.variants.find((v) => v.colour === name);
     // the shared size is dropped if this colour cannot be had in it
     if (c && size && sizeState(c, size) !== "ok") setSize("");
@@ -167,13 +168,13 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
       return;
     }
     if (combo) {
-      addCombo(reel.id, reel.title, combo.price, rows.map((r) => ({ id: r.p.id, colour: colour[r.p.id], size, qty: r.qty })));
+      addCombo(reel.id, reel.title, combo.price, rows.map((r, i) => ({ id: r.p.id, colour: colour[i], size, qty: r.qty })));
     } else {
       if (leftNote !== null && qty > leftNote) {
         setErr(true);
         return;
       }
-      add(single.p.id, size, qty, colour[single.p.id]);
+      add(single.p.id, size, qty, colour[0]);
     }
     setAdded(true);
     onAdded?.();
@@ -189,7 +190,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
     return (
       <div className={`${t.text} rounded-md border ${t.line} p-4 text-center`}>
         <p className="text-[14px] font-semibold">{combo ? "Combo added to your bag ✓" : "Added to your bag ✓"}</p>
-        <p className={`mt-1 text-[12.5px] ${t.muted}`}>{combo ? `${reel.title} · ${inr(combo.price)} · Size ${size}` : `${single.p.name} · ${colourLabel(single.p, picked(single)!)} · Size ${size}`}</p>
+        <p className={`mt-1 text-[12.5px] ${t.muted}`}>{combo ? `${reel.title} · ${inr(combo.price)} · Size ${size}` : `${single.p.name} · ${colourLabel(single.p, picked(single, 0)!)} · Size ${size}`}</p>
         <div className="mt-4 flex flex-col gap-2">
           <button type="button" onClick={() => setBagOpen(true)} className={`h-10 cursor-pointer text-[11.5px] font-bold uppercase tracking-[0.14em] ${t.btn}`}>
             View bag
@@ -205,18 +206,21 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
   return (
     <div className={t.text}>
       <div className="flex items-baseline justify-between gap-3">
-        <p className={`text-[10.5px] font-bold uppercase tracking-[0.16em] ${t.faint}`}>{combo ? `Combo · ${rows.length} designs` : "Buy this"}</p>
+        <p className={`text-[10.5px] font-bold uppercase tracking-[0.16em] ${t.faint}`}>{combo ? `Combo · ${new Set(rows.map((r) => r.p.id)).size} ${new Set(rows.map((r) => r.p.id)).size === 1 ? "design" : "designs"}` : "Buy this"}</p>
         <p className="text-[20px] font-bold">{inr(price)}</p>
       </div>
       {combo && <p className={`text-right text-[11.5px] ${t.muted}`}>one price for everything below</p>}
 
-      {rows.map((r) => {
-        const v = picked(r);
+      {rows.map((r, i) => {
+        const v = picked(r, i);
+        // the same design in several entries: say which colour this is, and do not let one colour be taken twice
+        const sameCount = rows.filter((o) => o.p.id === r.p.id).length;
+        const nth = rows.slice(0, i + 1).filter((o) => o.p.id === r.p.id).length;
         const shown = v ?? r.variants.find((x) => x.inStock) ?? r.variants[0];
         const soldOut = !r.variants.some((x) => x.inStock);
         const label = `${r.p.name}${v ? ` · ${colourLabel(r.p, v)}` : ""}`;
         return (
-          <div key={r.p.id} className={`mt-4 border-t ${t.line} pt-4`}>
+          <div key={i} className={`mt-4 border-t ${t.line} pt-4`}>
             <div className="flex gap-3">
               {/* the photo, big enough to judge the design; tap for the full picture */}
               <button
@@ -236,18 +240,19 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
               </button>
               <div className="min-w-0 flex-1">
                 <p className="text-[13.5px] font-semibold leading-snug">{r.p.name}</p>
+                {combo && sameCount > 1 && <p className={`text-[12px] font-semibold ${t.muted}`}>Colour {nth} of {sameCount}</p>}
                 {combo && <p className={`text-[12px] ${t.muted}`}>{r.qty > 1 ? `${r.qty} pieces` : "1 piece"}</p>}
                 {soldOut ? (
                   <p className={`mt-2 text-[12.5px] font-semibold ${t.err}`}>Sold out right now.</p>
                 ) : (
                   <>
-                    <label className={`mt-2 block text-[10.5px] font-bold uppercase tracking-[0.14em] ${t.faint}`} htmlFor={`col-${reel.id}-${r.p.id}`}>
+                    <label className={`mt-2 block text-[10.5px] font-bold uppercase tracking-[0.14em] ${t.faint}`} htmlFor={`col-${reel.id}-${i}`}>
                       Colour
                     </label>
                     <select
-                      id={`col-${reel.id}-${r.p.id}`}
-                      value={colour[r.p.id] ?? ""}
-                      onChange={(e) => chooseColour(r, e.target.value)}
+                      id={`col-${reel.id}-${i}`}
+                      value={colour[i] ?? ""}
+                      onChange={(e) => chooseColour(i, r, e.target.value)}
                       style={{ colorScheme: t.scheme }}
                       className={`mt-1 h-9 w-full cursor-pointer rounded-md border px-2 text-[13px] outline-none focus:border-current ${t.field}`}
                     >
@@ -256,10 +261,12 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
                       </option>
                       {r.variants.map((c) => {
                         const noSize = !!size && sizeState(c, size) !== "ok";
+                        // another entry of the same design already has this colour
+                        const taken = rows.some((o, k) => k !== i && o.p.id === r.p.id && colour[k] === c.colour);
                         return (
-                          <option key={c.colour} value={c.colour} disabled={!c.inStock || noSize}>
+                          <option key={c.colour} value={c.colour} disabled={!c.inStock || noSize || taken}>
                             {colourLabel(r.p, c)}
-                            {!c.inStock ? ", sold out" : noSize ? `, no size ${size}` : ""}
+                            {!c.inStock ? ", sold out" : noSize ? `, no size ${size}` : taken ? ", chosen above" : ""}
                           </option>
                         );
                       })}
@@ -279,8 +286,8 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
           {sizes.map((s) => {
             const on = size === s;
             // a size is offered only if every chosen colour can be had in it
-            const ok = rows.every((r) => {
-              const v = picked(r);
+            const ok = rows.every((r, i) => {
+              const v = picked(r, i);
               return v ? sizeState(v, s) === "ok" : r.variants.some((x) => x.inStock && sizeState(x, s) === "ok");
             });
             return (

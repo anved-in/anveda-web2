@@ -58,6 +58,7 @@ The CMS / shop server has its own map: `F:\ANTIGRAVITY\ANVEDA2\CODEMAP.md`. (Old
 | Offers strip | CMS "Settings > Offers strip" -> `AnnouncementBar.tsx` |
 | Product page | `ProductView.tsx`, `ProductBuy.tsx` |
 | Reels page | `lib/reels.ts` (filters + cover fallback), `ReelsGrid.tsx`, `ReelFeed.tsx` |
+| Reel combo colour picker | `ReelPicker.tsx`: one colour box per combo ENTRY, keyed by position (the same design can be in a combo twice); `lib/cart.tsx` `addCombo` stores `picks[]` |
 | Contact email / social links | `lib/site.ts` |
 | Global styles / buttons (`.av-btn`) | `src/app/globals.css` |
 | **A new server call from the browser** | 1) route in `functions/api/[[path]].js` ROUTES, 2) matching route in the CMS Worker, 3) `node scripts/check-routes.mjs` must pass |
@@ -71,7 +72,8 @@ Label 12px / box text 11px (iPhone boxes stay 16px), control corners 4px (`.av-b
 3. `node scripts/check-routes.mjs`: every `/api/...` and `accountPost("...")` call used in `src/` is routed in the Pages function and exists on the CMS. **Must pass before every push.**
 4. `node scripts/smoke-site.mjs`: serves `out/` and drives headless Edge with real touches (menu, bag, checkout, pinned bar, keyboard simulation). It sometimes hangs once; kill `node`/`msedge`, delete `%TEMP%\smoke-*`, run again.
 5. `git add -A src functions scripts; git commit; git push origin staging`; wait ~3 minutes; then `curl` the real route on `https://staging.anveda-web-pages.pages.dev` (a logged-out account call must answer 401, never "not found").
-6. Tests that need the real chain (website function -> CMS -> database) live in `tests/` here and in `ANVEDA2\tests`.
+6. Reel combos: `tests/reel_pair_prep.py` (adds a temporary same-design-twice reel to `src/data/reels.json`), `npm run build`, `node tests/test_reel_pair.mjs <screenshot folder>`, then `git checkout -- src/data/reels.json`.
+7. Tests that need the real chain (website function -> CMS -> database) live in `tests/` here and in `ANVEDA2\tests`.
 - Commit messages end with `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>`.
 
 ## Gotchas

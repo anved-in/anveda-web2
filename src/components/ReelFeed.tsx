@@ -39,7 +39,7 @@ function ComboThumbs({ r, size }: { r: ResolvedReel; size: string }) {
   const imgs = (r.combo?.items ?? []).slice(0, 3).flatMap((it) => {
     const cp = productById(it.productId);
     return cp ? [{ id: it.productId, src: cp.variants[0].image }] : [];
-  });
+  }).filter((m, i, all) => all.findIndex((x) => x.id === m.id) === i);   // one photo per design, even if it is in the combo twice
   return (
     <span className="flex shrink-0 -space-x-2.5">
       {imgs.map((m) => (
@@ -256,7 +256,7 @@ export default function ReelFeed({
                     >
                       <ComboThumbs r={r} size="h-9 w-9" />
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[11.5px] font-semibold text-white">Combo · {r.combo.items.length} designs</span>
+                        <span className="block truncate text-[11.5px] font-semibold text-white">Combo · {new Set(r.combo.items.map((it) => it.productId)).size} {new Set(r.combo.items.map((it) => it.productId)).size === 1 ? "design" : "designs"}</span>
                         <span className="block text-[12px] font-bold text-white">{inr(r.combo.price)}</span>
                       </span>
                       <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] text-white/85">Choose &amp; buy</span>
