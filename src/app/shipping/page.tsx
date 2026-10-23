@@ -14,7 +14,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "What does shipping cost?",
-    a: "Delivery is priced by weight and by where it is going, using our courier's real rates, with transit insurance included. You see the exact amount at checkout before you pay. Big orders get a reduced fixed delivery price: your bag tells you how many more dozens to add. In Bengaluru you can also choose Porter, and we confirm its price with you on WhatsApp first.",
+    a: "Delivery is priced by weight and by where it is going, using our courier's real rates. You see the exact amount at checkout before you pay. Big orders get a reduced fixed delivery price: your bag tells you how many more dozens to add. In Bengaluru you can also choose Porter, and we confirm its price with you on WhatsApp first.",
   },
   {
     q: "Do you ship outside India?",

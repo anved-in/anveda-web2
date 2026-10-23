@@ -576,7 +576,7 @@ export default function CheckoutForm() {
     </div>
     {!usePorter && shipKnown && !coupon?.freeShipping && (
       <p className="text-[12px] leading-snug text-ink-faint">
-        By DTDC to {quote!.label}, {quote!.days}. Insurance is included.
+        By DTDC to {quote!.label}, {quote!.days}.
       </p>
     )}
     {offerText && (

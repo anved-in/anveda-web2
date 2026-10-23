@@ -22,7 +22,7 @@ export default function CartDrawer() {
   const offerNote = (() => {
     if (!offer || !offer.on || lines.length === 0) return null;
     const far = `(${inr(offer.priceFar)} to the North East and J&K)`;
-    if (dozens > offer.maxDozens) return null;
+    if (dozens > offer.maxDozens) return `Big order offer: delivery starts at ${inr(offer.price)} ${far}, plus a small charge only for the weight above ${offer.maxDozens} dozens.`;
     if (dozens >= offer.minDozens) return `Big order offer: delivery is ${inr(offer.price)} for this bag ${far}.`;
     const toGo = Math.ceil(offer.minDozens - dozens);
     return `Add ${toGo} more ${toGo === 1 ? "dozen" : "dozens"} and delivery is just ${inr(offer.price)} ${far}.`;
