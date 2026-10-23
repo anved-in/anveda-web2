@@ -668,6 +668,42 @@
      }
     ]
    }
+  },
+  {
+   "id": "grape-emerald",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DdvysnZTDEZ/?srtk=eDlnOXk1ZnVranNq",
+   "cover": null,
+   "title": "Grape & Emerald",
+   "caption": "",
+   "productId": "intricate-glass-bangle",
+   "colour": "Purple",
+   "combo": {
+    "price": 880,
+    "items": [
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Purple"
+      ]
+     },
+     {
+      "productId": "intricate-glass-bangle",
+      "qty": 1,
+      "colours": [
+       "Emerald Green"
+      ]
+     },
+     {
+      "productId": "border-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
