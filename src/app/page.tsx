@@ -165,6 +165,21 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ------------------------------------------------------ what this site is (plain words, for people and for search / verification) */}
+      <section className="px-4 py-12 sm:px-6 md:py-14">
+        <div className="mx-auto max-w-[760px] text-center">
+          <h2 className="font-display text-[clamp(22px,3vw,30px)]">About anveda.in</h2>
+          <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
+            anveda.in is the online shop of ANVEDA, a small business in Karnataka, India. We sell handpicked glass, antique and kundan bangles,
+            delivered across India by courier. You can browse and buy without an account. If you want to see your past orders, track a parcel or
+            save delivery addresses, you can log in, with Google or with a code sent on WhatsApp. We use your Google email address and name only
+            for that, and never for advertising. Read our{" "}
+            <Link href="/privacy" className="underline underline-offset-2">Privacy Policy</Link> and{" "}
+            <Link href="/terms" className="underline underline-offset-2">Terms</Link>.
+          </p>
+        </div>
+      </section>
+
       <Testimonials />
 
       {/* ------------------------------------------------------ instagram */}
