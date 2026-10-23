@@ -34,7 +34,7 @@ const check = (ok, what) => { console.log((ok ? 'PASS  ' : 'FAIL  ') + what); if
 
 // NOTE: simulated touches only work on a browser's FIRST page load, so each scenario loads its page exactly once.
 // `seedCart` puts items in the bag BEFORE the page starts (no second navigation).
-async function session(width, height, mobile, url, fn, seedCart) {
+async function session(width, height, mobile, url, fn, seedCart, preScript) {
   const port = 9900 + Math.floor(Math.random() * 40);
   const prof = path.join(process.env.TEMP || '.', 'smoke-site-' + Date.now() + width);
   const proc = spawn(EDGE, [`--remote-debugging-port=${port}`, '--headless=new', '--disable-gpu', '--user-data-dir=' + prof, 'about:blank'], { stdio: 'ignore' });
@@ -47,6 +47,7 @@ async function session(width, height, mobile, url, fn, seedCart) {
   await send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile });
   if (mobile) await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
   if (seedCart) await send('Page.addScriptToEvaluateOnNewDocument', { source: "try{localStorage.setItem('anveda.cart.v1', " + JSON.stringify(JSON.stringify(seedCart)) + ")}catch(e){}" });
+  if (preScript) await send('Page.addScriptToEvaluateOnNewDocument', { source: preScript });
   await send('Page.navigate', { url }); await sleep(3500);
   const tap =async (x, y) => { await send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] }); await sleep(60); await send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] }); await sleep(700); };
   try { await fn({ ev, tap }); } finally { ws.close(); proc.kill(); await sleep(1500); try { fs.rmSync(prof, { recursive: true, force: true }); } catch {} }
@@ -110,6 +111,25 @@ await session(390, 800, true, BASE + '/checkout/', async ({ ev, tap }) => {
   const pinned = await ev("(async function(){var b=[].slice.call(document.querySelectorAll('form button[type=submit]')).filter(function(e){return e.offsetParent})[0];var out=[];var spots=[0,400,100000];for(var i=0;i<spots.length;i++){window.scrollTo({top:spots[i],behavior:'instant'});await new Promise(function(r){setTimeout(r,500)});var q=b.getBoundingClientRect();var h=document.elementFromPoint(q.left+q.width/2,q.top+q.height/2);out.push((h===b||b.contains(h))&&q.bottom<=innerHeight+1?'ok':'NOT')}var bar=b.closest('div.fixed');return out.join(',')+'|'+(bar?getComputedStyle(bar).position:'not-fixed')})()");
   check(pinned === 'ok,ok,ok|fixed', 'checkout: the Continue button is pinned to the bottom at every scroll position (' + pinned + ')');
 }, [{ id: 'intricate-glass-bangle', size: '2.4', qty: 2, colour: 'Aqua' }]);
+
+// phone checkout + on-screen keyboard: the pinned Continue bar steps aside while the keyboard is OPEN, and must come back
+// when it closes, even if the cursor is still sitting in a box (Android back button, iOS scroll-dismiss do not blur the field).
+// A fake visualViewport stands in for the keyboard: __kb(true) shrinks it by 320px, __kb(false) restores it.
+const FAKE_KEYBOARD = "(function(){var l={};var vv={height:window.innerHeight,width:window.innerWidth,scale:1,offsetTop:0,offsetLeft:0,addEventListener:function(t,f){(l[t]=l[t]||[]).push(f)},removeEventListener:function(){}};Object.defineProperty(window,'visualViewport',{value:vv,configurable:true});window.__kb=function(open){vv.height=open?window.innerHeight-320:window.innerHeight;(l.resize||[]).forEach(function(f){f()})};})();";
+await session(390, 800, true, BASE + '/checkout/', async ({ ev, tap }) => {
+  const bar = "(function(){var b=[].slice.call(document.querySelectorAll('form button[type=submit]')).filter(function(e){return e.offsetParent})[0];if(!b)return 'missing';var q=b.getBoundingClientRect();var h=document.elementFromPoint(q.left+q.width/2,q.top+q.height/2);return (q.bottom<=window.innerHeight&&q.top>=0&&(h===b||b.contains(h)))?'visible':'hidden'})()";
+  await ev("(function(){var s=document.createElement('style');s.textContent='*{transition:none!important;animation:none!important}';document.head.appendChild(s)})()");   // measure the logic, not the slide animation
+  check((await ev(bar)) === 'visible', 'keyboard: the Continue bar is visible before typing');
+  const nm = JSON.parse(await ev(centre('input[autocomplete="name"]')) || 'null');
+  if (nm) await tap(nm.x, nm.y);                                 // a real touch on the box, as a shopper does
+  await sleep(300); await ev("window.__kb(true)"); await sleep(500);
+  check((await ev(bar)) === 'hidden', 'keyboard: it steps aside while the keyboard is open');
+  await ev("window.__kb(false)"); await sleep(500);
+  check((await ev("document.activeElement && document.activeElement.tagName")) === 'INPUT', 'keyboard: (the cursor is still in the box)');
+  check((await ev(bar)) === 'visible', 'keyboard: it comes back when the keyboard closes, even though the cursor is still in the box');
+  await ev("window.__kb(true)"); await sleep(300); await ev("window.__kb(false)"); await sleep(300);
+  check((await ev(bar)) === 'visible', 'keyboard: and again after a second open and close');
+}, [{ id: 'intricate-glass-bangle', size: '2.4', qty: 2, colour: 'Aqua' }], FAKE_KEYBOARD);
 
 server.close();
 console.log(failures ? `\n${failures} CHECK(S) FAILED - do not publish.` : '\nAll smoke checks passed.');

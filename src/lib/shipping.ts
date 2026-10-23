@@ -101,7 +101,9 @@ export function useShipping(input: ShipInput, pollWhile = false) {
   const seq = useRef(0);
   const key = JSON.stringify([bagPayload(input.lines), input.pin.trim(), input.state, input.pin.trim().startsWith("560") ? input.phone.replace(/\D/g, "").slice(-10) : ""]);
   const latest = useRef(input);
-  latest.current = input;
+  useEffect(() => {
+    latest.current = input;
+  });
 
   const load = useCallback(async () => {
     const cur = latest.current;

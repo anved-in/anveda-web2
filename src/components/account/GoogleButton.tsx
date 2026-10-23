@@ -39,9 +39,11 @@ export default function GoogleButton({ clientId, onDone, onError }: { clientId: 
   const box = useRef<HTMLDivElement>(null);
   const [failed, setFailed] = useState(false);
   const doneRef = useRef(onDone);
-  doneRef.current = onDone;
   const errRef = useRef(onError);
-  errRef.current = onError;
+  useEffect(() => {
+    doneRef.current = onDone;
+    errRef.current = onError;
+  });
 
   useEffect(() => {
     let alive = true;

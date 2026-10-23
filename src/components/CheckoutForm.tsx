@@ -19,6 +19,7 @@ import {
 } from "@/lib/payment";
 import { useShipping, offerLine, porterMessage, porterLink, PORTER_WHATSAPP_DISPLAY } from "@/lib/shipping";
 import { useSlow, friendlyError, SLOW_NOTE } from "@/lib/useSlow";
+import { useKeyboardOpen } from "@/lib/useKeyboardOpen";
 import { INDIAN_STATES } from "@/lib/states";
 import { accountPost, loadLoginMethods, anyLogin, type SavedAddress } from "@/lib/account";
 
@@ -72,14 +73,14 @@ export default function CheckoutForm() {
   const [book, setBook] = useState<SavedAddress[]>([]);
   const [pick, setPick] = useState<number | "new" | null>(null);
   const [contactPhone, setContactPhone] = useState("");
-  const useSaved = (a: SavedAddress) => {
+  const applySaved = (a: SavedAddress) => {
     setPick(a.id);
     // WhatsApp updates go to the chosen number; the courier's contact number is kept separately when it differs
     setContactPhone(a.phone !== a.notifyPhone ? a.phone : "");
     setC((cur) => ({ ...cur, name: a.name, phone: a.notifyPhone, address: a.address, city: a.city, state: a.state, pin: a.pin }));
     setErrs({});
   };
-  const useNew = () => {
+  const applyNew = () => {
     setPick("new");
     setContactPhone("");
     setC((cur) => ({ ...cur, address: "", city: "", state: "", pin: "" }));
@@ -90,8 +91,7 @@ export default function CheckoutForm() {
   const [summaryOpen, setSummaryOpen] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
   // the pinned bottom bar steps aside while a field is being typed in (the on-screen keyboard needs the room)
-  const [typing, setTyping] = useState(false);
-  const typingTimer = useRef<number | undefined>(undefined);
+  const typing = useKeyboardOpen();
   const [failure, setFailure] = useState<string | null>(null);
 
   // Coupon: validated live against CMS 2.0's own rules via /api/coupon as the
@@ -595,19 +595,6 @@ export default function CheckoutForm() {
   return (
     <form
       onSubmit={onSubmit}
-      onFocus={(e) => {
-        if (/^(INPUT|TEXTAREA|SELECT)$/.test((e.target as HTMLElement).tagName)) {
-          window.clearTimeout(typingTimer.current);
-          setTyping(true);
-        }
-      }}
-      onBlur={() => {
-        window.clearTimeout(typingTimer.current);
-        // a short delay: moving from one field to the next must not flash the bar
-        typingTimer.current = window.setTimeout(() => {
-          if (!/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName ?? "")) setTyping(false);
-        }, 150);
-      }}
       className="mt-6 flex flex-wrap gap-y-8 md:mt-8 md:gap-y-10"
     >
       {/* ===================================================== PHONE: where you are, and the order in one line */}
@@ -685,7 +672,7 @@ export default function CheckoutForm() {
               <legend className="px-1 text-[12px] font-semibold uppercase tracking-[0.14em] text-ink-soft">Deliver to</legend>
               {book.map((a) => (
                 <label key={a.id} className="flex cursor-pointer items-start gap-3 py-2 text-[13.5px]">
-                  <input type="radio" name="saved-address" checked={pick === a.id} onChange={() => useSaved(a)} className="mt-1 accent-[#2b2724]" />
+                  <input type="radio" name="saved-address" checked={pick === a.id} onChange={() => applySaved(a)} className="mt-1 accent-[#2b2724]" />
                   <span className="min-w-0 flex-1">
                     <span className="font-semibold">{a.name}</span>
                     {a.isDefault && <span className="ml-2 text-[11px] uppercase tracking-[0.1em] text-ink-faint">Main</span>}
@@ -694,7 +681,7 @@ export default function CheckoutForm() {
                 </label>
               ))}
               <label className="flex cursor-pointer items-start gap-3 border-t border-line py-2 pt-3 text-[13.5px]">
-                <input type="radio" name="saved-address" checked={pick === "new"} onChange={useNew} className="mt-1 accent-[#2b2724]" />
+                <input type="radio" name="saved-address" checked={pick === "new"} onChange={applyNew} className="mt-1 accent-[#2b2724]" />
                 <span className="font-semibold">Use a different address</span>
               </label>
             </fieldset>
