@@ -7,6 +7,7 @@ import QtyStepper from "@/components/QtyStepper";
 import NotifyMe from "@/components/NotifyMe";
 import BagIcon from "@/components/BagIcon";
 import { useCart } from "@/lib/cart";
+import { useLiveStock } from "@/lib/liveStock";
 import { inr, variantPrice, colourLabel, sizeLeft, sizeLeftNote, sizeState, ALL_SIZES, sizeInfo, sizesOfProduct, visibleSizes, type Product, type Variant } from "@/lib/catalog";
 
 /**
@@ -35,6 +36,7 @@ export default function ProductBuy({
   // No size preselected on purpose: a defaulted size is the commonest cause of
   // a wrong-size delivery. The customer must choose deliberately.
   // (a size can arrive in the link, e.g. from the shop card's size picker: ?size=2.10)
+  useLiveStock(); // redraw when the real stock counts arrive
   const sizeFromLink = useSearchParams().get("size");
   const [size, setSize] = useState<string | null>(() => (sizeFromLink && ALL_SIZES.includes(sizeFromLink) && sizesOfProduct(p).includes(sizeFromLink) ? sizeFromLink : null));
   const sizeRef = useRef<HTMLDivElement>(null);

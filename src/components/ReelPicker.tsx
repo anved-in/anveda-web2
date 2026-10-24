@@ -22,6 +22,7 @@ import {
   type Variant,
 } from "@/lib/catalog";
 import { useCart } from "@/lib/cart";
+import { useLiveStock } from "@/lib/liveStock";
 import type { ResolvedReel } from "@/lib/reels";
 
 /**
@@ -100,6 +101,7 @@ function Lightbox({ src, caption, onClose }: { src: string; caption: string; onC
 }
 
 export default function ReelPicker({ reel, dark = false, onAdded }: { reel: ResolvedReel; dark?: boolean; onAdded?: () => void }) {
+  const live = useLiveStock(); // redraw when the real stock counts arrive
   const t = dark ? THEME.dark : THEME.light;
   const { add, addCombo, setOpen: setBagOpen } = useCart();
   const combo = reel.combo ?? null;
@@ -138,7 +140,8 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
   // the sizes every design in the reel is sold in
   const sizes = useMemo(
     () => ALL_SIZES.filter((s) => rows.every((r) => sizesOfProduct(r.p).includes(s) && (!isRareSize(r.p, s) || r.variants.some((x) => sizeState(x, s) === "ok")))),
-    [rows],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [rows, live],
   );
 
   if (rows.length === 0) return null;

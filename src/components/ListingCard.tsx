@@ -5,6 +5,7 @@ import Link from "@/components/Link";
 import { visibleSizes, inr, framingStyle, imgSrc, imgSrcSmall, listingPrice, listingTitle, sizeState, type Listing } from "@/lib/catalog";
 import { asset } from "@/lib/site";
 import { useCart } from "@/lib/cart";
+import { useLiveStock } from "@/lib/liveStock";
 import Price from "./Price";
 import FavButton from "./FavButton";
 import NotifyMe from "./NotifyMe";
@@ -41,6 +42,7 @@ export default function ListingCard({
    *  this skips the fade-in entirely and renders it already visible. */
   instant?: boolean;
 }) {
+  useLiveStock(); // redraw when the real stock counts arrive
   const { product: p, variant: v, href } = l;
   const showColour = p.variants.length > 1;
   const price = listingPrice(l);
