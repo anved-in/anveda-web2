@@ -12,9 +12,9 @@ export default function Confirmation() {
   return (
     <section className="px-5 py-16 sm:px-6 md:py-24">
       <div className="mx-auto max-w-[680px] text-center">
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gold/20">
+        <div className="av-ring mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gold/20">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#967c40" strokeWidth="1.8" aria-hidden="true">
-            <path d="M4 12.5l5 5L20 6.5" />
+            <path className="av-draw" pathLength="26" d="M4 12.5l5 5L20 6.5" />
           </svg>
         </div>
 

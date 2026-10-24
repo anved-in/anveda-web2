@@ -1,6 +1,7 @@
 "use client";
 
 import AccountLink from "@/components/AccountLink";
+import { usePlayOnChange } from "@/lib/motion";
 import Link from "@/components/Link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -41,6 +42,7 @@ export default function Header() {
     ? productById(path.split("/").filter(Boolean)[1] ?? "")?.group
     : undefined;
   const { count, setOpen, ready } = useCart();
+  const bagBadge = usePlayOnChange<HTMLSpanElement>(ready ? count : null, "av-bump"); // the badge swells when the bag changes
   const fav = useFavs();
 
   // Close the mobile menu on navigation, or it stays open over the new page.
@@ -245,6 +247,7 @@ export default function Header() {
                   it is legitimately different on server and first client paint. */}
               {ready && count > 0 && (
                 <span
+                  ref={bagBadge}
                   suppressHydrationWarning
                   className="absolute right-0 top-0 flex h-[16px] min-w-[16px] items-center justify-center rounded-full bg-maroon px-1 text-[9.5px] font-bold text-white"
                 >
@@ -304,7 +307,7 @@ export default function Header() {
           anywhere, and it carries its own close button. */}
       <div
         className={[
-          "fixed inset-0 z-[90] bg-black/45 transition-opacity duration-300 md:hidden",
+          "fixed inset-0 z-[90] bg-black/45 transition-opacity duration-200 ease-out md:hidden",
           menu ? "opacity-100" : "pointer-events-none opacity-0",
         ].join(" ")}
         onClick={() => setMenu(false)}
@@ -315,8 +318,9 @@ export default function Header() {
         aria-label="Menu"
         aria-hidden={menu ? undefined : true}
         className={[
-          "fixed left-0 top-0 z-[95] flex h-[100dvh] w-[84%] max-w-[330px] flex-col rounded-r-[14px] bg-white transition-transform duration-300 md:hidden",
-          menu ? "translate-x-0 shadow-2xl" : "-translate-x-full",
+          "fixed left-0 top-0 z-[95] flex h-[100dvh] w-[84%] max-w-[330px] flex-col rounded-r-[14px] bg-white transition-transform ease-[cubic-bezier(0.32,0.72,0,1)] md:hidden",
+          // opening takes a moment (the person is watching it arrive); closing is quicker (the system is responding)
+          menu ? "translate-x-0 shadow-2xl duration-300" : "-translate-x-full duration-[220ms]",
         ].join(" ")}
       >
         <div className="flex items-center justify-between border-b border-line px-4 py-4">

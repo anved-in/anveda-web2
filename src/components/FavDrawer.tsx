@@ -50,7 +50,7 @@ export default function FavDrawer() {
       <div
         onClick={() => setOpen(false)}
         className={[
-          "fixed inset-0 z-[70] bg-espresso/45 transition-opacity duration-300",
+          "fixed inset-0 z-[70] bg-espresso/45 transition-opacity duration-200 ease-out",
           open ? "opacity-100" : "pointer-events-none opacity-0",
         ].join(" ")}
         aria-hidden="true"
@@ -62,8 +62,8 @@ export default function FavDrawer() {
         aria-hidden={!open}
         inert={!open}
         className={[
-          "fixed right-0 top-0 z-[80] flex h-[100dvh] w-full max-w-[420px] flex-col rounded-l-[14px] bg-cream transition-transform duration-300",
-          open ? "translate-x-0 shadow-2xl" : "translate-x-full",
+          "fixed right-0 top-0 z-[80] flex h-[100dvh] w-full max-w-[420px] flex-col rounded-l-[14px] bg-cream transition-transform ease-[cubic-bezier(0.32,0.72,0,1)]",
+          open ? "translate-x-0 shadow-2xl duration-300" : "translate-x-full duration-[220ms]",
         ].join(" ")}
       >
         <div className="flex items-center justify-between border-b border-line px-6 py-5">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useFavs } from "@/lib/favourites";
+import { usePlayOnChange } from "@/lib/motion";
 
 /** The heart outline shared by the button, the header and the tab bar. */
 export const HEART = "M12 20.5s-7.5-4.6-7.5-10.3A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.7-7.5 10.3-7.5 10.3Z";
@@ -26,9 +27,12 @@ export default function FavButton({
   const { has, toggle, ready } = useFavs();
   const on = ready && has(id, colour);
   const label = on ? `Remove ${name} from favourites` : `Add ${name} to favourites`;
+  // "Saved": the heart on a card pops once. Not on the product page's own heart (the phone product page is finalised).
+  const heart = usePlayOnChange<SVGSVGElement>(ready ? on : null, "av-heart", variant === "card" && on);
 
   const icon = (
     <svg
+      ref={heart}
       width={variant === "card" ? 18 : 22}
       height={variant === "card" ? 18 : 22}
       viewBox="0 0 24 24"

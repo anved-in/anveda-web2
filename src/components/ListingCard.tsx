@@ -77,7 +77,7 @@ export default function ListingCard({
       data-d={delay}
     >
       <FavButton id={p.id} colour={v.colour} name={title} />
-      <Link href={href} className="block">
+      <Link href={href} className="press-card block">
         {/* The photo runs edge to edge across the top of the card, so it shows as large as the card allows. */}
         <div className="relative aspect-square overflow-hidden rounded-t-[10px] bg-cream-2">
           {/* Plain <img>: the site builds to a static export, where the Next

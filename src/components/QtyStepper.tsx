@@ -1,3 +1,7 @@
+"use client";
+
+import { usePlayOnChange } from "@/lib/motion";
+
 /**
  * A real 3-cell grid, −, the count, +, each its own bordered box via
  * divide-x on the outer border, not just a single outer rectangle with
@@ -11,6 +15,7 @@ export default function QtyStepper({
   onIncrease,
   label = "",
   size = "md",
+  animate = false,
 }: {
   qty: number;
   onDecrease: () => void;
@@ -19,7 +24,10 @@ export default function QtyStepper({
    *  Border Bangles", omit for a page with only one stepper on it. */
   label?: string;
   size?: "sm" | "md";
+  /** The number slides in when it changes. Off by default so the product page stays exactly as designed. */
+  animate?: boolean;
 }) {
+  const num = usePlayOnChange<HTMLSpanElement>(qty, "av-tick", animate);
   const cell = size === "sm" ? "h-8 min-w-[32px] text-[14px]" : "h-11 min-w-[44px] text-[17px]";
   return (
     <div className="grid grid-cols-3 divide-x divide-line-strong overflow-hidden rounded-md border border-line-strong bg-white">
@@ -31,7 +39,7 @@ export default function QtyStepper({
       >
         −
       </button>
-      <span className={`flex items-center justify-center font-semibold ${cell}`}>{qty}</span>
+      <span ref={num} className={`flex items-center justify-center font-semibold ${cell}`}>{qty}</span>
       <button
         type="button"
         onClick={onIncrease}

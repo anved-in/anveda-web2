@@ -67,7 +67,7 @@ function DropdownPortal({
   }, [anchorRef]);
   if (!pos) return null;
   return createPortal(
-    <div data-shop-dropdown style={{ position: "fixed", top: pos.top, left: pos.left, width: PANEL_W }} className="z-20 rounded-[10px] border border-line bg-white py-1.5 shadow-lg">
+    <div data-shop-dropdown style={{ position: "fixed", top: pos.top, left: pos.left, width: PANEL_W }} className="av-pop-in z-20 rounded-[10px] border border-line bg-white py-1.5 shadow-lg">
       {children}
     </div>,
     document.body,

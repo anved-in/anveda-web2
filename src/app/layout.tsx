@@ -12,6 +12,7 @@ import { CartProvider } from "@/lib/cart";
 import { FavProvider } from "@/lib/favourites";
 import { SITE, HAS_WHATSAPP } from "@/lib/site";
 import LiveStockSync from "@/lib/liveStock";
+import ScrollState from "@/lib/motion";
 import NavProgress from "@/components/NavProgress";
 import AnnouncementBar from "@/components/AnnouncementBar";
 
@@ -82,8 +83,9 @@ export default function RootLayout({
           <FavProvider>
           <Reveal />
           <LiveStockSync />
+          <ScrollState />
           <NavProgress />
-          <div className="sticky top-0 z-50">
+          <div className="site-head sticky top-0 z-50">
           <AnnouncementBar />
           <Header />
           </div>

@@ -9,6 +9,7 @@ import Price from "@/components/Price";
 import FavButton from "@/components/FavButton";
 import Stars from "@/components/Stars";
 import { useLiveStock } from "@/lib/liveStock";
+import { usePdpFlag } from "@/lib/motion";
 import { soldOutLast, variantSlides, imgSrc, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, isRareSize, sizeState, type Product, type Variant } from "@/lib/catalog";
 import { asset, SITE, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 
@@ -59,6 +60,7 @@ function ShareButton({ name, colour }: { name: string; colour: string }) {
 }
 
 export default function ProductView({ p, rating }: { p: Product; rating?: { avg: number; count: number } | null }) {
+  usePdpFlag(); // the phone product page is finalised: the new micro-animations stay off here (globals.css, html.pdp)
   const wanted = useSearchParams().get("c") ?? "";
   // Keyed on the colour in the address: opening a different colour of the
   // design you are already on (from favourites, say) changes only the URL, and
