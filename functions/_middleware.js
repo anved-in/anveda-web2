@@ -60,6 +60,8 @@ async function testCopy(next, request, url) {
   return out;
 }
 
+const APEX_KEEP = ["/api/", "/img/", "/_next/", "/fonts/", "/video/", "/go/"];
+
 const COOKIE = "av_preview";
 const COOKIE_SECONDS = 2 * 60 * 60;
 
@@ -153,6 +155,14 @@ async function handle(context) {
   const { request, env, next } = context;
   const url = new URL(request.url);
   const path = url.pathname;
+
+  // One address for the shop. anveda.in used to answer with a full copy of every page next to www.anveda.in, which splits what
+  // Google learns about the site in two. Pages move permanently to www; files and /api/ are left alone (an Instagram card
+  // photo or a payment call must never be redirected).
+  if (url.hostname === "anveda.in" && (request.method === "GET" || request.method === "HEAD") && !APEX_KEEP.some((p) => path.startsWith(p))) {
+    url.hostname = "www.anveda.in";
+    return new Response(null, { status: 301, headers: { location: url.toString(), "cache-control": "public, max-age=3600" } });
+  }
 
   if (isTestCopy(url.hostname)) return testCopy(next, request, url);
   if (!env.CMS) return next(); // not wired up (e.g. local preview): never block

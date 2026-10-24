@@ -4,6 +4,7 @@ import CheckoutForm from "@/components/CheckoutForm";
 export const metadata: Metadata = {
   title: "Checkout",
   description: "Complete your ANVEDA order. Secure payment by UPI, card or netbanking.",
+  robots: { index: false, follow: false },
 };
 
 export default function CheckoutPage() {

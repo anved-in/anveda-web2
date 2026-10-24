@@ -11,6 +11,8 @@ export const SITE = {
   /** What link previews and Google show as the page heading. */
   domain: "anveda.in",
   tagline: "Handpicked Glass Bangles",
+  /** The front-page headline in search results: what shoppers type, then (in the layout) the domain. */
+  seoTitle: "Glass Bangles Online India | Handpicked Sets",
   description:
     "Handpicked glass, antique and kundan bangles. Chosen in small batches, packed with care.",
   /**

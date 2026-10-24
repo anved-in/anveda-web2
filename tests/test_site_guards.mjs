@@ -29,6 +29,25 @@ res = await run('https://staging.anveda-web-pages.pages.dev/', async () => new R
 assert.ok(has(res));
 ok('the test copy (with its "TEST COPY" strip) has them as well');
 
+// ---------------------------------------------------------------- one address for the shop (anveda.in -> www.anveda.in)
+let hit = 0;
+const nextHit = async () => { hit++; return new Response('page', { headers: { 'content-type': 'text/html' } }); };
+res = await run('https://anveda.in/shop/glass/?c=Pink', nextHit);
+assert.equal(res.status, 301); assert.equal(res.headers.get('location'), 'https://www.anveda.in/shop/glass/?c=Pink'); assert.equal(hit, 0); assert.ok(has(res));
+ok('anveda.in pages move permanently to www.anveda.in, keeping the path and the query');
+res = await run('https://anveda.in/', nextHit);
+assert.equal(res.status, 301); assert.equal(res.headers.get('location'), 'https://www.anveda.in/');
+ok('...including the home page');
+res = await run('https://anveda.in/img/products/a.jpg', nextHit);
+assert.equal(res.status, 200); assert.equal(hit, 1);
+ok('photos on anveda.in are NOT redirected (Instagram cards fetch them from there)');
+res = await mw.onRequest({ request: new Request('https://anveda.in/api/coupon', { method: 'POST', body: '{}' }), env: {}, next: nextHit });
+assert.equal(res.status, 200); assert.equal(hit, 2);
+ok('a payment or coupon call to anveda.in is never redirected');
+res = await run('https://www.anveda.in/shop/glass/', nextHit);
+assert.equal(res.status, 200); assert.equal(hit, 3);
+ok('www.anveda.in itself is never redirected');
+
 // ---------------------------------------------------------------- the visitor's address reaches the shop server
 const seen = [];
 const env = { CMS: { fetch: async (url, init) => { seen.push([url, init.headers]); return new Response(JSON.stringify({ ok: true, valid: false, discount: 0 })); } } };

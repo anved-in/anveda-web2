@@ -76,9 +76,16 @@ export async function generateMetadata({
   const { id } = await params;
   const p = productById(id);
   if (!p) return { title: "Not found" };
+  const n = p.variants.length;
+  const colours = `${n} ${n === 1 ? "colour" : "colours"}`;
+  const from = Math.min(...p.variants.map((v) => v.price ?? p.price).filter(Boolean));
+  const lead = p.blurb ? `${p.blurb.replace(/[.\s]+$/, "")}. ` : "";
+  const first = soldOutLast(p.variants, (v) => v.inStock)[0];
   return {
-    title: p.name,
-    description: `${p.name} · ${p.variants.length} colourways. ${p.blurb}`,
+    title: `${p.name}, ${colours}`,
+    description: `Buy ${p.name} online from ₹${from}. ${lead}${colours}, handpicked and packed with care, delivered across India.`,
+    alternates: { canonical: `/product/${p.id}/` },
+    openGraph: first ? { images: [{ url: asset(imgSrc(first.image)) }] } : undefined,
   };
 }
 
@@ -123,6 +130,10 @@ export default async function ProductPage({
 
       <section className="px-5 pb-8 pt-4 sm:px-6 md:py-12">
         <div className="mx-auto max-w-[1320px]">
+          {/* The page's one heading, for search engines and screen readers (nothing changes on screen). */}
+          <h1 className="sr-only">
+            {p.name}: {p.variants.length} {p.variants.length === 1 ? "colour" : "colours"}
+          </h1>
           {/* useSearchParams needs a Suspense boundary to prerender statically. */}
           <Suspense
             fallback={<div className="min-h-[60svh] bg-cream-2" aria-hidden="true" />}

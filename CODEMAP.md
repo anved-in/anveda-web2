@@ -62,6 +62,7 @@ The CMS / shop server has its own map: `F:\ANTIGRAVITY\ANVEDA2\CODEMAP.md`. (Old
 | Reel combo colour picker | `ReelPicker.tsx`: one colour box per combo ENTRY, keyed by position (the same design can be in a combo twice); `lib/cart.tsx` `addCombo` stores `picks[]` |
 | Contact email / social links | `lib/site.ts` |
 | Global styles / buttons (`.av-btn`) | `src/app/globals.css` |
+| **Search (SEO) titles, descriptions, schema** | Home/site-wide: `src/app/layout.tsx` (+ `SITE.seoTitle` in `lib/site.ts`); shelves: `GROUP_SEO` in `app/shop/[group]/page.tsx`; products: `generateMetadata` in `app/product/[id]/page.tsx`; sitemap/robots: `app/sitemap.ts`, `app/robots.ts`. Private pages must say `robots: { index: false }`. anveda.in -> www redirect: `functions/_middleware.js` (`APEX_KEEP`). The whole plan and open decisions: `SEO-PLAN.md` |
 | **A new server call from the browser** | 1) route in `functions/api/[[path]].js` ROUTES, 2) matching route in the CMS Worker, 3) `node scripts/check-routes.mjs` must pass |
 
 ## Design rules (owner's, enforced in review)

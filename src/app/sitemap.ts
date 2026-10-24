@@ -10,6 +10,8 @@ const BASE = "https://www.anveda.in";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  // No lastModified on purpose: stamping every page "changed just now" on every build teaches Google to ignore the date.
+  // (Pages that say noindex, like Track order, are left out.)
   const staticPages = [
     "",
     "about",
@@ -19,21 +21,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "reels",
     "terms",
     "privacy",
-    "track",
     "colours",
   ].map((p) => ({
     url: `${BASE}/${p}${p ? "/" : ""}`,
-    lastModified: new Date(),
   }));
 
   const groupPages = groups.map((g) => ({
     url: `${BASE}/shop/${g.slug}/`,
-    lastModified: new Date(),
   }));
 
   const productPages = products.map((p) => ({
     url: `${BASE}/product/${p.id}/`,
-    lastModified: new Date(),
   }));
 
   return [...staticPages, ...groupPages, ...productPages];

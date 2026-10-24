@@ -5,6 +5,7 @@ import Confirmation from "@/components/Confirmation";
 export const metadata: Metadata = {
   title: "Order confirmed",
   description: "Thank you for your ANVEDA order.",
+  robots: { index: false, follow: false },
 };
 
 export default function OrderConfirmedPage() {

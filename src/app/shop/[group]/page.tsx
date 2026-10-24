@@ -17,6 +17,30 @@ import { breadcrumbJsonLd } from "@/lib/breadcrumbs";
  * chips below jump to a section by anchor.
  */
 
+// What each shelf is called in search results (the words shoppers type, then the domain from the layout's template).
+const GROUP_SEO: Record<string, { title: string; description: string }> = {
+  glass: {
+    title: "Glass Bangles Online | Pastel, Jelly & Stone-Set Bangles",
+    description:
+      "Shop glass bangles online in India: pastel, jelly, petal, phool and stone-set designs in every colour. Handpicked in small batches and delivered across India.",
+  },
+  ornate: {
+    title: "Kada & Statement Bangles Online | Ornate Bangles",
+    description:
+      "Shop ornate bangles online: wide statement bangles, solid kadas and designer side bangles to build your stack around. Delivered across India.",
+  },
+  layering: {
+    title: "Layering Bangles Online | Border & Gunghroo Bangles",
+    description:
+      "Layering bangles, border bangles and gunghroo (ghungroo) bangles to stack with your glass bangles. Handpicked colours, delivered across India.",
+  },
+  kids: {
+    title: "Kids Bangles Online | Small Sizes for Little Girls",
+    description:
+      "Bangles for kids: small sizes made for little hands, in soft colours. Handpicked and packed with care, delivered across India.",
+  },
+};
+
 export function generateStaticParams() {
   return groups.map((g) => ({ group: g.slug }));
 }
@@ -29,7 +53,12 @@ export async function generateMetadata({
   const { group } = await params;
   const g = groupBySlug(group);
   if (!g) return {};
-  return { title: g.name, description: g.blurb };
+  const seo = GROUP_SEO[g.slug];
+  return {
+    title: seo?.title ?? `${g.name} Online`,
+    description: seo?.description ?? g.blurb,
+    alternates: { canonical: `/shop/${g.slug}/` },
+  };
 }
 
 export default async function GroupPage({
@@ -55,6 +84,9 @@ export default async function GroupPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
+
+      {/* Phones hide the visible heading below, so search engines and screen readers still get one (nothing changes on screen). */}
+      <h1 className="sr-only lg:hidden">{g.name} Online</h1>
 
       {/* Desktop only (lg+): the page heading, blurb and ranges/designs
           count. Dropped on mobile entirely, not just hidden behind a

@@ -5,8 +5,10 @@ import { asset } from "@/lib/site";
 import { imgSrc, imgSrcSmall, framingStyle, colourLabel } from "@/lib/catalog";
 
 export const metadata: Metadata = {
-  title: "Shop by colour",
-  description: "Every ANVEDA bangle, laid out colour by colour.",
+  title: "Shop Glass Bangles by Colour",
+  description:
+    "Browse every ANVEDA bangle colour by colour: pastels, jellies, stone-set and more. Find the shade that goes with your saree or lehenga.",
+  alternates: { canonical: "/colours/" },
 };
 
 /**
@@ -17,6 +19,7 @@ export default async function ColoursPage() {
   const tiles = await colourFlow();
   return (
     <section aria-label="All bangles by colour">
+      <h1 className="sr-only">Glass bangles by colour</h1>
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
         {tiles.map((l, i) => (
           <Link
@@ -30,7 +33,7 @@ export default async function ColoursPage() {
               src={asset(imgSrcSmall(l.variant.image))}
               srcSet={`${asset(imgSrcSmall(l.variant.image))} 480w, ${asset(imgSrc(l.variant.image))} 1000w`}
               sizes="(max-width: 639px) 34vw, (max-width: 767px) 25vw, (max-width: 1023px) 17vw, 12.5vw"
-              alt=""
+              alt={`${l.product.name}, ${colourLabel(l.product, l.variant)}`}
               className="h-full w-full object-cover"
               style={framingStyle(l.variant)}
               loading={i < 12 ? "eager" : "lazy"}

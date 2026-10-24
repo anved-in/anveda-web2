@@ -4,6 +4,7 @@ import TrackForm from "@/components/TrackForm";
 export const metadata: Metadata = {
   title: "Track your order",
   description: "Check the status of an ANVEDA order with your order reference and phone number.",
+  robots: { index: false, follow: true },
 };
 
 export default function TrackPage() {
