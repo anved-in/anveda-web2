@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import { useCart, lineProduct } from "@/lib/cart";
 import QtyStepper from "@/components/QtyStepper";
 import ComboBagRow from "@/components/ComboBagRow";
-import { framingStyle, imgSrc, inr, unitPrice, packLabel, colourLabel } from "@/lib/catalog";
+import { framingStyle, imgSrc, inr, unitPrice, packLabel, colourLabel, sizeLeft, sizeState } from "@/lib/catalog";
+import { useLiveStock } from "@/lib/liveStock";
 import { asset } from "@/lib/site";
 import { bagPieces, loadOffer, type OfferConfig } from "@/lib/shipping";
 
 export default function CartDrawer() {
   const { open, setOpen, lines, setQty, remove, subtotal, count } = useCart();
+  useLiveStock(); // redraw the stock notes when the real counts arrive
 
   // The big-order delivery offer, from the shop's settings. The bag has no address yet, so it says what is true for every
   // address and never names a personal saving.
@@ -142,6 +144,22 @@ export default function CartDrawer() {
                         />
                         <span className="text-[14px] font-semibold">{inr(unitPrice(l.id, l.colour) * l.qty)}</span>
                       </div>
+
+                      {/* Live stock (see lib/liveStock): a line that sold out, or asks for more than is left, says so here
+                          instead of the shopper only finding out when checkout refuses. Checkout is not blocked: the
+                          server is the judge, this only tells them early. */}
+                      {(() => {
+                        const v = p.variants.find((x) => x.colour === l.colour);
+                        if (!v) return null;
+                        const have = sizeLeft(v, l.size);
+                        const gone = !v.inStock || sizeState(v, l.size) !== "ok";
+                        const note = gone
+                          ? "Sold out. Please remove it to check out."
+                          : have !== null && l.qty > have
+                            ? `Only ${have} left. Please lower the quantity.`
+                            : null;
+                        return note ? <p role="alert" className="mt-2 text-[12px] font-semibold text-maroon">{note}</p> : null;
+                      })()}
 
                       <button
                         type="button"
