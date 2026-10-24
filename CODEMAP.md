@@ -79,6 +79,7 @@ Label 12px / box text 11px (iPhone boxes stay 16px), control corners 4px (`.av-b
 - Commit messages end with `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>`.
 
 ## Gotchas
+- - **Stock is live, not baked.** `src/lib/liveStock.tsx` (`LiveStockSync` in the layout) POSTs `/api/stock` (Pages function -> CMS `GET /stock-live`) on load, tab focus and every 60 s, and overwrites `inStock` / `stockQty` / `sizeStock` on the `products` objects in place. Any component that shows stock must call `useLiveStock()` (and add its return value to the deps of any `useMemo` that reads stock) so it redraws. The test copy allows this one POST (`TEST_READ_OK` in `_middleware.js`).
 - `useXxx` names are treated as React hooks by ESLint: do not name plain functions `useSomething`.
 - A fixed bottom bar must never depend on "an input has focus" (it sticks); use `visualViewport` (`useKeyboardOpen`).
 - Static export: no server code in `src/`; `useSearchParams` needs a `Suspense` boundary; `url()` in CSS ignores `basePath`.
