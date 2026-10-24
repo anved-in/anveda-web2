@@ -293,6 +293,18 @@ async function handleNotifyStock(request, env) {
   return json(data, res.status);
 }
 
+// What can be bought right now. The page is built from a copy of the catalog, so the browser asks this and
+// lays the live counts over it. Never cached: a piece sold a second ago must not look available.
+async function handleStockLive(request, env) {
+  if (!env.CMS) return json({ ok: false, error: "not configured" }, 500);
+  const res = await env.CMS.fetch("https://internal/stock-live");
+  const data = await res.json().catch(() => ({ ok: false, error: "bad response" }));
+  return new Response(JSON.stringify(data), {
+    status: res.status,
+    headers: { "content-type": "application/json", "cache-control": "no-store" },
+  });
+}
+
 // Verified reviews: look up the order behind a private link, and submit a rating.
 // Same service-binding proxy; the CMS decides everything (token, delivered, once).
 const proxy = (cmsPath) => async (request, env) => {
@@ -373,6 +385,7 @@ const ROUTES = {
   "/api/shipping-config": shippingProxy("/config"),
   "/api/cart-capture": handleCartCapture,
   "/api/notify-stock": handleNotifyStock,
+  "/api/stock": handleStockLive,
   "/api/account/config": account("/config"),
   "/api/account/request": account("/request"),
   "/api/account/verify": account("/verify"),

@@ -11,6 +11,7 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { CartProvider } from "@/lib/cart";
 import { FavProvider } from "@/lib/favourites";
 import { SITE, HAS_WHATSAPP } from "@/lib/site";
+import LiveStockSync from "@/lib/liveStock";
 import NavProgress from "@/components/NavProgress";
 import AnnouncementBar from "@/components/AnnouncementBar";
 
@@ -80,6 +81,7 @@ export default function RootLayout({
         <CartProvider>
           <FavProvider>
           <Reveal />
+          <LiveStockSync />
           <NavProgress />
           <div className="sticky top-0 z-50">
           <AnnouncementBar />

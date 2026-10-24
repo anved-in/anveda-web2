@@ -8,6 +8,7 @@ import ProductBuy from "@/components/ProductBuy";
 import Price from "@/components/Price";
 import FavButton from "@/components/FavButton";
 import Stars from "@/components/Stars";
+import { useLiveStock } from "@/lib/liveStock";
 import { soldOutLast, variantSlides, imgSrc, variantPrice, packCount, packLabel, colourLabel, framingStyle, ALL_SIZES, isRareSize, sizeState, type Product, type Variant } from "@/lib/catalog";
 import { asset, SITE, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 
@@ -156,6 +157,7 @@ function InfoPopup({ p, variant, onClose }: { p: Product; variant: Variant; onCl
 }
 
 function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; rating?: { avg: number; count: number } | null }) {
+  useLiveStock(); // redraw when the real stock counts arrive
   // In-stock colours first; the strip, the swipe and the default all follow it.
   const ordered = soldOutLast(p.variants, (v) => v.inStock);
   const initial =

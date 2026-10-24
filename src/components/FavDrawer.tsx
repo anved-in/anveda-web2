@@ -4,6 +4,7 @@ import Link from "@/components/Link";
 import { useEffect, useState } from "react";
 import { useFavs } from "@/lib/favourites";
 import { useCart } from "@/lib/cart";
+import { useLiveStock } from "@/lib/liveStock";
 import {
   productById,
   framingStyle,
@@ -117,6 +118,7 @@ export default function FavDrawer() {
 }
 
 function FavRow({ p, v }: { p: Product; v: Variant }) {
+  useLiveStock(); // redraw when the real stock counts arrive
   const { remove, setOpen: setFavOpen } = useFavs();
   const { add } = useCart();
   // Chosen here, per row, and deliberately not stored with the favourite.
