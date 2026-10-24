@@ -254,47 +254,48 @@ export default function CheckoutForm() {
     if (errs[k]) setErrs((cur) => ({ ...cur, [k]: undefined }));
   };
 
-  // Abandoned-bag capture: fires once a valid phone number appears, so the
-  // owner has something to follow up on if payment never happens. Debounced
-  // (typing settles) and deduped per exact number (won't re-fire on every
-  // keystroke after it's already valid). Harmless if they go on to pay,
-  // the backend deletes this the moment a real order lands on that phone.
-  const capturedPhoneRef = useRef("");
+  // Abandoned-bag capture: once a valid phone number appears, the bag is saved so the owner has something to follow up
+  // on if payment never happens. Debounced (typing settles), and re-saved whenever what the owner would see changes (the
+  // name typed after the phone, an item added or removed, a quantity), so the saved bag is always the LATEST one. The
+  // same content is never sent twice. Harmless if they go on to pay: the backend deletes it the moment a real order lands.
+  const capturedRef = useRef("");
   useEffect(() => {
     const digits = c.phone.replace(/\D/g, "").slice(-10);
     if (!/^[6-9]\d{9}$/.test(digits) || lines.length === 0) return;
-    if (capturedPhoneRef.current === digits) return;
+    const payload = {
+      name: c.name.trim() || undefined,
+      phone: digits,
+      lines: lines.flatMap((l) => {
+        if (l.combo) {
+          // a combination is recorded as its designs, so a forgotten bag shows what was in it
+          return l.combo.picks.map((k) => {
+            const cp = productById(k.id);
+            const cv = cp?.variants.find((x) => x.colour === k.colour);
+            return { productId: k.id, name: `${cp?.name ?? k.id} (combo)`, colour: k.colour, size: k.size, qty: k.qty * l.qty, price: cv?.price ?? cp?.price ?? 0 };
+          });
+        }
+        const p = productById(l.id);
+        const v = p?.variants.find((x) => x.colour === l.colour);
+        return [{
+          productId: l.id,
+          name: p?.name ?? l.id,
+          colour: l.colour,
+          size: l.size,
+          qty: l.qty,
+          price: v?.price ?? p?.price ?? 0,
+        }];
+      }),
+      subtotal,
+      total,
+    };
+    const key = JSON.stringify(payload);
+    if (capturedRef.current === key) return;
     const t = setTimeout(() => {
-      capturedPhoneRef.current = digits;
+      capturedRef.current = key;
       fetch("/api/cart-capture", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          name: c.name || undefined,
-          phone: digits,
-          lines: lines.flatMap((l) => {
-            if (l.combo) {
-              // a combination is recorded as its designs, so a forgotten bag shows what was in it
-              return l.combo.picks.map((k) => {
-                const cp = productById(k.id);
-                const cv = cp?.variants.find((x) => x.colour === k.colour);
-                return { productId: k.id, name: `${cp?.name ?? k.id} (combo)`, colour: k.colour, size: k.size, qty: k.qty * l.qty, price: cv?.price ?? cp?.price ?? 0 };
-              });
-            }
-            const p = productById(l.id);
-            const v = p?.variants.find((x) => x.colour === l.colour);
-            return [{
-              productId: l.id,
-              name: p?.name ?? l.id,
-              colour: l.colour,
-              size: l.size,
-              qty: l.qty,
-              price: v?.price ?? p?.price ?? 0,
-            }];
-          }),
-          subtotal,
-          total,
-        }),
+        body: key,
       }).catch(() => {});
     }, 1200);
     return () => clearTimeout(t);
