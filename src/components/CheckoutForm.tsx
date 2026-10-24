@@ -87,6 +87,7 @@ export default function CheckoutForm() {
   };
   const [busy, setBusy] = useState(false);
   const slow = useSlow(busy);
+  const checkoutRef = useRef<string | null>(null);
   // phone only: the order summary starts folded away, and the optional note starts hidden
   const [summaryOpen, setSummaryOpen] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
@@ -338,7 +339,8 @@ export default function CheckoutForm() {
       return;
     }
 
-    const ref = makeRef();
+    if (!checkoutRef.current) checkoutRef.current = makeRef();
+    const ref = checkoutRef.current;
     setBusy(true);
     try {
       const paymentId = await payWithRazorpay(
