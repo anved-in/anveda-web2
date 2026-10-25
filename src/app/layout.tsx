@@ -96,7 +96,9 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-IN">
+    // data-scroll-behavior: the page scrolls smoothly (globals.css), and Next needs to be told so it can switch that off for the
+    // jump to the top when you move to another page. Without it, tapping Ornate while scrolled down in Glass stayed scrolled down.
+    <html lang="en-IN" data-scroll-behavior="smooth">
       <head>
         <BrandFonts />
         {/* eslint-disable-next-line react/no-danger */}

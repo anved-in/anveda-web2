@@ -131,6 +131,23 @@ await session(390, 800, true, BASE + '/checkout/', async ({ ev, tap }) => {
   check((await ev(bar)) === 'visible', 'keyboard: and again after a second open and close');
 }, [{ id: 'intricate-glass-bangle', size: '2.4', qty: 2, colour: 'Aqua' }], FAKE_KEYBOARD);
 
+// Switching shelf while scrolled down must land at the TOP of the new shelf, first product in view (it used to stay scrolled down
+// because the page scrolls smoothly and Next was not told: <html data-scroll-behavior="smooth">).
+for (const [w, h, mob] of [[390, 800, true], [1280, 800, false]]) {
+  await session(w, h, mob, BASE + '/shop/glass/', async ({ ev }) => {
+    const firstProduct = "(function(){var e=[].filter.call(document.querySelectorAll('main a[href^=\"/product/\"]'),function(x){return x.getClientRects().length>0})[0];if(!e)return null;return Math.round(e.getBoundingClientRect().top)})()";
+    for (const [from, to] of [['glass', 'ornate'], ['ornate', 'layering']]) {
+      await ev("window.scrollTo({top:2200,behavior:'instant'})"); await sleep(800);
+      check((await ev('window.scrollY')) > 1000, `${w}px: scrolled down in ${from}`);
+      const link = `[].filter.call(document.querySelectorAll('a[href="/shop/${to}/"],a[href="/shop/${to}"]'),function(x){return x.getClientRects().length>0})[0]`;
+      await ev(`(function(){var a=${link};if(a)a.click()})()`); await sleep(2500);
+      const top = await ev(firstProduct);
+      check((await ev('location.pathname')).indexOf('/shop/' + to) === 0 && (await ev('window.scrollY')) <= 5, `${w}px: tapping ${to} lands at the top of ${to} (scrollY ${Math.round(await ev('window.scrollY'))})`);
+      check(top !== null && top >= 0 && top < h, `${w}px: ...and the first ${to} product is on screen (${top}px from the top)`);
+    }
+  });
+}
+
 server.close();
 console.log(failures ? `\n${failures} CHECK(S) FAILED - do not publish.` : '\nAll smoke checks passed.');
 process.exit(failures ? 1 : 0);
