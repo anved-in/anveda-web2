@@ -4739,30 +4739,6 @@
        "zoom": 1.25
       }
      ]
-    },
-    {
-     "id": 203,
-     "colour": "MultiStone Gunghroo Set of 4",
-     "image": "u-gunghroo-multistone-gunghroo-mvjc7jkj.webp",
-     "price": 170,
-     "pieces": 4,
-     "sizes": [
-      "2.2",
-      "2.4",
-      "2.6",
-      "2.8",
-      "2.10"
-     ],
-     "inStock": false,
-     "sizeStock": {
-      "2.10": 0,
-      "2.2": 0,
-      "2.4": 0,
-      "2.6": 0,
-      "2.8": 0
-     },
-     "focal": "0% 38.4%",
-     "zoom": 1.2
     }
    ],
    "image": "gunghroo-acrylic-kashmiri-blue-yellow-set-of-4.webp"
