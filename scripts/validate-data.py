@@ -100,7 +100,7 @@ if reels is not None:
         shrink_check("The number of reels", len(lst), len((old or {}).get("reels", [])) if old else None, 0.5)
 
 # ---------------------------------------------------------------- website wording and photos (CMS > Website pages)
-site = load("src/data/site.json")
+site = load("src/data/site.json") if os.path.exists(os.path.join(ROOT, "src", "data", "site.json")) else None   # optional: older data has none
 if site is not None:
     vals = site.get("values")
     if not isinstance(vals, dict):
