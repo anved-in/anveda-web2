@@ -96,8 +96,18 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mx-auto mt-10 flex max-w-[1320px] flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-[#d9d9d9] pt-5 text-[12px] text-[#626262]">
+      {/* What this site is, in plain words (people, search engines and Google's sign-in check read it). */}
+      <p className="mx-auto mt-10 max-w-[1320px] text-[12px] leading-relaxed text-[#626262]">
+        anveda.in is the online shop of ANVEDA, a small business in Karnataka, India. We sell handpicked glass bangles, chosen in small batches and
+        delivered across India by courier. You can browse and buy without an account. Logging in with Google or with a code sent on WhatsApp is
+        only for seeing your past orders, tracking a parcel and saving delivery addresses; your Google email address and name are never used for advertising.
+      </p>
+      <div className="mx-auto mt-4 flex max-w-[1320px] flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-[#d9d9d9] pt-5 text-[12px] text-[#626262]">
         <span>© {new Date().getFullYear()} ANVEDA. All rights reserved.</span>
+        <nav aria-label="Legal" className="flex gap-x-5">
+          <Link href="/privacy" className="underline underline-offset-2 hover:opacity-60">Privacy Policy</Link>
+          <Link href="/terms" className="underline underline-offset-2 hover:opacity-60">Terms</Link>
+        </nav>
         <span>Made in India</span>
       </div>
     </footer>

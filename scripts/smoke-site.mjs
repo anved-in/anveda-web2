@@ -148,6 +148,20 @@ for (const [w, h, mob] of [[390, 800, true], [1280, 800, false]]) {
   });
 }
 
+// Home page: no policy / "what this site is" block above the products; Privacy and Terms are in the footer, always visible
+for (const [w, h, mob] of [[390, 800, true], [1280, 800, false]]) {
+  await session(w, h, mob, BASE + '/', async ({ ev }) => {
+    check((await ev("document.querySelector('main').innerText.indexOf('is the online shop of ANVEDA')")) === -1, `${w}px: home: no intro paragraph at the top of the page`);
+    check((await ev("document.querySelector('main').innerText.toLowerCase().indexOf('privacy policy')")) === -1, `${w}px: home: no Privacy / Terms sentence in the page body`);
+    check((await ev("document.querySelectorAll('h1').length")) === 1 && (await ev("var r=document.querySelector('h1').getBoundingClientRect();r.width<=2&&r.height<=2")) === true, `${w}px: home: still one heading for search engines, not visible`);
+    check((await ev("document.querySelector('main section').getBoundingClientRect().top")) < 200, `${w}px: home: the hero is the first thing under the header`);
+    await ev("window.scrollTo({top:document.body.scrollHeight,behavior:'instant'})"); await sleep(600);
+    check((await ev("document.querySelectorAll('footer nav[aria-label=\"Legal\"] a').length")) === 2, `${w}px: footer has Privacy Policy and Terms links`);
+    check((await ev(reachable('footer nav[aria-label="Legal"] a[href^="/privacy"]'))) === 'ok' && (await ev(reachable('footer nav[aria-label="Legal"] a[href^="/terms"]'))) === 'ok', `${w}px: ...visible and reachable without opening anything`);
+    check((await ev("document.querySelector('footer').innerText.indexOf('never used for advertising')")) !== -1, `${w}px: footer says how Google sign-in data is used`);
+  });
+}
+
 server.close();
 console.log(failures ? `\n${failures} CHECK(S) FAILED - do not publish.` : '\nAll smoke checks passed.');
 process.exit(failures ? 1 : 0);

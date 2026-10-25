@@ -72,20 +72,9 @@ export default function Home() {
       {/* ---------------------------------------------------------- hero */}
       <Hero3D slides={heroSlides} />
 
-      {/* ------------------------------------------- what this site is (plain words: people, search engines and Google's app verification read this first) */}
-      <section className="px-4 pb-2 pt-10 sm:px-6 md:pt-14">
-        <div className="mx-auto max-w-[760px] text-center">
-          <h1 className="font-display text-[clamp(24px,3.4vw,36px)] leading-tight">ANVEDA: handpicked glass, antique and kundan bangles</h1>
-          <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
-            anveda.in is the online shop of ANVEDA, a small business in Karnataka, India. We sell glass, antique and kundan bangles, chosen in small
-            batches and delivered across India by courier. You can browse and buy without an account. If you want to see your past orders, track a
-            parcel or save delivery addresses, you can log in with Google or with a code sent on WhatsApp. We use your Google email address and name
-            only for that, never for advertising. Read our{" "}
-            <Link href="/privacy" className="underline underline-offset-2">Privacy Policy</Link> and{" "}
-            <Link href="/terms" className="underline underline-offset-2">Terms</Link>.
-          </p>
-        </div>
-      </section>
+      {/* The page's one heading, for search engines and screen readers (nothing shows on screen). The plain-words
+          description of the shop and the Privacy / Terms links live in the footer. */}
+      <h1 className="sr-only">ANVEDA: handpicked glass bangles online, delivered across India</h1>
 
       {/* -------------------------------------------------- new arrivals */}
       <section className="px-4 py-12 sm:px-6 md:py-16">
