@@ -44,6 +44,13 @@ if os.path.exists(REELS):
         else:
             keep.add(fn)
 
+# Photos the owner chose for the home / About page in the CMS (src/data/site.json: every key ending ".image").
+SITE = os.path.join(ROOT, "src", "data", "site.json")
+if os.path.exists(SITE):
+    for k, v in json.load(io.open(SITE, encoding="utf-8")).get("values", {}).items():
+        if k.endswith(".image") and v:
+            keep.add(v)
+
 # The plain tile shown for a colour that has no photo yet (see catalog.ts).
 keep.add("no-photo.webp")
 

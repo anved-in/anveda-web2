@@ -44,6 +44,8 @@ The CMS / shop server has its own map: `F:\ANTIGRAVITY\ANVEDA2\CODEMAP.md`. (Old
 3. **Live (`main`)** only changes by a merge: `git switch main && git merge --ff-only staging`, and the data commit from `python scripts/gen-catalog.py` (the GitHub "Sync catalog" action dispatch returns 401). Ask the owner before doing this.
 4. Browser -> `/api/...` (Pages function) -> service binding `env.CMS.fetch("https://internal/...")` -> the Worker. The function adds the secrets (`ACCOUNT_API_SECRET`, `ORDERS_API_SECRET`); the browser never sees them. The login session is an HttpOnly cookie `av_acct` set by the function.
 
+Also from the CMS feed: `src/data/site.json` (the home / About page wording and photos the owner changed; only changed boxes; see the cookbook).
+
 ## "Where do I change...?" (cookbook)
 | I want to change | Edit |
 |---|---|
@@ -62,6 +64,7 @@ The CMS / shop server has its own map: `F:\ANTIGRAVITY\ANVEDA2\CODEMAP.md`. (Old
 | Reel combo colour picker | `ReelPicker.tsx`: one colour box per combo ENTRY, keyed by position (the same design can be in a combo twice); `lib/cart.tsx` `addCombo` stores `picks[]` |
 | Contact email / social links | `lib/site.ts` |
 | Global styles / buttons (`.av-btn`) | `src/app/globals.css` |
+| **Home / About page words and photos (the owner edits them in the CMS: CMS > Website pages)** | Use `sc("key", "original wording")` / `scImage("key")` from `lib/siteContent.ts` (data: `src/data/site.json`, written by `scripts/gen-catalog.py` from the CMS feed `siteContent`). To make a NEW editable box: add it to the CMS list `ANVEDA2/src/site-content-schema.json` (same key and the same original wording), use it in the page, run `node scripts/check-site-content.mjs`. A key ending `.image` is a photo (file in `public/img/products`, kept by `prune-photos.py`, checked by `validate-data.py`). Pages using it today: `app/page.tsx` (home), `app/about/page.tsx`, `components/Testimonials.tsx`, `components/home/Hero3D.tsx`. |
 | **Search (SEO) titles, descriptions, schema** | Home/site-wide: `src/app/layout.tsx` (+ `SITE.seoTitle` in `lib/site.ts`); shelves: `GROUP_SEO` in `app/shop/[group]/page.tsx`; products: `generateMetadata` in `app/product/[id]/page.tsx`; sitemap/robots: `app/sitemap.ts`, `app/robots.ts`. Private pages must say `robots: { index: false }`. anveda.in -> www redirect: `functions/_middleware.js` (`APEX_KEEP`). The whole plan and open decisions: `SEO-PLAN.md` |
 | **A new server call from the browser** | 1) route in `functions/api/[[path]].js` ROUTES, 2) matching route in the CMS Worker, 3) `node scripts/check-routes.mjs` must pass |
 

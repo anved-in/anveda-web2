@@ -11,7 +11,7 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { CartProvider } from "@/lib/cart";
 import { FavProvider } from "@/lib/favourites";
 import { SITE, HAS_WHATSAPP } from "@/lib/site";
-import { products } from "@/lib/catalog";
+import { HOME_TITLE, HOME_DESCRIPTION } from "@/lib/seo";
 import LiveStockSync from "@/lib/liveStock";
 import ScrollState from "@/lib/motion";
 import NavProgress from "@/components/NavProgress";
@@ -19,22 +19,17 @@ import AnnouncementBar from "@/components/AnnouncementBar";
 
 // Search engines show the title as the blue headline, so it carries what people actually type ("glass bangles online")
 // before the brand. The domain stays in every title, as the owner wanted. See SEO-PLAN.md.
-const colourways = products.reduce((n, p) => n + p.variants.length, 0);
-const HOME_DESCRIPTION =
-  `Shop handpicked glass bangles online: pastel, jelly, stone-set, kada and kids bangles in ${Math.floor(colourways / 50) * 50}+ colours. ` +
-  "Small batches, packed with care, delivered across India.";
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.anveda.in"),
   title: {
-    default: `${SITE.seoTitle} | ${SITE.domain}`,
+    default: HOME_TITLE,
     template: `%s | ${SITE.domain}`,
   },
   description: HOME_DESCRIPTION,
   // One address per page: "./" is each page's own address. Stops Google treating anveda.in and www.anveda.in (or a ?c=colour link) as copies.
   alternates: { canonical: "./" },
   openGraph: {
-    title: `${SITE.seoTitle} | ${SITE.domain}`,
+    title: HOME_TITLE,
     description: HOME_DESCRIPTION,
     type: "website",
     siteName: SITE.name,
@@ -42,7 +37,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE.seoTitle} | ${SITE.domain}`,
+    title: HOME_TITLE,
     description: HOME_DESCRIPTION,
   },
   appleWebApp: {

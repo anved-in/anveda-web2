@@ -11,9 +11,9 @@
 # shipped, by the exact name the catalog references it by.
 import json, os, sys, urllib.request
 
-CMS_BASE = "https://anveda2.anveda-in.workers.dev"
+CMS_BASE = os.environ.get("CMS_BASE", "https://anveda2.anveda-in.workers.dev")   # the env override is for tests only
 SRC = CMS_BASE + "/catalog"
-PHOTO_FALLBACK = "https://www.anveda.in/img/products/"
+PHOTO_FALLBACK = os.environ.get("PHOTO_FALLBACK", "https://www.anveda.in/img/products/")
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMGDIR = os.path.join(ROOT, "public", "img", "products")
 REEL_IMGDIR = os.path.join(ROOT, "public", "img", "reels")
@@ -21,6 +21,7 @@ OUT = os.path.join(ROOT, "src", "data", "catalog.json")
 REELS_OUT = os.path.join(ROOT, "src", "data", "reels.json")
 REVIEWS_OUT = os.path.join(ROOT, "src", "data", "reviews.json")
 FAQS_OUT = os.path.join(ROOT, "src", "data", "faqs.json")
+SITE_OUT = os.path.join(ROOT, "src", "data", "site.json")
 REELDIR = os.path.join(ROOT, "public", "video", "reels")
 
 
@@ -126,6 +127,23 @@ if "faqs" in data:
               open(FAQS_OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print(f"{len(data['faqs'])} help questions -> {FAQS_OUT}")
 
+# ------------------------------------------------------- website wording and photos
+# CMS > Website pages: the boxes of the home / About page the owner changed (only those). A box whose key ends in ".image" is a
+# photo: named like a catalog photo, downloaded below with the others. Written only when the CMS actually sent the block, so an
+# older CMS can never blank the pages' own wording.
+site_images = []
+if isinstance(data.get("siteContent"), dict):
+    site_values = {}
+    for _k, _v in data["siteContent"].items():
+        if not isinstance(_v, str) or not _v.strip():
+            continue
+        if _k.endswith(".image"):
+            _v = webp_name(_v.strip())
+            site_images.append(_v)
+        site_values[_k] = _v
+    json.dump({"values": site_values}, open(SITE_OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print(f"{len(site_values)} changed website text/photo boxes -> {SITE_OUT}")
+
 # --------------------------------------------------------------- reviews
 json.dump({"reviews": reviews_in}, open(REVIEWS_OUT, "w", encoding="utf-8"),
           ensure_ascii=False, indent=1)
@@ -149,6 +167,8 @@ for r in reels_in:
     cov = r.get("cover")
     if cov and not cov.startswith("ig:"):
         wanted.add(cov)
+for fn in site_images:
+    wanted.add(fn)
 
 def to_webp(blob):
     """Re-encode an uploaded photo (JPEG/PNG) as a <=1000px WebP, like the build does."""

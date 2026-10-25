@@ -99,6 +99,19 @@ if reels is not None:
         old = previous("src/data/reels.json")
         shrink_check("The number of reels", len(lst), len((old or {}).get("reels", [])) if old else None, 0.5)
 
+# ---------------------------------------------------------------- website wording and photos (CMS > Website pages)
+site = load("src/data/site.json")
+if site is not None:
+    vals = site.get("values")
+    if not isinstance(vals, dict):
+        bad("site.json has no 'values' object")
+    else:
+        for k, v in vals.items():
+            if not isinstance(k, str) or not isinstance(v, str):
+                bad(f"site.json: the box {k!r} is not text")
+            elif k.endswith(".image") and not os.path.exists(os.path.join(ROOT, "public", "img", "products", v)):
+                bad(f"site.json: the photo chosen for {k} ({v}) was not downloaded, so the page would show a broken picture")
+
 for rel, key in (("src/data/reviews.json", "reviews"), ("src/data/faqs.json", "faqs")):
     d = load(rel)
     if d is not None and not isinstance(d.get(key), list):

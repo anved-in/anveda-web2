@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "@/components/Link";
 import {
   allListings,
@@ -10,6 +11,8 @@ import {
   type Listing,
 } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
+import { sc, scImage, fill } from "@/lib/siteContent";
+import { HOME_TITLE, HOME_DESCRIPTION } from "@/lib/seo";
 import ListingCard from "@/components/ListingCard";
 import SectionHead from "@/components/SectionHead";
 import Testimonials from "@/components/Testimonials";
@@ -43,17 +46,35 @@ const arrivals: Listing[] = picked.length ? picked : collections.slice(0, 4).map
 // not repeat the same photographs down the page.
 const bestsellers: Listing[] = collections.slice(4, 8).map((c) => lead(c.slug, 1));
 
+// The owner can change the home page's words and photos in the CMS (CMS > Website pages); a box left alone keeps the
+// wording / photo written here, and a slide's title, text, photo and link left empty come from its design.
+export function generateMetadata(): Metadata {
+  const title = sc("home.seo.title", HOME_TITLE);
+  const description = sc("home.seo.description", HOME_DESCRIPTION);
+  return {
+    title: { absolute: title },
+    description,
+    alternates: { canonical: "./" },
+    openGraph: { title, description, type: "website", siteName: SITE.name, locale: "en_IN" },
+    twitter: { card: "summary_large_image", title, description },
+  };
+}
+
 // Hero slides: three wide, worked families make the strongest opening images.
 const heroSlides = ["statement-bangles", "kada", "border-bangles"]
   .map((s) => collections.find((c) => c.slug === s))
   .filter((c): c is NonNullable<typeof c> => Boolean(c))
-  .map((c) => {
+  .map((c, i) => {
     const l = lead(c.slug);
+    const n = i + 1;
+    const own = scImage(`home.hero${n}.image`);
     return {
-      image: asset(imgSrc(l.variant.image)),
-      title: c.name,
-      blurb: c.blurb,
-      href: rangeHref(c.slug),
+      image: asset(imgSrc(own ?? l.variant.image)),
+      title: sc(`home.hero${n}.title`, c.name),
+      blurb: sc(`home.hero${n}.text`, c.blurb ?? ""),
+      href: sc(`home.hero${n}.link`, rangeHref(c.slug)),
+      eyebrow: sc("home.hero.eyebrow", "The ANVEDA Collection"),
+      button: sc("home.hero.button", "Shop now"),
     };
   });
 
@@ -80,8 +101,8 @@ export default function Home() {
       <section className="px-4 py-12 sm:px-6 md:py-16">
         <div className="mx-auto max-w-[1320px]">
           <SectionHead
-            title="New Arrivals"
-            sub="Freshly picked, straight from the latest batch"
+            title={sc("home.arrivals.title", "New Arrivals")}
+            sub={sc("home.arrivals.sub", "Freshly picked, straight from the latest batch")}
             viewAllHref="/shop/glass"
           />
           <div className="mt-9 grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-4 md:gap-x-6">
@@ -97,7 +118,7 @@ export default function Home() {
       {/* ----------------------------------------------- shop by category */}
       <section className="px-4 py-12 sm:px-6 md:py-16">
         <div className="mx-auto max-w-[1320px]">
-          <SectionHead title="Shop By Category" />
+          <SectionHead title={sc("home.categories.title", "Shop By Category")} />
           <CategoryTiles items={categories} />
         </div>
       </section>
@@ -106,8 +127,8 @@ export default function Home() {
       <section className="px-4 py-12 sm:px-6 md:py-16">
         <div className="mx-auto max-w-[1320px]">
           <SectionHead
-            title="Best Sellers"
-            sub="The shades that keep going out of stock"
+            title={sc("home.best.title", "Best Sellers")}
+            sub={sc("home.best.sub", "The shades that keep going out of stock")}
             viewAllHref="/shop/glass"
           />
           <div className="mt-9 grid grid-cols-2 gap-x-4 gap-y-9 md:grid-cols-4 md:gap-x-6">
@@ -122,7 +143,7 @@ export default function Home() {
               href="/shop/glass/"
               className="rounded-md inline-block border border-ink px-9 py-3.5 text-[11.5px] uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-white"
             >
-              View all {allListings().length} designs
+              {fill(sc("home.best.button", "View all {count} designs"), { count: allListings().length })}
             </Link>
           </div>
         </div>
@@ -131,14 +152,14 @@ export default function Home() {
       {/* ------------------------------------------------------ our story */}
       <section className="bg-cream-2 px-4 py-12 sm:px-6 md:py-16">
         <div className="mx-auto max-w-[1320px]">
-          <SectionHead title="Our Story" />
+          <SectionHead title={sc("home.story.title", "Our Story")} />
           <div className="mt-9 flex flex-wrap items-center gap-8 md:flex-nowrap md:gap-14">
             <div className="w-full md:w-1/2">
               <Tilt max={4}>
                 <div className="reveal aspect-[4/3] overflow-hidden bg-cream-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={asset(imgSrc(collections[0].cover))}
+                    src={asset(imgSrc(scImage("home.story.image") ?? collections[0].cover))}
                     alt=""
                     className="h-full w-full object-cover"
                     loading="lazy"
@@ -148,21 +169,17 @@ export default function Home() {
               </Tilt>
             </div>
             <div className="reveal w-full md:w-1/2">
-              <p className="text-[15px] leading-relaxed text-ink-soft">
-                ANVEDA is more than a bangle shop. Every batch is chosen by hand,
-                held up to the light, checked for the cut and the colour, and
-                kept only if it is good enough to gift.
+              <p className="whitespace-pre-line text-[15px] leading-relaxed text-ink-soft">
+                {sc("home.story.p1", "ANVEDA is more than a bangle shop. Every batch is chosen by hand, held up to the light, checked for the cut and the colour, and kept only if it is good enough to gift.")}
               </p>
-              <p className="mt-4 text-[15px] leading-relaxed text-ink-soft">
-                Glass, kundan and antique pieces for the weddings, the festivals
-                and the ordinary Tuesdays that deserve them too. Packed with
-                care, set by set.
+              <p className="mt-4 whitespace-pre-line text-[15px] leading-relaxed text-ink-soft">
+                {sc("home.story.p2", "Glass, kundan and antique pieces for the weddings, the festivals and the ordinary Tuesdays that deserve them too. Packed with care, set by set.")}
               </p>
               <Link
                 href="/about"
                 className="rounded-md mt-7 inline-block border border-ink px-8 py-3.5 text-[11.5px] uppercase tracking-[0.16em] transition-colors hover:bg-ink hover:text-white"
               >
-                Read our story
+                {sc("home.story.button", "Read our story")}
               </Link>
             </div>
           </div>
@@ -174,9 +191,11 @@ export default function Home() {
       {/* ------------------------------------------------------ instagram */}
       <section className="px-4 py-12 sm:px-6 md:py-16">
         <div className="mx-auto max-w-[1320px]">
-          <SectionHead title="Follow us @anveda.in" />
+          <SectionHead title={sc("home.insta.title", "Follow us @anveda.in")} />
           <div className="mt-9 grid grid-cols-3 gap-2.5 md:grid-cols-6 md:gap-4">
-            {collections.slice(0, 6).map((c) => (
+            {collections.slice(0, 6).map((c, i) => {
+              const own = scImage(`home.insta${i + 1}.image`);
+              return (
               <a
                 key={c.slug}
                 href={SITE.instagram}
@@ -187,14 +206,15 @@ export default function Home() {
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={asset(imgSrcSmall(c.cover))}
+                  src={asset(imgSrcSmall(own ?? c.cover))}
                   alt=""
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
                   loading="lazy"
                   decoding="async"
                 />
               </a>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import { reviews } from "@/lib/reviews";
+import { sc } from "@/lib/siteContent";
 import SectionHead from "./SectionHead";
 import Stars from "./Stars";
 
@@ -13,7 +14,7 @@ export default function Testimonials() {
   return (
     <section className="border-t border-line px-4 py-14 sm:px-6 md:py-20">
       <div className="mx-auto max-w-[1320px]">
-        <SectionHead title="What customers say" />
+        <SectionHead title={sc("home.reviews.title", "What customers say")} />
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {reviews.slice(0, 6).map((r) => (
             <div key={r.id} className="reveal bg-cream-2 p-6">
