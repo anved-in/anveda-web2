@@ -1510,32 +1510,6 @@
      ]
     },
     {
-     "id": 39,
-     "colour": "Deep Coffee",
-     "image": "petal-stone-glass-bangle-deep-coffee.webp",
-     "hex": "#543b08",
-     "price": 320,
-     "pieces": 12,
-     "sizes": [
-      "2.2",
-      "2.4",
-      "2.6",
-      "2.8",
-      "2.10"
-     ],
-     "inStock": true,
-     "stockQty": 5,
-     "sizeStock": {
-      "2.10": 0,
-      "2.2": 1,
-      "2.4": 1,
-      "2.6": 1,
-      "2.8": 2
-     },
-     "focal": "47.28% 50.86%",
-     "zoom": 1.3
-    },
-    {
      "id": 41,
      "colour": "Ivory",
      "image": "u-petal-stone-glass-bangle-ivory-1a161d5efab.webp",
