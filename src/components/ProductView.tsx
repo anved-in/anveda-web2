@@ -277,7 +277,7 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
               <img
                 src={asset(imgSrc(v.image))}
                 alt=""
-                className={`h-full w-full object-cover ${v.inStock ? "" : "grayscale"}`}
+                className="h-full w-full object-cover"
                 loading="lazy"
                 style={framingStyle(v)}
               />
@@ -327,7 +327,7 @@ function ProductViewInner({ p, wanted, rating }: { p: Product; wanted?: string; 
                   <img
                     src={asset(imgSrc(sl.image))}
                     alt={`${p.name} · ${colourLabel(p, variant)}${i > 0 ? ` (photo ${i + 1})` : ""}`}
-                    className={`h-full w-full object-cover ${variant.inStock ? "" : "grayscale"}`}
+                    className="h-full w-full object-cover"
                     style={framingStyle(sl)}
                     fetchPriority={i === 0 ? "high" : "auto"}
                     decoding="async"

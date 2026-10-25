@@ -88,7 +88,7 @@ export default function ListingCard({
             srcSet={`${asset(imgSrcSmall(v.image))} 480w, ${asset(imgSrc(v.image))} 1000w`}
             sizes="(max-width: 767px) 46vw, (max-width: 1023px) 30vw, 300px"
             alt={`${p.name}${showColour ? ` · ${v.colour}` : ""}`}
-            className={`h-full w-full object-cover ${v.inStock ? "" : "grayscale"} ${v.zoom && v.zoom !== 1 ? "" : "transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04]"}`}
+            className={`h-full w-full object-cover ${v.zoom && v.zoom !== 1 ? "" : "transition-transform duration-[900ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04]"}`}
             // An inline transform beats the group-hover Tailwind utility
             // outright (higher specificity, can't compose with it), so a
             // zoomed photo loses the hover micro-effect, a fine trade for

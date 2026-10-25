@@ -145,7 +145,7 @@ export const loadOffer = (): Promise<OfferConfig | null> => {
   return offerCache;
 };
 
-/** The WhatsApp text that asks for a Porter price: who, where, and exactly what is in the bag. */
+/** The WhatsApp text that asks us to arrange Porter delivery: who, where, and exactly what is in the bag. */
 export const porterMessage = (c: { name: string; phone: string; address: string; city: string; pin: string }, lines: Line[]): string => {
   const items = lines.map((l) => {
     if (l.combo) return `${l.combo.title} (combo) x${l.qty}`;
@@ -154,7 +154,7 @@ export const porterMessage = (c: { name: string; phone: string; address: string;
     return `${p?.name ?? l.id}${p && v ? ` (${colourLabel(p, v)})` : ""} size ${l.size} x${l.qty}`;
   });
   return [
-    "Hi ANVEDA! I would like Porter delivery in Bengaluru. Please confirm the Porter price.",
+    "Hi ANVEDA! I would like Porter delivery in Bengaluru for my order. Please arrange it with me here.",
     "",
     `Name: ${c.name || "-"}`,
     `Mobile: ${c.phone || "-"}`,

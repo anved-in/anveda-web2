@@ -233,7 +233,12 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
                 aria-label={`View ${label} larger`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={asset(imgSrcSmall(shown.image))} alt="" className={`h-full w-full object-cover ${soldOut ? "grayscale" : ""}`} style={framingStyle(shown)} loading="lazy" />
+                <img src={asset(imgSrcSmall(shown.image))} alt="" className="h-full w-full object-cover" style={framingStyle(shown)} loading="lazy" />
+                {soldOut && (
+                  <span className="absolute inset-x-0 top-1/2 -translate-y-1/2 whitespace-nowrap bg-ink/80 py-1 text-center text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
+                    Sold out
+                  </span>
+                )}
                 <span className="absolute bottom-1 right-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/55 text-white" aria-hidden="true">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                     <circle cx="11" cy="11" r="6" />

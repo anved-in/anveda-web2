@@ -17,7 +17,8 @@ import {
   paymentsEnabled,
   ShippingChanged,
 } from "@/lib/payment";
-import { useShipping, offerLine, porterMessage, porterLink, porterNumberDisplay } from "@/lib/shipping";
+import { useShipping, offerLine, porterMessage, porterLink } from "@/lib/shipping";
+import { useBackToClose } from "@/lib/useBackToClose";
 import { useSlow, friendlyError, SLOW_NOTE } from "@/lib/useSlow";
 import { useKeyboardOpen } from "@/lib/useKeyboardOpen";
 import { INDIAN_STATES } from "@/lib/states";
@@ -88,6 +89,7 @@ export default function CheckoutForm() {
   const [busy, setBusy] = useState(false);
   const slow = useSlow(busy);
   const checkoutRef = useRef<string | null>(null);
+  const checkoutSig = useRef("");
   // phone only: the order summary starts folded away, and the optional note starts hidden
   const [summaryOpen, setSummaryOpen] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
@@ -107,16 +109,21 @@ export default function CheckoutForm() {
 
   // Delivery is priced by the shop's server (real DTDC rates) from the bag, the PIN code and the state, and it
   // re-prices as those change, so the total is never a surprise at the last step. In Bengaluru there is also a Porter
-  // option: the owner confirms the Porter price on WhatsApp, then it appears here and the customer pays it online.
+  // option, kept simple: nothing is added to the order for delivery (₹0). The customer taps "Send message on WhatsApp"
+  // (a pop-up), we arrange the Porter delivery with them there, and if they later decline it we collect normal delivery
+  // on WhatsApp instead. The server (orders-api) allows ₹0 only for a Bengaluru PIN.
   const [method, setMethod] = useState<"standard" | "porter">("standard");
-  const ship = useShipping({ lines, pin: c.pin, state: c.state, phone: c.phone }, method === "porter");
+  const [porterOpen, setPorterOpen] = useState(false);
+  const [porterAsked, setPorterAsked] = useState(false);
+  const ship = useShipping({ lines, pin: c.pin, state: c.state, phone: c.phone });
   const quote = ship.info?.quote ?? null;
   const shipKnown = !!quote?.known;
   const porterOffered = !!ship.info?.porter.available;
-  const porterQuote = ship.info?.porter.quote ?? null;
   const porterWa = ship.info?.porter.whatsapp ?? "";
   const usePorter = method === "porter" && porterOffered;
-  const deliveryAmount: number | null = usePorter ? (porterQuote?.amount ?? null) : shipKnown ? quote!.amount : null;
+  const deliveryAmount: number | null = usePorter ? 0 : shipKnown ? quote!.amount : null;
+  const porterContactOk = c.name.trim().length > 1 && /^[6-9]\d{9}$/.test(c.phone.replace(/\D/g, "").slice(-10));
+  useBackToClose(porterOpen, () => setPorterOpen(false));
   const deliveryReady = deliveryAmount !== null;
   const shipping = coupon?.freeShipping ? 0 : (deliveryAmount ?? 0);
   const offerText = !usePorter && quote ? offerLine(quote) : null;
@@ -323,12 +330,15 @@ export default function CheckoutForm() {
     if (lines.length === 0) return;
     if (!deliveryReady) {
       setFailure(
-        usePorter
-          ? "Your Porter price is not confirmed yet. Use the WhatsApp button above, and pay once the price appears here."
-          : ship.failed
-            ? "We could not work out delivery. Please check your connection and try again."
-            : "Please enter your PIN code and choose your state, so we can work out delivery.",
+        ship.failed
+          ? "We could not work out delivery. Please check your connection and try again."
+          : "Please enter your PIN code and choose your state, so we can work out delivery.",
       );
+      return;
+    }
+    if (usePorter && !porterAsked) {
+      setFailure("For Porter delivery, please send us the WhatsApp message first (or choose Courier). Then you can pay.");
+      setPorterOpen(true);
       return;
     }
 
@@ -339,7 +349,11 @@ export default function CheckoutForm() {
       return;
     }
 
-    if (!checkoutRef.current) checkoutRef.current = makeRef();
+    // The same order reference is reused when the customer retries payment (so a closed Razorpay window does not leave
+    // duplicate orders), but ONLY while nothing about the order has changed: a different delivery choice, bag, coupon or
+    // address is a different order and gets its own reference.
+    const sig = JSON.stringify([lines, subtotal, shipping, total, coupon?.code ?? "", usePorter, c.address, c.pin, c.phone]);
+    if (!checkoutRef.current || checkoutSig.current !== sig) { checkoutRef.current = makeRef(); checkoutSig.current = sig; }
     const ref = checkoutRef.current;
     setBusy(true);
     try {
@@ -574,10 +588,15 @@ export default function CheckoutForm() {
         <span className="font-semibold">{inr(shipping)}</span>
       ) : (
         <span className="text-right text-[12.5px] text-ink-soft">
-          {usePorter ? "Waiting for the Porter price" : ship.busy ? "Working it out…" : "Add PIN code and state"}
+          {ship.busy ? "Working it out…" : "Add PIN code and state"}
         </span>
       )}
     </div>
+    {usePorter && (
+      <p className="text-[12px] leading-snug text-ink-faint">
+        Porter within Bengaluru, arranged with you on WhatsApp.
+      </p>
+    )}
     {!usePorter && shipKnown && !coupon?.freeShipping && (
       <p className="text-[12px] leading-snug text-ink-faint">
         By DTDC to {quote!.label}, {quote!.days}.
@@ -767,43 +786,34 @@ export default function CheckoutForm() {
                 </span>
               </label>
               <label className="flex cursor-pointer items-start gap-3 border-t border-line py-2 pt-3">
-                <input type="radio" name="delivery-method" checked={usePorter} onChange={() => setMethod("porter")} className="mt-1 accent-[#2b2724]" />
+                <input
+                  type="radio"
+                  name="delivery-method"
+                  checked={usePorter}
+                  onChange={() => { setMethod("porter"); if (!porterAsked) setPorterOpen(true); }}
+                  onClick={() => { if (usePorter && !porterAsked) setPorterOpen(true); }}
+                  className="mt-1 accent-[#2b2724]"
+                />
                 <span className="min-w-0 flex-1 text-[13.5px]">
                   <span className="font-semibold">Porter, within Bengaluru</span>
-                  <span className="block text-[12px] text-ink-soft">{porterQuote ? `${inr(porterQuote.amount)} confirmed for you` : "Quick local delivery. We confirm the price with you."}</span>
+                  <span className="block text-[12px] text-ink-soft">Quick local delivery. Nothing added to your order for delivery; we arrange it with you on WhatsApp.</span>
                 </span>
               </label>
               {usePorter && (
                 <div className="mt-2 space-y-3 border-t border-line pt-3 text-[12.5px] leading-relaxed text-ink-soft">
-                  {porterQuote ? (
+                  {porterAsked ? (
                     <p className="font-semibold text-[#2f6e4f]">
-                      Your Porter price is confirmed: {inr(porterQuote.amount)}. You can pay now. It stays valid until {new Date(porterQuote.expiresAt.replace(" ", "T") + "Z").toLocaleString("en-IN", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })}.
+                      WhatsApp opened for your Porter delivery. Send the message there, then you can pay here.{" "}
+                      <button type="button" onClick={() => setPorterOpen(true)} className="font-normal underline underline-offset-2 hover:text-ink">Open it again</button>
                     </p>
                   ) : (
-                    <>
-                      <p>
-                        {porterWa ? "Porter prices depend on the distance. Tap the button to send us a ready-made message with your address and bag. We reply with the Porter price, and when we add it, it appears here by itself so you can pay." : "Porter prices depend on the distance. Send us your address and bag on Instagram. We reply with the Porter price, and when we add it, it appears here by itself so you can pay."}
-                      </p>
-                      {!/^[6-9]\d{9}$/.test(c.phone.replace(/\D/g, "").slice(-10)) && (
-                        <p className="font-semibold text-[#a33a2f]">Enter your mobile number above first. We match your Porter price to it.</p>
-                      )}
-                      <div className="flex flex-wrap items-center gap-3">
-                        <a
-                          href={porterWa ? porterLink(porterWa, porterMessage(c, lines)) : igDmLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="av-btn"
-                        >
-                          {porterWa ? "Message us on WhatsApp" : "Message us on Instagram"}
-                        </a>
-                        <button type="button" onClick={() => ship.refresh()} className="text-[12.5px] font-semibold underline underline-offset-2 hover:text-ink">
-                          {ship.busy ? "Checking…" : "Check for my price"}
-                        </button>
-                      </div>
-                      <p className="text-[12px] text-ink-faint">{porterWa ? `Or message ${porterNumberDisplay(porterWa)}. ` : ""}Use the same mobile number as above.</p>
-                    </>
+                    <div className="flex flex-wrap items-center gap-3">
+                      <button type="button" onClick={() => setPorterOpen(true)} className="av-btn">
+                        {porterWa ? "Send message on WhatsApp" : "Send message on Instagram"}
+                      </button>
+                      <span className="text-[12px] text-ink-faint">Needed before you pay.</span>
+                    </div>
                   )}
-                  <p>You pay for the order and the Porter delivery online, so there is nothing to pay at the door.</p>
                   <p className="border-l-2 border-line-strong pl-3">
                     Please record one continuous unboxing video, starting before you open the sealed package. Only an unboxing video counts: a photo, or a video taken after opening, cannot be considered. If anything arrives broken, send the video to us within 24 hours of delivery for a replacement or refund.
                   </p>
@@ -861,7 +871,7 @@ export default function CheckoutForm() {
         )}
         <div className="mb-2.5 flex items-baseline justify-between gap-3">
           <span className="text-[12.5px] text-ink-soft">
-            {coupon?.freeShipping ? "Free shipping" : deliveryReady ? `incl. ${inr(shipping)} delivery` : usePorter ? "+ Porter delivery (to be confirmed)" : "+ delivery (add PIN and state)"}
+            {coupon?.freeShipping ? "Free shipping" : usePorter ? "Porter delivery, arranged on WhatsApp" : deliveryReady ? `incl. ${inr(shipping)} delivery` : "+ delivery (add PIN and state)"}
           </span>
           <span className="text-[17px] font-semibold">
             <span className="mr-2 text-[13px] font-normal text-ink-soft">Total</span>
@@ -942,6 +952,75 @@ export default function CheckoutForm() {
           </p>
         </div>
       </div>
+
+      {/* ------------------------------------------------ Porter pop-up (Bengaluru): send the WhatsApp message, then pay */}
+      {porterOpen && usePorter && (
+        <div
+          className="fixed inset-0 z-[90] flex items-end justify-center bg-black/45 sm:items-center sm:p-4"
+          role="presentation"
+          onClick={(e) => { if (e.target === e.currentTarget) setPorterOpen(false); }}
+          onKeyDown={(e) => { if (e.key === "Escape") setPorterOpen(false); }}
+        >
+          <div role="dialog" aria-modal="true" aria-labelledby="porter-title" className="w-full max-w-[460px] rounded-t-[14px] bg-white p-6 pb-[calc(24px+env(safe-area-inset-bottom))] shadow-xl sm:rounded-[10px]">
+            <h2 id="porter-title" className="font-display text-[22px] leading-tight">Porter delivery in Bengaluru</h2>
+            {!porterAsked ? (
+              <>
+                <p className="mt-3 text-[14px] leading-relaxed text-ink-soft">
+                  Send us a message on {porterWa ? "WhatsApp" : "Instagram"} with your address and bag, and we will arrange your Porter delivery with you there.
+                  Nothing is added to this order for delivery. If you would rather not use Porter, we will message you for the normal courier charge instead.
+                </p>
+                {!porterContactOk && (
+                  <p className="mt-3 text-[13px] font-semibold text-[#a33a2f]">
+                    Please fill in your name and mobile number first, so the message carries your details.
+                  </p>
+                )}
+                {porterContactOk ? (
+                  <a
+                    href={porterWa ? porterLink(porterWa, porterMessage(c, lines)) : igDmLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setPorterAsked(true)}
+                    className="av-btn mt-5 w-full justify-center"
+                  >
+                    {porterWa ? "Send message on WhatsApp" : "Send message on Instagram"}
+                  </a>
+                ) : (
+                  <button type="button" disabled className="av-btn mt-5 w-full justify-center">
+                    {porterWa ? "Send message on WhatsApp" : "Send message on Instagram"}
+                  </button>
+                )}
+              </>
+            ) : (
+              <>
+                <p className="mt-3 text-[14px] leading-relaxed text-ink-soft">
+                  {porterWa ? "WhatsApp" : "Instagram"} has opened with your message ready. Send it there, then come back here to pay.
+                </p>
+                <button type="button" onClick={() => setPorterOpen(false)} className="av-btn mt-5 w-full justify-center">
+                  Continue to payment
+                </button>
+                <a
+                  href={porterWa ? porterLink(porterWa, porterMessage(c, lines)) : igDmLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 block text-center text-[13px] underline underline-offset-2 hover:text-ink"
+                >
+                  Open {porterWa ? "WhatsApp" : "Instagram"} again
+                </a>
+              </>
+            )}
+            <button
+              type="button"
+              onClick={() => { setMethod("standard"); setPorterOpen(false); }}
+              className="mt-4 block w-full text-center text-[13px] text-ink-soft underline underline-offset-2 hover:text-ink"
+            >
+              Use courier (DTDC) instead
+            </button>
+            <button type="button" onClick={() => setPorterOpen(false)} className="mt-3 block w-full text-center text-[13px] text-ink-faint hover:text-ink">
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </form>
   );
 }

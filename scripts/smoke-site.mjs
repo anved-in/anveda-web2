@@ -148,6 +148,68 @@ for (const [w, h, mob] of [[390, 800, true], [1280, 800, false]]) {
   });
 }
 
+// Porter in Bengaluru, the simple way: pick Porter -> pop-up -> "Send message on WhatsApp" -> pay with 0 delivery.
+// The shop's price service is faked (this page is served as plain files) and the WhatsApp link is caught instead of opened.
+const PORTER_STUBS = "window.Razorpay=function(){return {on:function(){},open:function(){}}};(function(){var orig=window.fetch;window.fetch=function(u,o){var s=String(u);var J=function(b,st){return Promise.resolve(new Response(JSON.stringify(b),{status:st||200,headers:{'content-type':'application/json'}}))};" +
+  "if(s.indexOf('/api/shipping-quote')>-1)return J({ok:true,quote:{known:true,lane:'local',label:'Bengaluru',days:'2 to 4 days',amount:100,offer:{on:true,unlocked:false,show:false}},porter:{on:true,whatsapp:'918123298528',available:/^560/.test(JSON.parse(o.body).pin||''),quote:null}});" +
+  "if(s.indexOf('/api/checkout')>-1){window.__checkout=JSON.parse(o.body);return J({ok:false,error:'TEST STOP'},409)}" +
+  "return orig.apply(this,arguments)};document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^=\"https://wa.me\"]');if(a){e.preventDefault();window.__wa=(window.__wa||[]).concat([a.href])}},true)})();";
+for (const [w, h, mob] of [[390, 800, true], [1280, 800, false]]) {
+  await session(w, h, mob, BASE + '/checkout/', async ({ ev }) => {
+    const setv = (sel, v) => ev(`(function(){var e=document.querySelector(${JSON.stringify(sel)});var p=e.tagName==='SELECT'?HTMLSelectElement.prototype:e.tagName==='TEXTAREA'?HTMLTextAreaElement.prototype:HTMLInputElement.prototype;Object.getOwnPropertyDescriptor(p,'value').set.call(e,${JSON.stringify(v)});e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}))})()`);
+    const dialog = () => ev("!!document.querySelector('[aria-labelledby=porter-title][aria-labelledby=porter-title]')");
+    const porterRadio = "[].filter.call(document.querySelectorAll('input[name=delivery-method]'),function(x){return x.getClientRects().length>0})[1]";
+    const submit = () => ev("(function(){var b=[].filter.call(document.querySelectorAll('form button[type=submit]'),function(e){return e.offsetParent})[0];b.click()})()");
+    await ev("(function(){var s=document.createElement('style');s.textContent='*{transition:none!important;animation:none!important}';document.head.appendChild(s)})()");
+    check((await ev("document.querySelectorAll('input[name=delivery-method]').length")) === 0, `${w}px: porter: no Porter choice before a Bengaluru PIN`);
+    await setv('input[autocomplete="address-level2"]', 'Bengaluru'); await setv('select[autocomplete="address-level1"]', 'Karnataka'); await setv('input[autocomplete="postal-code"]', '560001'); await sleep(1200);
+    check((await ev("document.querySelectorAll('input[name=delivery-method]').length")) >= 2, `${w}px: porter: a Bengaluru PIN offers Porter`);
+    const len0 = await ev('history.length');
+    await ev(`${porterRadio}.click()`); await sleep(500);
+    check(await dialog(), `${w}px: porter: choosing Porter opens the pop-up`);
+    check((await ev("document.querySelector('[aria-labelledby=porter-title]').textContent")).indexOf('Nothing is added to this order for delivery') !== -1, `${w}px: porter: it says nothing is added for delivery`);
+    check((await ev("!!document.querySelector('[aria-labelledby=porter-title] button[disabled]')")) === true &&(await ev("document.querySelector('[aria-labelledby=porter-title]').textContent")).indexOf('fill in your name and mobile number first') !== -1, `${w}px: porter: without a name and mobile number the WhatsApp button is off and says why`);
+    await ev("document.querySelectorAll('[aria-labelledby=porter-title] button')[document.querySelectorAll('[aria-labelledby=porter-title] button').length-1].click()"); await sleep(300);   // Close
+    check(!(await dialog()), `${w}px: porter: Close shuts the pop-up`);
+    await setv('input[autocomplete="name"]', 'Priya Nair'); await setv('input[autocomplete="tel-national"]', '9876543210'); await setv('textarea[autocomplete="street-address"]', '12 MG Road'); await sleep(300);
+    await submit(); await sleep(600);
+    check((await ev("document.querySelector('[role=alert]')?document.querySelector('[role=alert]').textContent:''")).indexOf('send us the WhatsApp message first') !== -1 && (await dialog()), `${w}px: porter: paying before sending the message is stopped and the pop-up comes back`);
+    check((await ev("window.__checkout===undefined")) === true, `${w}px: porter: ...nothing was sent to payment`);
+    const link = "document.querySelector('[aria-labelledby=porter-title] a[href^=\"https://wa.me\"]')";
+    check((await ev(`!!${link}`)) === true && (await ev(`decodeURIComponent(${link}.href)`)).indexOf('https://wa.me/918123298528?text=Hi ANVEDA! I would like Porter delivery in Bengaluru') === 0, `${w}px: porter: "Send message on WhatsApp" opens the shop's number with a ready message`);
+    const msg = await ev(`decodeURIComponent(${link}.href)`);
+    check(msg.indexOf('Priya Nair') !== -1 && msg.indexOf('9876543210') !== -1 && msg.indexOf('560001') !== -1 && /Intricate/.test(msg), `${w}px: porter: the message carries name, mobile, PIN and the bag`);
+    await ev(`${link}.click()`); await sleep(400);
+    check((await ev('window.__wa&&window.__wa.length')) === 1, `${w}px: porter: tapping it opens WhatsApp`);
+    check((await ev("document.querySelector('[aria-labelledby=porter-title]').textContent")).indexOf('Send it there, then come back here to pay') !== -1, `${w}px: porter: the pop-up then says to send it and come back`);
+    await ev("history.back()"); await sleep(500);
+    check(!(await dialog()) && (await ev('location.pathname')) === '/checkout/', `${w}px: porter: the Back button closes the pop-up and stays on the checkout`);
+    check((await ev('history.length')) === len0 + 1 || (await ev('history.length')) === len0, `${w}px: porter: no stray history steps left`);
+    // (on a phone the order summary is folded away, so the pinned pay bar is what shows; on a PC the summary column shows both)
+    check((await ev("document.body.innerText")).indexOf('Porter delivery, arranged on WhatsApp') !== -1 || (await ev("document.body.innerText")).indexOf('Porter within Bengaluru, arranged with you on WhatsApp') !== -1, `${w}px: porter: the totals say Porter, arranged on WhatsApp`);
+    if (!mob) check((await ev("(function(){var t=document.body.innerText;var i=t.indexOf('Delivery (Porter)');return i>-1&&/\\u20b90/.test(t.slice(i,i+40))})()")) === true, `${w}px: porter: delivery shows 0 rupees`);
+    await submit(); await sleep(4500);
+    check((await ev("window.__checkout&&window.__checkout.shipping")) === 0 && (await ev("window.__checkout&&window.__checkout.delivery&&window.__checkout.delivery.method")) === 'porter', `${w}px: porter: after the message, payment starts with 0 delivery and method porter`);
+    await ev(`${porterRadio}.click()`); await ev("document.querySelectorAll('input[name=delivery-method]')[0].click()"); await sleep(300);
+    check((await ev("document.body.innerText.indexOf('Porter within Bengaluru, arranged')")) === -1, `${w}px: porter: switching back to Courier removes the Porter wording`);
+  }, [{ id: 'intricate-glass-bangle', size: '2.4', qty: 1, colour: 'Aqua' }], PORTER_STUBS);
+}
+
+// A sold-out colour is shown in full colour with the "Sold out" band across it (it used to be washed to black and white).
+for (const [w, h, mob] of [[390, 800, true], [1280, 800, false]]) {
+  await session(w, h, mob, BASE + '/product/jelly-bangles-glass-bangles/?c=Red', async ({ ev }) => {
+    const soldImg = "[].filter.call(document.querySelectorAll('main img'),function(i){return i.getClientRects().length>0&&/Red/.test(i.alt)})[0]";
+    check((await ev(`(function(){var i=${soldImg};return i?getComputedStyle(i).filter:'missing'})()`)) === 'none', `${w}px: sold out: the product photo is in full colour`);
+    check((await ev("[].some.call(document.querySelectorAll('main span'),function(s){return s.textContent.trim()==='Sold out'&&s.getClientRects().length>0&&getComputedStyle(s).position==='absolute'})")) === true, `${w}px: sold out: the "Sold out" band is on the photo`);
+    check((await ev("[].every.call(document.querySelectorAll('main img'),function(i){return getComputedStyle(i).filter==='none'})")) === true, `${w}px: sold out: no photo on the page is black and white (colour strip included)`);
+  });
+  await session(w, h, mob, BASE + '/shop/glass/', async ({ ev }) => {
+    const band = "[].filter.call(document.querySelectorAll('main span'),function(s){return s.textContent.trim()==='Sold out'&&getComputedStyle(s).position==='absolute'})[0]";
+    check((await ev(`!!${band}`)) === true, `${w}px: sold out: the shelf shows a sold-out tile with its band`);
+    check((await ev(`(function(){var b=${band};var i=b.parentElement.querySelector('img');return getComputedStyle(i).filter})()`)) === 'none', `${w}px: sold out: ...and its photo is in full colour`);
+  });
+}
+
 // Home page: no policy / "what this site is" block above the products; Privacy and Terms are in the footer, always visible
 for (const [w, h, mob] of [[390, 800, true], [1280, 800, false]]) {
   await session(w, h, mob, BASE + '/', async ({ ev }) => {

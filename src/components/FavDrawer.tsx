@@ -157,7 +157,7 @@ function FavRow({ p, v }: { p: Product; v: Variant }) {
         <img
           src={asset(imgSrc(v.image))}
           alt={`${p.name} · ${colourLabel(p, v)}`}
-          className={`h-full w-full object-cover ${v.inStock ? "" : "grayscale"}`}
+          className="h-full w-full object-cover"
           loading="lazy"
           style={framingStyle(v)}
         />

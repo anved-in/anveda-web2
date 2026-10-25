@@ -75,10 +75,11 @@ async function handleCheckout(request, env) {
     if (!sq.quote.known) return json({ ok: false, error: "Please enter a valid PIN code and choose your state, so we can work out delivery." }, 400);
     let expected = sq.quote.amount;
     if (delivery.method === "porter") {
-      if (!sq.porter || !sq.porter.available || !sq.porter.quote) {
-        return json({ ok: false, error: "Your Porter delivery price has expired or was not confirmed yet. Please message us on WhatsApp to confirm it again." }, 409);
+      // Porter is arranged with the customer on WhatsApp, so nothing is added to the order for delivery (only offered for a Bengaluru PIN).
+      if (!sq.porter || !sq.porter.available) {
+        return json({ ok: false, error: "Porter delivery is only available in Bengaluru. Please choose courier delivery." }, 409);
       }
-      expected = sq.porter.quote.amount;
+      expected = 0;
     }
     if (Math.abs(expected - Number(shipping)) > 1) {
       return json({ ok: false, shipping: expected, error: "Delivery is now \u20b9" + Math.round(expected) + ". Please check your total and pay again." }, 409);
