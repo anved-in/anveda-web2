@@ -23,6 +23,7 @@ import {
 } from "@/lib/catalog";
 import { useCart } from "@/lib/cart";
 import { useLiveStock } from "@/lib/liveStock";
+import NotifyMe, { type AskChoice } from "@/components/NotifyMe";
 import type { ResolvedReel } from "@/lib/reels";
 
 /**
@@ -136,6 +137,8 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
   const [added, setAdded] = useState(false);
   const [err, setErr] = useState(false);
   const [zoom, setZoom] = useState<{ src: string; caption: string } | null>(null);
+  // "Get it for me": the pop-up that lets the shopper ask us for a sold-out colour or a size we do not have right now
+  const [ask, setAsk] = useState<AskChoice[] | null>(null);
 
   // the sizes every design in the reel is sold in
   const sizes = useMemo(
@@ -156,6 +159,20 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
   const price = combo ? combo.price : variantPrice(rows[0].p, first) * qty;
   const single = rows[0];
   const leftNote = !combo && size && picked(single, 0) ? sizeLeft(picked(single, 0)!, size) : null;
+
+  // what can be asked for: a design's sold-out colours, or the colours that lack a size
+  const soldChoices = (r: Row): AskChoice[] => r.variants.filter((x) => !x.inStock).map((x) => ({ variantId: x.id, label: `${r.p.name}, ${colourLabel(r.p, x)}` }));
+  const sizeChoices = (sz: string): AskChoice[] => {
+    const out: AskChoice[] = [];
+    rows.forEach((r, i) => {
+      const v = picked(r, i);
+      const lacking = v ? (sizeState(v, sz) !== "ok" ? [v] : []) : r.variants.filter((x) => sizeState(x, sz) !== "ok");
+      lacking.forEach((x) => {
+        if (!out.some((o) => o.variantId === x.id)) out.push({ variantId: x.id, size: sz, label: `${r.p.name}, ${colourLabel(r.p, x)}, size ${sz}` });
+      });
+    });
+    return out;
+  };
 
   const chooseColour = (i: number, r: Row, name: string) => {
     setColour((cur) => ({ ...cur, [i]: name }));
@@ -251,7 +268,15 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
                 {combo && sameCount > 1 && <p className={`text-[12px] font-semibold ${t.muted}`}>Colour {nth} of {sameCount}</p>}
                 {combo && <p className={`text-[12px] ${t.muted}`}>{r.qty > 1 ? `${r.qty} pieces` : "1 piece"}</p>}
                 {soldOut ? (
-                  <p className={`mt-2 text-[12.5px] font-semibold ${t.err}`}>Sold out right now.</p>
+                  <>
+                    <p className={`mt-2 text-[12.5px] font-semibold ${t.err}`}>Sold out right now.</p>
+                    {soldChoices(r).length > 0 && (
+                      <button type="button" onClick={() => setAsk(soldChoices(r))} className={`mt-2 h-9 w-full cursor-pointer border text-[11px] font-bold uppercase tracking-[0.12em] transition-colors ${t.ghost}`}>
+                        Get it for me
+                      </button>
+                    )}
+                    <p className={`mt-1.5 text-[11.5px] ${t.muted}`}>Tell us and we&rsquo;ll get it for you.</p>
+                  </>
                 ) : (
                   <>
                     <label className={`mt-2 block text-[10.5px] font-bold uppercase tracking-[0.14em] ${t.faint}`} htmlFor={`col-${reel.id}-${i}`}>
@@ -279,6 +304,11 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
                         );
                       })}
                     </select>
+                    {soldChoices(r).length > 0 && (
+                      <button type="button" onClick={() => setAsk(soldChoices(r))} className={`mt-1.5 cursor-pointer text-left text-[11.5px] underline underline-offset-2 ${t.muted}`}>
+                        Colour you want is sold out? We&rsquo;ll get it for you.
+                      </button>
+                    )}
                   </>
                 )}
               </div>
@@ -302,19 +332,30 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
               <button
                 key={s}
                 type="button"
-                disabled={!ok}
                 aria-pressed={on}
+                aria-label={ok ? undefined : `Size ${s} is not available right now. Tap and we will get it for you.`}
                 onClick={() => {
+                  // a size we do not have is not a dead end: tapping it opens "we'll get it for you"
+                  if (!ok) {
+                    const c = sizeChoices(s);
+                    if (c.length) setAsk(c);
+                    return;
+                  }
                   setSize(s);
                   setErr(false);
                 }}
-                className={["min-w-[42px] border px-2.5 py-1.5 text-[12.5px] font-semibold transition-colors", on ? t.chipOn : ok ? t.chipOff : t.chipGone, ok ? "cursor-pointer" : "cursor-not-allowed"].join(" ")}
+                className={["min-w-[42px] border px-2.5 py-1.5 text-[12.5px] font-semibold transition-colors", on ? t.chipOn : ok ? t.chipOff : t.chipGone, "cursor-pointer"].join(" ")}
               >
                 {s}
               </button>
             );
           })}
         </div>
+        {sizes.length > 0 && (
+          <p className={`mt-2 text-[11.5px] ${t.muted}`} data-ask-size-hint>
+            Size crossed out or missing? Tap it and we&rsquo;ll get it for you.
+          </p>
+        )}
       </div>
 
       {!combo && (
@@ -339,7 +380,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
       <div className={`sticky bottom-0 mt-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 ${dark ? "bg-black" : "bg-white"}`}>
         {soldOutRows.length > 0 && (
           <p role="status" className={`mb-2 text-[12.5px] ${t.err}`}>
-            {combo ? `This combination is unavailable right now: ${soldOutRows.map((r) => r.p.name).join(", ")} ${soldOutRows.length === 1 ? "is" : "are"} sold out.` : "This design is sold out right now."}
+            {combo ? `${soldOutRows.map((r) => r.p.name).join(", ")} ${soldOutRows.length === 1 ? "is" : "are"} sold out right now.` : "This design is sold out right now."}
           </p>
         )}
         {err && !complete && soldOutRows.length === 0 && (
@@ -361,6 +402,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
         )}
       </div>
 
+      {ask && ask.length > 0 && <NotifyMe mode="request" controlled={{ open: true, onClose: () => setAsk(null) }} variantId={ask[0].variantId} size={ask[0].size ?? null} label={ask[0].label} choices={ask} />}
       {zoom && <Lightbox src={zoom.src} caption={zoom.caption} onClose={() => setZoom(null)} />}
     </div>
   );
