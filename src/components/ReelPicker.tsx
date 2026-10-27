@@ -150,6 +150,17 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
   if (rows.length === 0) return null;
 
   const picked = (r: Row, i: number) => r.variants.find((v) => v.colour === colour[i]);
+  // a combination takes ALL of a design's pieces (e.g. 12) in one colour and one size, so a size with fewer pieces left than that cannot be chosen
+  const enough = (r: Row, v: Variant, s: string): boolean => {
+    if (sizeState(v, s) !== "ok") return false;
+    const left = sizeLeft(v, s);
+    return left === null || !combo || left >= r.qty;
+  };
+  const shortBy = (r: Row, v: Variant, s: string): number | null => {
+    if (!combo || sizeState(v, s) !== "ok") return null;
+    const left = sizeLeft(v, s);
+    return left !== null && left < r.qty ? left : null;
+  };
   const soldOutRows = rows.filter((r) => !r.variants.some((v) => v.inStock));
   const complete = soldOutRows.length === 0 && !!size && rows.every((_, i) => colour[i]);
   const missingColours = rows.filter((_, i) => !colour[i]).length;
@@ -166,7 +177,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
     const out: AskChoice[] = [];
     rows.forEach((r, i) => {
       const v = picked(r, i);
-      const lacking = v ? (sizeState(v, sz) !== "ok" ? [v] : []) : r.variants.filter((x) => sizeState(x, sz) !== "ok");
+      const lacking = v ? (!enough(r, v, sz) ? [v] : []) : r.variants.filter((x) => !enough(r, x, sz));
       lacking.forEach((x) => {
         if (!out.some((o) => o.variantId === x.id)) out.push({ variantId: x.id, size: sz, label: `${r.p.name}, ${colourLabel(r.p, x)}, size ${sz}` });
       });
@@ -178,7 +189,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
     setColour((cur) => ({ ...cur, [i]: name }));
     const c = r.variants.find((v) => v.colour === name);
     // the shared size is dropped if this colour cannot be had in it
-    if (c && size && sizeState(c, size) !== "ok") setSize("");
+    if (c && size && !enough(r, c, size)) setSize("");
     setErr(false);
   };
 
@@ -293,13 +304,14 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
                         Choose a colour
                       </option>
                       {r.variants.map((c) => {
-                        const noSize = !!size && sizeState(c, size) !== "ok";
+                        const noSize = !!size && !enough(r, c, size);
+                        const few = size ? shortBy(r, c, size) : null;
                         // another entry of the same design already has this colour
                         const taken = rows.some((o, k) => k !== i && o.p.id === r.p.id && colour[k] === c.colour);
                         return (
                           <option key={c.colour} value={c.colour} disabled={!c.inStock || noSize || taken}>
                             {colourLabel(r.p, c)}
-                            {!c.inStock ? ", sold out" : noSize ? `, no size ${size}` : taken ? ", chosen above" : ""}
+                            {!c.inStock ? ", sold out" : few !== null ? `, only ${few} left in size ${size}, needs ${r.qty}` : noSize ? `, no size ${size}` : taken ? ", chosen above" : ""}
                           </option>
                         );
                       })}
@@ -326,7 +338,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
             // a size is offered only if every chosen colour can be had in it
             const ok = rows.every((r, i) => {
               const v = picked(r, i);
-              return v ? sizeState(v, s) === "ok" : r.variants.some((x) => x.inStock && sizeState(x, s) === "ok");
+              return v ? enough(r, v, s) : r.variants.some((x) => x.inStock && enough(r, x, s));
             });
             return (
               <button
@@ -351,6 +363,11 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
             );
           })}
         </div>
+        {combo && rows.some((r, i) => { const v = picked(r, i); return !!v && sizes.some((s) => shortBy(r, v, s) !== null); }) && (
+          <p className={`mt-2 text-[11.5px] ${t.muted}`} data-short-hint>
+            This combination takes {rows.map((r) => r.qty).filter((q, i, a) => a.indexOf(q) === i && q > 1).join(" / ") || "all"} pieces of a design in the same colour and size, so a size with fewer left is crossed out.
+          </p>
+        )}
         {sizes.length > 0 && (
           <p className={`mt-2 text-[11.5px] ${t.muted}`} data-ask-size-hint>
             Size crossed out or missing? Tap it and we&rsquo;ll get it for you.

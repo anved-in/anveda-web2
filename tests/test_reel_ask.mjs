@@ -70,6 +70,16 @@ async function session(width, height, mobile, tag) {
     d = await dialog();
     check(!!d && /Kada|kada/i.test(d), `${tag}: the request names the sold-out design (${(d || '').replace(/\s+/g, ' ').slice(0, 90)})`);
     check((await ev("(function(){var el=document.querySelector('[aria-labelledby=notify-title]'); var d=el.getBoundingClientRect(); var z=getComputedStyle(el.parentElement).zIndex; return z==='500' && d.width>0 && d.width<=innerWidth})()")) === true, `${tag}: the request sits above the reel sheet and fits the screen`);
+
+    // ---- a combination that takes 12 of one colour and size: a size with only 9 left cannot be picked
+    if (!mobile) { // (the phone feed opens its first reel's sheet whatever ?v= says, and the picker code is the same)
+    await open('ask-c');
+    const chips = JSON.parse(await ev("JSON.stringify([].slice.call(document.querySelectorAll('[role=group][aria-label=Size] button')).filter(function(x){return x.offsetParent}).map(function(x){return {s:x.textContent.trim(), gone:/line-through/.test(x.className)}}))"));
+    check(chips.some((c) => c.s === '2.2' && !c.gone) && chips.some((c) => c.s === '2.4' && c.gone), `${tag}: size 2.2 (20 left) can be picked, size 2.4 (only 9 left, the combo needs 12) is crossed out (${JSON.stringify(chips)})`);
+    await ev("(function(){var b=[].slice.call(document.querySelectorAll('[role=group][aria-label=Size] button')).filter(function(x){return x.textContent.trim()==='2.4'&&x.offsetParent})[0]; b.click()})()"); await sleep(500);
+    d = await dialog();
+    check(!!d && /size 2\.4/.test(d), `${tag}: tapping it offers "we'll get it for you" for that size instead of failing at payment`);
+    }
   } finally { ws.close(); proc.kill(); await sleep(1500); try { fs.rmSync(prof, { recursive: true, force: true }); } catch {} }
 }
 await session(1280, 900, false, 'desktop');

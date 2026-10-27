@@ -6,8 +6,7 @@ jelly = next(p for p in cat["products"] if p["id"] == "jelly-bangles-glass-bangl
 kada = next(p for p in cat["products"] if p["id"] == "kada")
 for v in jelly["variants"]:               # no colour of this design comes in 2.6 any more
     v["sizes"] = [s for s in v["sizes"] if s != "2.6"]
-    if v.get("sizeStock"):
-        v["sizeStock"].pop("2.6", None)
+    v["sizeStock"] = {"2.2": 20, "2.4": 9}    # a 12-piece combo can be had in 2.2 but not in 2.4 (only 9 left)
 for v in kada["variants"]:                # the whole design is sold out
     v["inStock"] = False
 json.dump(cat, open("src/data/catalog.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
@@ -17,5 +16,7 @@ base = {"video": None, "cover": first["cover"], "caption": ""}
 reels["reels"].insert(0, dict(base, id="ask-a", instagram="https://www.instagram.com/reel/ASKA/", title="Ask A", productId=jelly["id"], colour=None, combo=None))
 reels["reels"].insert(0, dict(base, id="ask-b", instagram="https://www.instagram.com/reel/ASKB/", title="Ask B", productId=jelly["id"], colour=None,
     combo={"price": 500, "items": [{"productId": jelly["id"], "qty": 1, "colours": []}, {"productId": kada["id"], "qty": 1, "colours": []}]}))
+reels["reels"].insert(2, dict(base, id="ask-c", instagram="https://www.instagram.com/reel/ASKC/", title="Ask C", productId=jelly["id"], colour=None,
+    combo={"price": 899, "items": [{"productId": jelly["id"], "qty": 12, "colours": []}]}))
 json.dump(reels, open("src/data/reels.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print("prepared")
