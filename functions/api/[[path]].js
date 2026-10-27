@@ -164,7 +164,7 @@ async function handleCheckout(request, env) {
         try {
           const parsed = JSON.parse(detail);
           if (parsed && typeof parsed.shipping === "number") return json({ ok: false, shipping: parsed.shipping, error: String(parsed.error) }, 409);
-          if (parsed && parsed.error) return json({ ok: false, error: String(parsed.error) + " Please change it in your bag and try again." }, 409);
+          if (parsed && parsed.error) return json({ ok: false, error: /please/i.test(String(parsed.error)) ? String(parsed.error) : String(parsed.error) + " Please change it in your bag and try again." }, 409);
         } catch { /* fall through to the technical message */ }
       }
       return json({ ok: false, error: `order intake failed: ${detail}` }, 500);
