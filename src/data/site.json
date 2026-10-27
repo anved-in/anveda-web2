@@ -1,3 +1,20 @@
 {
- "values": {}
+ "values": {
+  "home.hero1.image": "home-statement-bangles.webp",
+  "home.hero2.image": "home-kada.webp",
+  "home.hero3.image": "home-border-bangles.webp",
+  "home.story.image": "home-border-bangles.webp",
+  "home.cat.border-bangles.image": "home-border-bangles.webp",
+  "home.cat.intricate-glass-bangle.image": "home-intricate-glass-bangle.webp",
+  "home.cat.jelly-bangles-glass-bangles.image": "home-jelly-bangles.webp",
+  "home.cat.pastel-palette-glass-bangle.image": "home-pastel-palette.webp",
+  "home.cat.petal-stone-glass-bangle.image": "home-petal-stone.webp",
+  "home.cat.phool-glass-bangle.image": "home-phool-glass.webp",
+  "home.cat.statement-bangles.image": "home-statement-bangles.webp",
+  "home.cat.kada.image": "home-kada.webp",
+  "home.cat.designer-side-bangles.image": "home-designer-side-bangles.webp",
+  "home.cat.gunghroo.image": "home-gunghroo.webp",
+  "home.cat.square-edge-glass-bangles.image": "home-square-edge.webp",
+  "home.cat.lil-charms-kids-section.image": "home-lil-charms.webp"
+ }
 }

@@ -78,14 +78,18 @@ const heroSlides = ["statement-bangles", "kada", "border-bangles"]
     };
   });
 
-// Shop By Category tiles.
-const categories = collections.map((c) => ({
-  slug: c.slug,
-  name: c.name,
-  href: rangeHref(c.slug),
-  src: asset(imgSrc(c.cover)),
-  srcSmall: asset(imgSrcSmall(c.cover)),
-}));
+// Shop By Category tiles. The owner can give a collection its own home-page tile photo
+// (src/data/site.json: home.cat.<slug>.image); left alone it shows the collection's own cover.
+const categories = collections.map((c) => {
+  const cover = scImage(`home.cat.${c.slug}.image`) ?? c.cover;
+  return {
+    slug: c.slug,
+    name: c.name,
+    href: rangeHref(c.slug),
+    src: asset(imgSrc(cover)),
+    srcSmall: asset(imgSrcSmall(cover)),
+  };
+});
 
 export default function Home() {
   return (
