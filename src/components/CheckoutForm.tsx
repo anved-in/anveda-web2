@@ -966,8 +966,10 @@ export default function CheckoutForm() {
             {!porterAsked ? (
               <>
                 <p className="mt-3 text-[14px] leading-relaxed text-ink-soft">
-                  Send us a message on {porterWa ? "WhatsApp" : "Instagram"} with your address and bag, and we will arrange your Porter delivery with you there.
-                  Nothing is added to this order for delivery. If you would rather not use Porter, we will message you for the normal courier charge instead.
+                  To know the Porter delivery charges, please contact us on WhatsApp using the button below.
+                </p>
+                <p className="mt-3 text-[14px] leading-relaxed text-ink-soft">
+                  Please note: Porter delivery charges must be paid directly to the delivery partner. You will only pay us for the products.
                 </p>
                 {!porterContactOk && (
                   <p className="mt-3 text-[13px] font-semibold text-[#a33a2f]">
