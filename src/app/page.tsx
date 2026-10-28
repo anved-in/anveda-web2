@@ -60,16 +60,33 @@ export function generateMetadata(): Metadata {
   };
 }
 
+// Home-page-only product photography: the real bangles re-shot on a clean white studio backdrop
+// (public/img/products/home-*.webp), one per collection. This is a site-design choice, not a CMS box
+// (CMS > Website pages still overrides title/text/link per slide) - the CMS sync that refreshes
+// src/data/site.json on every staging build would otherwise wipe an image key it doesn't know about.
+const HOME_PHOTO: Record<string, string> = {
+  "border-bangles": "home-border-bangles.webp",
+  "intricate-glass-bangle": "home-intricate-glass-bangle.webp",
+  "jelly-bangles-glass-bangles": "home-jelly-bangles.webp",
+  "pastel-palette-glass-bangle": "home-pastel-palette.webp",
+  "petal-stone-glass-bangle": "home-petal-stone.webp",
+  "phool-glass-bangle": "home-phool-glass.webp",
+  "statement-bangles": "home-statement-bangles.webp",
+  kada: "home-kada.webp",
+  "designer-side-bangles": "home-designer-side-bangles.webp",
+  gunghroo: "home-gunghroo.webp",
+  "square-edge-glass-bangles": "home-square-edge.webp",
+  "lil-charms-kids-section": "home-lil-charms.webp",
+};
+
 // Hero slides: three wide, worked families make the strongest opening images.
 const heroSlides = ["statement-bangles", "kada", "border-bangles"]
   .map((s) => collections.find((c) => c.slug === s))
   .filter((c): c is NonNullable<typeof c> => Boolean(c))
   .map((c, i) => {
-    const l = lead(c.slug);
     const n = i + 1;
-    const own = scImage(`home.hero${n}.image`);
     return {
-      image: asset(imgSrc(own ?? l.variant.image)),
+      image: asset(imgSrc(HOME_PHOTO[c.slug] ?? c.cover)),
       title: sc(`home.hero${n}.title`, c.name),
       blurb: sc(`home.hero${n}.text`, c.blurb ?? ""),
       href: sc(`home.hero${n}.link`, rangeHref(c.slug)),
@@ -78,14 +95,17 @@ const heroSlides = ["statement-bangles", "kada", "border-bangles"]
     };
   });
 
-// Shop By Category tiles.
-const categories = collections.map((c) => ({
-  slug: c.slug,
-  name: c.name,
-  href: rangeHref(c.slug),
-  src: asset(imgSrc(c.cover)),
-  srcSmall: asset(imgSrcSmall(c.cover)),
-}));
+// Shop By Category tiles, same home-page photo set as the hero.
+const categories = collections.map((c) => {
+  const cover = HOME_PHOTO[c.slug] ?? c.cover;
+  return {
+    slug: c.slug,
+    name: c.name,
+    href: rangeHref(c.slug),
+    src: asset(imgSrc(cover)),
+    srcSmall: asset(imgSrcSmall(cover)),
+  };
+});
 
 export default function Home() {
   return (
@@ -159,7 +179,7 @@ export default function Home() {
                 <div className="reveal aspect-[4/3] overflow-hidden bg-cream-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={asset(imgSrc(scImage("home.story.image") ?? collections[0].cover))}
+                    src={asset(imgSrc(scImage("home.story.image") ?? HOME_PHOTO[collections[0].slug] ?? collections[0].cover))}
                     alt=""
                     className="h-full w-full object-cover"
                     loading="lazy"

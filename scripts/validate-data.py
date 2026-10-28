@@ -99,6 +99,16 @@ if reels is not None:
         old = previous("src/data/reels.json")
         shrink_check("The number of reels", len(lst), len((old or {}).get("reels", [])) if old else None, 0.5)
 
+sets_d = load("src/data/sets.json")
+if sets_d is not None:
+    lst = sets_d.get("sets")
+    if not isinstance(lst, list):
+        bad("sets.json has no sets list")
+    else:
+        for s in lst:
+            if not s.get("id") or not s.get("title"):
+                bad("a styled set has no id or title")
+
 # ---------------------------------------------------------------- website wording and photos (CMS > Website pages)
 site = load("src/data/site.json") if os.path.exists(os.path.join(ROOT, "src", "data", "site.json")) else None   # optional: older data has none
 if site is not None:

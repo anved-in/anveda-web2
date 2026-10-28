@@ -51,8 +51,23 @@ if os.path.exists(SITE):
         if k.endswith(".image") and v:
             keep.add(v)
 
+# Styled Sets' own cover photos (src/data/sets.json: "/img/products/<file>").
+SETS = os.path.join(ROOT, "src", "data", "sets.json")
+if os.path.exists(SETS):
+    for s in json.load(io.open(SETS, encoding="utf-8")).get("sets", []):
+        cov = (s.get("cover") or "").rsplit("/", 1)[-1]
+        if cov:
+            keep.add(cov)
+
 # The plain tile shown for a colour that has no photo yet (see catalog.ts).
 keep.add("no-photo.webp")
+
+# Home-page-only studio photos (src/app/page.tsx: HOME_PHOTO), named "home-*.webp".
+# Not in the catalog or site.json, so they need their own rule here.
+if os.path.isdir(IMGDIR):
+    for fn in os.listdir(IMGDIR):
+        if fn.startswith("home-") and "@480" not in fn:
+            keep.add(fn)
 
 # Each kept file has a "@480" thumbnail sitting next to it (see
 # optimize-images.js) that never appears in the catalog itself, keep those

@@ -8,6 +8,7 @@ import ComboBagRow from "@/components/ComboBagRow";
 import { framingStyle, imgSrc, inr, unitPrice, packLabel, colourLabel, sizeLeft, sizeState } from "@/lib/catalog";
 import { useLiveStock } from "@/lib/liveStock";
 import { asset } from "@/lib/site";
+import NotifyMe from "@/components/NotifyMe";
 
 export default function CartDrawer() {
   const { open, setOpen, lines, setQty, remove, subtotal, count } = useCart();
@@ -137,12 +138,21 @@ export default function CartDrawer() {
                         if (!v) return null;
                         const have = sizeLeft(v, l.size);
                         const gone = !v.inStock || sizeState(v, l.size) !== "ok";
-                        const note = gone
-                          ? "Sold out. Please remove it to check out."
-                          : have !== null && l.qty > have
-                            ? `Only ${have} left. Please lower the quantity.`
-                            : null;
-                        return note ? <p role="alert" className="mt-2 text-[12px] font-semibold text-maroon">{note}</p> : null;
+                        if (gone) {
+                          return (
+                            <div className="mt-2">
+                              <p role="alert" className="text-[12px] font-semibold text-maroon">
+                                Sorry, this item has been sold out. You can ask to be notified, or remove it from your bag.
+                              </p>
+                              <div className="mt-1.5">
+                                <NotifyMe variantId={v.id} size={l.size} label={`${p.name}, ${colourLabel(p, v)}, size ${l.size}`} />
+                              </div>
+                            </div>
+                          );
+                        }
+                        return have !== null && l.qty > have ? (
+                          <p role="alert" className="mt-2 text-[12px] font-semibold text-maroon">{`Only ${have} left. Please lower the quantity.`}</p>
+                        ) : null;
                       })()}
 
                       <button

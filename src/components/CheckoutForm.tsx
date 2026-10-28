@@ -8,7 +8,9 @@ import QtyStepper from "@/components/QtyStepper";
 import ComboBagRow from "@/components/ComboBagRow";
 import { useFavs } from "@/lib/favourites";
 import { HEART } from "@/components/FavButton";
-import { framingStyle, imgSrc, inr, unitPrice, productById, colourLabel } from "@/lib/catalog";
+import { framingStyle, imgSrc, inr, unitPrice, productById, colourLabel, sizeLeft, sizeState } from "@/lib/catalog";
+import { useLiveStock } from "@/lib/liveStock";
+import NotifyMe from "@/components/NotifyMe";
 import { asset, SITE, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 import {
   type Customer,
@@ -65,7 +67,22 @@ const validate = (c: Customer): Partial<Record<keyof Customer, string>> => {
 export default function CheckoutForm() {
   const router = useRouter();
   const { lines, subtotal, clear, ready, setQty, remove } = useCart();
+  useLiveStock(); // redraw the bag summary with real stock before the shopper pays
   const { has: hasFav, toggle: toggleFav } = useFavs();
+  // Checked again on the server at the moment of payment (orders-api.ts), this only stops the shopper
+  // from reaching Pay with something that is already, visibly, sold out.
+  const soldOutLine = lines.some((l) => {
+    if (l.combo) {
+      return l.combo.picks.some((k) => {
+        const p = productById(k.id);
+        const v = p?.variants.find((x) => x.colour === k.colour);
+        return !v || !v.inStock || sizeState(v, k.size) !== "ok";
+      });
+    }
+    const p = lineProduct(l);
+    const v = p?.variants.find((x) => x.colour === l.colour);
+    return !v || !v.inStock || sizeState(v, l.size) !== "ok";
+  });
   const [c, setC] = useState<Customer>(EMPTY);
   // "in": details were filled from the customer's account; "out": login is on but nobody is logged in; "none": no login
   const [acct, setAcct] = useState<"unknown" | "in" | "out" | "none">("unknown");
@@ -328,6 +345,10 @@ export default function CheckoutForm() {
       return;
     }
     if (lines.length === 0) return;
+    if (soldOutLine) {
+      setFailure("Something in your bag has sold out. Please remove it (or wait to be notified) before paying.");
+      return;
+    }
     if (!deliveryReady) {
       setFailure(
         ship.failed
@@ -458,6 +479,26 @@ export default function CheckoutForm() {
             <div className="mt-0.5 text-[12px] text-ink-soft">
               {shade && `${shade} · `}Size {l.size}
             </div>
+            {(() => {
+              if (!v) return null;
+              const have = sizeLeft(v, l.size);
+              const gone = !v.inStock || sizeState(v, l.size) !== "ok";
+              if (gone) {
+                return (
+                  <div className="mt-1.5">
+                    <p role="alert" className="text-[12px] font-semibold text-maroon">
+                      Sorry, this item has been sold out. Please ask to be notified, or remove it to check out.
+                    </p>
+                    <div className="mt-1.5">
+                      <NotifyMe variantId={v.id} size={l.size} label={`${p.name}, ${shade}, size ${l.size}`} />
+                    </div>
+                  </div>
+                );
+              }
+              return have !== null && l.qty > have ? (
+                <p role="alert" className="mt-1.5 text-[12px] font-semibold text-maroon">{`Only ${have} left. Please lower the quantity.`}</p>
+              ) : null;
+            })()}
             <div className="mt-1.5 text-[13.5px] font-semibold">
               {inr(unitPrice(l.id, l.colour) * l.qty)}
             </div>
@@ -966,8 +1007,10 @@ export default function CheckoutForm() {
             {!porterAsked ? (
               <>
                 <p className="mt-3 text-[14px] leading-relaxed text-ink-soft">
-                  Send us a message on {porterWa ? "WhatsApp" : "Instagram"} with your address and bag, and we will arrange your Porter delivery with you there.
-                  Nothing is added to this order for delivery. If you would rather not use Porter, we will message you for the normal courier charge instead.
+                  To know the Porter delivery charges, please contact us on WhatsApp using the button below.
+                </p>
+                <p className="mt-3 text-[14px] leading-relaxed text-ink-soft">
+                  Please note: Porter delivery charges must be paid directly to the delivery partner. You will only pay us for the products.
                 </p>
                 {!porterContactOk && (
                   <p className="mt-3 text-[13px] font-semibold text-[#a33a2f]">
