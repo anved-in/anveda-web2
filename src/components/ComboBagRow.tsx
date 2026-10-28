@@ -1,7 +1,7 @@
 "use client";
 
 import { asset } from "@/lib/site";
-import { colourLabel, framingStyle, imgSrcSmall, inr, productById } from "@/lib/catalog";
+import { colourLabel, framingStyle, imgSrcSmall, inr, productById, sizeState } from "@/lib/catalog";
 import { lineTotal, type Line } from "@/lib/cart";
 import QtyStepper from "@/components/QtyStepper";
 
@@ -18,6 +18,12 @@ export default function ComboBagRow({
   pad?: string;
 }) {
   const c = l.combo!;
+  // If any design in the combo sold out since it was added, the whole combo can no longer be bought as-is.
+  const gone = c.picks.some((k) => {
+    const p = productById(k.id);
+    const v = p?.variants.find((x) => x.colour === k.colour);
+    return !v || !v.inStock || sizeState(v, k.size) !== "ok";
+  });
   return (
     <div className={`flex gap-3.5 border-b border-line ${pad}`}>
       <div className="flex w-[70px] shrink-0 flex-col gap-1" aria-hidden="true">
@@ -58,6 +64,11 @@ export default function ComboBagRow({
           />
           <span className="text-[14px] font-semibold">{inr(lineTotal(l))}</span>
         </div>
+        {gone && (
+          <p role="alert" className="mt-2 text-[12px] font-semibold text-maroon">
+            Sorry, one of the designs in this combo has been sold out. Please remove it from your bag.
+          </p>
+        )}
         <button
           type="button"
           onClick={() => remove(l.id, l.size, l.colour)}
