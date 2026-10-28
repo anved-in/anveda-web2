@@ -15,6 +15,7 @@ import { groups, collectionsInGroup, rangeHref, productById } from "@/lib/catalo
 const NAV = [
   { href: "/colours", label: "By Colour" },
   { href: "/reels", label: "Reels" },
+  { href: "/sets", label: "Styled Sets" },
   { href: "/about", label: "About Us" },
   { href: "/sizing", label: "Sizing" },
 ];
@@ -388,6 +389,7 @@ export default function Header() {
               { href: "/", label: "Home" },
               { href: "/colours", label: "By Colour" },
               { href: "/reels", label: "Reels" },
+              { href: "/sets", label: "Styled Sets" },
             ].map((n) => (
               <li key={n.href} className="border-b border-line last:border-b-0">
                 <Link

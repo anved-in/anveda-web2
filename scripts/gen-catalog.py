@@ -19,6 +19,7 @@ IMGDIR = os.path.join(ROOT, "public", "img", "products")
 REEL_IMGDIR = os.path.join(ROOT, "public", "img", "reels")
 OUT = os.path.join(ROOT, "src", "data", "catalog.json")
 REELS_OUT = os.path.join(ROOT, "src", "data", "reels.json")
+SETS_OUT = os.path.join(ROOT, "src", "data", "sets.json")
 REVIEWS_OUT = os.path.join(ROOT, "src", "data", "reviews.json")
 FAQS_OUT = os.path.join(ROOT, "src", "data", "faqs.json")
 SITE_OUT = os.path.join(ROOT, "src", "data", "site.json")
@@ -37,6 +38,7 @@ groups = data.get("groups", [])
 collections = data.get("collections", [])
 products = data.get("products", [])
 reels_in = data.get("reels", [])
+sets_in = data.get("sets", [])
 reviews_in = data.get("reviews", [])
 
 # Photos uploaded in the CMS keep the extension they were uploaded with (.jpg /
@@ -70,6 +72,9 @@ for _r in reels_in:
     _cov = _r.get("cover")
     if _cov and not _cov.startswith("ig:"):
         _r["cover"] = webp_name(_cov)
+for _s in sets_in:
+    if _s.get("cover"):
+        _s["cover"] = webp_name(_s["cover"])
 
 json.dump(
     {"groups": groups, "collections": collections, "products": products, "colourWall": data.get("colourWall", []), "newArrivals": data.get("newArrivals", []), "announcement": data.get("announcement")},
@@ -120,6 +125,20 @@ json.dump({"reels": reels_out}, open(REELS_OUT, "w", encoding="utf-8"),
 print(f"{len(reels_out)} reels "
       f"({sum(1 for r in reels_out if r['video'])} with uploaded video) -> {REELS_OUT}")
 
+# ------------------------------------------------------------------ styled sets
+# Same combo mechanism as a reel, but a single still photo and its own page: no video, no Instagram link.
+sets_out = [{
+    "id": s["id"],
+    "cover": f"/img/products/{s['cover']}" if s.get("cover") else None,
+    "title": s.get("title"),
+    "caption": s.get("caption") or "",
+    "productId": s.get("productId"),
+    "colour": s.get("colour"),
+    "combo": s.get("combo"),
+} for s in sets_in]
+json.dump({"sets": sets_out}, open(SETS_OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+print(f"{len(sets_out)} styled sets -> {SETS_OUT}")
+
 # ------------------------------------------------------------------ help questions
 # Written only when the CMS actually sent the list, so an older CMS can never blank the page.
 if "faqs" in data:
@@ -167,6 +186,9 @@ for r in reels_in:
     cov = r.get("cover")
     if cov and not cov.startswith("ig:"):
         wanted.add(cov)
+for s in sets_in:
+    if s.get("cover"):
+        wanted.add(s["cover"])
 for fn in site_images:
     wanted.add(fn)
 

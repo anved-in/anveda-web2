@@ -51,6 +51,14 @@ if os.path.exists(SITE):
         if k.endswith(".image") and v:
             keep.add(v)
 
+# Styled Sets' own cover photos (src/data/sets.json: "/img/products/<file>").
+SETS = os.path.join(ROOT, "src", "data", "sets.json")
+if os.path.exists(SETS):
+    for s in json.load(io.open(SETS, encoding="utf-8")).get("sets", []):
+        cov = (s.get("cover") or "").rsplit("/", 1)[-1]
+        if cov:
+            keep.add(cov)
+
 # The plain tile shown for a colour that has no photo yet (see catalog.ts).
 keep.add("no-photo.webp")
 
