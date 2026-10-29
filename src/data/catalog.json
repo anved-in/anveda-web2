@@ -3377,6 +3377,90 @@
      },
      "focal": "58.4% 71.3%",
      "zoom": 1.7
+    },
+    {
+     "id": 214,
+     "colour": "Gold Plated Flower",
+     "price": 1050,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 3,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 1
+     },
+     "zoom": 1
+    },
+    {
+     "id": 215,
+     "colour": "Peacock with Stones",
+     "price": 850,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 4,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 2,
+      "2.6": 2,
+      "2.8": 0
+     },
+     "zoom": 1
+    },
+    {
+     "id": 216,
+     "colour": "Temple Lakshmi",
+     "price": 350,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 2,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "zoom": 1
+    },
+    {
+     "id": 217,
+     "colour": "Lakshmi Petal Green",
+     "price": 1250,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 1,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 0,
+      "2.8": 0
+     },
+     "zoom": 1
     }
    ],
    "image": "statement-bangles-elephant-design.webp"
