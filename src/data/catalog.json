@@ -5124,6 +5124,41 @@
        "zoom": 1.25
       }
      ]
+    },
+    {
+     "id": 207,
+     "colour": "Dual Layer White Stone Long Hanging Gunghroo",
+     "image": "u-gunghroo-dual-layer-white-stone-long-hanging-gunghroo-more-mvt774dt.webp",
+     "price": 0,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 7,
+     "sizeStock": {
+      "2.2": 2,
+      "2.4": 2,
+      "2.6": 3,
+      "2.8": 0
+     },
+     "focal": "39.9% 61%",
+     "zoom": 1.45,
+     "gallery": [
+      {
+       "image": "u-gunghroo-dual-layer-white-stone-long-hanging-gunghroo-more-mvt77e7z.webp",
+       "focal": "100% 54.6%",
+       "zoom": 1.45
+      },
+      {
+       "image": "u-gunghroo-dual-layer-white-stone-long-hanging-gunghroo-more-mvt77pmq.webp",
+       "focal": "64.4% 22.8%",
+       "zoom": 1.35
+      }
+     ]
     }
    ],
    "image": "gunghroo-acrylic-kashmiri-blue-yellow-set-of-4.webp"
