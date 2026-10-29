@@ -1129,12 +1129,12 @@
       "2.8"
      ],
      "inStock": true,
-     "stockQty": 1,
+     "stockQty": 7,
      "sizeStock": {
       "2.2": 0,
-      "2.4": 1,
-      "2.6": 0,
-      "2.8": 0
+      "2.4": 3,
+      "2.6": 2,
+      "2.8": 2
      },
      "focal": "52% 54.6%",
      "zoom": 1.45,
@@ -1331,6 +1331,26 @@
        "zoom": 1
       }
      ]
+    },
+    {
+     "id": 213,
+     "colour": "Untitled colourway",
+     "price": 220,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": false,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 0,
+      "2.6": 0,
+      "2.8": 0
+     },
+     "zoom": 1
     }
    ],
    "image": "u-pastel-palette-glass-bangle-gold-hd-1792254278.webp"
