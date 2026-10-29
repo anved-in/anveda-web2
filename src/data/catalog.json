@@ -3527,6 +3527,7 @@
     {
      "id": 251,
      "colour": "White Stone with Ruby Flower",
+     "image": "u-statement-bangles-white-stone-with-ruby-flower-more-mvt971g0.webp",
      "price": 1300,
      "pieces": 2,
      "sizes": [
@@ -3543,7 +3544,8 @@
       "2.6": 1,
       "2.8": 0
      },
-     "zoom": 1
+     "focal": "53.6% 63.6%",
+     "zoom": 1.65
     },
     {
      "id": 252,
