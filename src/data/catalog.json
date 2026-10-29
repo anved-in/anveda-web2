@@ -5159,6 +5159,36 @@
        "zoom": 1.35
       }
      ]
+    },
+    {
+     "id": 258,
+     "colour": "White Stone Hanging Gunghroo",
+     "image": "u-gunghroo-white-stone-hanging-gunghroo-more-mvt79l50.webp",
+     "price": 220,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 1,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 0,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "focal": "65.7% 62.6%",
+     "zoom": 1.55,
+     "gallery": [
+      {
+       "image": "u-gunghroo-white-stone-hanging-gunghroo-more-mvt79z2w.webp",
+       "focal": "65.6% 27%",
+       "zoom": 1.5
+      }
+     ]
     }
    ],
    "image": "gunghroo-acrylic-kashmiri-blue-yellow-set-of-4.webp"
