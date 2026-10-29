@@ -420,7 +420,14 @@
       "2.8": 2
      },
      "focal": "36.3% 48.8%",
-     "zoom": 1.6
+     "zoom": 1.6,
+     "gallery": [
+      {
+       "image": "u-intricate-glass-bangle-aqua-more-mvt75a5e.webp",
+       "focal": "40.4% 80.2%",
+       "zoom": 1.5
+      }
+     ]
     },
     {
      "id": 6,
