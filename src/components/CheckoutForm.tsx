@@ -332,6 +332,14 @@ export default function CheckoutForm() {
   const complete = (ref: string, paymentId: string) => {
     clear();
     const q = new URLSearchParams({ ref, p: paymentId });
+    if (c.email) q.set("em", c.email);
+    // Google's opt-in survey needs an estimated delivery date; the quote only has a free-text label
+    // ("4-6 business days"), so take its first number and fall back to a safe default if it has none.
+    const daysMatch = ship.info?.quote.days.match(/\d+/g);
+    const etaDays = daysMatch ? Math.max(...daysMatch.map(Number)) : 6;
+    const eta = new Date();
+    eta.setDate(eta.getDate() + etaDays);
+    q.set("edd", eta.toISOString().slice(0, 10));
     router.push(`/order-confirmed/?${q.toString()}`);
   };
 

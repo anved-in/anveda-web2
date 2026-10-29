@@ -1,13 +1,47 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "@/components/Link";
 import { useSearchParams } from "next/navigation";
 import { SITE, HAS_WHATSAPP, igDmLink } from "@/lib/site";
+
+const GOOGLE_CUSTOMER_REVIEWS_MERCHANT_ID = "5891469577";
 
 export default function Confirmation() {
   const q = useSearchParams();
   const ref = q.get("ref");
   const paymentId = q.get("p");
+  const email = q.get("em");
+  const estimatedDeliveryDate = q.get("edd");
+
+  // Google Customer Reviews opt-in: asks the customer, right here, if Google can email them a short
+  // delivery/quality survey after the order arrives. Those ratings are what builds the seller-rating
+  // stars shown on our Shopping ads and listings. Google requires an email to send the survey to, so
+  // this is skipped for orders placed without one.
+  useEffect(() => {
+    if (!ref || !email || !estimatedDeliveryDate) return;
+    const w = window as typeof window & { renderOptIn?: () => void; gapi?: { load: (name: string, cb: () => void) => void; surveyoptin?: { render: (opts: Record<string, unknown>) => void } } };
+    w.renderOptIn = () => {
+      w.gapi?.load("surveyoptin", () => {
+        w.gapi?.surveyoptin?.render({
+          merchant_id: GOOGLE_CUSTOMER_REVIEWS_MERCHANT_ID,
+          order_id: ref,
+          email,
+          delivery_country: "IN",
+          estimated_delivery_date: estimatedDeliveryDate,
+        });
+      });
+    };
+    const script = document.createElement("script");
+    script.src = "https://apis.google.com/js/platform.js?onload=renderOptIn";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+      delete w.renderOptIn;
+    };
+  }, [ref, email, estimatedDeliveryDate]);
 
   return (
     <section className="px-5 py-16 sm:px-6 md:py-24">
