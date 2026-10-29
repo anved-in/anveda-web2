@@ -824,6 +824,28 @@
      },
      "focal": "59.1% 49%",
      "zoom": 1.6
+    },
+    {
+     "id": 212,
+     "colour": "Maroon",
+     "image": "u-intricate-glass-bangle-maroon-mvt7146u.webp",
+     "price": 320,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 6,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 2,
+      "2.6": 2,
+      "2.8": 2
+     },
+     "zoom": 1
     }
    ],
    "image": "u-intricate-glass-bangle-aqua-more-mvjhi52g.webp"
