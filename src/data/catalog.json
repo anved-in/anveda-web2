@@ -3379,7 +3379,7 @@
      "zoom": 1.7
     },
     {
-     "id": 214,
+     "id": 220,
      "colour": "Gold Plated Flower",
      "price": 1050,
      "pieces": 2,
@@ -3400,7 +3400,7 @@
      "zoom": 1
     },
     {
-     "id": 215,
+     "id": 221,
      "colour": "Peacock with Stones",
      "price": 850,
      "pieces": 2,
@@ -3421,7 +3421,7 @@
      "zoom": 1
     },
     {
-     "id": 216,
+     "id": 222,
      "colour": "Temple Lakshmi",
      "price": 350,
      "pieces": 2,
@@ -3442,7 +3442,7 @@
      "zoom": 1
     },
     {
-     "id": 217,
+     "id": 223,
      "colour": "Lakshmi Petal Green",
      "price": 1250,
      "pieces": 2,
@@ -3458,6 +3458,132 @@
       "2.2": 0,
       "2.4": 1,
       "2.6": 0,
+      "2.8": 0
+     },
+     "zoom": 1
+    },
+    {
+     "id": 224,
+     "colour": "White Stone with Ruby Flower",
+     "price": 1300,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 2,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "zoom": 1
+    },
+    {
+     "id": 225,
+     "colour": "Lakshmi with Round Ruby Emerald",
+     "price": 850,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 2,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "zoom": 1
+    },
+    {
+     "id": 226,
+     "colour": "Lakshmi with Emerald Flower",
+     "price": 950,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 2,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "zoom": 1
+    },
+    {
+     "id": 227,
+     "colour": "Ruby Green Stone",
+     "price": 499,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 2,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "zoom": 1
+    },
+    {
+     "id": 228,
+     "colour": "Black Pink Stone",
+     "price": 450,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 2,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "zoom": 1
+    },
+    {
+     "id": 229,
+     "colour": "Petal Ruby Lakshmi",
+     "price": 1150,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 1,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 0,
+      "2.6": 1,
       "2.8": 0
      },
      "zoom": 1
