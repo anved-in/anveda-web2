@@ -4935,8 +4935,8 @@
    "collectionName": "Gunghroo",
    "group": "layering",
    "name": "Gunghroo",
-   "price": 0,
-   "priceMax": 220,
+   "price": 100,
+   "priceMax": 399,
    "pieces": 4,
    "unit": "set",
    "sizes": [
@@ -5129,7 +5129,7 @@
      "id": 207,
      "colour": "Dual Layer White Stone Long Hanging Gunghroo",
      "image": "u-gunghroo-dual-layer-white-stone-long-hanging-gunghroo-more-mvt774dt.webp",
-     "price": 0,
+     "price": 399,
      "pieces": 4,
      "sizes": [
       "2.2",
