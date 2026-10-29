@@ -4857,6 +4857,7 @@
     {
      "id": 244,
      "colour": "Kashu with Ruby Flower Set of 4",
+     "image": "u-designer-side-bangles-kashu-with-ruby-flower-set-of-4-more-mvt839xk.webp",
      "price": 599,
      "pieces": 4,
      "sizes": [
@@ -4873,7 +4874,8 @@
       "2.6": 1,
       "2.8": 0
      },
-     "zoom": 1
+     "focal": "53.8% 73.1%",
+     "zoom": 1.4
     },
     {
      "id": 245,
