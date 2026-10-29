@@ -4925,6 +4925,29 @@
        "zoom": 1.4
       }
      ]
+    },
+    {
+     "id": 259,
+     "colour": "White Stone Flowe set of 4",
+     "image": "u-designer-side-bangles-white-stone-flowe-set-of-4-mvt7crf6.webp",
+     "price": 220,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 1,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 0,
+      "2.6": 0,
+      "2.8": 1
+     },
+     "focal": "66.4% 59.8%",
+     "zoom": 1.8
     }
    ],
    "image": "designer-side-bangles-bell-pearl-flower-set-of-4.webp"
