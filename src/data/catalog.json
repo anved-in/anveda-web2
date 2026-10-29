@@ -759,7 +759,7 @@
     {
      "id": 148,
      "colour": "Ruby Red",
-     "image": "u-intricate-glass-bangle-ruby-red-1a161d5efa2.webp",
+     "image": "u-intricate-glass-bangle-ruby-red-more-mvt71kjp.webp",
      "price": 320,
      "pieces": 1,
      "sizes": [
@@ -776,8 +776,15 @@
       "2.6": 3,
       "2.8": 4
      },
-     "focal": "34.6% 57%",
-     "zoom": 1.7
+     "focal": "39.9% 66.2%",
+     "zoom": 1.8,
+     "gallery": [
+      {
+       "image": "u-intricate-glass-bangle-ruby-red-1a161d5efa2.webp",
+       "focal": "34.6% 57%",
+       "zoom": 1.7
+      }
+     ]
     },
     {
      "id": 149,
