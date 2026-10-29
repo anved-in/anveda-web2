@@ -1273,6 +1273,11 @@
        "image": "pastel-palette-glass-bangle-pink.webp",
        "focal": "50% 49.25%",
        "zoom": 1
+      },
+      {
+       "image": "u-pastel-palette-glass-bangle-pink-more-mvt8alko.webp",
+       "focal": "45.7% 64.4%",
+       "zoom": 1.7
       }
      ]
     },
@@ -1301,9 +1306,9 @@
      "zoom": 1.1,
      "gallery": [
       {
-       "image": "pastel-palette-glass-bangle-pista.webp",
-       "focal": "49.28% 50.49%",
-       "zoom": 1
+       "image": "u-pastel-palette-glass-bangle-pista-more-mvt8a4xe.webp",
+       "focal": "52.1% 78.7%",
+       "zoom": 1.5
       }
      ]
     },
