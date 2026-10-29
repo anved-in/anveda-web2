@@ -4751,7 +4751,7 @@
      "zoom": 1.6
     },
     {
-     "id": 218,
+     "id": 230,
      "colour": "Kashu with Ruby Flower Set of 4",
      "price": 599,
      "pieces": 4,
@@ -4772,7 +4772,7 @@
      "zoom": 1
     },
     {
-     "id": 219,
+     "id": 231,
      "colour": "Gold Ruby Green Flower Set of 4",
      "price": 1600,
      "pieces": 4,
@@ -4789,6 +4789,27 @@
       "2.4": 1,
       "2.6": 1,
       "2.8": 0
+     },
+     "zoom": 1
+    },
+    {
+     "id": 232,
+     "colour": "Mantap Lakshmi Set of 4",
+     "price": 399,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 5,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 2,
+      "2.8": 2
      },
      "zoom": 1
     }
