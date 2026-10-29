@@ -4878,6 +4878,7 @@
     {
      "id": 245,
      "colour": "Gold Ruby Green Flower Set of 4",
+     "image": "u-designer-side-bangles-gold-ruby-green-flower-set-of-4-more-mvt7xwqs.webp",
      "price": 1600,
      "pieces": 4,
      "sizes": [
@@ -4894,7 +4895,8 @@
       "2.6": 1,
       "2.8": 0
      },
-     "zoom": 1
+     "focal": "66.8% 63.2%",
+     "zoom": 1.4
     },
     {
      "id": 246,
