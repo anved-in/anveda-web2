@@ -57,7 +57,11 @@
        "Sky Blue",
        "Golden Yellow",
        "Classic Blue",
-       "Royal Blue (Premium Raindrop)"
+       "Royal Blue (Premium Raindrop)",
+       "Wine (Premium Raindrop)",
+       "Red (Raindrop)",
+       "Dark Green (Premium Raindrop)",
+       "Strawberry (Premium Raindrop)"
       ]
      },
      {
@@ -149,28 +153,6 @@
        "Golden Yellow",
        "Classic Blue",
        "Royal Blue (Premium Raindrop)"
-      ]
-     }
-    ]
-   }
-  },
-  {
-   "id": "red-flower-stone",
-   "video": null,
-   "instagram": "https://www.instagram.com/reel/DdEVLDtTvml/?utm_source=ig_web_copy_link&srtk=MzRlODBiNWFlZA==",
-   "cover": "/img/reels/red-flower-stone-cover.jpg",
-   "title": "Red Flower Stone",
-   "caption": "",
-   "productId": "statement-bangles",
-   "colour": "Red Flower Stone",
-   "combo": {
-    "price": 899,
-    "items": [
-     {
-      "productId": "statement-bangles",
-      "qty": 1,
-      "colours": [
-       "Red Flower Stone"
       ]
      }
     ]
@@ -705,6 +687,69 @@
       "qty": 1,
       "colours": [
        "Gold Stones (Non Bendable)"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "raaga-set",
+   "video": null,
+   "instagram": "https://www.instagram.com/reel/DfE5BMBzh0v/?cplk=Mm5hMDhoeTd4cGZo",
+   "cover": "/img/reels/raaga-set-cover.jpg",
+   "title": "Raaga Set",
+   "caption": "",
+   "productId": "square-edge-glass-bangles",
+   "colour": "Aqua",
+   "combo": {
+    "price": 2160,
+    "items": [
+     {
+      "productId": "square-edge-glass-bangles",
+      "qty": 1,
+      "colours": [
+       "Aqua",
+       "Black",
+       "Champagne Gold",
+       "Dark Green",
+       "Dark Pink",
+       "Green (premium Raindrop)",
+       "Lavender",
+       "Maroon",
+       "Mauve",
+       "Olive (premium Raindrop)",
+       "Parrot Green",
+       "Radium",
+       "Red",
+       "Rose Pink",
+       "Royal Blue",
+       "Sunset Orange",
+       "Wine",
+       "Pink",
+       "Grey",
+       "Teal",
+       "Sky Blue",
+       "Golden Yellow",
+       "Classic Blue",
+       "Royal Blue (Premium Raindrop)",
+       "Wine (Premium Raindrop)",
+       "Red (Raindrop)",
+       "Dark Green (Premium Raindrop)",
+       "Strawberry (Premium Raindrop)"
+      ]
+     },
+     {
+      "productId": "designer-side-bangles",
+      "qty": 1,
+      "colours": [
+       "Crystal drop Set of 4"
+      ]
+     },
+     {
+      "productId": "statement-bangles",
+      "qty": 1,
+      "colours": [
+       "Gold Plated Flower"
       ]
      }
     ]
