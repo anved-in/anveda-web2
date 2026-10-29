@@ -285,6 +285,18 @@ export const KIDS_SIZE_GUIDE: { size: string; label: string }[] = [
 ];
 
 /**
+ * A very general age guide for the Kids sizes, shown on the Sizing page with a clear "approximate" label. Every
+ * child's wrist is different, so this is a starting point for choosing a size, not a promise: always measure
+ * before ordering (see the Sizing page's "how to measure" method).
+ */
+export const KIDS_AGE_GUIDE: { size: string; ageRange: string }[] = [
+  { size: "1.10", ageRange: "newborn to around 3 months" },
+  { size: "1.12", ageRange: "around 3 to 9 months" },
+  { size: "1.14", ageRange: "around 9 months to 2 years" },
+  { size: "2.0", ageRange: "around 2 to 6 years" },
+];
+
+/**
  * Sizes that are rarely made (2.12). They are shown ONLY where a colourway really has them in stock: when one is not
  * available it is not shown at all (not even greyed out or struck through), and it is not listed on the size guide page.
  */

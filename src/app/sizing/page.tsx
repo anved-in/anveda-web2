@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "@/components/Link";
-import { SIZE_GUIDE } from "@/lib/catalog";
+import { SIZE_GUIDE, KIDS_AGE_GUIDE } from "@/lib/catalog";
 import { waLink, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Sizing Guide",
   description:
-    "Indian bangle sizing explained. Measure once, order confidently. Sizes 2.2 to 2.8.",
+    "Indian bangle sizing explained, for adults and kids. Measure once, order confidently. Sizes 2.2 to 2.8, plus a kids bangle size and age guide.",
 };
 
 const howToJsonLd = {
@@ -169,6 +169,67 @@ export default function SizingPage() {
                   {HAS_WHATSAPP ? "Ask on WhatsApp" : "Ask on Instagram"}
                 </a>
               </div>
+            </div>
+          </div>
+
+          <div className="mt-14 border-t border-line pt-10">
+            <span className="eyebrow">For little ones</span>
+            <h2 className="mt-3 font-display text-[clamp(22px,2.6vw,32px)]">
+              Kids bangle sizing
+            </h2>
+            <p className="mt-3 max-w-[64ch] text-[14.5px] leading-relaxed text-ink-soft">
+              Our Kids bangles come in four sizes: 1.10, 1.12, 1.14 and 2.0.
+              The ages below are a general guide only, not an exact fit:
+              every child&apos;s wrist is different, so measure using the
+              methods above before ordering whenever you can.
+            </p>
+            <div className="mt-6 overflow-x-auto">
+              <table className="w-full min-w-[360px] max-w-[560px] border-collapse text-left">
+                <thead>
+                  <tr className="border-b border-ink">
+                    {["Size", "Approximate age"].map((h) => (
+                      <th
+                        key={h}
+                        className="py-3 pr-4 text-[11px] font-bold uppercase tracking-[0.16em] text-ink-soft"
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {KIDS_AGE_GUIDE.map((s) => (
+                    <tr key={s.size} className="border-b border-line">
+                      <td className="py-4 pr-4 font-display text-[24px] text-maroon">
+                        {s.size}
+                      </td>
+                      <td className="py-4 text-[14px] text-ink-soft">
+                        {s.ageRange}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-6 max-w-[64ch] text-[13.5px] leading-relaxed text-ink-soft">
+              As a general guide: ANVEDA kids&apos; bangle size 1.10 suits a
+              newborn to around 3 months old. Size 1.12 suits around 3 to 9
+              months old. Size 1.14 suits around 9 months to 2 years old.
+              Size 2.0 suits around 2 to 6 years old. These are approximate
+              ranges, not an exact fit, since every child&apos;s wrist is
+              different.
+            </p>
+            <p className="mt-4 max-w-[64ch] text-[13px] leading-relaxed text-ink-faint">
+              Not sure which size fits? Send us your child&apos;s wrist
+              measurement or age and we will suggest a size.
+            </p>
+            <div className="mt-6">
+              <Link
+                href="/shop/kids/"
+                className="rounded-md inline-block border border-ink px-9 py-4 text-[11.5px] font-bold uppercase tracking-[0.2em] transition-colors hover:bg-ink hover:text-cream"
+              >
+                Shop kids bangles
+              </Link>
             </div>
           </div>
 

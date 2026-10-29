@@ -58,6 +58,7 @@ export default function Footer() {
                 ["/about", "Our story"],
                 ["/sizing", "Sizing guide"],
                 ["/shipping", "Shipping & returns"],
+                ["/bengaluru-delivery", "Same-day delivery in Bengaluru"],
                 ["/track", "Track order"],
                 ["/contact", "Contact"],
                 ["/terms", "Terms & Conditions"],

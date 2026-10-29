@@ -65,12 +65,12 @@ These are the phrases Google itself offers while people type. They show what is 
 Status: built and tested on `staging`. Live after "go live".
 
 ### Phase 2: content that answers questions (2 to 6 weeks, needs your words and facts)
-1. **Shelf introductions** (100 to 200 words each) on Glass, Ornate, Layering, Kids: what it is, who it suits, sizes, care.
+1. **Shelf introductions** (100 to 200 words each) on Glass, Ornate, Layering, Kids: what it is, who it suits, sizes, care. Status: done and **live on `main`** (`GROUP_CONTENT` in `app/shop/[group]/page.tsx`). Note (29 Oct 2026): `staging` still has the older, shorter `GROUP_SEO`-only version of this file, so the two branches have diverged on this one file; worth syncing staging forward before the next "go live" so nothing regresses.
 2. **Product text**: 80 to 150 words per design (materials, finish, how many pieces in a set, what to wear it with). I will draft, you correct the facts.
 3. **Outfit guides** (one page each, real photos from your catalog): bangles for silk saree, for mysore silk saree, for red / black / pink sarees, for lehenga.
 4. **Colour pages** (`/colours/pink/`, `/colours/green/` ...) generated from the catalog.
-5. **Kids guide** by age and size (needs the ages you want to state for sizes 1.10 / 1.12 / 1.14 / 2.0).
-6. **Bengaluru delivery page** (only if the same-day claim is true).
+5. **Kids guide** by age and size. Status: done, approximate age ranges on `/sizing` (`KIDS_AGE_GUIDE` in `lib/catalog.ts`), framed as a general guide, not exact (owner confirmed: general ranges are fine, not precise).
+6. **Bengaluru delivery page**. Status: done, `/bengaluru-delivery` (owner confirmed: same-day delivery is real, only via Porter chosen at checkout, Porter's fee paid by the customer directly to Porter, not included in the ANVEDA order total).
 7. **Product page content in the delivered HTML** (heading, price, colours, description), done without changing how the phone product page looks, checked with before and after screenshots.
 8. **Google Merchant Center free listings**: free product listings on Google Shopping. India appears in the supported-country lists I found, but I could not read Google's current India page, so confirm eligibility at support.google.com/merchants before we build the feed.
 9. **Seasonal pages** (Karwa Chauth, Diwali, weddings): publish one to two months before each festival, and keep the same page every year.
@@ -84,7 +84,8 @@ Status: built and tested on `staging`. Live after "go live".
 ### Phase 4: measure and repeat
 - Weekly: Search Console clicks, impressions, top queries, pages not indexed.
 - Monthly: add 2 to 4 new pages for queries that already show impressions but sit below position 10.
-- Quarterly: speed test, broken-link check, update festival pages.
+- Quarterly: speed test, broken-link check, update festival pages. Third-party keyword research (RankHero, directional estimate, not Google Keyword Planner) shows "glass bangles" and "glass bangles set" both peak in March, not just around Karwa Chauth/Diwali, so any seasonal content push should also be ready before March, not only before the autumn/winter festivals.
+- Keyword notes (RankHero, directional, India-weighted where shown): "glass bangles" (~60,500/mo globally, ~40,500 India, difficulty 28/100) and "glass bangles set" (~5,400/mo, difficulty 20/100) are the easiest high-value phrases and already anchor the Glass shelf copy. "bangles for wedding" (~3,600/mo, difficulty 14/100, peak Oct-Nov) is easy and now used on the Ornate shelf. Plain "bangles" (difficulty 46/100) and "kids bangles" (difficulty 82/100, no reliable volume) are harder to rank for; Kids pages use natural phrasing ("bangles for kids", "kids glass bangles") rather than targeting "kids bangles" directly.
 
 ## 5. For AI answers (GEO), what we actually do
 1. Be indexed and quotable: all of the above. Google says that is the entry ticket.
@@ -99,11 +100,13 @@ Status: built and tested on `staging`. Live after "go live".
 - Otherwise, geography comes from the website: the Bengaluru delivery page, Karnataka in the organisation details, and Kannada-speaking shoppers ("bangles in kannada" appears in suggestions, so a small Kannada section on the Help page is worth testing later).
 
 ## 7. Decisions needed from you
-1. Replace the "anveda.in"-only title with the keyword title (Phase 1)? Brand and domain stay in it.
-2. Is same-day delivery in Bengaluru real, and in which areas? (Porter exists; "same day" must be true before we say it.)
-3. Which ages go with kids sizes 1.10 to 2.0?
-4. Is there a place customers can visit, or an area you deliver to by hand?
-5. May the guide pages use your catalog photos and your Instagram captions?
+
+All five answered by the owner (29 Oct 2026):
+1. Keyword title: yes, live since Phase 1.
+2. Same-day Bengaluru delivery: real, only when Porter is chosen at checkout; Porter's fee is paid by the customer directly to Porter, never added to the ANVEDA order total. Built as `/bengaluru-delivery`.
+3. Kids sizes 1.10 to 2.0: owner asked for general, clearly-approximate age ranges rather than exact ones; built on `/sizing` with that framing.
+4. No place customers can visit, online-only; no Google Business Profile (see section 6).
+5. Yes, guide pages may use catalog photos and adapt Instagram caption wording.
 
 ## 8. Keep in mind
 - Do not leave maintenance mode on for long. The maintenance page tells Google "temporarily unavailable", which is fine for hours, but a long outage can make Google drop pages.

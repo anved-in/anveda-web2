@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "about",
     "contact",
     "shipping",
+    "bengaluru-delivery",
     "sizing",
     "reels",
     "sets",

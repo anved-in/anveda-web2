@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "@/components/Link";
 import { waLink, HAS_WHATSAPP, igDmLink } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -100,7 +101,15 @@ export default function ShippingPage() {
 
       <section className="px-5 pb-16 sm:px-6 md:pb-24">
         <div className="mx-auto max-w-[820px]">
-          <h2 className="font-display text-[clamp(24px,3vw,36px)]">
+          <p className="text-[14px] leading-relaxed text-ink-soft">
+            In Bengaluru, Porter can get your order to you the same day. See{" "}
+            <Link href="/bengaluru-delivery" className="underline underline-offset-2">
+              same-day delivery in Bengaluru
+            </Link>
+            .
+          </p>
+
+          <h2 className="mt-10 font-display text-[clamp(24px,3vw,36px)]">
             Common questions
           </h2>
           <div className="mt-8">
