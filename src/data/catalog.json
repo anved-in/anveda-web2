@@ -4967,7 +4967,7 @@
      "id": 260,
      "colour": "Crystal drop Set of 4",
      "image": "u-designer-side-bangles-crystal-drop-set-of-4-more-mvt87ppm.webp",
-     "price": 599,
+     "price": 880,
      "pieces": 4,
      "sizes": [
       "2.2",
@@ -4975,12 +4975,13 @@
       "2.6",
       "2.8"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 3,
      "sizeStock": {
       "2.2": 0,
-      "2.4": 0,
+      "2.4": 2,
       "2.6": 0,
-      "2.8": 0
+      "2.8": 1
      },
      "focal": "64.2% 72.5%",
      "zoom": 1.5,
