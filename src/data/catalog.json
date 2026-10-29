@@ -1086,7 +1086,7 @@
     },
     {
      "id": 26,
-     "colour": "Green",
+     "colour": "Parrot Green",
      "image": "u-pastel-palette-glass-bangle-green-hd-1792254278.webp",
      "hex": "#7cd76a",
      "price": 220,
@@ -1160,12 +1160,12 @@
       "2.8"
      ],
      "inStock": true,
-     "stockQty": 2,
+     "stockQty": 6,
      "sizeStock": {
-      "2.2": 0,
+      "2.2": 1,
       "2.4": 0,
-      "2.6": 1,
-      "2.8": 1
+      "2.6": 3,
+      "2.8": 2
      },
      "focal": "50% 10.0%",
      "zoom": 1,
@@ -1222,12 +1222,12 @@
       "2.8"
      ],
      "inStock": true,
-     "stockQty": 2,
+     "stockQty": 8,
      "sizeStock": {
-      "2.2": 0,
-      "2.4": 0,
+      "2.2": 1,
+      "2.4": 2,
       "2.6": 2,
-      "2.8": 0
+      "2.8": 3
      },
      "focal": "57.3% 53.3%",
      "zoom": 1.45,
@@ -1334,7 +1334,7 @@
     },
     {
      "id": 213,
-     "colour": "Untitled colourway",
+     "colour": "Green",
      "price": 220,
      "pieces": 12,
      "sizes": [
@@ -1343,12 +1343,13 @@
       "2.6",
       "2.8"
      ],
-     "inStock": false,
+     "inStock": true,
+     "stockQty": 7,
      "sizeStock": {
-      "2.2": 0,
-      "2.4": 0,
-      "2.6": 0,
-      "2.8": 0
+      "2.2": 1,
+      "2.4": 2,
+      "2.6": 2,
+      "2.8": 2
      },
      "zoom": 1
     }
