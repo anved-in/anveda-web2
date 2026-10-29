@@ -4623,6 +4623,27 @@
      },
      "focal": "41% 60.1%",
      "zoom": 1.6
+    },
+    {
+     "id": 218,
+     "colour": "Kashu with Ruby Flower Set of 4",
+     "price": 599,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 2,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "zoom": 1
     }
    ],
    "image": "designer-side-bangles-bell-pearl-flower-set-of-4.webp"
