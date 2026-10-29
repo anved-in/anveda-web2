@@ -33,6 +33,15 @@ def load(rel):
         return None
 
 
+def load_optional(rel):
+    """Like load(), but a MISSING file is fine (not every sync writes this one): only a file that
+    exists and is corrupt or not valid JSON fails the check."""
+    path = os.path.join(ROOT, rel)
+    if not os.path.exists(path):
+        return None
+    return load(rel)
+
+
 def previous(rel):
     """The same file as last committed, or None when there is no history to compare with."""
     try:
@@ -99,7 +108,7 @@ if reels is not None:
         old = previous("src/data/reels.json")
         shrink_check("The number of reels", len(lst), len((old or {}).get("reels", [])) if old else None, 0.5)
 
-sets_d = load("src/data/sets.json")
+sets_d = load_optional("src/data/sets.json")
 if sets_d is not None:
     lst = sets_d.get("sets")
     if not isinstance(lst, list):

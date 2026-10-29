@@ -73,8 +73,24 @@ const THEME = {
   },
 } as const;
 
-/** The photo at full size, in a pop-up. Escape / tap anywhere closes it (never the reel behind it). */
-function Lightbox({ src, caption, onClose }: { src: string; caption: string; onClose: () => void }) {
+/**
+ * The photo at full size, in a pop-up. Escape / tap anywhere closes it (never the reel behind it).
+ * Shows the SAME crop the thumbnail shows (the owner's focal point + zoom from the CMS), just
+ * bigger, not the whole original frame: a square window on the photo, object-cover + the same
+ * framingStyle, not object-contain. Zooming in is "look closer at what you were shown", not
+ * "now see parts of the photo that were cropped out everywhere else".
+ */
+function Lightbox({
+  src,
+  caption,
+  framing,
+  onClose,
+}: {
+  src: string;
+  caption: string;
+  framing: { objectPosition?: string; transform?: string; transformOrigin?: string };
+  onClose: () => void;
+}) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -88,8 +104,10 @@ function Lightbox({ src, caption, onClose }: { src: string; caption: string; onC
   if (typeof document === "undefined") return null;
   return createPortal(
     <div className="fixed inset-0 z-[400] flex flex-col items-center justify-center bg-black/85 p-4" onClick={onClose} role="dialog" aria-modal="true" aria-label={caption}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={caption} className="max-h-[82dvh] max-w-full rounded-md object-contain" />
+      <div className="aspect-square max-h-[82dvh] w-full max-w-[82dvh] overflow-hidden rounded-md">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={caption} className="h-full w-full object-cover" style={framing} />
+      </div>
       <p className="mt-3 text-center text-[13px] text-white/85">{caption}</p>
       <button type="button" aria-label="Close" className="absolute right-3 top-3 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25" onClick={onClose}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
@@ -136,7 +154,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const [err, setErr] = useState(false);
-  const [zoom, setZoom] = useState<{ src: string; caption: string } | null>(null);
+  const [zoom, setZoom] = useState<{ src: string; caption: string; framing: ReturnType<typeof framingStyle> } | null>(null);
   // "Get it for me": the pop-up that lets the shopper ask us for a sold-out colour or a size we do not have right now
   const [ask, setAsk] = useState<AskChoice[] | null>(null);
 
@@ -256,7 +274,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
               {/* the photo, big enough to judge the design; tap for the full picture */}
               <button
                 type="button"
-                onClick={() => setZoom({ src: asset(imgSrc(shown.image)), caption: label })}
+                onClick={() => setZoom({ src: asset(imgSrc(shown.image)), caption: label, framing: framingStyle(shown) })}
                 className="relative h-[132px] w-[132px] shrink-0 cursor-zoom-in overflow-hidden rounded-md bg-black/10"
                 aria-label={`View ${label} larger`}
               >
@@ -420,7 +438,7 @@ export default function ReelPicker({ reel, dark = false, onAdded }: { reel: Reso
       </div>
 
       {ask && ask.length > 0 && <NotifyMe mode="request" controlled={{ open: true, onClose: () => setAsk(null) }} variantId={ask[0].variantId} size={ask[0].size ?? null} label={ask[0].label} choices={ask} />}
-      {zoom && <Lightbox src={zoom.src} caption={zoom.caption} onClose={() => setZoom(null)} />}
+      {zoom && <Lightbox src={zoom.src} caption={zoom.caption} framing={zoom.framing} onClose={() => setZoom(null)} />}
     </div>
   );
 }
