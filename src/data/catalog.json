@@ -3381,6 +3381,7 @@
     {
      "id": 247,
      "colour": "Gold Plated Flower",
+     "image": "u-statement-bangles-gold-plated-flower-more-mvt5no4r.webp",
      "price": 1050,
      "pieces": 2,
      "sizes": [
@@ -3397,11 +3398,13 @@
       "2.6": 1,
       "2.8": 1
      },
-     "zoom": 1
+     "focal": "57% 71.9%",
+     "zoom": 1.65
     },
     {
      "id": 248,
      "colour": "Peacock with Stones",
+     "image": "u-statement-bangles-peacock-with-stones-more-mvt5bqek.webp",
      "price": 850,
      "pieces": 2,
      "sizes": [
@@ -3418,11 +3421,20 @@
       "2.6": 2,
       "2.8": 0
      },
-     "zoom": 1
+     "focal": "54% 57.5%",
+     "zoom": 1.8,
+     "gallery": [
+      {
+       "image": "u-statement-bangles-peacock-with-stones-more-mvt5bwfm.webp",
+       "focal": "0% 59.4%",
+       "zoom": 1.15
+      }
+     ]
     },
     {
      "id": 249,
      "colour": "Temple Lakshmi",
+     "image": "u-statement-bangles-temple-lakshmi-more-mvt5fb7g.webp",
      "price": 350,
      "pieces": 2,
      "sizes": [
@@ -3439,7 +3451,8 @@
       "2.6": 1,
       "2.8": 0
      },
-     "zoom": 1
+     "focal": "49.7% 65.5%",
+     "zoom": 1.85
     },
     {
      "id": 250,
@@ -3509,6 +3522,7 @@
     {
      "id": 253,
      "colour": "Lakshmi with Emerald Flower",
+     "image": "u-statement-bangles-lakshmi-with-emerald-flower-mvt53jgs.webp",
      "price": 950,
      "pieces": 2,
      "sizes": [
@@ -3525,11 +3539,20 @@
       "2.6": 1,
       "2.8": 0
      },
-     "zoom": 1
+     "focal": "48.7% 61.5%",
+     "zoom": 1.4,
+     "gallery": [
+      {
+       "image": "u-statement-bangles-lakshmi-with-emerald-flower-more-mvt53zrf.webp",
+       "focal": "27.8% 75.2%",
+       "zoom": 1.45
+      }
+     ]
     },
     {
      "id": 254,
      "colour": "Ruby Green Stone",
+     "image": "u-statement-bangles-ruby-green-stone-more-mvt531py.webp",
      "price": 499,
      "pieces": 2,
      "sizes": [
@@ -3546,7 +3569,8 @@
       "2.6": 1,
       "2.8": 0
      },
-     "zoom": 1
+     "focal": "29.2% 74.4%",
+     "zoom": 1.35
     },
     {
      "id": 255,
