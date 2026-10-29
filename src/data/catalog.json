@@ -1372,6 +1372,7 @@
     {
      "id": 213,
      "colour": "Green",
+     "image": "u-pastel-palette-glass-bangle-green-more-mvt88n52.webp",
      "price": 220,
      "pieces": 12,
      "sizes": [
@@ -1388,7 +1389,8 @@
       "2.6": 2,
       "2.8": 2
      },
-     "zoom": 1
+     "focal": "47.4% 68.8%",
+     "zoom": 1.5
     }
    ],
    "image": "u-pastel-palette-glass-bangle-gold-hd-1792254278.webp"
