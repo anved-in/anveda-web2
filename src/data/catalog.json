@@ -6231,6 +6231,143 @@
     }
    ],
    "image": "u-design-gold-stone-gunghroo-set-of-4-mvghu126.webp"
+  },
+  {
+   "id": "kalamkaari-stone-glass-bangles",
+   "collection": "kalamkaari-stone-glass-bangles",
+   "collectionName": "Kalamkaari Stone Glass Bangles",
+   "group": "glass",
+   "name": "Kalamkaari Stone Glass Bangles",
+   "price": 230,
+   "priceMax": 230,
+   "pieces": 12,
+   "unit": "set",
+   "sizes": [],
+   "blurb": "",
+   "story": "",
+   "variants": [
+    {
+     "id": 208,
+     "colour": "Wine",
+     "image": "u-kalamkaari-stone-glass-bangles-wine-more-mvt6tf3x.webp",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 6,
+     "sizeStock": {
+      "2.2": 1,
+      "2.4": 2,
+      "2.6": 2,
+      "2.8": 1
+     },
+     "focal": "48.8% 56.1%",
+     "zoom": 1.45,
+     "gallery": [
+      {
+       "image": "u-kalamkaari-stone-glass-bangles-wine-more-mvt6tlld.webp",
+       "focal": "21.3% 64.8%",
+       "zoom": 1.7
+      }
+     ]
+    },
+    {
+     "id": 209,
+     "colour": "Aqua",
+     "image": "u-kalamkaari-stone-glass-bangles-aqua-more-mvt6us9t.webp",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 6,
+     "sizeStock": {
+      "2.2": 1,
+      "2.4": 2,
+      "2.6": 2,
+      "2.8": 1
+     },
+     "focal": "55.1% 81.5%",
+     "zoom": 1.5,
+     "gallery": [
+      {
+       "image": "u-kalamkaari-stone-glass-bangles-aqua-more-mvt6uztg.webp",
+       "focal": "30.6% 58.2%",
+       "zoom": 1.8
+      }
+     ]
+    },
+    {
+     "id": 210,
+     "colour": "Ruby Red",
+     "image": "u-kalamkaari-stone-glass-bangles-ruby-red-more-mvt6wrzc.webp",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 6,
+     "sizeStock": {
+      "2.2": 1,
+      "2.4": 2,
+      "2.6": 2,
+      "2.8": 1
+     },
+     "focal": "46.7% 76.7%",
+     "zoom": 1.35,
+     "gallery": [
+      {
+       "image": "u-kalamkaari-stone-glass-bangles-ruby-red-more-mvt6wyu8.webp",
+       "focal": "0% 57.4%",
+       "zoom": 1.6
+      }
+     ]
+    },
+    {
+     "id": 211,
+     "colour": "Emerald Green",
+     "image": "u-kalamkaari-stone-glass-bangles-emerald-green-more-mvt6xm4r.webp",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 6,
+     "sizeStock": {
+      "2.2": 1,
+      "2.4": 2,
+      "2.6": 2,
+      "2.8": 1
+     },
+     "focal": "28.2% 62.3%",
+     "zoom": 1.5,
+     "gallery": [
+      {
+       "image": "u-kalamkaari-stone-glass-bangles-emerald-green-more-mvt6xy5i.webp",
+       "focal": "20.3% 68.5%",
+       "zoom": 1.5
+      }
+     ]
+    }
+   ],
+   "image": "u-kalamkaari-stone-glass-bangles-wine-more-mvt6tf3x.webp"
   }
  ],
  "colourWall": [
