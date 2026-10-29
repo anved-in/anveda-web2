@@ -3379,7 +3379,7 @@
      "zoom": 1.7
     },
     {
-     "id": 220,
+     "id": 233,
      "colour": "Gold Plated Flower",
      "price": 1050,
      "pieces": 2,
@@ -3400,7 +3400,7 @@
      "zoom": 1
     },
     {
-     "id": 221,
+     "id": 234,
      "colour": "Peacock with Stones",
      "price": 850,
      "pieces": 2,
@@ -3421,7 +3421,7 @@
      "zoom": 1
     },
     {
-     "id": 222,
+     "id": 235,
      "colour": "Temple Lakshmi",
      "price": 350,
      "pieces": 2,
@@ -3442,7 +3442,7 @@
      "zoom": 1
     },
     {
-     "id": 223,
+     "id": 236,
      "colour": "Lakshmi Petal Green",
      "price": 1250,
      "pieces": 2,
@@ -3463,7 +3463,7 @@
      "zoom": 1
     },
     {
-     "id": 224,
+     "id": 237,
      "colour": "White Stone with Ruby Flower",
      "price": 1300,
      "pieces": 2,
@@ -3484,7 +3484,7 @@
      "zoom": 1
     },
     {
-     "id": 225,
+     "id": 238,
      "colour": "Lakshmi with Round Ruby Emerald",
      "price": 850,
      "pieces": 2,
@@ -3505,7 +3505,7 @@
      "zoom": 1
     },
     {
-     "id": 226,
+     "id": 239,
      "colour": "Lakshmi with Emerald Flower",
      "price": 950,
      "pieces": 2,
@@ -3526,7 +3526,7 @@
      "zoom": 1
     },
     {
-     "id": 227,
+     "id": 240,
      "colour": "Ruby Green Stone",
      "price": 499,
      "pieces": 2,
@@ -3547,7 +3547,7 @@
      "zoom": 1
     },
     {
-     "id": 228,
+     "id": 241,
      "colour": "Black Pink Stone",
      "price": 450,
      "pieces": 2,
@@ -3568,7 +3568,7 @@
      "zoom": 1
     },
     {
-     "id": 229,
+     "id": 242,
      "colour": "Petal Ruby Lakshmi",
      "price": 1150,
      "pieces": 2,
@@ -3585,6 +3585,27 @@
       "2.4": 0,
       "2.6": 1,
       "2.8": 0
+     },
+     "zoom": 1
+    },
+    {
+     "id": 243,
+     "colour": "Gold Plated White Stone",
+     "price": 1050,
+     "pieces": 2,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 5,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 2,
+      "2.6": 2,
+      "2.8": 1
      },
      "zoom": 1
     }
