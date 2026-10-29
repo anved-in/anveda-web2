@@ -3,8 +3,10 @@ import SetsGrid from "@/components/SetsGrid";
 import { sets } from "@/lib/sets";
 
 export const metadata: Metadata = {
-  title: "Styled Sets",
-  description: "Designs put together on purpose. Pick your colours, buy the set.",
+  title: "Glass Bangles Set & Styled Combos Online | ANVEDA Sets",
+  description:
+    "Handpicked glass bangle sets and curated combos for sarees, weddings and festive wear. Mix and match colours, select your sizes, delivered safely across India.",
+  alternates: { canonical: "/sets/" },
 };
 
 export default function SetsPage() {

@@ -5,9 +5,9 @@ import { asset } from "@/lib/site";
 import { imgSrc, imgSrcSmall, framingStyle, colourLabel } from "@/lib/catalog";
 
 export const metadata: Metadata = {
-  title: "Shop Glass Bangles by Colour",
+  title: "Shop Glass Bangles by Colour | Pastel, Red, Green & Bridal Shades",
   description:
-    "Browse every ANVEDA bangle colour by colour: pastels, jellies, stone-set and more. Find the shade that goes with your saree or lehenga.",
+    "Browse 250+ glass bangle colours: soft pastels, vibrant bridal reds, bottle greens, and festive tones. Pair perfectly with your silk saree or lehenga. Delivered safely across India.",
   alternates: { canonical: "/colours/" },
 };
 

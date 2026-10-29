@@ -1,10 +1,11 @@
 {
   "name": "anveda-web",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/staging-sync.js && node scripts/optimize-images.js",
+    "prebuild": "node scripts/staging-sync.js && node scripts/optimize-images.js && node scripts/gen-merchant-feed.mjs",
+    "feed": "node scripts/gen-merchant-feed.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
