@@ -3591,6 +3591,7 @@
     {
      "id": 243,
      "colour": "Gold Plated White Stone",
+     "image": "u-statement-bangles-gold-plated-white-stone-more-mvt4fug2.webp",
      "price": 1050,
      "pieces": 2,
      "sizes": [
@@ -3607,7 +3608,15 @@
       "2.6": 2,
       "2.8": 1
      },
-     "zoom": 1
+     "focal": "66.4% 81.1%",
+     "zoom": 1.5,
+     "gallery": [
+      {
+       "image": "u-statement-bangles-gold-plated-white-stone-more-mvt4fzog.webp",
+       "focal": "46.5% 75.1%",
+       "zoom": 1.35
+      }
+     ]
     }
    ],
    "image": "statement-bangles-elephant-design.webp"
