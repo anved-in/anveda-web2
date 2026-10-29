@@ -31,17 +31,17 @@ const GROUP_CONTENT: Record<string, GroupGuide> = {
     title: "Glass Bangles Online India",
     seoTitle: "Glass Bangles Online India | Pastel, Jelly & Stone-Set Bangles",
     seoDescription:
-      "Shop authentic glass bangles online in India: pastel, jelly, petal, phool and stone-set designs in 250+ colours. Handpicked in small batches and delivered across India.",
+      "Shop authentic glass bangles online in India: pastel, jelly, petal, phool and stone-set designs in 90+ colours. Handpicked in small batches and delivered across India.",
     leadParagraph:
-      "Glass bangles hold a cherished place in Indian tradition and everyday elegance, celebrated for their delicate chime, vibrant brilliance, and timeless cultural heritage. At ANVEDA, we curate small, handcrafted batches from master artisans across heritage bangle craft centers in India, offering over 250 nuanced shades.",
+      "Glass bangles hold a cherished place in Indian tradition and everyday elegance, celebrated for their delicate chime, vibrant brilliance, and timeless cultural heritage. At ANVEDA, we curate small, handcrafted batches from master artisans across heritage bangle craft centers in India, offering 90+ nuanced shades.",
     paragraphs: [
       "Our core glass collection brings together silky pastel palettes, ultra-glossy jelly finishes, intricate cut-glass patterns, and shimmering stone-set floral work. Whether you are seeking a traditional scarlet red set for bridal celebrations, Karwa Chauth, or Diwali, subtle emerald and bottle greens for festive silk sarees, or soothing blush and mint pastels for contemporary occasions, our collection is curated to match every outfit.",
-      "Every ANVEDA glass bangle set is available in standard Indian sizing from 2.2 (extra small) to 2.12 (large). Each parcel is packed using custom shock-absorbent multi-layer cushioning to guarantee safe, crack-free delivery to your doorstep anywhere in India.",
+      "Every ANVEDA glass bangle set is available in standard Indian sizing from 2.2 (extra small) to 2.12 (large). Each parcel is shipped in a corrugated packaging box with bubble wrap and proper safety measures, for safe, crack-free delivery to your doorstep anywhere in India.",
     ],
     faqs: [
       {
         q: "Where can I buy authentic glass bangles online in India?",
-        a: "You can purchase authentic, handcrafted glass bangles directly at ANVEDA (www.anveda.in). We stock over 250 curated colours across pastel, jelly, and stone-cut finishes with safe delivery to all Indian PIN codes.",
+        a: "You can purchase authentic, handcrafted glass bangles directly at ANVEDA (www.anveda.in). We stock 90+ curated colours across pastel, jelly, and stone-cut finishes with safe delivery to all Indian PIN codes.",
       },
       {
         q: "What sizes are available in glass bangles?",
@@ -49,7 +49,7 @@ const GROUP_CONTENT: Record<string, GroupGuide> = {
       },
       {
         q: "How are fragile glass bangles packed for delivery?",
-        a: "Every bangle order is individually secured in high-density foam casing, bubble-wrapped, and packed in heavy-duty cardboard boxes to ensure zero transit damage.",
+        a: "Every bangle order ships in a corrugated packaging box with bubble wrap and proper safety measures to protect it in transit.",
       },
     ],
   },
@@ -92,7 +92,7 @@ const GROUP_CONTENT: Record<string, GroupGuide> = {
       "Finding authentic glass bangles in delicate proportions for infants, toddlers, and young girls is often difficult. ANVEDA’s Lil Charms collection features petite sizes 1.10, 1.12, 1.14, and 2.0.",
     paragraphs: [
       "Designed with smooth, polished inner rims for gentle skin contact, our kids' glass bangles come in enchanting pastel and jelly shades perfect for naming ceremonies, birthdays, and festivals.",
-      "Delivered with our signature shock-proof packaging across India, ensuring safe arrival for your little ones.",
+      "Shipped in a corrugated packaging box with bubble wrap and proper safety measures, for safe arrival anywhere in India.",
     ],
   },
 };
