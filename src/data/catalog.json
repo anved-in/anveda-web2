@@ -4781,7 +4781,7 @@
      "zoom": 1.6
     },
     {
-     "id": 230,
+     "id": 244,
      "colour": "Kashu with Ruby Flower Set of 4",
      "price": 599,
      "pieces": 4,
@@ -4802,7 +4802,7 @@
      "zoom": 1
     },
     {
-     "id": 231,
+     "id": 245,
      "colour": "Gold Ruby Green Flower Set of 4",
      "price": 1600,
      "pieces": 4,
@@ -4823,8 +4823,9 @@
      "zoom": 1
     },
     {
-     "id": 232,
+     "id": 246,
      "colour": "Mantap Lakshmi Set of 4",
+     "image": "u-designer-side-bangles-mantap-lakshmi-set-of-4-more-mvt4mvs4.webp",
      "price": 399,
      "pieces": 4,
      "sizes": [
@@ -4836,12 +4837,20 @@
      "inStock": true,
      "stockQty": 5,
      "sizeStock": {
-      "2.2": 0,
-      "2.4": 1,
+      "2.2": 1,
+      "2.4": 2,
       "2.6": 2,
-      "2.8": 2
+      "2.8": 0
      },
-     "zoom": 1
+     "focal": "55.8% 71.8%",
+     "zoom": 1.75,
+     "gallery": [
+      {
+       "image": "u-designer-side-bangles-mantap-lakshmi-set-of-4-more-mvt4n75b.webp",
+       "focal": "35.8% 63.8%",
+       "zoom": 1.4
+      }
+     ]
     }
    ],
    "image": "designer-side-bangles-bell-pearl-flower-set-of-4.webp"
