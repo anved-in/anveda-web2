@@ -3506,6 +3506,7 @@
     {
      "id": 250,
      "colour": "Lakshmi Petal Green",
+     "image": "u-statement-bangles-lakshmi-petal-green-more-mvta8y3d.webp",
      "price": 1250,
      "pieces": 2,
      "sizes": [
@@ -3522,7 +3523,8 @@
       "2.6": 0,
       "2.8": 0
      },
-     "zoom": 1
+     "focal": "63% 66.3%",
+     "zoom": 1.7
     },
     {
      "id": 251,
