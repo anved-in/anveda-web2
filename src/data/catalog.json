@@ -4461,7 +4461,7 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
+     "inStock": true,
      "stockQty": 4,
      "sizeStock": {
       "2.2": 2,
@@ -4511,7 +4511,7 @@
       "2.4",
       "2.6"
      ],
-     "inStock": false,
+     "inStock": true,
      "stockQty": 2,
      "sizeStock": {
       "2.2": 1,
