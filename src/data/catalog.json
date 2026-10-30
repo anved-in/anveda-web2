@@ -5027,9 +5027,9 @@
       "2.6"
      ],
      "inStock": true,
-     "stockQty": 2,
+     "stockQty": 1,
      "sizeStock": {
-      "2.2": 2,
+      "2.2": 1,
       "2.4": 0,
       "2.6": 0
      },
