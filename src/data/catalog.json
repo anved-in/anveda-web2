@@ -6162,6 +6162,27 @@
       "2.8": 0
      },
      "zoom": 1
+    },
+    {
+     "id": 263,
+     "colour": "Radium (Premium Raindrop)",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 4,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 3,
+      "2.8": 0
+     },
+     "zoom": 1
     }
    ],
    "image": "u-square-edge-glass-bangles-aqua-hd-1792254278.webp"
