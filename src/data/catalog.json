@@ -5358,8 +5358,8 @@
      "sizeStock": {
       "2.2": 2,
       "2.4": 5,
-      "2.6": 2,
-      "2.8": 4
+      "2.6": 0,
+      "2.8": 6
      },
      "focal": "28.4% 75%",
      "zoom": 1.5,
@@ -6124,7 +6124,7 @@
     {
      "id": 261,
      "colour": "Black (Premium Raindrop)",
-     "price": 230,
+     "price": 220,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -6166,7 +6166,7 @@
     {
      "id": 263,
      "colour": "Radium (Premium Raindrop)",
-     "price": 230,
+     "price": 220,
      "pieces": 12,
      "sizes": [
       "2.2",
@@ -6180,6 +6180,27 @@
       "2.2": 0,
       "2.4": 1,
       "2.6": 3,
+      "2.8": 0
+     },
+     "zoom": 1
+    },
+    {
+     "id": 264,
+     "colour": "Violet (Premium Raindrop)",
+     "price": 220,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 2,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
       "2.8": 0
      },
      "zoom": 1
