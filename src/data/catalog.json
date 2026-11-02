@@ -6120,6 +6120,27 @@
      },
      "focal": "43.6% 36.6%",
      "zoom": 1.35
+    },
+    {
+     "id": 261,
+     "colour": "Black (Premium Raindrop)",
+     "price": 230,
+     "pieces": 12,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 3,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 1,
+      "2.6": 1,
+      "2.8": 1
+     },
+     "zoom": 1
     }
    ],
    "image": "u-square-edge-glass-bangles-aqua-hd-1792254278.webp"
