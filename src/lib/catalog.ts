@@ -142,6 +142,10 @@ export const newArrivalsManual: number[] =
 export const announcement: { text: string; link?: string; bg: string } | null =
   (data as { announcement?: { text: string; link?: string; bg: string } | null }).announcement ?? null;
 
+/** Whether the CMS owner has enabled the "By Colour" page (default true when not set). */
+export const showColoursPage: boolean =
+  (data as { showColoursPage?: boolean }).showColoursPage ?? true;
+
 export const productsIn = (slug: string): Product[] =>
   products.filter((p) => p.collection === slug);
 
