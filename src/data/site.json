@@ -1,3 +1,13 @@
 {
- "values": {}
+ "values": {
+  "home.hero1.image": "u-site-home-hero1-image-mw1q32dl.webp",
+  "home.story.p2": "Glass and antique pieces for the weddings, the festivals and the ordinary Tuesdays that deserve them too. Packed with care, set by set.",
+  "home.story.image": "u-site-home-story-image-mw1qa4xv.webp",
+  "home.insta1.image": "u-site-home-insta1-image-mw1qbwzy.webp",
+  "home.insta2.image": "u-site-home-insta2-image-mw1qczun.webp",
+  "home.insta3.image": "u-site-home-insta3-image-mw1qeg79.webp",
+  "home.insta4.image": "u-site-home-insta4-image-mw1qemmj.webp",
+  "home.insta5.image": "u-site-home-insta5-image-mw1qet7h.webp",
+  "home.insta6.image": "u-site-home-insta6-image-mw1qf9ck.webp"
+ }
 }
