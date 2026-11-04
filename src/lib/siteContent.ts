@@ -20,6 +20,16 @@ export const scImage = (key: string): string | null => {
   return typeof v === "string" && v.trim() !== "" ? v.trim() : null;
 };
 
+/** Focal point and zoom the owner set for an image box (used with framingStyle). */
+export const scImageFraming = (key: string): { focal?: string | null; zoom?: number | null } => {
+  const f = values[key + ".focal"];
+  const z = values[key + ".zoom"];
+  return {
+    focal: typeof f === "string" && f.trim() ? f.trim() : null,
+    zoom: typeof z === "string" || typeof z === "number" ? (Number(z) || null) : null,
+  };
+};
+
 /** Fills {count}-style markers in a sentence. A marker with no value is left as written. */
 export const fill = (text: string, vars: Record<string, string | number>): string =>
   text.replace(/\{(\w+)\}/g, (m, k: string) => (k in vars ? String(vars[k]) : m));

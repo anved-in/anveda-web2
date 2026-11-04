@@ -11,7 +11,8 @@ import {
   type Listing,
 } from "@/lib/catalog";
 import { asset, SITE } from "@/lib/site";
-import { sc, scImage, fill } from "@/lib/siteContent";
+import { sc, scImage, scImageFraming, fill } from "@/lib/siteContent";
+import { framingStyle } from "@/lib/catalog";
 import { HOME_TITLE, HOME_DESCRIPTION } from "@/lib/seo";
 import ListingCard from "@/components/ListingCard";
 import SectionHead from "@/components/SectionHead";
@@ -182,6 +183,7 @@ export default function Home() {
                     src={asset(imgSrc(scImage("home.story.image") ?? HOME_PHOTO[collections[0].slug] ?? collections[0].cover))}
                     alt=""
                     className="h-full w-full object-cover"
+                    style={framingStyle(scImageFraming("home.story.image"))}
                     loading="lazy"
                     decoding="async"
                   />
@@ -229,6 +231,7 @@ export default function Home() {
                   src={asset(imgSrcSmall(own ?? c.cover))}
                   alt=""
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                  style={own ? framingStyle(scImageFraming(`home.insta${i + 1}.image`)) : undefined}
                   loading="lazy"
                   decoding="async"
                 />

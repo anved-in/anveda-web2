@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "@/components/Link";
 import { products, imgSrc, collections } from "@/lib/catalog";
 import { asset, HAS_WHATSAPP } from "@/lib/site";
-import { sc, scImage, fill } from "@/lib/siteContent";
+import { sc, scImage, scImageFraming, fill } from "@/lib/siteContent";
+import { framingStyle } from "@/lib/catalog";
 
 // The owner can change this page's words and photo in the CMS (CMS > Website pages > About page). A box left alone keeps the
 // wording written here (the second argument of sc), which must match the CMS's list: node scripts/check-site-content.mjs.
@@ -28,6 +29,7 @@ export default function AboutPage() {
           src={asset(imgSrc(heroImage))}
           alt=""
           className="absolute inset-0 h-full w-full object-cover opacity-45"
+          style={framingStyle(scImageFraming("about.hero.image"))}
           fetchPriority="high"
         />
         <div

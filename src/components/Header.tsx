@@ -9,11 +9,11 @@ import Logo from "./Logo";
 import { useCart } from "@/lib/cart";
 import { useFavs } from "@/lib/favourites";
 import { HEART } from "./FavButton";
-import { groups, collectionsInGroup, rangeHref, productById } from "@/lib/catalog";
+import { groups, collectionsInGroup, rangeHref, productById, showColoursPage } from "@/lib/catalog";
 
 /** The reference keeps a short text nav on the left of a single header row. */
 const NAV = [
-  { href: "/colours", label: "By Colour" },
+  ...(showColoursPage ? [{ href: "/colours", label: "By Colour" }] : []),
   { href: "/reels", label: "Reels" },
   { href: "/sets", label: "Styled Sets" },
   { href: "/about", label: "About Us" },
@@ -387,7 +387,7 @@ export default function Header() {
           <ul className="overflow-hidden rounded-[10px] bg-cream-2">
             {[
               { href: "/", label: "Home" },
-              { href: "/colours", label: "By Colour" },
+              ...(showColoursPage ? [{ href: "/colours", label: "By Colour" }] : []),
               { href: "/reels", label: "Reels" },
               { href: "/sets", label: "Styled Sets" },
             ].map((n) => (

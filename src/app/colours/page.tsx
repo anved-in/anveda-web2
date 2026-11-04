@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import Link from "@/components/Link";
 import { colourFlow } from "@/lib/colourflow";
 import { asset } from "@/lib/site";
-import { imgSrc, imgSrcSmall, framingStyle, colourLabel } from "@/lib/catalog";
+import { imgSrc, imgSrcSmall, framingStyle, colourLabel, showColoursPage } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   title: "Shop Glass Bangles by Colour | Pastel, Red, Green & Bridal Shades",
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
  * colours flow from one into the next. Each tile opens that colourway.
  */
 export default async function ColoursPage() {
+  if (!showColoursPage) redirect("/");
   const tiles = await colourFlow();
   return (
     <section aria-label="All bangles by colour">
