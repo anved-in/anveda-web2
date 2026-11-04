@@ -8,6 +8,12 @@
   "home.insta3.image": "u-site-home-insta3-image-mw1qeg79.webp",
   "home.insta4.image": "u-site-home-insta4-image-mw1qemmj.webp",
   "home.insta5.image": "u-site-home-insta5-image-mw1qet7h.webp",
-  "home.insta6.image": "u-site-home-insta6-image-mw1qf9ck.webp"
+  "home.insta6.image": "u-site-home-insta6-image-mw1qf9ck.webp",
+  "home.hero2.image.focal": "23.2% 61%",
+  "home.hero2.image.zoom": "1.12",
+  "home.hero1.image.zoom": "1.05",
+  "home.hero1.image.focal": "100% 61%",
+  "home.hero3.image.zoom": "1.18",
+  "home.hero3.image.focal": "46.7% 51.7%"
  }
 }
