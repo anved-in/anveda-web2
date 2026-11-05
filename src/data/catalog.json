@@ -5011,8 +5011,9 @@
      ]
     },
     {
-     "id": 270,
+     "id": 272,
      "colour": "Gold look-alike Flower Set of 4",
+     "image": "u-designer-side-bangles-gold-look-alike-flower-set-of-4-mw3hp2z3.webp",
      "price": 899,
      "pieces": 4,
      "sizes": [
@@ -5029,7 +5030,8 @@
       "2.6": 1,
       "2.8": 0
      },
-     "zoom": 1
+     "focal": "47.1% 74%",
+     "zoom": 1.45
     }
    ],
    "image": "designer-side-bangles-bell-pearl-flower-set-of-4.webp"
