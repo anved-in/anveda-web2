@@ -5007,6 +5007,27 @@
        "zoom": 1.4
       }
      ]
+    },
+    {
+     "id": 270,
+     "colour": "Gold look-alike Flower Set of 4",
+     "price": 899,
+     "pieces": 4,
+     "sizes": [
+      "2.2",
+      "2.4",
+      "2.6",
+      "2.8"
+     ],
+     "inStock": true,
+     "stockQty": 3,
+     "sizeStock": {
+      "2.2": 0,
+      "2.4": 2,
+      "2.6": 1,
+      "2.8": 0
+     },
+     "zoom": 1
     }
    ],
    "image": "designer-side-bangles-bell-pearl-flower-set-of-4.webp"
