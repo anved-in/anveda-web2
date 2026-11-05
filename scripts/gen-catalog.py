@@ -77,7 +77,7 @@ for _s in sets_in:
         _s["cover"] = webp_name(_s["cover"])
 
 json.dump(
-    {"groups": groups, "collections": collections, "products": products, "colourWall": data.get("colourWall", []), "newArrivals": data.get("newArrivals", []), "announcement": data.get("announcement")},
+    {"groups": groups, "collections": collections, "products": products, "colourWall": data.get("colourWall", []), "newArrivals": data.get("newArrivals", []), "announcement": data.get("announcement"), "showColoursPage": data.get("showColoursPage", True)},
     open(OUT, "w", encoding="utf-8"),
     ensure_ascii=False,
     indent=1,
