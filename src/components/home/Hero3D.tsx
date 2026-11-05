@@ -256,7 +256,7 @@ export default function Hero3D({ slides }: { slides: Slide[] }) {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(100deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 42%, rgba(0,0,0,0) 62%)",
+                "linear-gradient(100deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.30) 40%, rgba(0,0,0,.62) 100%)",
             }}
           />
           <div className="absolute inset-y-0 right-0 flex w-[88%] max-w-[480px] flex-col justify-center p-6 sm:p-10 md:p-14">
