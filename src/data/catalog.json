@@ -3708,8 +3708,9 @@
      ]
     },
     {
-     "id": 269,
+     "id": 271,
      "colour": "Kashu with White Stones",
+     "image": "u-statement-bangles-kashu-with-white-stones-mw3ho923.webp",
      "price": 899,
      "pieces": 2,
      "sizes": [
@@ -3720,7 +3721,8 @@
      ],
      "inStock": true,
      "stockQty": 2,
-     "zoom": 1
+     "focal": "41.3% 73.8%",
+     "zoom": 1.6
     }
    ],
    "image": "statement-bangles-elephant-design.webp"
