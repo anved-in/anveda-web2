@@ -89,16 +89,14 @@
    "title": "Premium 4 in 1 Diamond Kada (Free Size Openable)",
    "caption": "",
    "productId": "kada",
-   "colour": "Premium 4 in 1 Diamond Kada (Free Size Openable)",
+   "colour": "Premium 4 in 1 Diamond Kada (Free Size O",
    "combo": {
     "price": 1799,
     "items": [
      {
       "productId": "kada",
       "qty": 1,
-      "colours": [
-       "Premium 4 in 1 Diamond Kada (Free Size Openable)"
-      ]
+      "colours": []
      }
     ]
    }
