@@ -1,3 +1,31 @@
 {
- "sets": []
+ "sets": [
+  {
+   "id": "kashu-lakshmi-combo-set",
+   "cover": "/img/products/u-set-mw4jpa5d.webp",
+   "title": "Kashu Lakshmi Combo Set",
+   "caption": "",
+   "productId": "statement-bangles",
+   "colour": "Kashu with White Stones",
+   "combo": {
+    "price": 1690,
+    "items": [
+     {
+      "productId": "statement-bangles",
+      "qty": 1,
+      "colours": [
+       "Kashu with White Stones"
+      ]
+     },
+     {
+      "productId": "designer-side-bangles",
+      "qty": 1,
+      "colours": [
+       "White Stone Lakshmi Set of 4"
+      ]
+     }
+    ]
+   }
+  }
+ ]
 }
