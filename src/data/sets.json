@@ -26,6 +26,33 @@
      }
     ]
    }
+  },
+  {
+   "id": "premium-royal-blue-set",
+   "cover": "/img/products/u-set-mw4mnob1.webp",
+   "title": "Premium Royal Blue Set",
+   "caption": "",
+   "productId": "statement-bangles",
+   "colour": "Sapphire Flower Stone",
+   "combo": {
+    "price": 2650,
+    "items": [
+     {
+      "productId": "statement-bangles",
+      "qty": 1,
+      "colours": [
+       "Sapphire Flower Stone"
+      ]
+     },
+     {
+      "productId": "designer-side-bangles",
+      "qty": 1,
+      "colours": [
+       "Royal blue flower - Set of 4"
+      ]
+     }
+    ]
+   }
   }
  ]
 }
